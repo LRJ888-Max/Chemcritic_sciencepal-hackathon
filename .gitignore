@@ -1,0 +1,22 @@
+# 本地材料与大文件（不入库）
+refs/
+outputs/
+_gh_push/
+
+# 文献与数据文件（受出版社许可限制 / 体积过大）
+*.pdf
+*.zip
+*.xml
+*.ndjson
+
+# 办公文件与临时文件
+*.xlsx
+*.csv
+~$*
+*.tmp
+
+# 系统与编辑器
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
