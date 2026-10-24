@@ -1,0 +1,31 @@
+{
+  "version": "seed-0.1",
+  "created": "2026-10-25",
+  "warning": "本文件是 SEED，由规则表测试用例直接派生（T1–T12）。它与引擎是同一批人、同一批假设写成的，因此 FPR/FNR 会偏乐观，不能当作独立评测结果。B 必须从 refs/pool.json 的 34 条候选中另标 12–15 对独立样本，标注完成后把 status 改为 independent。",
+  "labeling_rules": {
+    "COMPARABLE": "硬门槛 1–4 全部通过",
+    "BLOCKED": "任一硬门槛确定不通过（口径不同、底物不同、产物不同）",
+    "NEEDS_EVIDENCE": "任一硬门槛字段缺失或口径未决",
+    "gold_dim": "首个未通过/缺失的硬门槛维度"
+  },
+  "pairs": [
+    {"pair_id": "G01", "subject": "USER-001", "reference": "SM-001b", "gold_verdict": "COMPARABLE", "gold_dim": null, "status": "seed", "note": "同底物同口径，档 A 内比较"},
+    {"pair_id": "G02", "subject": "USER-001", "reference": "SM-001a", "gold_verdict": "BLOCKED", "gold_dim": "outcome_type", "status": "seed", "note": "分离 vs GLC"},
+    {"pair_id": "G03", "subject": "USER-001", "reference": "SM-002", "gold_verdict": "COMPARABLE", "gold_dim": null, "status": "seed", "note": "跨档同口径，可比较但需标 L2"},
+    {"pair_id": "G04", "subject": "USER-001", "reference": "SM-003", "gold_verdict": "BLOCKED", "gold_dim": "outcome_type", "status": "seed", "note": "分离 vs 1H NMR"},
+    {"pair_id": "G05", "subject": "USER-001", "reference": "SM-004.1", "gold_verdict": "NEEDS_EVIDENCE", "gold_dim": "outcome_type", "status": "seed", "note": "表列名与脚注冲突，口径未决"},
+    {"pair_id": "G06", "subject": "USER-001", "reference": "SM-004.7", "gold_verdict": "NEEDS_EVIDENCE", "gold_dim": "outcome_type", "status": "seed", "note": "同上"},
+    {"pair_id": "G07", "subject": "USER-001", "reference": "SM-005", "gold_verdict": "COMPARABLE", "gold_dim": null, "status": "seed", "note": "跨档同口径"},
+    {"pair_id": "G08", "subject": "USER-001", "reference": "SM-006", "gold_verdict": "BLOCKED", "gold_dim": "outcome_type", "status": "seed", "note": "分离 vs GC"},
+    {"pair_id": "G09", "subject": "SM-006", "reference": "SM-004.7", "gold_verdict": "NEEDS_EVIDENCE", "gold_dim": "outcome_type", "status": "seed", "note": "SM-004 口径未决；若采信作者 GC 措辞则应为 BLOCKED@assay"},
+    {"pair_id": "G10", "subject": "SM-004.1", "reference": "SM-004.7", "gold_verdict": "NEEDS_EVIDENCE", "gold_dim": "outcome_type", "status": "seed", "note": "同篇不同条目，另需 non_independent 标记"},
+    {"pair_id": "G11", "subject": "USER-011", "reference": "SM-002", "gold_verdict": "NEEDS_EVIDENCE", "gold_dim": "outcome_type", "status": "seed", "note": "用户未填口径"},
+    {"pair_id": "G12", "subject": "USER-012", "reference": "SM-002", "gold_verdict": "NEEDS_EVIDENCE", "gold_dim": "assay", "status": "seed", "note": "用户填了值但未说明是否分离"}
+  ],
+  "todo_for_B": [
+    "从 refs/pool.json 选 12–15 对独立样本（不得复用 T1–T12）",
+    "每对标注 gold_verdict 与 gold_dim，并写明 locator",
+    "标注完成后更新 version 为 independent-0.1，status 改为 independent",
+    "至少包含 3 对 BLOCKED@assay（校准缺失）与 2 对跨档同口径"
+  ]
+}

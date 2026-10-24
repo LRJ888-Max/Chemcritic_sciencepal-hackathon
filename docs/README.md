@@ -1,6 +1,6 @@
 # 文档索引
 
-> 评审或新成员请按 **① plan → ② science → ③ archive（可跳过）** 的顺序读。
+> 评审或新成员请按 **① plan → ② rules → ③ science → ④ archive（可跳过）** 的顺序读。
 
 ---
 
@@ -25,6 +25,28 @@
 | [Suzuki–Miyaura 先例核验报告](science/Suzuki_Miyaura_文献核验报告.md) | 完整核验报告：证据分级方法、逐条可比性检查、全局免责边界 |
 
 **阅读建议：** 先看 `LITERATURE.md` 的两张表，再看 `10/18 首期决策` 了解字段级口径，最后看核验报告的方法学一节。
+
+---
+
+## `rules/` — 判定规则（待化学签字，`DRAFT`）
+
+| 文件 | 内容 | 交给谁 |
+|---|---|---|
+| [分档定义](rules/分档定义-待签字.md) | 档 A / B / C 的成员判据、判档顺序、6 条记录归档结果 | A 签字 → C 实现 `engine/placement.py` |
+| [8 维门槛规则表](rules/8维门槛规则表-待签字.md) | 4 硬 + 4 软门槛的判定细则、结论优先级、T1–T12 验收用例（实测 12/12 通过） | A 签字 → C 实现 `engine/gates.py` |
+| [机制库 v0](rules/机制库v0-待签字.md) | 9 条机制的化学理由、判别实验、成本、序贯决策树 | A 签字 → A3/A4 调用 |
+
+> 每份文件末尾都有 `【请你填】` 的待确认项（D1–D6）。签字前它们是 `DRAFT`，实现以实测结果为准。
+
+### 配套代码骨架
+
+| 目录 | 内容 | 状态 |
+|---|---|---|
+| `agents/` | A0–A5 六个 Agent 的提示词与平台配置 | 骨架，可直接粘进 SciencePal |
+| `engine/` | `schemas.py` / `gates.py` / `placement.py` / `run_demo.py` | **可运行**（`python engine/run_demo.py`） |
+| `skills/` | `chemcritic-comparability` 可导出 Skill | 骨架 |
+| `eval/` | gold set（seed）、FPR/FNR 脚本、baseline 方案 | 脚本可运行；gold set 待 B 独立标注 |
+| `data/` | 8 条 entry 级记录（`records.json`） | 已核验 |
 
 ---
 
