@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ChemCritic KB Document Metadata",
+  "description": "知识库中每个文档（文献 / 记录集 / 规则 / 词典 / 陷阱）的元数据。无此元数据的文档不得入库。",
+  "version": "0.1",
+  "type": "object",
+  "required": ["doc_id", "layer", "collection", "type", "title", "added_by", "added_at"],
+  "properties": {
+    "doc_id": {
+      "type": "string",
+      "description": "唯一标识，建议 {layer}-{slug}，例：L1-SM-001、L2-records、L3-gates"
+    },
+    "layer": {
+      "enum": ["L1_evidence", "L2_records", "L3_rules", "L4_aux"],
+      "description": "L1 原始 PDF / L2 entry 级记录 / L3 判定规则 / L4 词典与陷阱"
+    },
+    "collection": {
+      "enum": ["evidence", "rules", "sessions"],
+      "description": "平台侧 collection 名。evidence=文献与记录；rules=门槛与分档；sessions=用户实验数据（物理隔离）"
+    },
+    "type": {
+      "enum": ["paper", "record_set", "rule", "lexicon", "pitfall", "query_set"],
+      "description": "文档类型，决定检索时的用途"
+    },
+    "title": { "type": "string" },
+    "authors": { "type": "string" },
+    "year": { "type": "integer" },
+    "journal": { "type": "string" },
+    "doi": { "type": "string" },
+    "url": { "type": "string", "description": "可打开的官方入口（DOI 优先）" },
+    "license": {
+      "type": "string",
+      "description": "开放获取状态与许可，例：CC-BY / OA (MDPI) / 未确认"
+    },
+    "redistributable": {
+      "type": "boolean",
+      "description": "是否允许把全文上传到平台。false 时只上传 DOI 占位与官方链接"
+    },
+    "locator_style": {
+      "type": "string",
+      "description": "本文件采用的定位格式，例：Table II row + footnote / SI p.N Table M entry K"
+    },
+    "records": {
+      "type": "array",
+      "description": "该文献贡献的 entry 级记录 id 列表（L1 用）",
+      "items": { "type": "string" }
+    },
+    "evidence_grade": {
+      "enum": ["A_confirmed", "imported_unchecked", "candidate"],
+      "description": "A_confirmed=已回原文核对；imported_unchecked=导入未核（只能检索展示）；candidate=有未决歧义"
+    },
+    "evidence_note": {
+      "type": "string",
+      "description": "证据等级的来源说明，例：继承自角色 A 2026-10-18 核验记录"
+    },
+    "added_by": { "type": "string", "enum": ["A", "B", "C"] },
+    "added_at": { "type": "string", "format": "date" },
+    "verified_at": { "type": "string", "format": "date" },
+    "source_file": {
+      "type": "string",
+      "description": "本地文件路径（PDF 或 md），用于核对上传的是不是同一份"
+    },
+    "sha256": {
+      "type": "string",
+      "description": "文件指纹，防止重复上传或传错版本"
+    },
+    "notes": { "type": "string" }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "layer": { "const": "L1_evidence" } } },
+      "then": { "required": ["doi", "license", "redistributable", "locator_style"] }
+    },
+    {
+      "if": { "properties": { "layer": { "const": "L2_records" } } },
+      "then": { "required": ["evidence_grade", "locator_style"] }
+    }
+  ]
+}
