@@ -16,8 +16,12 @@ import os
 from dataclasses import replace
 from typing import Any, Dict, List, Optional
 
-import tier as tier_mod
-from schemas import Record
+try:  # 作为子包导入
+    from . import tier as tier_mod
+    from .schemas import Record
+except ImportError:  # 独立脚本运行
+    import tier as tier_mod  # type: ignore
+    from schemas import Record  # type: ignore
 
 OUTCOME_ORDER = ("isolated", "gc", "nmr", "conversion")
 

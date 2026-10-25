@@ -36,17 +36,19 @@
 | [8 维门槛规则表](rules/8维门槛规则表-待签字.md) | 4 硬 + 4 软门槛的判定细则、结论优先级、T1–T12 验收用例（实测 12/12 通过） | A 签字 → C 实现 `engine/gates.py` |
 | [机制库 v0](rules/机制库v0-待签字.md) | 9 条机制的化学理由、判别实验、成本、序贯决策树 | A 签字 → A3/A4 调用 |
 
-> 每份文件末尾都有 `【请你填】` 的待确认项（D1–D6）。签字前它们是 `DRAFT`，实现以实测结果为准。
+> 每份文件末尾的 D1–D6 已全部定稿（其中 D1–D5 由技术侧代签，A 可推翻）。实现与文档不一致时以测试为准。
 
 ### 配套代码骨架
 
 | 目录 | 内容 | 状态 |
 |---|---|---|
 | `agents/` | A0–A5 六个 Agent 的提示词与平台配置 | 骨架，可直接粘进 SciencePal |
-| `engine/` | `schemas.py` / `gates.py` / `placement.py` / `run_demo.py` | **可运行**（`python engine/run_demo.py`） |
+| `engine/` | `schemas` / `gates`（8 维门槛）/ `tier`（档位判定）/ `profiles` / `adapter`（接 C 的案例库）/ `placement` / `run_demo` | **可运行**：13 项测试通过，档位 8/8 一致 |
 | `skills/` | `chemcritic-comparability` 可导出 Skill | 骨架 |
 | `eval/` | gold set（seed）、FPR/FNR 脚本、baseline 方案 | 脚本可运行；gold set 待 B 独立标注 |
 | `data/` | 8 条 entry 级记录（`records.json`） | 已核验 |
+
+**与 C 的工程合并在进行中**，指令见 [给 C 的合并指令](integration/2026-10-25-给C-的合并指令.md)——以 `test_code/` 为主体，`engine/` 只提供判定内核。
 
 ---
 

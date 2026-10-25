@@ -71,7 +71,8 @@ EXPECTED = {
     "T9": ("SM-004.7", NEEDS_EVIDENCE, "outcome_type"),  # 参照物改为 SM-006 时见 T9b
     "T10": ("SM-004.7", NEEDS_EVIDENCE, "outcome_type"),
     "T11": ("SM-002", NEEDS_EVIDENCE, "outcome_type"),
-    "T12": ("SM-002", NEEDS_EVIDENCE, "assay"),
+    "T12": ("SM-002", COMPARABLE, None),
+    "T13": ("SM-006", NEEDS_EVIDENCE, "assay"),
 }
 
 
@@ -174,6 +175,10 @@ def test_matrix(records):
             subject = Record(record_id="USER-012", outcome_type="isolated", outcome_value=35,
                              substrate=USER.substrate, conditions=USER.conditions,
                              assay={"method": "reported as yield"}, tier="A")
+        elif case == "T13":
+            subject = Record(record_id="USER-013", outcome_type="gc", outcome_value=66,
+                             substrate=USER.substrate, conditions=USER.conditions,
+                             assay={"method": "GC", "internal_standard": None}, tier="A")
 
         v = gates.judge(subject, by_id[ref_id])
         ok = v.verdict == exp_verdict and (exp_dim is None or v.blocking_dimension == exp_dim)

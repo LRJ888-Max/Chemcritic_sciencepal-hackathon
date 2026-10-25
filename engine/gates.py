@@ -14,21 +14,38 @@ from __future__ import annotations
 
 from typing import Optional
 
-from schemas import (
-    ALLOWED_OUTCOME_TYPES,
-    BLOCKED,
-    COMPARABLE,
-    FAIL,
-    GATE_NAMES,
-    HARD_GATES,
-    NEEDS_EVIDENCE,
-    PASS,
-    SOFT_GATES,
-    UNKNOWN,
-    GateResult,
-    Record,
-    Verdict,
-)
+try:  # 作为子包（app/chemcritic/engine/）导入
+    from .schemas import (
+        ALLOWED_OUTCOME_TYPES,
+        BLOCKED,
+        COMPARABLE,
+        FAIL,
+        GATE_NAMES,
+        HARD_GATES,
+        NEEDS_EVIDENCE,
+        PASS,
+        SOFT_GATES,
+        UNKNOWN,
+        GateResult,
+        Record,
+        Verdict,
+    )
+except ImportError:  # 作为独立脚本运行（python engine/run_demo.py）
+    from schemas import (  # type: ignore
+        ALLOWED_OUTCOME_TYPES,
+        BLOCKED,
+        COMPARABLE,
+        FAIL,
+        GATE_NAMES,
+        HARD_GATES,
+        NEEDS_EVIDENCE,
+        PASS,
+        SOFT_GATES,
+        UNKNOWN,
+        GateResult,
+        Record,
+        Verdict,
+    )
 
 UNLOCK_MESSAGES = {
     1: "请确认底物结构一致（提供芳基卤与硼酸的 SMILES）",
@@ -121,15 +138,17 @@ def gate_assay(user: Record, ref: Record) -> GateResult:
 
 
 def _assay_check(record: Record, side: str) -> Optional[GateResult]:
-    """返回 None 表示本侧通过；否则返回阻断/待补。"""
+    """返回 None 表示本侧通过；否则返回阻断/待补。
+
+    `outcome_type == "isolated"` 本身即"分离后称重收率"的声明，维度 4 直接 PASS。
+    纯化方式是否记录/一致属维度 8（软）。若在此处再要求 assay 文本出现 isolated，
+    会把案例库里所有分离收率记录误杀成 NEEDS_EVIDENCE（C 的 assay 是自由文本）。
+    """
     t = record.outcome_type
     if t not in ALLOWED_OUTCOME_TYPES:
         return GateResult(4, UNKNOWN, f"{side} 口径未决，无法判定 assay")
     if t == "isolated":
-        method = str(record.assay.get("method") or "").lower()
-        if "isolated" in method or "分离" in method:
-            return None
-        return GateResult(4, UNKNOWN, f"{side} 未明确为分离收率")
+        return None
     if t in ("gc", "nmr"):
         std = record.assay.get("internal_standard")
         basis = record.assay.get("quantification_basis")
