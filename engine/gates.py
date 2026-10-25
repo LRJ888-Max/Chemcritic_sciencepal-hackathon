@@ -132,22 +132,74 @@ def gate_outcome_type(user: Record, ref: Record) -> GateResult:
 
 
 def gate_assay(user: Record, ref: Record) -> GateResult:
-    return _assay_check(user, "subject") or _assay_check(ref, "reference") or GateResult(
-        4, PASS, "口径与校准信息足以支撑比较"
+    """维度 4 · Assay 与校准（三层，任一不过即 UNKNOWN）。
+
+    ① **口径标记必须与原文措辞一致**——`outcome_type` 是抽取器给出的分类，
+       不是事实本身；它必须被 `label_raw`（原文逐字措辞）支持。
+    ② **证据等级必须达到可比较门槛**——只有 `A_confirmed`（已回原文核验）才允许
+       进入数值比较；`imported_unchecked` / `candidate` 一律不支撑比较。
+    ③ **定量方法与校准信息**足以支撑该口径（GC 要内标+基准，NMR 要内标）。
+
+    设计立场：**对文献侧苛刻，对用户侧宽松**。用户是现场记录者，
+    对其追问比阻断更有用；文献数值若未核验，一旦允许比较就是在制造假精确。
+    """
+    return (
+        _label_consistency(ref, "reference")
+        or _evidence_check(ref)
+        or _calibration_check(user, "subject")
+        or _calibration_check(ref, "reference")
+        or GateResult(4, PASS, "口径标记、证据等级与校准信息均足以支撑比较")
     )
 
 
-def _assay_check(record: Record, side: str) -> Optional[GateResult]:
-    """返回 None 表示本侧通过；否则返回阻断/待补。
+# 每个口径在原文措辞里必须能找到的支撑词
+_LABEL_HINTS = {
+    "isolated": ("isolated", "分离", "称重", "weighed"),
+    "gc": ("gc", "glc", "气相"),
+    "nmr": ("nmr", "核磁", "1h", "¹h"),
+    "conversion": ("conversion", "转化"),
+}
 
-    `outcome_type == "isolated"` 本身即"分离后称重收率"的声明，维度 4 直接 PASS。
-    纯化方式是否记录/一致属维度 8（软）。若在此处再要求 assay 文本出现 isolated，
-    会把案例库里所有分离收率记录误杀成 NEEDS_EVIDENCE（C 的 assay 是自由文本）。
-    """
+_REQUIRED_EVIDENCE = ("a_confirmed",)  # 小写比对，见 _evidence_check
+
+
+def _label_consistency(record: Record, side: str) -> Optional[GateResult]:
+    """口径标记必须被原文措辞支撑。标记与措辞矛盾时不得比较。"""
     t = record.outcome_type
     if t not in ALLOWED_OUTCOME_TYPES:
         return GateResult(4, UNKNOWN, f"{side} 口径未决，无法判定 assay")
+    raw = (record.label_raw or "").strip()
+    if not raw:
+        return GateResult(4, UNKNOWN, f"{side} 未记录原文措辞（label_raw），无法确认口径")
+    low = raw.lower()
+    if not any(h in low for h in _LABEL_HINTS[t]):
+        return GateResult(
+            4, UNKNOWN,
+            f"{side} 口径标记为 {t}，但原文措辞不支持：「{raw}」——需回原文确认",
+        )
+    return None
+
+
+def _evidence_check(record: Record) -> Optional[GateResult]:
+    """文献侧证据等级门槛：未回原文核验的记录不支撑数值比较。"""
+    grade = (record.evidence_grade or "imported_unchecked").strip()
+    if grade.lower() in _REQUIRED_EVIDENCE:
+        return None
+    if grade.lower() == "candidate":
+        return GateResult(4, UNKNOWN, "文献侧记录为候选状态（未完成原文核验），不支撑数值比较")
+    return GateResult(
+        4, UNKNOWN,
+        "文献侧记录尚未回原文核验（imported_unchecked），不支撑数值比较——需 A/B 抽检后升级",
+    )
+
+
+def _calibration_check(record: Record, side: str) -> Optional[GateResult]:
+    """定量方法是否足以支撑该口径。返回 None 表示通过。"""
+    t = record.outcome_type
+    if t not in ALLOWED_OUTCOME_TYPES:
+        return GateResult(4, UNKNOWN, f"{side} 口径未决")
     if t == "isolated":
+        # 纯化方式是否记录/一致 → 维度 8（软）。此处不再重复要求。
         return None
     if t in ("gc", "nmr"):
         std = record.assay.get("internal_standard")

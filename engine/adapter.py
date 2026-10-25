@@ -44,6 +44,21 @@ except ImportError:  # 独立脚本运行
 
 _LEAVING_GROUP_HINTS = ("bromo", "iodo", "chloro", "triflate", "tosylate", "溴", "碘", "氯")
 
+# 证据等级继承表：这批记录来自角色 A 的核验记录（docs/science/2026-10-18、2026-10-21，
+# A 对 SM-001–SM-005 标注证据等级 A），C 的导入器没有独立复核原文——这**不降低**证据等级，
+# 但也不等于 C 核过。
+# ⚠️ 需 A 逐条确认：若某条实际未回原文核过，把它从这里删掉，引擎会自动把它降为
+#    imported_unchecked，该条就只能用于检索、不支撑数值比较。
+A_CONFIRMED_IDS = {
+    "SM-001-GC",
+    "SM-001-isolated",
+    "SM-002-isolated",
+    "SM-003-NMR",
+    "SM-004-T1-E1",
+    "SM-004-T1-E7",
+    "SM-005-isolated",
+}
+
 
 def split_substrates(substrates: Optional[List[str]]) -> Tuple[Optional[str], Optional[str]]:
     """把 substrate 列表拆成 (芳基卤, 硼酸)。无法判定时返回 (None, None)。"""
@@ -90,8 +105,19 @@ def from_library(rec: Dict[str, Any], allow_profile_lookup: bool = True) -> Reco
     if not profile and allow_profile_lookup:
         profile = profiles_mod.profile_for(rec.get("record_id"))
 
+    # 原文措辞：优先 original_metric（C 的字段），退回 assay 文本。
+    # 这是维度 4 判定口径的唯一依据——没有它就只能判"需补证"。
+    label_raw = out.get("original_metric") or out.get("assay") or None
+
+    record_id = rec.get("record_id") or "UNKNOWN"
+    verified_locally = bool((rec.get("verification") or {}).get("original_source_verified_locally"))
+    if verified_locally or record_id in A_CONFIRMED_IDS:
+        evidence_grade = "A_confirmed"
+    else:
+        evidence_grade = "imported_unchecked"
+
     return Record(
-        record_id=rec.get("record_id") or "UNKNOWN",
+        record_id=record_id,
         outcome_type=(out.get("yield_type") or "unknown").lower(),
         outcome_value=out.get("value_pct"),
         assay=probe_assay,
@@ -121,6 +147,8 @@ def from_library(rec: Dict[str, Any], allow_profile_lookup: bool = True) -> Reco
         purification=None,
         verification=verification,
         catalytic_profile=profile or {},
+        label_raw=label_raw,
+        evidence_grade=evidence_grade,
     )
 
 

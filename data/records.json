@@ -45,7 +45,7 @@
         "concentration_m": null
       },
       "purification": null,
-      "evidence_grade": "A",
+      "evidence_grade": "A_confirmed",
       "verification": "verified",
       "catalytic_profile": {
         "catalyst_form": "molecular_complex",
@@ -53,7 +53,8 @@
         "support": "none",
         "medium": "organic",
         "activation_mode": "thermal"
-      }
+      },
+      "evidence_note": "证据等级继承自角色 A 的核验记录（docs/science/2026-10-1*/），非导入方独立复核"
     },
     {
       "record_id": "SM-001b",
@@ -93,7 +94,7 @@
         "concentration_m": null
       },
       "purification": null,
-      "evidence_grade": "A",
+      "evidence_grade": "A_confirmed",
       "verification": "verified",
       "catalytic_profile": {
         "catalyst_form": "molecular_complex",
@@ -101,7 +102,8 @@
         "support": "none",
         "medium": "organic",
         "activation_mode": "thermal"
-      }
+      },
+      "evidence_note": "证据等级继承自角色 A 的核验记录（docs/science/2026-10-1*/），非导入方独立复核"
     },
     {
       "record_id": "SM-002",
@@ -141,7 +143,7 @@
         "concentration_m": null
       },
       "purification": "short column chromatography",
-      "evidence_grade": "A",
+      "evidence_grade": "A_confirmed",
       "verification": "verified",
       "catalytic_profile": {
         "catalyst_form": "in_situ_salt",
@@ -149,7 +151,8 @@
         "support": "none",
         "medium": "aqueous",
         "activation_mode": "thermal"
-      }
+      },
+      "evidence_note": "证据等级继承自角色 A 的核验记录（docs/science/2026-10-1*/），非导入方独立复核"
     },
     {
       "record_id": "SM-003",
@@ -189,7 +192,7 @@
         "concentration_m": null
       },
       "purification": null,
-      "evidence_grade": "A",
+      "evidence_grade": "A_confirmed",
       "verification": "verified",
       "catalytic_profile": {
         "catalyst_form": "molecular_complex",
@@ -197,7 +200,8 @@
         "support": "none",
         "medium": "organic",
         "activation_mode": "thermal"
-      }
+      },
+      "evidence_note": "证据等级继承自角色 A 的核验记录（docs/science/2026-10-1*/），非导入方独立复核"
     },
     {
       "record_id": "SM-004.1",
@@ -237,7 +241,7 @@
         "concentration_m": null
       },
       "purification": null,
-      "evidence_grade": "A",
+      "evidence_grade": "A_confirmed",
       "verification": "verified_with_caveat",
       "catalytic_profile": {
         "catalyst_form": "supported",
@@ -245,7 +249,8 @@
         "support": "solid_support",
         "medium": "organic",
         "activation_mode": "thermal"
-      }
+      },
+      "evidence_note": "证据等级继承自角色 A 的核验记录（docs/science/2026-10-1*/），非导入方独立复核"
     },
     {
       "record_id": "SM-004.7",
@@ -285,7 +290,7 @@
         "concentration_m": null
       },
       "purification": null,
-      "evidence_grade": "A",
+      "evidence_grade": "A_confirmed",
       "verification": "verified_with_caveat",
       "catalytic_profile": {
         "catalyst_form": "supported",
@@ -293,7 +298,8 @@
         "support": "solid_support",
         "medium": "organic",
         "activation_mode": "thermal"
-      }
+      },
+      "evidence_note": "证据等级继承自角色 A 的核验记录（docs/science/2026-10-1*/），非导入方独立复核"
     },
     {
       "record_id": "SM-005",
@@ -333,7 +339,7 @@
         "concentration_m": null
       },
       "purification": "column chromatography",
-      "evidence_grade": "A",
+      "evidence_grade": "A_confirmed",
       "verification": "verified",
       "catalytic_profile": {
         "catalyst_form": "nanoparticle",
@@ -342,7 +348,8 @@
         "medium": "aqueous",
         "activation_mode": "thermal"
       },
-      "tier_note": "borderline {B, C}：物理形态命中 R3（纳米颗粒）→ C；操作谱系命中 R6（无配体水相）→ B。主判 C。"
+      "tier_note": "borderline {B, C}：物理形态命中 R3（纳米颗粒）→ C；操作谱系命中 R6（无配体水相）→ B。主判 C。",
+      "evidence_note": "证据等级继承自角色 A 的核验记录（docs/science/2026-10-1*/），非导入方独立复核"
     },
     {
       "record_id": "SM-006",
@@ -382,7 +389,7 @@
         "concentration_m": null
       },
       "purification": null,
-      "evidence_grade": "A",
+      "evidence_grade": "candidate",
       "verification": "candidate",
       "catalytic_profile": {
         "catalyst_form": "molecular_complex",
@@ -390,7 +397,8 @@
         "support": "none",
         "medium": "aqueous",
         "activation_mode": "thermal"
-      }
+      },
+      "evidence_note": "候选状态：GC 校准未注明，未完成原文核验"
     }
   ]
 }

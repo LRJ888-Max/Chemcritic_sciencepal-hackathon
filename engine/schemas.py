@@ -55,6 +55,8 @@ class Record:
     verification: str = "unverified"
     catalytic_profile: Dict[str, Any] = field(default_factory=dict)
     tier_meta: Dict[str, Any] = field(default_factory=dict)
+    label_raw: Optional[str] = None       # 原文措辞，逐字照抄（口径判定的唯一依据）
+    evidence_grade: str = "imported_unchecked"  # A_confirmed | imported_unchecked | candidate
 
     @classmethod
     def from_dict(cls, d: Dict[str, Any]) -> "Record":
@@ -72,6 +74,8 @@ class Record:
             purification=d.get("purification"),
             verification=d.get("verification", "unverified"),
             catalytic_profile=d.get("catalytic_profile") or {},
+            label_raw=outcome.get("label_raw"),
+            evidence_grade=d.get("evidence_grade") or "imported_unchecked",
         )
 
     @property

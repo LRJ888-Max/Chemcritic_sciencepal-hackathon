@@ -17,6 +17,11 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
+try:  # 作为子包被 app/chemcritic/run_demo 调用时
+    from dataclasses import replace as replacement
+except ImportError:  # pragma: no cover
+    replacement = None
+
 import gates  # noqa: E402
 import placement as placement_mod  # noqa: E402
 from schemas import BLOCKED, COMPARABLE, NEEDS_EVIDENCE, Record  # noqa: E402
@@ -73,6 +78,8 @@ EXPECTED = {
     "T11": ("SM-002", NEEDS_EVIDENCE, "outcome_type"),
     "T12": ("SM-002", COMPARABLE, None),
     "T13": ("SM-006", NEEDS_EVIDENCE, "assay"),
+    "T14": ("SM-001b", NEEDS_EVIDENCE, "assay"),
+    "T15": ("SM-001b", NEEDS_EVIDENCE, "assay"),
 }
 
 
@@ -179,8 +186,21 @@ def test_matrix(records):
             subject = Record(record_id="USER-013", outcome_type="gc", outcome_value=66,
                              substrate=USER.substrate, conditions=USER.conditions,
                              assay={"method": "GC", "internal_standard": None}, tier="A")
+        elif case == "T14":
+            # 文献侧：口径标记写 isolated，但原文措辞只写 "Yield (%)" → 标记与原文矛盾
+            subject = USER
+        elif case == "T15":
+            # 文献侧：同口径同措辞，但证据等级未达标（导入未核验）→ 不支撑数值比较
+            subject = USER
 
-        v = gates.judge(subject, by_id[ref_id])
+        ref_obj = by_id[ref_id]
+        if case == "T14":
+            ref_obj = replacement(by_id["SM-001b"], record_id="REF-014", label_raw="Yield (%)")
+        elif case == "T15":
+            ref_obj = replacement(by_id["SM-001b"], record_id="REF-015",
+                                  evidence_grade="imported_unchecked")
+
+        v = gates.judge(subject, ref_obj)
         ok = v.verdict == exp_verdict and (exp_dim is None or v.blocking_dimension == exp_dim)
         passed += ok
         failed += not ok
