@@ -53,6 +53,8 @@ class Record:
     locator: Optional[str] = None
     purification: Optional[str] = None
     verification: str = "unverified"
+    catalytic_profile: Dict[str, Any] = field(default_factory=dict)
+    tier_meta: Dict[str, Any] = field(default_factory=dict)
 
     @classmethod
     def from_dict(cls, d: Dict[str, Any]) -> "Record":
@@ -69,6 +71,7 @@ class Record:
             locator=d.get("locator"),
             purification=d.get("purification"),
             verification=d.get("verification", "unverified"),
+            catalytic_profile=d.get("catalytic_profile") or {},
         )
 
     @property

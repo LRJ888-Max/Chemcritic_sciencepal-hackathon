@@ -17,7 +17,7 @@
 | SM-002 | Liu et al., *Org. Biomol. Chem.* 2011, 9, 1054 | **100%** | 分离 | B | ✅ RSC 官方 SI |
 | SM-003 | Chang et al., *Dalton Trans.* 2015, 44, 17129 | 95% | ¹H NMR | A | ✅ RSC 官方 SI |
 | SM-004 | *Molecules* 2018, 23, 2435 | 35.0 / 91.9 | GC（十六烷内标） | C | ✅ 开放全文 |
-| SM-005 | Dewan et al., *ACS Omega* 2018, 3, 5327 | 95% | 分离 | B | ✅ 开放全文 |
+| SM-005 | Dewan et al., *ACS Omega* 2018, 3, 5327 | 95% | 分离 | C（边界 B/C） | ✅ 开放全文 |
 | SM-006 | Fiebor et al., *Beilstein J. Org. Chem.* 2018, 14, 1859 | 92% | GC（校准未注明） | C | ⚠️ 候选（校准待确认） |
 
 ### 关键判定素材（来自上述记录）

@@ -14,17 +14,46 @@
       "citation": "Miyaura, Yanagi & Suzuki, Synth. Commun. 1981, 11, 513",
       "doi": "10.1080/00397918108063618",
       "locator": "Table II, p-MeOPhBr row, footnote",
-      "outcome": {"value": 66, "unit": "%", "outcome_type": "gc", "label_raw": "GLC yield", "note": "以卤代芳烃为基准"},
-      "assay": {"method": "GLC", "internal_standard": null, "quantification_basis": "aryl halide"},
+      "outcome": {
+        "value": 66,
+        "unit": "%",
+        "outcome_type": "gc",
+        "label_raw": "GLC yield",
+        "note": "以卤代芳烃为基准"
+      },
+      "assay": {
+        "method": "GLC",
+        "internal_standard": null,
+        "quantification_basis": "aryl halide"
+      },
       "conditions": {
-        "catalyst": "Pd(PPh3)4", "catalyst_mol_pct": 3.0, "ligand": null, "ligand_mol_pct": null,
-        "base": "Na2CO3", "base_eq": 2.0, "solvent": "benzene", "temp_c": 80, "time_h": 6,
-        "atmosphere": "N2", "scale_mmol": 1.0, "equivalents": {"aryl_halide": 1.0, "boronic_acid": 1.1},
+        "catalyst": "Pd(PPh3)4",
+        "catalyst_mol_pct": 3.0,
+        "ligand": null,
+        "ligand_mol_pct": null,
+        "base": "Na2CO3",
+        "base_eq": 2.0,
+        "solvent": "benzene",
+        "temp_c": 80,
+        "time_h": 6,
+        "atmosphere": "N2",
+        "scale_mmol": 1.0,
+        "equivalents": {
+          "aryl_halide": 1.0,
+          "boronic_acid": 1.1
+        },
         "concentration_m": null
       },
       "purification": null,
       "evidence_grade": "A",
-      "verification": "verified"
+      "verification": "verified",
+      "catalytic_profile": {
+        "catalyst_form": "molecular_complex",
+        "ligand_family": "phosphine",
+        "support": "none",
+        "medium": "organic",
+        "activation_mode": "thermal"
+      }
     },
     {
       "record_id": "SM-001b",
@@ -33,17 +62,46 @@
       "citation": "Miyaura, Yanagi & Suzuki, Synth. Commun. 1981, 11, 513",
       "doi": "10.1080/00397918108063618",
       "locator": "Table II, p-MeOPhBr row, value in parentheses",
-      "outcome": {"value": 40, "unit": "%", "outcome_type": "isolated", "label_raw": "(40) isolated yield", "note": "括号内数值；纯化方式未在表注说明"},
-      "assay": {"method": "isolated (weighed)", "internal_standard": null, "quantification_basis": "isolated product"},
+      "outcome": {
+        "value": 40,
+        "unit": "%",
+        "outcome_type": "isolated",
+        "label_raw": "(40) isolated yield",
+        "note": "括号内数值；纯化方式未在表注说明"
+      },
+      "assay": {
+        "method": "isolated (weighed)",
+        "internal_standard": null,
+        "quantification_basis": "isolated product"
+      },
       "conditions": {
-        "catalyst": "Pd(PPh3)4", "catalyst_mol_pct": 3.0, "ligand": null, "ligand_mol_pct": null,
-        "base": "Na2CO3", "base_eq": 2.0, "solvent": "benzene", "temp_c": 80, "time_h": 6,
-        "atmosphere": "N2", "scale_mmol": 1.0, "equivalents": {"aryl_halide": 1.0, "boronic_acid": 1.1},
+        "catalyst": "Pd(PPh3)4",
+        "catalyst_mol_pct": 3.0,
+        "ligand": null,
+        "ligand_mol_pct": null,
+        "base": "Na2CO3",
+        "base_eq": 2.0,
+        "solvent": "benzene",
+        "temp_c": 80,
+        "time_h": 6,
+        "atmosphere": "N2",
+        "scale_mmol": 1.0,
+        "equivalents": {
+          "aryl_halide": 1.0,
+          "boronic_acid": 1.1
+        },
         "concentration_m": null
       },
       "purification": null,
       "evidence_grade": "A",
-      "verification": "verified"
+      "verification": "verified",
+      "catalytic_profile": {
+        "catalyst_form": "molecular_complex",
+        "ligand_family": "phosphine",
+        "support": "none",
+        "medium": "organic",
+        "activation_mode": "thermal"
+      }
     },
     {
       "record_id": "SM-002",
@@ -52,17 +110,46 @@
       "citation": "Liu et al., Org. Biomol. Chem. 2011, 9, 1054",
       "doi": "10.1039/C0OB00524J",
       "locator": "SI p.1 general procedure; p.2 Table 1 entry 1 + footnote",
-      "outcome": {"value": 100, "unit": "%", "outcome_type": "isolated", "label_raw": "isolated yield", "note": "分离收率，不等于纯度"},
-      "assay": {"method": "isolated (weighed)", "internal_standard": null, "quantification_basis": "isolated product"},
+      "outcome": {
+        "value": 100,
+        "unit": "%",
+        "outcome_type": "isolated",
+        "label_raw": "isolated yield",
+        "note": "分离收率，不等于纯度"
+      },
+      "assay": {
+        "method": "isolated (weighed)",
+        "internal_standard": null,
+        "quantification_basis": "isolated product"
+      },
       "conditions": {
-        "catalyst": "PdCl2", "catalyst_mol_pct": 0.5, "ligand": null, "ligand_mol_pct": null,
-        "base": "K2CO3", "base_eq": 2.0, "solvent": "50% EtOH/H2O", "temp_c": 25, "time_h": 0.5,
-        "atmosphere": "air", "scale_mmol": 0.5, "equivalents": {"aryl_halide": 1.0, "boronic_acid": 1.5},
+        "catalyst": "PdCl2",
+        "catalyst_mol_pct": 0.5,
+        "ligand": null,
+        "ligand_mol_pct": null,
+        "base": "K2CO3",
+        "base_eq": 2.0,
+        "solvent": "50% EtOH/H2O",
+        "temp_c": 25,
+        "time_h": 0.5,
+        "atmosphere": "air",
+        "scale_mmol": 0.5,
+        "equivalents": {
+          "aryl_halide": 1.0,
+          "boronic_acid": 1.5
+        },
         "concentration_m": null
       },
       "purification": "short column chromatography",
       "evidence_grade": "A",
-      "verification": "verified"
+      "verification": "verified",
+      "catalytic_profile": {
+        "catalyst_form": "in_situ_salt",
+        "ligand_family": "none",
+        "support": "none",
+        "medium": "aqueous",
+        "activation_mode": "thermal"
+      }
     },
     {
       "record_id": "SM-003",
@@ -71,17 +158,46 @@
       "citation": "Chang et al., Dalton Trans. 2015, 44, 17129",
       "doi": "10.1039/C5DT02611C",
       "locator": "SI p.3 Table S1 entry 2 + footnote",
-      "outcome": {"value": 95, "unit": "%", "outcome_type": "nmr", "label_raw": "1H NMR yield", "note": "两次实验平均"},
-      "assay": {"method": "1H NMR", "internal_standard": null, "quantification_basis": "average of two runs"},
+      "outcome": {
+        "value": 95,
+        "unit": "%",
+        "outcome_type": "nmr",
+        "label_raw": "1H NMR yield",
+        "note": "两次实验平均"
+      },
+      "assay": {
+        "method": "1H NMR",
+        "internal_standard": null,
+        "quantification_basis": "average of two runs"
+      },
       "conditions": {
-        "catalyst": "Pd(OAc)2", "catalyst_mol_pct": 1.0, "ligand": "SPO (phosphinous acid) 5h", "ligand_mol_pct": 2.0,
-        "base": "NaOtBu", "base_eq": 3.0, "solvent": "THF", "temp_c": 60, "time_h": 1,
-        "atmosphere": "N2", "scale_mmol": 1.0, "equivalents": {"aryl_halide": 1.0, "boronic_acid": 1.5},
+        "catalyst": "Pd(OAc)2",
+        "catalyst_mol_pct": 1.0,
+        "ligand": "SPO (phosphinous acid) 5h",
+        "ligand_mol_pct": 2.0,
+        "base": "NaOtBu",
+        "base_eq": 3.0,
+        "solvent": "THF",
+        "temp_c": 60,
+        "time_h": 1,
+        "atmosphere": "N2",
+        "scale_mmol": 1.0,
+        "equivalents": {
+          "aryl_halide": 1.0,
+          "boronic_acid": 1.5
+        },
         "concentration_m": null
       },
       "purification": null,
       "evidence_grade": "A",
-      "verification": "verified"
+      "verification": "verified",
+      "catalytic_profile": {
+        "catalyst_form": "molecular_complex",
+        "ligand_family": "phosphine",
+        "support": "none",
+        "medium": "organic",
+        "activation_mode": "thermal"
+      }
     },
     {
       "record_id": "SM-004.1",
@@ -90,17 +206,46 @@
       "citation": "Molecules 2018, 23, 2435",
       "doi": "10.3390/molecules23102435",
       "locator": "Table 1 entry 1 + footnotes a/c, PDF p.4",
-      "outcome": {"value": 35.0, "unit": "%", "outcome_type": "unknown", "label_raw": "Yield (%) — 脚注: total conversion determined from the internal standard yield ... based on GC", "note": "表列名与脚注冲突，口径未决；不得当作确定 GC 收率"},
-      "assay": {"method": "GC", "internal_standard": "hexadecane", "quantification_basis": "aryl halide"},
+      "outcome": {
+        "value": 35.0,
+        "unit": "%",
+        "outcome_type": "unknown",
+        "label_raw": "Yield (%) — 脚注: total conversion determined from the internal standard yield ... based on GC",
+        "note": "表列名与脚注冲突，口径未决；不得当作确定 GC 收率"
+      },
+      "assay": {
+        "method": "GC",
+        "internal_standard": "hexadecane",
+        "quantification_basis": "aryl halide"
+      },
       "conditions": {
-        "catalyst": "Pd-bpydc-La (1)", "catalyst_mol_pct": 0.5, "ligand": null, "ligand_mol_pct": null,
-        "base": "NaOtBu", "base_eq": 1.0, "solvent": "MeOH", "temp_c": 30, "time_h": 8,
-        "atmosphere": "air", "scale_mmol": 0.5, "equivalents": {"aryl_halide": 1.0, "boronic_acid": 1.2},
+        "catalyst": "Pd-bpydc-La (1)",
+        "catalyst_mol_pct": 0.5,
+        "ligand": null,
+        "ligand_mol_pct": null,
+        "base": "NaOtBu",
+        "base_eq": 1.0,
+        "solvent": "MeOH",
+        "temp_c": 30,
+        "time_h": 8,
+        "atmosphere": "air",
+        "scale_mmol": 0.5,
+        "equivalents": {
+          "aryl_halide": 1.0,
+          "boronic_acid": 1.2
+        },
         "concentration_m": null
       },
       "purification": null,
       "evidence_grade": "A",
-      "verification": "verified_with_caveat"
+      "verification": "verified_with_caveat",
+      "catalytic_profile": {
+        "catalyst_form": "supported",
+        "ligand_family": "none",
+        "support": "solid_support",
+        "medium": "organic",
+        "activation_mode": "thermal"
+      }
     },
     {
       "record_id": "SM-004.7",
@@ -109,36 +254,95 @@
       "citation": "Molecules 2018, 23, 2435",
       "doi": "10.3390/molecules23102435",
       "locator": "Table 1 entry 7 + footnotes a/c, PDF p.4",
-      "outcome": {"value": 91.9, "unit": "%", "outcome_type": "unknown", "label_raw": "Yield (%) — 脚注: total conversion determined from the internal standard yield ... based on GC", "note": "同篇不同条目；催化剂/温度/时间同时不同，不得与 entry 1 视为独立来源"},
-      "assay": {"method": "GC", "internal_standard": "hexadecane", "quantification_basis": "aryl halide"},
+      "outcome": {
+        "value": 91.9,
+        "unit": "%",
+        "outcome_type": "unknown",
+        "label_raw": "Yield (%) — 脚注: total conversion determined from the internal standard yield ... based on GC",
+        "note": "同篇不同条目；催化剂/温度/时间同时不同，不得与 entry 1 视为独立来源"
+      },
+      "assay": {
+        "method": "GC",
+        "internal_standard": "hexadecane",
+        "quantification_basis": "aryl halide"
+      },
       "conditions": {
-        "catalyst": "Pd-bpydc-Ce (2)", "catalyst_mol_pct": 0.5, "ligand": null, "ligand_mol_pct": null,
-        "base": "NaOtBu", "base_eq": 1.0, "solvent": "MeOH", "temp_c": 60, "time_h": 4,
-        "atmosphere": "air", "scale_mmol": 0.5, "equivalents": {"aryl_halide": 1.0, "boronic_acid": 1.2},
+        "catalyst": "Pd-bpydc-Ce (2)",
+        "catalyst_mol_pct": 0.5,
+        "ligand": null,
+        "ligand_mol_pct": null,
+        "base": "NaOtBu",
+        "base_eq": 1.0,
+        "solvent": "MeOH",
+        "temp_c": 60,
+        "time_h": 4,
+        "atmosphere": "air",
+        "scale_mmol": 0.5,
+        "equivalents": {
+          "aryl_halide": 1.0,
+          "boronic_acid": 1.2
+        },
         "concentration_m": null
       },
       "purification": null,
       "evidence_grade": "A",
-      "verification": "verified_with_caveat"
+      "verification": "verified_with_caveat",
+      "catalytic_profile": {
+        "catalyst_form": "supported",
+        "ligand_family": "none",
+        "support": "solid_support",
+        "medium": "organic",
+        "activation_mode": "thermal"
+      }
     },
     {
       "record_id": "SM-005",
       "source_id": "SM-005",
-      "tier": "B",
+      "tier": "C",
       "citation": "Dewan et al., ACS Omega 2018, 3, 5327",
       "doi": "10.1021/acsomega.8b00039",
       "locator": "Table 1 entry 1 + table footnote; Experimental typical procedure",
-      "outcome": {"value": 95, "unit": "%", "outcome_type": "isolated", "label_raw": "isolated yield", "note": "产物以 1H/13C NMR 鉴定"},
-      "assay": {"method": "isolated (weighed)", "internal_standard": null, "quantification_basis": "isolated product"},
+      "outcome": {
+        "value": 95,
+        "unit": "%",
+        "outcome_type": "isolated",
+        "label_raw": "isolated yield",
+        "note": "产物以 1H/13C NMR 鉴定"
+      },
+      "assay": {
+        "method": "isolated (weighed)",
+        "internal_standard": null,
+        "quantification_basis": "isolated product"
+      },
       "conditions": {
-        "catalyst": "Pd NPs (papaya peel, biosynthesized)", "catalyst_mol_pct": 0.2, "ligand": null, "ligand_mol_pct": null,
-        "base": "K2CO3", "base_eq": 3.0, "solvent": "H2O", "temp_c": 25, "time_h": 2,
-        "atmosphere": "air", "scale_mmol": 0.5, "equivalents": {"aryl_halide": 1.0, "boronic_acid": 1.2},
+        "catalyst": "Pd NPs (papaya peel, biosynthesized)",
+        "catalyst_mol_pct": 0.2,
+        "ligand": null,
+        "ligand_mol_pct": null,
+        "base": "K2CO3",
+        "base_eq": 3.0,
+        "solvent": "H2O",
+        "temp_c": 25,
+        "time_h": 2,
+        "atmosphere": "air",
+        "scale_mmol": 0.5,
+        "equivalents": {
+          "aryl_halide": 1.0,
+          "boronic_acid": 1.2
+        },
         "concentration_m": null
       },
       "purification": "column chromatography",
       "evidence_grade": "A",
-      "verification": "verified"
+      "verification": "verified",
+      "catalytic_profile": {
+        "catalyst_form": "nanoparticle",
+        "ligand_family": "none",
+        "support": "none",
+        "medium": "aqueous",
+        "activation_mode": "thermal"
+      },
+      "tier_note": "borderline {B, C}：物理形态命中 R3（纳米颗粒）→ C；操作谱系命中 R6（无配体水相）→ B。主判 C。"
     },
     {
       "record_id": "SM-006",
@@ -147,17 +351,46 @@
       "citation": "Fiebor et al., Beilstein J. Org. Chem. 2018, 14, 1859",
       "doi": "10.3762/bjoc.14.160",
       "locator": "Table 2 entry 1 + footnote a",
-      "outcome": {"value": 92, "unit": "%", "outcome_type": "gc", "label_raw": "GC yield", "note": "内标与校准细节未见于该表脚注"},
-      "assay": {"method": "GC", "internal_standard": null, "quantification_basis": null},
+      "outcome": {
+        "value": 92,
+        "unit": "%",
+        "outcome_type": "gc",
+        "label_raw": "GC yield",
+        "note": "内标与校准细节未见于该表脚注"
+      },
+      "assay": {
+        "method": "GC",
+        "internal_standard": null,
+        "quantification_basis": null
+      },
       "conditions": {
-        "catalyst": "SNS-Pd pincer 17a", "catalyst_mol_pct": 1.0, "ligand": null, "ligand_mol_pct": null,
-        "base": "K3PO4", "base_eq": 2.0, "solvent": "H2O", "temp_c": 140, "time_h": 4,
-        "atmosphere": "air", "scale_mmol": 0.5, "equivalents": {"aryl_halide": 1.0, "boronic_acid": 1.0},
+        "catalyst": "SNS-Pd pincer 17a",
+        "catalyst_mol_pct": 1.0,
+        "ligand": null,
+        "ligand_mol_pct": null,
+        "base": "K3PO4",
+        "base_eq": 2.0,
+        "solvent": "H2O",
+        "temp_c": 140,
+        "time_h": 4,
+        "atmosphere": "air",
+        "scale_mmol": 0.5,
+        "equivalents": {
+          "aryl_halide": 1.0,
+          "boronic_acid": 1.0
+        },
         "concentration_m": null
       },
       "purification": null,
       "evidence_grade": "A",
-      "verification": "candidate"
+      "verification": "candidate",
+      "catalytic_profile": {
+        "catalyst_form": "molecular_complex",
+        "ligand_family": "non_phosphine",
+        "support": "none",
+        "medium": "aqueous",
+        "activation_mode": "thermal"
+      }
     }
   ]
 }

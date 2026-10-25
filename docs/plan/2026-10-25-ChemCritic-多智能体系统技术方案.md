@@ -194,10 +194,11 @@
 | 档 | 催化体系族 | 首批对应记录 |
 |---|---|---|
 | A 经典膦配体 Pd | Pd(PPh₃)₄ / Pd(OAc)₂+膦配体、碳酸盐或 NaOtBu、有机溶剂 | SM-001（40% isolated）、SM-003（95% NMR） |
-| B 无配体/水相 Pd | PdCl₂ 无配体水相、生物法 Pd NPs | SM-002（100% isolated）、SM-005（95% isolated） |
-| C 负载/多相 Pd | Pd-bpydc-Ln MOF、pincer、机械化学 | SM-004（GC）、SM-006（GC） |
+| B 无配体/水相 Pd | PdCl₂ 无配体水相（含原位生成 Pd(0)） | SM-002（100% isolated） |
+| C 负载 / 纳米颗粒 / 非膦配体 | MOF 固载、预先制备的 Pd NPs、pincer/NHC、机械化学 | SM-004（unknown）、SM-005（95% isolated，边界 B/C）、SM-006（GC） |
 
 > 分档的意义：**"异常"只能在档内定义**。跨档比较只能作为"迁移目标"，不能作为"正常区间"。
+> 判档由 `engine/tier.py` 从受控词表字段确定性计算，边界情形自动标记 `borderline` 并做双档敏感性分析。完整规则见 [`docs/rules/分档定义-待签字.md`](../rules/分档定义-待签字.md)。
 
 ---
 

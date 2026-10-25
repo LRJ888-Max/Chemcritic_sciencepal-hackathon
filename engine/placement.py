@@ -3,9 +3,9 @@
 职责边界：
 - 只做"分组"与"定位"，不做"好坏判断"。
 - "异常"只在档内定义；跨档只输出迁移目标，不输出正常区间。
+- 档位由 `tier.tier_of()` 从受控词表字段确定性计算，**不读人工标注**（标注仅用于交叉校验）。
 
-TODO（待化学签字后确认）：
-- 档位判定目前读取 records.json 的 tier 字段；上线后应由 `tier_of()` 按规则动态判定。
+TODO：
 - 覆盖率统计需扩展到 40–50 条 entry 后才有说服力。
 """
 
@@ -13,8 +13,10 @@ from __future__ import annotations
 
 import json
 import os
+from dataclasses import replace
 from typing import Any, Dict, List, Optional
 
+import tier as tier_mod
 from schemas import Record
 
 OUTCOME_ORDER = ("isolated", "gc", "nmr", "conversion")
@@ -30,7 +32,15 @@ def load_records(path: Optional[str] = None) -> List[Record]:
     for raw in payload["records"]:
         if not raw.get("substrate"):
             raw["substrate"] = subject
-        records.append(Record.from_dict(raw))
+        rec = Record.from_dict(raw)
+        annotated = rec.tier
+        if rec.catalytic_profile:
+            meta = tier_mod.tier_of(rec.catalytic_profile)
+            meta["annotated"] = annotated
+            rec.tier_meta = meta
+            if meta["tier"]:
+                rec.tier = meta["tier"]
+        records.append(rec)
     return records
 
 
@@ -111,4 +121,28 @@ def placement(user: Record, records: List[Record]) -> Dict[str, Any]:
         "reference_values": sorted(values),
         "delta_vs_min": round(user.outcome_value - min(values), 1),
         "delta_vs_max": round(user.outcome_value - max(values), 1),
+    }
+
+
+def sensitivity(user: Record, records: List[Record], tiers: List[str]) -> Dict[str, Any]:
+    """档归属敏感时的双档（多档）敏感性分析。
+
+    档不确定只影响"档内定位"，不影响硬门槛，因此不该让流程卡住：
+    - 各档结论一致 → 结论稳健，直接输出
+    - 各档结论冲突 → 输出"档归属敏感"，并给出需要补录的可观察事实
+    """
+    results = {t: placement(replace(user, tier=t), records) for t in tiers}
+    signatures = {
+        t: (
+            r.get("status"),
+            tuple(r.get("reference_values") or []),
+        )
+        for t, r in results.items()
+    }
+    consistent = len(set(signatures.values())) == 1
+    return {
+        "tiers": tiers,
+        "consistent": consistent,
+        "per_tier": results,
+        "action": None if consistent else "档归属敏感：需补录可观察的化学事实（催化剂物理形态），或分别按各档解读",
     }

@@ -49,6 +49,13 @@ USER = Record(
     assay={"method": "isolated (weighed)", "internal_standard": None, "quantification_basis": "isolated product"},
     purification=None,
     verification="user_report",
+    catalytic_profile={
+        "catalyst_form": "molecular_complex",
+        "ligand_family": "phosphine",
+        "support": "none",
+        "medium": "organic",
+        "activation_mode": "thermal",
+    },
 )
 
 # 规则表 §4 的验收矩阵：T编号 -> (对照记录, 期望结论, 期望阻断维度)
@@ -117,8 +124,35 @@ def screen_three(records):
     print()
     print("  结论（示例文案，需 A 签字后使用）：")
     print("    「你的 35% 不属于异常。档 A（经典膦配体体系）在此底物上的文献分离收率是 40%；")
-    print("      95%–100% 来自档 B（无配体水相/纳米颗粒），换条件调不到，需要换体系。」")
+    print("      100% 来自档 B（无配体水相），95% 来自档 C（生物法 Pd 纳米颗粒）——换条件调不到，需要换体系。」")
+
+    meta = USER.tier_meta
+    if meta.get("borderline"):
+        sens = placement_mod.sensitivity(USER, records, meta["borderline"])
+        print("\n  档归属敏感（%s）：" % "/".join(meta["borderline"]))
+        for t, res in sens["per_tier"].items():
+            print(f"    按档 {t} → 参照 {res.get('reference_values')}  status={res.get('status')}")
+        print(f"    结论稳健性：{'一致' if sens['consistent'] else '不一致，需补录可观察事实'}")
     return result
+
+
+def screen_four(records):
+    _hr("屏 4 · 档位判定审计（字段 → 规则 → 结果，全程可复现）")
+    print("  档位由 engine/tier.py 从受控词表字段计算，不读人工标注；标注仅用于交叉校验。\n")
+    ok = 0
+    for r in records:
+        meta = r.tier_meta or {}
+        rules = ", ".join(f"{x['rule_id']}" for x in meta.get("rules", [])) or "-"
+        borderline = "/".join(meta.get("borderline", [])) or "-"
+        annotated = meta.get("annotated") or "-"
+        computed = meta.get("tier") or "-"
+        same = "OK" if annotated == computed else "MISMATCH"
+        ok += annotated == computed
+        print(f"  {r.record_id:<10} tier={computed:<3} (标注 {annotated:<3}) {same:<8} "
+              f"rules={rules:<8} borderline={borderline:<6} conf={meta.get('confidence', '-'):<7} "
+              f"form={r.catalytic_profile.get('catalyst_form', '-'):<17} ligand={r.catalytic_profile.get('ligand_family', '-')}")
+    print(f"\n  计算值与标注一致：{ok}/{len(records)}")
+    return ok == len(records)
 
 
 def test_matrix(records):
@@ -168,8 +202,9 @@ def main() -> int:
     screen_one(records)
     screen_two(records)
     screen_three(records)
+    tier_ok = screen_four(records)
     ok = test_matrix(records)
-    return 0 if ok else 1
+    return 0 if (ok and tier_ok) else 1
 
 
 if __name__ == "__main__":
