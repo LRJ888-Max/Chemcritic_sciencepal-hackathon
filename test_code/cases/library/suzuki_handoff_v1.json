@@ -1,0 +1,947 @@
+{
+  "schema_version": "chemcritic.precedents.v0.1",
+  "metadata": {
+    "source_file": "ChemCritic-Suzuki-首批案例与交接.xlsx",
+    "source_sha256": "fa3bb44d8be954ad12fb04f58eecd859867fa1b45a590a47a688161deaea81f8",
+    "record_count": 7,
+    "independent_publication_count": 5,
+    "retrieval_mode": "local_library_exact_pair",
+    "numeric_comparison_enabled": false,
+    "note": "Local team-curated records, not a live SciencePal search or independent chemistry validation."
+  },
+  "records": [
+    {
+      "record_id": "SM-001-GC",
+      "source_id": "SM-001",
+      "doi": "10.1080/00397918108063618",
+      "title": "Miyaura, Yanagi & Suzuki, Synth. Commun. 1981, 11(7), 513–519. DOI: 10.1080/00397918108063618",
+      "url": "https://doi.org/10.1080/00397918108063618",
+      "locator": "原文 Table II，p-MeOPhBr 行；表注/一般条件说明",
+      "source_links": [
+        "https://doi.org/10.1080/00397918108063618",
+        "https://eprints.lib.hokudai.ac.jp/repo/huscap/all/44302/syntheticcommunications.pdf"
+      ],
+      "provenance": "team_workbook_report_unverified_locally",
+      "evidence_level_claimed": "A：原始论文全文及表行可定位",
+      "verification": {
+        "original_source_verified_locally": false,
+        "tool_log_verified": false
+      },
+      "reaction": {
+        "substrates": [
+          "4-bromoanisole",
+          "phenylboronic acid"
+        ],
+        "target_product": "4-methoxybiphenyl"
+      },
+      "conditions": {
+        "catalyst": "Pd(PPh3)4",
+        "catalyst_loading_mol_pct": 3,
+        "base_status": "present",
+        "base_name": "Na2CO3",
+        "base_equivalents": 2,
+        "solvent": "benzene",
+        "solvent_volume_ml": null,
+        "temperature_C": null,
+        "time_h": 6,
+        "atmosphere": "N2",
+        "scale_mmol": 1,
+        "partner_equivalents": 1.1,
+        "ligand": null
+      },
+      "outcome": {
+        "value_pct": 66,
+        "yield_type": "gc",
+        "reported_technique": "gc",
+        "interpretation_pending": false,
+        "original_metric": "66% GLC/GC；40% isolated",
+        "assay": "GC/GLC，以卤代芳烃为基准；未见现代内标校准描述",
+        "internal_standard": null,
+        "replicates": null
+      },
+      "limitations": [
+        "五条中催化剂/碱与设想最接近；溶剂、温度、时间不同；GC与分离口径须分开",
+        "不能用 GC 66% 与未知口径的 35% 作直接高低判定；不能证明当前条件效果",
+        "35% 场景的assay、校准、重复数等；本来源重复数未确认"
+      ],
+      "field_evidence": {
+        "reaction": {
+          "cell": "案例表 v1!C5",
+          "text": "4-溴苯甲醚 + 苯硼酸 → 4-甲氧基联苯"
+        },
+        "locator": {
+          "cell": "案例表 v1!D5",
+          "text": "原文 Table II，p-MeOPhBr 行；表注/一般条件说明"
+        },
+        "catalyst": {
+          "cell": "案例表 v1!E5",
+          "text": "Pd(PPh₃)₄ 3 mol%"
+        },
+        "ligand": {
+          "cell": "案例表 v1!F5",
+          "text": "无另加配体（催化剂本身为膦配合物）"
+        },
+        "base": {
+          "cell": "案例表 v1!G5",
+          "text": "Na₂CO₃，2 eq"
+        },
+        "solvent": {
+          "cell": "案例表 v1!H5",
+          "text": "苯，回流"
+        },
+        "conditions": {
+          "cell": "案例表 v1!I5",
+          "text": "约 6 h；N₂"
+        },
+        "scale": {
+          "cell": "案例表 v1!J5",
+          "text": "卤代芳烃 1.0 mmol；苯硼酸为 10% excess"
+        },
+        "value": {
+          "cell": "案例表 v1!K5",
+          "text": "66；括号另列 40"
+        },
+        "metric": {
+          "cell": "案例表 v1!L5",
+          "text": "66% GLC/GC；40% isolated"
+        },
+        "assay": {
+          "cell": "案例表 v1!M5",
+          "text": "GC/GLC，以卤代芳烃为基准；未见现代内标校准描述"
+        }
+      },
+      "raw_workbook_row": {
+        "A5": "SM-001",
+        "B5": "Miyaura, Yanagi & Suzuki, Synth. Commun. 1981, 11(7), 513–519. DOI: 10.1080/00397918108063618",
+        "C5": "4-溴苯甲醚 + 苯硼酸 → 4-甲氧基联苯",
+        "D5": "原文 Table II，p-MeOPhBr 行；表注/一般条件说明",
+        "E5": "Pd(PPh₃)₄ 3 mol%",
+        "F5": "无另加配体（催化剂本身为膦配合物）",
+        "G5": "Na₂CO₃，2 eq",
+        "H5": "苯，回流",
+        "I5": "约 6 h；N₂",
+        "J5": "卤代芳烃 1.0 mmol；苯硼酸为 10% excess",
+        "K5": "66；括号另列 40",
+        "L5": "66% GLC/GC；40% isolated",
+        "M5": "GC/GLC，以卤代芳烃为基准；未见现代内标校准描述",
+        "N5": "unknown",
+        "O5": "分离收率有报告；具体纯化步骤需按全文实验段落补定位",
+        "P5": "https://doi.org/10.1080/00397918108063618；HUSCAP PDF: https://eprints.lib.hokudai.ac.jp/repo/huscap/all/44302/syntheticcommunications.pdf",
+        "Q5": "完全底物匹配",
+        "R5": "五条中催化剂/碱与设想最接近；溶剂、温度、时间不同；GC与分离口径须分开",
+        "S5": "不能用 GC 66% 与未知口径的 35% 作直接高低判定；不能证明当前条件效果",
+        "T5": "35% 场景的assay、校准、重复数等；本来源重复数未确认",
+        "U5": "A：原始论文全文及表行可定位",
+        "V5": "历史基准；结果口径抽取测试",
+        "W5": "1981"
+      },
+      "import_metadata": {
+        "mode": "team_library",
+        "workbook_row": 5,
+        "warnings": [
+          "团队工作簿报告的A级证据，未在本工程独立核验原文。"
+        ]
+      }
+    },
+    {
+      "record_id": "SM-001-isolated",
+      "source_id": "SM-001",
+      "doi": "10.1080/00397918108063618",
+      "title": "Miyaura, Yanagi & Suzuki, Synth. Commun. 1981, 11(7), 513–519. DOI: 10.1080/00397918108063618",
+      "url": "https://doi.org/10.1080/00397918108063618",
+      "locator": "原文 Table II，p-MeOPhBr 行；表注/一般条件说明",
+      "source_links": [
+        "https://doi.org/10.1080/00397918108063618",
+        "https://eprints.lib.hokudai.ac.jp/repo/huscap/all/44302/syntheticcommunications.pdf"
+      ],
+      "provenance": "team_workbook_report_unverified_locally",
+      "evidence_level_claimed": "A：原始论文全文及表行可定位",
+      "verification": {
+        "original_source_verified_locally": false,
+        "tool_log_verified": false
+      },
+      "reaction": {
+        "substrates": [
+          "4-bromoanisole",
+          "phenylboronic acid"
+        ],
+        "target_product": "4-methoxybiphenyl"
+      },
+      "conditions": {
+        "catalyst": "Pd(PPh3)4",
+        "catalyst_loading_mol_pct": 3,
+        "base_status": "present",
+        "base_name": "Na2CO3",
+        "base_equivalents": 2,
+        "solvent": "benzene",
+        "solvent_volume_ml": null,
+        "temperature_C": null,
+        "time_h": 6,
+        "atmosphere": "N2",
+        "scale_mmol": 1,
+        "partner_equivalents": 1.1,
+        "ligand": null
+      },
+      "outcome": {
+        "value_pct": 40,
+        "yield_type": "isolated",
+        "reported_technique": "isolated",
+        "interpretation_pending": false,
+        "original_metric": "66% GLC/GC；40% isolated",
+        "assay": "GC/GLC，以卤代芳烃为基准；未见现代内标校准描述",
+        "internal_standard": null,
+        "replicates": null
+      },
+      "limitations": [
+        "五条中催化剂/碱与设想最接近；溶剂、温度、时间不同；GC与分离口径须分开",
+        "不能用 GC 66% 与未知口径的 35% 作直接高低判定；不能证明当前条件效果",
+        "35% 场景的assay、校准、重复数等；本来源重复数未确认"
+      ],
+      "field_evidence": {
+        "reaction": {
+          "cell": "案例表 v1!C5",
+          "text": "4-溴苯甲醚 + 苯硼酸 → 4-甲氧基联苯"
+        },
+        "locator": {
+          "cell": "案例表 v1!D5",
+          "text": "原文 Table II，p-MeOPhBr 行；表注/一般条件说明"
+        },
+        "catalyst": {
+          "cell": "案例表 v1!E5",
+          "text": "Pd(PPh₃)₄ 3 mol%"
+        },
+        "ligand": {
+          "cell": "案例表 v1!F5",
+          "text": "无另加配体（催化剂本身为膦配合物）"
+        },
+        "base": {
+          "cell": "案例表 v1!G5",
+          "text": "Na₂CO₃，2 eq"
+        },
+        "solvent": {
+          "cell": "案例表 v1!H5",
+          "text": "苯，回流"
+        },
+        "conditions": {
+          "cell": "案例表 v1!I5",
+          "text": "约 6 h；N₂"
+        },
+        "scale": {
+          "cell": "案例表 v1!J5",
+          "text": "卤代芳烃 1.0 mmol；苯硼酸为 10% excess"
+        },
+        "value": {
+          "cell": "案例表 v1!K5",
+          "text": "66；括号另列 40"
+        },
+        "metric": {
+          "cell": "案例表 v1!L5",
+          "text": "66% GLC/GC；40% isolated"
+        },
+        "assay": {
+          "cell": "案例表 v1!M5",
+          "text": "GC/GLC，以卤代芳烃为基准；未见现代内标校准描述"
+        }
+      },
+      "raw_workbook_row": {
+        "A5": "SM-001",
+        "B5": "Miyaura, Yanagi & Suzuki, Synth. Commun. 1981, 11(7), 513–519. DOI: 10.1080/00397918108063618",
+        "C5": "4-溴苯甲醚 + 苯硼酸 → 4-甲氧基联苯",
+        "D5": "原文 Table II，p-MeOPhBr 行；表注/一般条件说明",
+        "E5": "Pd(PPh₃)₄ 3 mol%",
+        "F5": "无另加配体（催化剂本身为膦配合物）",
+        "G5": "Na₂CO₃，2 eq",
+        "H5": "苯，回流",
+        "I5": "约 6 h；N₂",
+        "J5": "卤代芳烃 1.0 mmol；苯硼酸为 10% excess",
+        "K5": "66；括号另列 40",
+        "L5": "66% GLC/GC；40% isolated",
+        "M5": "GC/GLC，以卤代芳烃为基准；未见现代内标校准描述",
+        "N5": "unknown",
+        "O5": "分离收率有报告；具体纯化步骤需按全文实验段落补定位",
+        "P5": "https://doi.org/10.1080/00397918108063618；HUSCAP PDF: https://eprints.lib.hokudai.ac.jp/repo/huscap/all/44302/syntheticcommunications.pdf",
+        "Q5": "完全底物匹配",
+        "R5": "五条中催化剂/碱与设想最接近；溶剂、温度、时间不同；GC与分离口径须分开",
+        "S5": "不能用 GC 66% 与未知口径的 35% 作直接高低判定；不能证明当前条件效果",
+        "T5": "35% 场景的assay、校准、重复数等；本来源重复数未确认",
+        "U5": "A：原始论文全文及表行可定位",
+        "V5": "历史基准；结果口径抽取测试",
+        "W5": "1981"
+      },
+      "import_metadata": {
+        "mode": "team_library",
+        "workbook_row": 5,
+        "warnings": [
+          "团队工作簿报告的A级证据，未在本工程独立核验原文。"
+        ]
+      }
+    },
+    {
+      "record_id": "SM-002-isolated",
+      "source_id": "SM-002",
+      "doi": "10.1039/C0OB00524J",
+      "title": "Liu et al., Org. Biomol. Chem. 2011, 9, 1054–1060. DOI: 10.1039/C0OB00524J",
+      "url": "https://doi.org/10.1039/C0OB00524J",
+      "locator": "RSC 官方 SI：通用步骤 p.1；Table 1 entry 1/脚注 p.2；谱图见 SI",
+      "source_links": [
+        "https://doi.org/10.1039/C0OB00524J",
+        "https://www.rsc.org/suppdata/ob/c0/c0ob00524j/c0ob00524j.pdf"
+      ],
+      "provenance": "team_workbook_report_unverified_locally",
+      "evidence_level_claimed": "A：RSC 官方文章及 SI 有精确表格/步骤定位",
+      "verification": {
+        "original_source_verified_locally": false,
+        "tool_log_verified": false
+      },
+      "reaction": {
+        "substrates": [
+          "4-bromoanisole",
+          "phenylboronic acid"
+        ],
+        "target_product": "4-methoxybiphenyl"
+      },
+      "conditions": {
+        "catalyst": "PdCl2",
+        "catalyst_loading_mol_pct": 0.5,
+        "base_status": "present",
+        "base_name": "K2CO3",
+        "base_equivalents": 2,
+        "solvent": "EtOH/H2O (1:1)",
+        "solvent_volume_ml": 4,
+        "temperature_C": 25,
+        "time_h": 0.5,
+        "atmosphere": "air",
+        "scale_mmol": 0.5,
+        "partner_equivalents": 1.5,
+        "ligand": null
+      },
+      "outcome": {
+        "value_pct": 100,
+        "yield_type": "isolated",
+        "reported_technique": "isolated",
+        "interpretation_pending": false,
+        "original_metric": "isolated yield",
+        "assay": "SI 报分离收率；有 ¹H NMR 表征；定量校准不适用/未报告",
+        "internal_standard": null,
+        "replicates": null
+      },
+      "limitations": [
+        "底物相同，催化剂、碱、溶剂和温度不同；不是当前催化体系预测值",
+        "不能视作产品纯度 100%，也不能外推至 Pd(PPh₃)₄/THF",
+        "重复数、分离损失、纯度定量均未确认"
+      ],
+      "field_evidence": {
+        "reaction": {
+          "cell": "案例表 v1!C6",
+          "text": "4-溴苯甲醚 + 苯硼酸 → 4-甲氧基联苯"
+        },
+        "locator": {
+          "cell": "案例表 v1!D6",
+          "text": "RSC 官方 SI：通用步骤 p.1；Table 1 entry 1/脚注 p.2；谱图见 SI"
+        },
+        "catalyst": {
+          "cell": "案例表 v1!E6",
+          "text": "PdCl₂ 0.5 mol%"
+        },
+        "ligand": {
+          "cell": "案例表 v1!F6",
+          "text": "无配体（ligand-free）"
+        },
+        "base": {
+          "cell": "案例表 v1!G6",
+          "text": "K₂CO₃ 1.0 mmol，2 eq"
+        },
+        "solvent": {
+          "cell": "案例表 v1!H6",
+          "text": "EtOH/H₂O 50%，4 mL"
+        },
+        "conditions": {
+          "cell": "案例表 v1!I6",
+          "text": "25 °C，30 min，空气"
+        },
+        "scale": {
+          "cell": "案例表 v1!J6",
+          "text": "4-溴苯甲醚 0.5 mmol；苯硼酸 0.75 mmol（1.5 eq）"
+        },
+        "value": {
+          "cell": "案例表 v1!K6",
+          "text": "100"
+        },
+        "metric": {
+          "cell": "案例表 v1!L6",
+          "text": "isolated yield"
+        },
+        "assay": {
+          "cell": "案例表 v1!M6",
+          "text": "SI 报分离收率；有 ¹H NMR 表征；定量校准不适用/未报告"
+        }
+      },
+      "raw_workbook_row": {
+        "A6": "SM-002",
+        "B6": "Liu et al., Org. Biomol. Chem. 2011, 9, 1054–1060. DOI: 10.1039/C0OB00524J",
+        "C6": "4-溴苯甲醚 + 苯硼酸 → 4-甲氧基联苯",
+        "D6": "RSC 官方 SI：通用步骤 p.1；Table 1 entry 1/脚注 p.2；谱图见 SI",
+        "E6": "PdCl₂ 0.5 mol%",
+        "F6": "无配体（ligand-free）",
+        "G6": "K₂CO₃ 1.0 mmol，2 eq",
+        "H6": "EtOH/H₂O 50%，4 mL",
+        "I6": "25 °C，30 min，空气",
+        "J6": "4-溴苯甲醚 0.5 mmol；苯硼酸 0.75 mmol（1.5 eq）",
+        "K6": "100",
+        "L6": "isolated yield",
+        "M6": "SI 报分离收率；有 ¹H NMR 表征；定量校准不适用/未报告",
+        "N6": "unknown",
+        "O6": "短柱层析",
+        "P6": "https://doi.org/10.1039/C0OB00524J；官方 SI: https://www.rsc.org/suppdata/ob/c0/c0ob00524j/c0ob00524j.pdf",
+        "Q6": "完全底物匹配",
+        "R6": "底物相同，催化剂、碱、溶剂和温度不同；不是当前催化体系预测值",
+        "S6": "不能视作产品纯度 100%，也不能外推至 Pd(PPh₃)₄/THF",
+        "T6": "重复数、分离损失、纯度定量均未确认",
+        "U6": "A：RSC 官方文章及 SI 有精确表格/步骤定位",
+        "V6": "来源检索、条件抽取、yield type 区分",
+        "W6": "2011"
+      },
+      "import_metadata": {
+        "mode": "team_library",
+        "workbook_row": 6,
+        "warnings": [
+          "团队工作簿报告的A级证据，未在本工程独立核验原文。"
+        ]
+      }
+    },
+    {
+      "record_id": "SM-003-NMR",
+      "source_id": "SM-003",
+      "doi": "10.1039/C5DT02611C",
+      "title": "Chang et al., Dalton Trans. 2015, 44, 17129–17142. DOI: 10.1039/C5DT02611C",
+      "url": "https://doi.org/10.1039/C5DT02611C",
+      "locator": "RSC 官方 SI：Table S1 entry 2，p.3及脚注；N₂ 通用步骤",
+      "source_links": [
+        "https://doi.org/10.1039/C5DT02611C",
+        "https://www.rsc.org/suppdata/c5/dt/c5dt02611c/c5dt02611c1.pdf"
+      ],
+      "provenance": "team_workbook_report_unverified_locally",
+      "evidence_level_claimed": "A：RSC 官方 SI 表格与脚注可定位",
+      "verification": {
+        "original_source_verified_locally": false,
+        "tool_log_verified": false
+      },
+      "reaction": {
+        "substrates": [
+          "4-bromoanisole",
+          "phenylboronic acid"
+        ],
+        "target_product": "4-methoxybiphenyl"
+      },
+      "conditions": {
+        "catalyst": "Pd(OAc)2",
+        "catalyst_loading_mol_pct": 1,
+        "base_status": "present",
+        "base_name": "NaOtBu",
+        "base_equivalents": 3,
+        "solvent": "THF",
+        "solvent_volume_ml": 1,
+        "temperature_C": 60,
+        "time_h": 1,
+        "atmosphere": "N2",
+        "scale_mmol": 1,
+        "partner_equivalents": 1.5,
+        "ligand": "SPO 5h"
+      },
+      "outcome": {
+        "value_pct": 95,
+        "yield_type": "nmr",
+        "reported_technique": "nmr",
+        "interpretation_pending": false,
+        "original_metric": "¹H NMR yield",
+        "assay": "¹H NMR 定量；SI 表注说明平均值",
+        "internal_standard": null,
+        "replicates": 2
+      },
+      "limitations": [
+        "THF/60 °C相同，但催化剂、配体、碱、时间、assay不同",
+        "不能归因于 THF/60 °C 单独作用；NMR yield不可当作分离收率",
+        "内标/校准细节、分离收率、产物纯度未报告"
+      ],
+      "field_evidence": {
+        "reaction": {
+          "cell": "案例表 v1!C7",
+          "text": "4-溴苯甲醚 + 苯硼酸 → 4-甲氧基联苯"
+        },
+        "locator": {
+          "cell": "案例表 v1!D7",
+          "text": "RSC 官方 SI：Table S1 entry 2，p.3及脚注；N₂ 通用步骤"
+        },
+        "catalyst": {
+          "cell": "案例表 v1!E7",
+          "text": "Pd(OAc)₂ 1 mol%"
+        },
+        "ligand": {
+          "cell": "案例表 v1!F7",
+          "text": "SPO 配体 5h，2 mol%"
+        },
+        "base": {
+          "cell": "案例表 v1!G7",
+          "text": "NaOtBu 3 mmol，3 eq"
+        },
+        "solvent": {
+          "cell": "案例表 v1!H7",
+          "text": "THF，1.0 mL"
+        },
+        "conditions": {
+          "cell": "案例表 v1!I7",
+          "text": "60 °C，1 h，N₂"
+        },
+        "scale": {
+          "cell": "案例表 v1!J7",
+          "text": "4-溴苯甲醚 1.0 mmol；苯硼酸 1.5 mmol"
+        },
+        "value": {
+          "cell": "案例表 v1!K7",
+          "text": "95"
+        },
+        "metric": {
+          "cell": "案例表 v1!L7",
+          "text": "¹H NMR yield"
+        },
+        "assay": {
+          "cell": "案例表 v1!M7",
+          "text": "¹H NMR 定量；SI 表注说明平均值"
+        }
+      },
+      "raw_workbook_row": {
+        "A7": "SM-003",
+        "B7": "Chang et al., Dalton Trans. 2015, 44, 17129–17142. DOI: 10.1039/C5DT02611C",
+        "C7": "4-溴苯甲醚 + 苯硼酸 → 4-甲氧基联苯",
+        "D7": "RSC 官方 SI：Table S1 entry 2，p.3及脚注；N₂ 通用步骤",
+        "E7": "Pd(OAc)₂ 1 mol%",
+        "F7": "SPO 配体 5h，2 mol%",
+        "G7": "NaOtBu 3 mmol，3 eq",
+        "H7": "THF，1.0 mL",
+        "I7": "60 °C，1 h，N₂",
+        "J7": "4-溴苯甲醚 1.0 mmol；苯硼酸 1.5 mmol",
+        "K7": "95",
+        "L7": "¹H NMR yield",
+        "M7": "¹H NMR 定量；SI 表注说明平均值",
+        "N7": "2 次实验（平均）",
+        "O7": "unknown（该表格筛选记录未在该处给出纯化流程）",
+        "P7": "https://doi.org/10.1039/C5DT02611C；官方 SI: https://www.rsc.org/suppdata/c5/dt/c5dt02611c/c5dt02611c1.pdf",
+        "Q7": "完全底物匹配",
+        "R7": "THF/60 °C相同，但催化剂、配体、碱、时间、assay不同",
+        "S7": "不能归因于 THF/60 °C 单独作用；NMR yield不可当作分离收率",
+        "T7": "内标/校准细节、分离收率、产物纯度未报告",
+        "U7": "A：RSC 官方 SI 表格与脚注可定位",
+        "V7": "THF/60 °C条件邻近案例；测试口径解释",
+        "W7": "2015"
+      },
+      "import_metadata": {
+        "mode": "team_library",
+        "workbook_row": 7,
+        "warnings": [
+          "团队工作簿报告的A级证据，未在本工程独立核验原文。"
+        ]
+      }
+    },
+    {
+      "record_id": "SM-004-T1-E7",
+      "source_id": "SM-004",
+      "doi": "10.3390/molecules23102435",
+      "title": "“Efficient Suzuki–Miyaura C–C Cross-Couplings Induced by Novel Heterodinuclear Pd-bpydc-Ln Scaffolds,” Molecules 2018, 23, 2435. DOI: 10.3390/molecules23102435",
+      "url": "https://doi.org/10.3390/molecules23102435",
+      "locator": "原文 Table 1 entry 7/脚注；一般实验步骤",
+      "source_links": [
+        "https://doi.org/10.3390/molecules23102435",
+        "https://www.mdpi.com/1420-3049/23/10/2435"
+      ],
+      "provenance": "team_workbook_report_unverified_locally",
+      "evidence_level_claimed": "A：开放全文表格、脚注和方法可查",
+      "verification": {
+        "original_source_verified_locally": false,
+        "tool_log_verified": false
+      },
+      "reaction": {
+        "substrates": [
+          "4-bromoanisole",
+          "phenylboronic acid"
+        ],
+        "target_product": "4-methoxybiphenyl"
+      },
+      "conditions": {
+        "catalyst": "Pd-bpydc-Ce (2)",
+        "catalyst_loading_mol_pct": 0.5,
+        "base_status": "present",
+        "base_name": "NaOtBu",
+        "base_equivalents": 1,
+        "solvent": "MeOH",
+        "solvent_volume_ml": 1,
+        "temperature_C": 60,
+        "time_h": 4,
+        "atmosphere": "air",
+        "scale_mmol": 0.5,
+        "partner_equivalents": 1.2,
+        "ligand": null
+      },
+      "outcome": {
+        "value_pct": 91.9,
+        "yield_type": "unknown",
+        "reported_technique": "gc",
+        "interpretation_pending": true,
+        "original_metric": "GC 内标法总转化率（原文表列为 yield）",
+        "assay": "GC；hexadecane 内标；脚注 c 将其定义为指定反应时间下基于 GC 内标法测得的 total conversion",
+        "internal_standard": "hexadecane",
+        "replicates": null
+      },
+      "limitations": [
+        "温度相同，催化剂、碱、溶剂、时间不同；GC口径",
+        "不能改记为分离收率或推断纯度；不能跨催化体系归因",
+        "重复次数、GC重复性/误差未确认"
+      ],
+      "field_evidence": {
+        "reaction": {
+          "cell": "案例表 v1!C8",
+          "text": "4-溴苯甲醚 + 苯硼酸 → 4-甲氧基联苯"
+        },
+        "locator": {
+          "cell": "案例表 v1!D8",
+          "text": "原文 Table 1 entry 7/脚注；一般实验步骤"
+        },
+        "catalyst": {
+          "cell": "案例表 v1!E8",
+          "text": "Pd-bpydc-Ce 0.5 mol%"
+        },
+        "ligand": {
+          "cell": "案例表 v1!F8",
+          "text": "配位于催化剂框架；未另加游离配体"
+        },
+        "base": {
+          "cell": "案例表 v1!G8",
+          "text": "NaOtBu 0.5 mmol，1 eq"
+        },
+        "solvent": {
+          "cell": "案例表 v1!H8",
+          "text": "MeOH，1 mL"
+        },
+        "conditions": {
+          "cell": "案例表 v1!I8",
+          "text": "60 °C，4 h，空气"
+        },
+        "scale": {
+          "cell": "案例表 v1!J8",
+          "text": "4-溴苯甲醚 0.5 mmol；苯硼酸 0.6 mmol（1.2 eq）"
+        },
+        "value": {
+          "cell": "案例表 v1!K8",
+          "text": "91.9"
+        },
+        "metric": {
+          "cell": "案例表 v1!L8",
+          "text": "GC 内标法总转化率（原文表列为 yield）"
+        },
+        "assay": {
+          "cell": "案例表 v1!M8",
+          "text": "GC；hexadecane 内标；脚注 c 将其定义为指定反应时间下基于 GC 内标法测得的 total conversion"
+        }
+      },
+      "raw_workbook_row": {
+        "A8": "SM-004",
+        "B8": "“Efficient Suzuki–Miyaura C–C Cross-Couplings Induced by Novel Heterodinuclear Pd-bpydc-Ln Scaffolds,” Molecules 2018, 23, 2435. DOI: 10.3390/molecules23102435",
+        "C8": "4-溴苯甲醚 + 苯硼酸 → 4-甲氧基联苯",
+        "D8": "原文 Table 1 entry 7/脚注；一般实验步骤",
+        "E8": "Pd-bpydc-Ce 0.5 mol%",
+        "F8": "配位于催化剂框架；未另加游离配体",
+        "G8": "NaOtBu 0.5 mmol，1 eq",
+        "H8": "MeOH，1 mL",
+        "I8": "60 °C，4 h，空气",
+        "J8": "4-溴苯甲醚 0.5 mmol；苯硼酸 0.6 mmol（1.2 eq）",
+        "K8": "91.9",
+        "L8": "GC 内标法总转化率（原文表列为 yield）",
+        "M8": "GC；hexadecane 内标；脚注 c 将其定义为指定反应时间下基于 GC 内标法测得的 total conversion",
+        "N8": "unknown",
+        "O8": "文中有提取/层析步骤；表中结果为 GC yield",
+        "P8": "https://doi.org/10.3390/molecules23102435；全文: https://www.mdpi.com/1420-3049/23/10/2435",
+        "Q8": "完全底物匹配",
+        "R8": "温度相同，催化剂、碱、溶剂、时间不同；GC口径",
+        "S8": "不能改记为分离收率或推断纯度；不能跨催化体系归因",
+        "T8": "重复次数、GC重复性/误差未确认",
+        "U8": "A：开放全文表格、脚注和方法可查",
+        "V8": "GC口径和内标字段抽取测试",
+        "W8": "2018"
+      },
+      "import_metadata": {
+        "mode": "team_library",
+        "workbook_row": 8,
+        "warnings": [
+          "团队工作簿报告的A级证据，未在本工程独立核验原文。",
+          "A标GC total conversion，B用gc标签；口径待确认，当前规范类型为unknown。"
+        ]
+      }
+    },
+    {
+      "record_id": "SM-005-isolated",
+      "source_id": "SM-005",
+      "doi": "10.1021/acsomega.8b00039",
+      "title": "Dewan et al., ACS Omega 2018, 3(5), 5327–5335. DOI: 10.1021/acsomega.8b00039",
+      "url": "https://doi.org/10.1021/acsomega.8b00039",
+      "locator": "原文 Table 1 entry 1/脚注；Experimental typical procedure / General Information",
+      "source_links": [
+        "https://doi.org/10.1021/acsomega.8b00039",
+        "https://pmc.ncbi.nlm.nih.gov/articles/PMC6641936/"
+      ],
+      "provenance": "team_workbook_report_unverified_locally",
+      "evidence_level_claimed": "A：ACS 论文及开放全文表格/实验段可定位",
+      "verification": {
+        "original_source_verified_locally": false,
+        "tool_log_verified": false
+      },
+      "reaction": {
+        "substrates": [
+          "4-bromoanisole",
+          "phenylboronic acid"
+        ],
+        "target_product": "4-methoxybiphenyl"
+      },
+      "conditions": {
+        "catalyst": "biogenic Pd NPs",
+        "catalyst_loading_mol_pct": 0.2,
+        "base_status": "present",
+        "base_name": "K2CO3",
+        "base_equivalents": 3,
+        "solvent": "H2O",
+        "solvent_volume_ml": 2,
+        "temperature_C": 25,
+        "time_h": 2,
+        "atmosphere": "air",
+        "scale_mmol": 0.5,
+        "partner_equivalents": 1.2,
+        "ligand": null
+      },
+      "outcome": {
+        "value_pct": 95,
+        "yield_type": "isolated",
+        "reported_technique": "isolated",
+        "interpretation_pending": false,
+        "original_metric": "isolated yield",
+        "assay": "TLC监测；产物以¹H/¹³C NMR表征；无定量assay校准",
+        "internal_standard": null,
+        "replicates": null
+      },
+      "limitations": [
+        "底物相同，催化剂、碱、溶剂、温度和时间不同",
+        "分离收率不等同纯度；不能预测 Pd(PPh₃)₄ 条件的结果",
+        "重复次数、误差、纯度定量未报告"
+      ],
+      "field_evidence": {
+        "reaction": {
+          "cell": "案例表 v1!C9",
+          "text": "4-溴苯甲醚 + 苯硼酸 → 4-甲氧基联苯"
+        },
+        "locator": {
+          "cell": "案例表 v1!D9",
+          "text": "原文 Table 1 entry 1/脚注；Experimental typical procedure / General Information"
+        },
+        "catalyst": {
+          "cell": "案例表 v1!E9",
+          "text": "木瓜皮生物合成 Pd NPs，0.001 mmol（0.2 mol%）"
+        },
+        "ligand": {
+          "cell": "案例表 v1!F9",
+          "text": "无另加配体；生物合成纳米颗粒"
+        },
+        "base": {
+          "cell": "案例表 v1!G9",
+          "text": "K₂CO₃ 1.5 mmol，3 eq"
+        },
+        "solvent": {
+          "cell": "案例表 v1!H9",
+          "text": "H₂O，2 mL"
+        },
+        "conditions": {
+          "cell": "案例表 v1!I9",
+          "text": "室温约25 °C，2 h，空气"
+        },
+        "scale": {
+          "cell": "案例表 v1!J9",
+          "text": "4-溴苯甲醚 0.5 mmol；苯硼酸 0.6 mmol（1.2 eq）"
+        },
+        "value": {
+          "cell": "案例表 v1!K9",
+          "text": "95"
+        },
+        "metric": {
+          "cell": "案例表 v1!L9",
+          "text": "isolated yield"
+        },
+        "assay": {
+          "cell": "案例表 v1!M9",
+          "text": "TLC监测；产物以¹H/¹³C NMR表征；无定量assay校准"
+        }
+      },
+      "raw_workbook_row": {
+        "A9": "SM-005",
+        "B9": "Dewan et al., ACS Omega 2018, 3(5), 5327–5335. DOI: 10.1021/acsomega.8b00039",
+        "C9": "4-溴苯甲醚 + 苯硼酸 → 4-甲氧基联苯",
+        "D9": "原文 Table 1 entry 1/脚注；Experimental typical procedure / General Information",
+        "E9": "木瓜皮生物合成 Pd NPs，0.001 mmol（0.2 mol%）",
+        "F9": "无另加配体；生物合成纳米颗粒",
+        "G9": "K₂CO₃ 1.5 mmol，3 eq",
+        "H9": "H₂O，2 mL",
+        "I9": "室温约25 °C，2 h，空气",
+        "J9": "4-溴苯甲醚 0.5 mmol；苯硼酸 0.6 mmol（1.2 eq）",
+        "K9": "95",
+        "L9": "isolated yield",
+        "M9": "TLC监测；产物以¹H/¹³C NMR表征；无定量assay校准",
+        "N9": "unknown",
+        "O9": "柱层析",
+        "P9": "https://doi.org/10.1021/acsomega.8b00039；PMC开放全文: https://pmc.ncbi.nlm.nih.gov/articles/PMC6641936/",
+        "Q9": "完全底物匹配",
+        "R9": "底物相同，催化剂、碱、溶剂、温度和时间不同",
+        "S9": "分离收率不等同纯度；不能预测 Pd(PPh₃)₄ 条件的结果",
+        "T9": "重复次数、误差、纯度定量未报告",
+        "U9": "A：ACS 论文及开放全文表格/实验段可定位",
+        "V9": "分离收率字段抽取和来源追溯",
+        "W9": "2018"
+      },
+      "import_metadata": {
+        "mode": "team_library",
+        "workbook_row": 9,
+        "warnings": [
+          "团队工作簿报告的A级证据，未在本工程独立核验原文。"
+        ]
+      }
+    },
+    {
+      "record_id": "SM-004-T1-E1",
+      "source_id": "SM-004",
+      "doi": "10.3390/molecules23102435",
+      "title": "同 SM-004：Molecules 2018, 23, 2435. DOI: 10.3390/molecules23102435",
+      "url": "https://doi.org/10.3390/molecules23102435",
+      "locator": "原文 Table 1 entry 1/脚注 a、c；PDF 第 4 页；refs/extract.txt 表格摘录第 320 行附近",
+      "source_links": [
+        "https://doi.org/10.3390/molecules23102435",
+        "https://www.mdpi.com/1420-3049/23/10/2435"
+      ],
+      "provenance": "team_workbook_report_unverified_locally",
+      "evidence_level_claimed": "A：开放全文 PDF、Table 1、脚注与本地表格摘录可定位",
+      "verification": {
+        "original_source_verified_locally": false,
+        "tool_log_verified": false
+      },
+      "reaction": {
+        "substrates": [
+          "4-bromoanisole",
+          "phenylboronic acid"
+        ],
+        "target_product": "4-methoxybiphenyl"
+      },
+      "conditions": {
+        "catalyst": "Pd-bpydc-La (1)",
+        "catalyst_loading_mol_pct": 0.5,
+        "base_status": "present",
+        "base_name": "NaOtBu",
+        "base_equivalents": 1,
+        "solvent": "MeOH",
+        "solvent_volume_ml": 1,
+        "temperature_C": 30,
+        "time_h": 8,
+        "atmosphere": null,
+        "scale_mmol": 0.5,
+        "partner_equivalents": 1.2,
+        "ligand": null
+      },
+      "outcome": {
+        "value_pct": 35,
+        "yield_type": "unknown",
+        "reported_technique": "gc",
+        "interpretation_pending": true,
+        "original_metric": "GC 内标法总转化率（原文表列为 yield）",
+        "assay": "GC；hexadecane 内标；脚注 c 定义为指定时间的 total conversion，基于 GC 内标法",
+        "internal_standard": "hexadecane",
+        "replicates": null
+      },
+      "limitations": [
+        "与 SM-004 entry 7 同底物、同 assay 和投料比例；催化剂、温度和时间不同；同一研究内对照，不是独立来源",
+        "证明 35.0% 在特定文献条件下有实测先例；不能据此判断用户条件是否异常，也不能把差异归因于单一因素",
+        "气氛、重复次数、误差、分离收率及纯度均未报告"
+      ],
+      "field_evidence": {
+        "reaction": {
+          "cell": "案例表 v1!C10",
+          "text": "4-溴苯甲醚 + 苯硼酸 → 4-甲氧基联苯"
+        },
+        "locator": {
+          "cell": "案例表 v1!D10",
+          "text": "原文 Table 1 entry 1/脚注 a、c；PDF 第 4 页；refs/extract.txt 表格摘录第 320 行附近"
+        },
+        "catalyst": {
+          "cell": "案例表 v1!E10",
+          "text": "Pd-bpydc-La (1)，0.5 mol%"
+        },
+        "ligand": {
+          "cell": "案例表 v1!F10",
+          "text": "配位于催化剂框架；未另加游离配体"
+        },
+        "base": {
+          "cell": "案例表 v1!G10",
+          "text": "NaOtBu 0.5 mmol，1 eq"
+        },
+        "solvent": {
+          "cell": "案例表 v1!H10",
+          "text": "MeOH，1 mL"
+        },
+        "conditions": {
+          "cell": "案例表 v1!I10",
+          "text": "30 °C，8 h；气氛 unknown"
+        },
+        "scale": {
+          "cell": "案例表 v1!J10",
+          "text": "4-溴苯甲醚 0.5 mmol；苯硼酸 0.6 mmol（1.2 eq）"
+        },
+        "value": {
+          "cell": "案例表 v1!K10",
+          "text": "35.0"
+        },
+        "metric": {
+          "cell": "案例表 v1!L10",
+          "text": "GC 内标法总转化率（原文表列为 yield）"
+        },
+        "assay": {
+          "cell": "案例表 v1!M10",
+          "text": "GC；hexadecane 内标；脚注 c 定义为指定时间的 total conversion，基于 GC 内标法"
+        }
+      },
+      "raw_workbook_row": {
+        "A10": "SM-004-E1",
+        "B10": "同 SM-004：Molecules 2018, 23, 2435. DOI: 10.3390/molecules23102435",
+        "C10": "4-溴苯甲醚 + 苯硼酸 → 4-甲氧基联苯",
+        "D10": "原文 Table 1 entry 1/脚注 a、c；PDF 第 4 页；refs/extract.txt 表格摘录第 320 行附近",
+        "E10": "Pd-bpydc-La (1)，0.5 mol%",
+        "F10": "配位于催化剂框架；未另加游离配体",
+        "G10": "NaOtBu 0.5 mmol，1 eq",
+        "H10": "MeOH，1 mL",
+        "I10": "30 °C，8 h；气氛 unknown",
+        "J10": "4-溴苯甲醚 0.5 mmol；苯硼酸 0.6 mmol（1.2 eq）",
+        "K10": "35.0",
+        "L10": "GC 内标法总转化率（原文表列为 yield）",
+        "M10": "GC；hexadecane 内标；脚注 c 定义为指定时间的 total conversion，基于 GC 内标法",
+        "N10": "unknown",
+        "O10": "unknown；此催化筛选表项未提供分离收率",
+        "P10": "https://doi.org/10.3390/molecules23102435；全文: https://www.mdpi.com/1420-3049/23/10/2435",
+        "Q10": "完全底物匹配",
+        "R10": "与 SM-004 entry 7 同底物、同 assay 和投料比例；催化剂、温度和时间不同；同一研究内对照，不是独立来源",
+        "S10": "证明 35.0% 在特定文献条件下有实测先例；不能据此判断用户条件是否异常，也不能把差异归因于单一因素",
+        "T10": "气氛、重复次数、误差、分离收率及纯度均未报告",
+        "U10": "A：开放全文 PDF、Table 1、脚注与本地表格摘录可定位",
+        "V10": "作为同研究的 35.0% 先例展示；可用于结果抽取和口径边界测试，不作为独立基准",
+        "W10": "2018"
+      },
+      "import_metadata": {
+        "mode": "team_library",
+        "workbook_row": 10,
+        "warnings": [
+          "团队工作簿报告的A级证据，未在本工程独立核验原文。",
+          "A标GC total conversion，B用gc标签；口径待确认，当前规范类型为unknown。"
+        ]
+      }
+    }
+  ]
+}

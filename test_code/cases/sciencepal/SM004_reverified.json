@@ -1,0 +1,108 @@
+{
+  "task_id": "SM-004",
+  "tools_used": [
+    "web_search: 本次以10.3390/molecules23102435为检索词,返回PubMed等记录;未返回知识库命中。",
+    "search_history + expand_message: 从历史消息1f29a8d6-226d-42c0-b831-2434e8c02e5c的create_file参数恢复原JSON字段结构;仅用于结构恢复,不用于替代本次原文核验。",
+    "scrape_webpage: 本次实际打开MDPI与PMC原文;响应原文件为scrape/20261019_145423_mdpi_com.json和scrape/20261019_145422_pmc_ncbi_nlm_nih_gov.json。",
+    "load_skill('mineru'): 本次重新加载PDF读取规则;已有同SHA-256 PDF的转换稿,未重新运行MinerU转换。",
+    "execute_command: 实际运行SM-004_verify_source.sh;curl重新下载PDF、保存HTTP响应头;sha256sum核对附件;pdfinfo确认14页;pdftotext读取第3、4页;pdftoppm渲染这两页。stdout/stderr记录在SM-004_execution.log。",
+    "see_image: 本次目视检查SM-004_page3.png和SM-004_page4.png,核对表格合并单元格、脚注和页码。",
+    "load_skill('material-report')及write_report.py: 增量保存核查报告;最终JSON用python标准json模块验证。"
+  ],
+  "target_paper": {
+    "doi": "10.3390/molecules23102435",
+    "pmid": "30249066",
+    "year": 2018,
+    "issue": 10,
+    "pmcid": "PMC6222659",
+    "title": "Efficient Suzuki–Miyaura C-C Cross-Couplings Induced by Novel Heterodinuclear Pd-bpydc-Ln Scaffolds",
+    "volume": 23,
+    "authors": "Ding F; Li Y; Yan P; Deng Y; Wang D; Zhang Y; Dragutan I; Dragutan V; Wang K",
+    "journal": "Molecules",
+    "pdf_url": "https://mdpi-res.com/d_attachment/molecules/molecules-23-02435/article_deploy/molecules-23-02435.pdf",
+    "article_no": 2435,
+    "source_url": "https://www.mdpi.com/1420-3049/23/10/2435",
+    "pdf_pages_total": 14
+  },
+  "access_status": {
+    "note": "本次重新检索、打开MDPI和PMC HTML、重新下载并读取出版社PDF第3、4页,非沿用记忆。下载日志起始UTC时间2026-10-19T14:55:49Z;HTTP 200;762609字节;SHA-256=0619cb460ead914295107a8426365eab3d37820f5785fe72e7e5f6e396778d80,与上传附件相同。PDF物理页码与印刷页码一致。MDPI网页抓取包含正文但Table 1表体缺失;PMC表体存在但合并单元格展平,均用PDF目视补核。PDF共14页,未据网页13 Pages改写。实际链接及日志索引见SM-004_retrieval_record.md。旧JSON schema从历史工具调用恢复,本次保留所有原有字段名和类型。",
+    "pdf_file": "SM-004_source.pdf",
+    "pdf_markdown": "molecules-23-02435.md",
+    "pdf_downloaded": true,
+    "full_text_accessed": true
+  },
+  "table_location": {
+    "entry": 7,
+    "section": "3. Results and Discussion",
+    "pdf_page": 4,
+    "table_number": "Table 1",
+    "table_caption": "Suzuki–Miyaura cross-coupling of 4-bromoanisole with phenylboronic acid in methanol-induced by Pd-bpydc-Ln catalysts 1–3.",
+    "pdf_page_label": "4 of 14"
+  },
+  "target_reaction": "4-bromoanisole + phenylboronic acid -> 4-methoxybiphenyl [底物来自p.4 Table 1标题/脚注a;产物名称依据p.3 Scheme 1中R=OCH3的结构作名称对应,属结构到名称的映射推断,不是entry 7逐字列出的产物名]",
+  "entry_7_extraction": {
+    "base": {
+      "name": "sodium tert-butoxide (NaOtBu)",
+      "amount": "0.5 mmol",
+      "source": "原文直接信息:PDF p.4 Table 1脚注a写sodium tert-butoxide (0.5 mmol)(PDF跨行排字tert-/butoxide);§2.3 p.3仅写specified base (0.5 mmol)。NaOtBu为规范缩写,非脚注a原始拼写。"
+    },
+    "result": {
+      "unit": "%",
+      "value": "91.9",
+      "metric": "Author-reported Yield (%) measured by GC with hexadecane internal standard; ambiguity retained: footnote c also says 'for total conversion'. Not unconditionally normalized to target-product GC yield or substrate total conversion; not an isolated yield value.",
+      "source": "【表头,原文直接信息】PDF p.4 Table 1: Yield (%)带a,b,c脚注;entry 7为91.9上标a,未写Conversion (%)。【脚注c,原文完整句】'Reaction yield (%) for total conversion determined from the internal standard yield, at the specified reaction time, based on gas chromatography (GC), using hexadecane as internal standard.'【正文§2.3,p.3】'GC-calculated yields were based on the amount of 4-bromoanisole or 4-bromobenzonitrile employed.'【紧邻正文,p.4 Table 1后】作者并列使用'yields (93–95%) and conversions (73–99%)'(指催化剂3,不能套给entry 7),另写'An increase in the product yield with temperature'。【解释,非逐字结论】表头及正文倾向于产物收率解释,但脚注c混合yield与total conversion措辞且缺少唯一判别计算式;本次保留歧义,不确定地归入任一类别。"
+    },
+    "solvent": {
+      "name": "methanol",
+      "source": "原文直接信息:PDF p.4 Table 1脚注a和§2.3 p.3均为methanol (1 mL)。",
+      "volume": "1 mL"
+    },
+    "catalyst": {
+      "name": "Pd-bpydc-Ce (2)",
+      "source": "PDF p.4 Table 1的entries 5–8共享Pd-bpydc-Ce (2)合并单元格;entry 7结果上标a对应脚注a 'catalyst (0.5 mol %)';为版式/脚注直接关联读取,不是机制推断。§2.3 p.3只给0.2–0.5 mol%通用范围。所查范围未明确按Pd原子还是复合催化剂实体计量,不自行换算或给出质量。",
+      "loading": "0.5 mol % (as reported)"
+    },
+    "substrate": {
+      "name": "4-bromoanisole",
+      "amount": "0.5 mmol",
+      "source": "原文直接信息:PDF p.4 Table 1标题、脚注a;§2.3 p.3列4-bromoanisole (0.5 mmol) or 4-bromobenzonitrile (0.5 mmol),其中Table 1指定前者。"
+    },
+    "conditions": {
+      "time": "4 h",
+      "source": "温度和时间为原文直接信息:PDF p.4 Table 1 entry 7,T (°C)=60、Time (h)=4。气氛原文见§2.3 p.3 'stirred at 30 °C or 60 °C in air';Table 1未单列气氛。将in air应用于entry 7为通法关联,不是该条独立记录。",
+      "atmosphere": "air (general procedure linkage; not separately specified in entry 7)",
+      "temperature": "60 °C"
+    },
+    "coupling_partner": {
+      "name": "phenylboronic acid",
+      "amount": "0.6 mmol",
+      "source": "原文直接信息:PDF p.4 Table 1标题/脚注a;§2.3 p.3,phenylboronic acid (0.6 mmol)。"
+    },
+    "quantitative_method": {
+      "basis": "§2.3 p.3原文:GC-calculated yields were based on the amount of 4-bromoanisole or 4-bromobenzonitrile employed;Table 1限定为4-bromoanisole投料量基准。不因此消除脚注c的yield/total conversion歧义。",
+      "method": "Gas chromatography (GC) with internal standard; progress monitoring by GC-MS per §2.3; exact yield-vs-conversion definition unresolved",
+      "source": "原文直接信息:PDF p.4 Table 1脚注c说明GC和hexadecane内标;§2.3 p.3说明定期取样GC-MS及GC-calculated yields的投料基准;§2.3 p.4续文说明产品鉴定。所查段落没有列出entry 7响应因子、校准曲线或完整计算式。",
+      "instrument": "Entry 7的定量仪器型号在本次限定段落中未明确;§2.3 p.4只说明all coupling products were identified by Agilent 7890A-5975C GC-MS and 1H NMR,不能把鉴定仪器擅自指定为该条定量仪器。",
+      "internal_standard": "hexadecane"
+    }
+  },
+  "notes_and_discrepancies": [
+    "本次纠正旧记录将91.9%无条件归为目标产物GC收率的过强结论。可靠记录为Yield (%)栏的91.9%,GC/hexadecane内标;脚注c的for total conversion必须保留。表头/正文较支持产物收率解释只是解释,不能冒充原文唯一界定。",
+    "不能把91.9%确认成底物总转化率;该条也没有单独报告可确认的分离收率。§2.3描述分离纯化不等于Table 1给的是分离收率。",
+    "Table 1表头Yield (%)及上标a,b,c;entry 7为91.9上标a。脚注b给0.2 mol%,不适用于entry 7;脚注c是结果方法说明。",
+    "气氛in air来自§2.3 p.3,不是Table 1逐条所列;应用于entry 7标记为通法关联。",
+    "Catalyst name与entry 7的归属按p.4合并单元格核验,不因PMC文本表格列错位而将其视为未知。0.5 mol%按作者文字保留,不换算Pd原子mol%。",
+    "本次所查正文中的93–95% yields和73–99% conversions指催化剂3,不能给entry 7的Ce催化剂补填转化率。",
+    "原结构的target_reaction保留,但产物规范名称为p.3 Scheme 1结构对应的命名推断;底物组合、投料和条件有Table 1及§2.3直接文字依据。",
+    "本次只核验上述文献段落,没有诊断模拟实验,没有将文献数值与模拟分离收率进行比较。",
+    "旧JSON结构恢复来源:历史thread 5a5f4a60-ab26-488c-b33d-b3e01c6a9a6d,message 1f29a8d6-226d-42c0-b831-2434e8c02e5c,create_file的survey_project/analysis/SM-004.json参数。旧内容只用作字段模板,化学断言重新核验。"
+  ],
+  "fields_not_reported_or_unknown": [
+    "entry 7的无歧义yield-vs-total-conversion计算定义:未能由Table 1/脚注/§2.3唯一确定。",
+    "entry 7的独立底物总转化率:所查范围未单独、无歧义列出。",
+    "entry 7分离收率:所查范围未报告单独数值。",
+    "entry 7完整GC校准、响应因子、原始色谱、产物摩尔量和底物剩余量:所查范围未提供。",
+    "entry 7催化剂实际质量及0.5 mol%的Pd原子/催化剂实体明确计量定义:所查范围未明确,不换算绝对量。",
+    "entry 7独立的重复次数、误差及特定容器/搅拌速率:所查范围未报告。"
+  ]
+}

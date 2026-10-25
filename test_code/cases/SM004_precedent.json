@@ -1,0 +1,17 @@
+[
+  {
+    "record_id": "SM-004-T1-E7",
+    "source_id": "SM-004",
+    "doi": "10.3390/molecules23102435",
+    "url": "https://www.mdpi.com/1420-3049/23/10/2435",
+    "locator": "PDF p.4, Table 1 entry 7, footnotes a/c; general procedure section 2.3",
+    "provenance": "team_handoff_and_SciencePal_report_not_independently_verified_locally",
+    "outcome": {
+      "value_pct": 91.9,
+      "yield_type": "gc",
+      "assay": "GC internal standard",
+      "internal_standard": "hexadecane",
+      "original_metric_note": "Preserve original table footnote wording before final domain approval."
+    }
+  }
+]

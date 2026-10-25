@@ -1,0 +1,1 @@
+"""ChemCritic local application."""

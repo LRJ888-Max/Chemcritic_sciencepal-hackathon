@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ChemCritic · 实验复盘</title>
+  <link rel="stylesheet" href="/style.css"><script src="/app.js" defer></script>
+</head>
+<body>
+<header class="masthead"><div class="brand"><span class="brand-mark" aria-hidden="true">Cc</span><div><strong>ChemCritic</strong><span>实验有据，复盘有序</span></div></div><span class="local-tag">本地工作台 · v0.2</span></header>
+<main>
+  <section class="intro"><p class="eyebrow">SUZUKI–MIYAURA / 实验复盘</p><h1>从一条实验记录，<br>找到下一步该核查什么。</h1><p>整理已知事实，对齐文献口径，保留尚不能判断的部分。</p></section>
+  <div id="message" class="message" role="status" hidden></div>
+  <div class="workspace">
+    <section class="panel input-panel" aria-labelledby="input-title">
+      <div class="section-heading"><div><span class="step">01 / 输入</span><h2 id="input-title">实验记录</h2></div><button type="button" id="load-example" class="button secondary">载入示例</button></div>
+      <p class="hint">未知项留空。填写百分数42表示42%，不填0.42。</p>
+      <form id="experiment-form">
+        <div class="fields two"><label>实验编号（可自定）<input name="experiment_id" required></label><label>数据属性<select name="simulated" required><option value="true">模拟案例</option><option value="false">真实实验记录</option></select></label></div>
+        <p class="hint">实验编号不会随收率变化。历史标题按每次保存的实测值与目标生成。</p>
+        <fieldset><legend>反应与条件</legend>
+          <div class="fields two"><label>芳基卤化物<input name="substrate_1" required></label><label>偶联伙伴<input name="substrate_2" required></label></div>
+          <label>目标产物<input name="target_product" required></label>
+          <div class="fields two"><label>催化剂<input name="catalyst" placeholder="未知可留空"></label><label>载量（mol%）<input name="catalyst_loading_mol_pct" type="number" min="0" step="any"></label></div>
+          <label>催化剂载量计算基准<input name="catalyst_loading_basis" placeholder="相对哪个投料"></label>
+          <div class="fields three"><label>溶剂<input name="solvent"></label><label>温度（°C）<input name="temperature_C" type="number" min="-273.15" step="any"></label><label>时间（h）<input name="time_h" type="number" min="0.000001" step="any"></label></div>
+          <div class="fields three"><label>是否加入碱<select name="base_status"><option value="unknown">未知 / 未记录</option><option value="present">已加入</option><option value="absent">明确未加入</option></select></label><label>碱名称<input name="base_name"></label><label>碱当量<input name="base_equivalents" type="number" min="0" step="any"></label></div>
+          <details><summary>补充规模、气氛和用量</summary><div class="fields two"><label>规模（mmol）<input name="scale_mmol" type="number" min="0.000001" step="any"></label><label>溶剂体积（mL）<input name="solvent_volume_ml" type="number" min="0.000001" step="any"></label><label>偶联伙伴当量<input name="partner_equivalents" type="number" min="0" step="any"></label><label>气氛<input name="atmosphere" placeholder="如空气、N2；未知留空"></label></div></details>
+        </fieldset>
+        <fieldset><legend>结果与产物证据</legend><div class="fields two"><label>实测结果（%）<input name="yield_pct" type="number" min="0" max="100" step="any"></label><label>结果口径<select name="yield_type" class="assay-options"></select></label></div>
+          <label>结果计算基准<input name="yield_basis" placeholder="如4-bromoanisole投料量"></label>
+          <div class="fields two"><label>结构证据<select name="evidence"><option value="user_report_only">用户报告与目标匹配（未独立审核）</option><option value="missing">未提供</option><option value="contradictory">用户报告与目标不符</option></select></label><label>表征方法<input name="method" placeholder="如1H NMR"></label></div>
+          <label>同条件重复次数<input name="repeat_attempts" type="number" min="1" step="1"></label>
+        </fieldset>
+        <fieldset><legend>用户目标</legend><label class="check"><input name="has_goal" type="checkbox" aria-describedby="goal-help">设置最低结果目标</label><p class="muted" id="goal-help">目标可选。不设目标时，请取消勾选上方选项，无需只清空数字；勾选后须填写目标值。未设目标仍可复盘，但不判断是否达标。</p><div class="fields two" id="goal-fields"><label>目标（%）<input name="minimum_yield_pct" type="number" min="0" max="100" step="any"></label><label>目标口径<select name="goal_yield_type" class="assay-options"></select></label></div></fieldset>
+        <fieldset><legend>文献先例</legend><p class="hint">可载入团队案例库，按完整底物对检索；或上传原有SM-004 SciencePal JSON。结果将明确标注来源方式。</p><div class="source-actions"><button type="button" id="load-library" class="button secondary">载入团队先例库</button><label class="file-button">选择 JSON 文件<input id="source-file" type="file" accept=".json,application/json"></label><button type="button" id="clear-source" class="button text-button">清空先例</button></div><p id="source-name" class="hint"></p><details><summary>查看或粘贴先例 JSON</summary><textarea id="source-text" rows="8" spellcheck="false" aria-label="先例JSON"></textarea></details></fieldset>
+        <button class="button primary full" id="evaluate" type="submit">开始复盘 <span aria-hidden="true">→</span></button>
+      </form>
+    </section>
+    <div class="output-column">
+      <section class="panel output-panel" aria-labelledby="result-title"><div class="section-heading"><div><span class="step">02 / 评估</span><h2 id="result-title">复盘结果</h2></div><span id="result-state" class="tag">等待输入</span></div>
+        <p id="stale" class="notice" hidden>输入已修改。请重新复盘，以下是上一次评估结果。</p>
+        <div id="empty-result" class="empty"><span aria-hidden="true">⌁</span><h3>先整理记录，再判断结果</h3><p>点击“开始复盘”，查看目标比较、证据边界和待补信息。</p></div>
+        <div id="result" hidden>
+          <div id="simulation-banner" class="notice" hidden>模拟案例 · 非团队真实实验数据</div>
+          <div class="goal-card"><span>与用户目标比较</span><h3 id="goal-title"></h3><p id="goal-description"></p></div>
+          <section class="result-section"><h3><i class="dot blue"></i>优先核查行动</h3><p class="hint">规则生成的证据核查顺序，不是失败原因诊断。</p><div id="next-checks"></div></section>
+          <section class="result-section"><h3><i class="dot green"></i>证据与来源</h3><p id="product-evidence"></p><p id="retrieval-summary" class="hint"></p><div id="sources"></div></section>
+          <section class="result-section"><h3><i class="dot amber"></i>推断边界</h3><ul id="boundaries"></ul><p id="policy-note" class="hint"></p></section>
+          <section class="result-section"><h3><i class="dot blue"></i>缺失与追问</h3><ul id="followups"></ul></section>
+          <div class="result-actions"><button id="save" class="button primary" disabled>保存本次复盘</button><button id="download" class="button secondary" disabled>导出 JSON</button></div><p id="saved-info" class="hint" aria-live="polite"></p>
+          <details><summary>查看完整规则输出</summary><pre id="raw-result"></pre></details>
+        </div>
+      </section>
+      <section class="panel history-panel"><div class="section-heading"><div><span class="step">03 / 记录</span><h2>历史复盘</h2></div><button id="refresh-history" class="button text-button">刷新</button></div><p class="hint">保存在本机，显示最近100条。打开旧记录后可修改并另存为新记录。</p><div id="history" class="history-list"></div></section>
+    </div>
+  </div>
+  <footer>当前范围：芳基溴与芳基硼酸的Suzuki–Miyaura单次实验。文献通过文件导入，未启用实时检索。</footer>
+</main>
+</body></html>

@@ -1,0 +1,34 @@
+{
+  "schema_version": "chemcritic.experiment.v0.1",
+  "experiment_id": "C2_simulated_42_goal60",
+  "simulated": true,
+  "reaction": {
+    "name": "Suzuki-Miyaura",
+    "substrates": ["4-bromoanisole", "phenylboronic acid"],
+    "target_product": "4-methoxybiphenyl"
+  },
+  "conditions": {
+    "catalyst": "Pd(PPh3)4",
+    "catalyst_loading_mol_pct": 1,
+    "catalyst_loading_basis": null,
+    "solvent": "THF",
+    "temperature_C": 60,
+    "time_h": 12,
+    "base_status": "unknown",
+    "base_name": null,
+    "atmosphere": null,
+    "partner_equivalents": null,
+    "scale_mmol": null,
+    "solvent_volume_ml": null
+  },
+  "results": {
+    "yield_pct": 42,
+    "yield_type": "isolated",
+    "yield_basis": "4-bromoanisole",
+    "characterization": [
+      {"method": "1H NMR", "supports_target": true, "provenance": "user_report", "raw_spectrum_provided": false}
+    ],
+    "repeat_attempts": null
+  },
+  "user_goal": {"minimum_yield_pct": 60, "yield_type": "isolated"}
+}

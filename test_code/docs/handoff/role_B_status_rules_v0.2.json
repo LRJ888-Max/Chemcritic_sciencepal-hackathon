@@ -1,0 +1,186 @@
+{
+  "schema_version": "chemcritic.status_rules.v0.2",
+  "updated": "2026-10-19",
+  "owner": "role-B",
+  "supersedes": "v0.1 (2026-10-19 morning)",
+  "revision_basis": "A review 2026-10-19: 4 issues (S2 self-contradiction, C1 vs independent-source rule, unknown scored as 0, source package status)",
+  "source_of_domain": "role-A 2026-10-18 (Suzuki first-round decision + 5 verified records)",
+
+  "scope": {
+    "reaction_class": "Suzuki-Miyaura: aryl bromide + arylboronic acid -> biaryl",
+    "demo_substrates": ["4-bromoanisole", "phenylboronic acid"],
+    "demo_product": "4-methoxybiphenyl",
+    "excluded_substrates_note": "aryl iodide / aryl chloride / heteroaryl: allowed as input but forced low comparability, never as numeric anchor"
+  },
+
+  "status_enum": {
+    "S1": {
+      "name_zh": "目标产物已确认",
+      "name_en": "product_confirmed",
+      "requires": [
+        "results.product_confirmed == true",
+        "results.characterization contains at least one structural evidence item",
+        "no contradiction between characterization and target_product"
+      ]
+    },
+    "S2": {
+      "name_zh": "部分达到目标",
+      "name_en": "partially_meets_target",
+      "requires": [
+        "S1 holds",
+        "user_goal.minimum_yield_pct IS NOT NULL (or minimum_purity_pct IS NOT NULL)",
+        "observed value < user goal"
+      ],
+      "forbidden_trigger": "literature precedent alone must never raise S2; without an explicit user goal the system reports result + evidence only, and does not judge met/unmet"
+    },
+    "S3": {
+      "name_zh": "未确认 / 证据不足",
+      "name_en": "unconfirmed_or_insufficient",
+      "requires_any": [
+        "characterization missing OR contradictory",
+        "target_product missing or not unique",
+        "yield_pct missing AND yield_type missing"
+      ]
+    }
+  },
+
+  "orthogonal_flags": {
+    "blocked_dimensions": {
+      "enum": ["target_comparison", "precedent_numeric", "causal_attribution", "repeatability"],
+      "rule": "missing condition fields set flags; they never change status",
+      "forced": "when user_goal is absent, [target_comparison, precedent_numeric] are always set"
+    },
+    "simulated": {
+      "type": "boolean",
+      "rule": "if true: UI banner required, export field required, never silently dropped"
+    }
+  },
+
+  "evaluation_order": [
+    {"step": 1, "id": "read_simulated", "effect": "render_only"},
+    {"step": 2, "id": "G1_PRODUCT_EVIDENCE", "on_fail": {"status": "S3", "reason_code": "evidence_gap", "forbid_numeric_output": true}},
+    {"step": 3, "id": "G2_OUTCOME_EXISTS", "on_fail": {"status": "S3", "reason_code": "input_gap", "forbid_numeric_output": true}},
+    {"step": 4, "id": "G3_USER_GOAL",
+      "branch_goal_present": {"below": {"status": "S2", "reason_code": "goal_below"}, "meets": {"status": "S1", "reason_code": "goal_met"}},
+      "branch_goal_absent": {"status": "S1", "reason_code": "goal_not_set", "set_blocked": ["target_comparison", "precedent_numeric"]}
+    },
+    {"step": 5, "id": "G4_NUMERIC_GATE", "on_fail": "keep current status, show precedent qualitatively only", "on_pass": "may show a descriptive range, still does not change status"},
+    {"step": 6, "id": "LOCK", "effect": "downstream LLM text must not overwrite status/reason_code/triggered_fields"}
+  ],
+
+  "numeric_comparison": {
+    "enabled_in_mvp": false,
+    "why": "H4 requires two independent papers with identical substrate pair AND identical assay type; the current library has only SM-004 (GC / hexadecane internal standard) in that cell",
+    "hard_gates_all_required": {
+      "H1_substrate_pair_identical": "V1 == 2 (exact same aryl halide + boronic acid pair)",
+      "H2_assay_type_known_and_identical": "yield_type known AND same as precedent (isolated / gc / nmr / lc / conversion); unknown => gate fails",
+      "H3_key_conditions_known": "catalyst system, base (present|absent explicitly), solvent, temperature all known; unknown is NOT treated as a known mismatch, it simply fails the gate",
+      "H4_two_independent_papers": ">=2 records from DIFFERENT publications (SM-004 entry 1 and entry 7 do NOT count as two sources)"
+    },
+    "unknown_policy": {
+      "rule": "unknown never scores as 0 and never becomes 'absent'; an unknown critical field blocks the gate instead of lowering a total score",
+      "example": "conditions.base_status == unknown -> numeric gate fails; must NOT be rendered as 'no base added'"
+    },
+    "on_gate_fail": "citation may be shown for existence and method only; numeric values may be displayed as 'reported value' but never compared against the user's run"
+  },
+
+  "ranking_score": {
+    "purpose": "ordering search results and precedents for display ONLY; never used in status determination and never gates numeric comparison",
+    "weights": {"V1_substrate_pair": 3, "V2_catalyst": 2, "V3_base": 2, "V4_conditions": 2, "V5_assay_type": 1},
+    "total": 10,
+    "unknown_handling": "unknown dimension contributes null and is excluded from the denominator; displayed as '未知' rather than 0"
+  },
+
+  "required_fields": {
+    "L0_any_status": ["reaction.name", "reaction.target_product", "results.product_confirmed", "results.characterization"],
+    "L1_goal_judgement": ["results.yield_pct", "results.yield_type", "user_goal.minimum_yield_pct"],
+    "L2_precedent_numeric": ["all of numeric_comparison.hard_gates_all_required"]
+  },
+
+  "unknown_vs_absent": {
+    "base_status": {"enum": ["present", "absent", "unknown"], "rule": "unknown must never be rendered as 'no base added'"},
+    "yield_type": {"enum": ["isolated", "gc", "nmr", "lc", "conversion", "unknown"], "rule": "unknown blocks every numeric comparison"},
+    "purity": {"rule": "do not infer purity from NMR match; requires qNMR/chromatography/explicit method"}
+  },
+
+  "followup_questions": {
+    "user_goal.minimum_yield_pct": "你这次的目标收率是多少？没有目标的话系统只报告结果，不判定是否达标。",
+    "conditions.base_status": "本次反应是否加入了碱？加入的是哪一种、几当量？",
+    "results.yield_type": "这个百分比是分离收率、GC/LC 收率（是否内标）、NMR 收率还是转化率？",
+    "conditions.catalyst_loading": "催化剂的用量是多少（mol%），相对哪个组分计算？",
+    "conditions.scale_mmol": "反应规模是多少 mmol，总体积多少？",
+    "conditions.atmosphere": "反应在什么气氛下进行（N2/Ar/空气）？",
+    "results.characterization": "除了 NMR，是否做了 HRMS、熔点或与标准品比对？",
+    "repeat_attempts": "同一条件重复了几次，每次收率分别是多少？"
+  },
+
+  "hard_boundaries": {
+    "HB1": "no claim without source_id + locator (page/table/footnote)",
+    "HB2": "no cross-assay comparison (GC vs NMR vs isolated)",
+    "HB3": "unknown != absent; missing field never becomes a causal attribution",
+    "HB4": "without user_goal, never label the run 'abnormal', 'failed' or 'below target' using literature values",
+    "HB5": "simulated data must be marked in UI and export"
+  },
+
+  "output_contract": {
+    "status": "S1 | S2 | S3",
+    "reason_code": ["goal_below", "goal_met", "goal_not_set", "evidence_gap", "input_gap"],
+    "triggered_fields": ["list of dotted input paths that fired a rule"],
+    "blocked_dimensions": ["subset of enum above"],
+    "unknowns": ["list of dotted input paths"],
+    "followups": [{"field": "string", "question": "string"}],
+    "precedents": [{"source_id": "SM-00x", "rank_score": "float|null", "usable_for_numeric": "boolean"}],
+    "simulated": "boolean",
+    "determinism": "status / reason_code / triggered_fields MUST be produced by pure python; LLM may only phrase followups and candidate directions"
+  },
+
+  "test_indicators": [
+    {"id": "M1", "name": "main_path_pass_rate", "threshold": ">=9/10"},
+    {"id": "M2", "name": "citation_openable_rate", "threshold": 1.0},
+    {"id": "M3", "name": "claim_locator_consistency", "threshold": 1.0},
+    {"id": "M4", "name": "cross_assay_errors", "threshold": 0},
+    {"id": "M5", "name": "missing_field_handling", "threshold": 1.0, "note": "unknown must stay unknown; never filled with a default"},
+    {"id": "M6", "name": "no_hit_degradation", "threshold": 1.0},
+    {"id": "M7", "name": "status_stability_3x", "threshold": 1.0},
+    {"id": "M8", "name": "review_latency_min", "threshold": "<=8 min (baseline to be measured)"},
+    {"id": "M9", "name": "user_comprehension", "threshold": ">=4/5 (10/26)"}
+  ],
+
+  "case_specs": {
+    "C1": {
+      "name": "known-answer extraction and citation locating",
+      "input": "SM-004 replay (4-bromoanisole + phenylboronic acid, Pd-bpydc-Ce, 60 C, 4 h, MeOH, NaOtBu, 0.5 mol%, 91.9% GC with hexadecane internal standard)",
+      "expected_status": "S1",
+      "expected_reason_code": "goal_not_set",
+      "expected_blocked": ["target_comparison", "precedent_numeric"],
+      "check_items": [
+        "extracts the 6 condition fields exactly as written in Table 1 footnote a",
+        "extracts yield 91.9 with yield_type = gc and assay = hexadecane internal standard",
+        "cites p.4 Table 1 entry 7 plus footnotes a and c",
+        "does NOT compare 91.9 against any other value",
+        "does NOT claim causal attribution to temperature or catalyst"
+      ],
+      "removed_check": "numeric range comparison against literature (withdrawn because H4 is not satisfiable in MVP)"
+    }
+  },
+
+  "resolved_items": {
+    "S2_precedent_trigger": "removed in v0.2; A's objection accepted",
+    "unknown_as_zero": "removed in v0.2; hard gates replace scoring for judgement",
+    "SM-001_pdf": "A clarified the PDF exists in the project directory; withdrawn",
+    "SM-005_locator": "A clarified PMC open full text + XML; locator now PMC full text Table 1 entry 1 and table footnote, isolated yield 95%"
+  },
+
+  "open_items_for_A": [
+    "SM-002 (10.1039/C0OB00524J) and SM-003 (10.1039/C5DT02611C) supplemental PDFs are not in local refs although official links exist",
+    "A second INDEPENDENT paper with identical substrate pair and identical assay type, otherwise numeric comparison stays disabled"
+  ],
+
+  "new_evidence_note": {
+    "source_id": "SM-004",
+    "file": "P09_molecules-23-02435.pdf",
+    "locator": "p.4, Table 1",
+    "observation": "entry 1 = 35.0% (catalyst 1, 30 C, 8 h, 0.5 mol%, GC internal standard); entry 7 = 91.9% (Pd-bpydc-Ce, 60 C, 4 h)",
+    "use": "supports HB4 only in the weak sense that 35.0% appears as a real reported value; entry 1 and entry 7 are the SAME paper, so they cannot be counted as two independent sources and cannot establish which single condition caused the difference"
+  }
+}
