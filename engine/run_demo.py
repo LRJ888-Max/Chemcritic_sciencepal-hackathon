@@ -80,6 +80,7 @@ EXPECTED = {
     "T13": ("SM-006", NEEDS_EVIDENCE, "assay"),
     "T14": ("SM-001b", NEEDS_EVIDENCE, "assay"),
     "T15": ("SM-001b", NEEDS_EVIDENCE, "assay"),
+    "T16": ("SM-001b", NEEDS_EVIDENCE, "assay"),
 }
 
 
@@ -192,6 +193,11 @@ def test_matrix(records):
         elif case == "T15":
             # 文献侧：同口径同措辞，但证据等级未达标（导入未核验）→ 不支撑数值比较
             subject = USER
+        elif case == "T16":
+            # conversion 口径缺内标与基准 → 转化率无法复算，必须补证
+            subject = Record(record_id="USER-016", outcome_type="conversion", outcome_value=95,
+                             substrate=USER.substrate, conditions=USER.conditions,
+                             assay={"method": "conversion"}, tier="A")
 
         ref_obj = by_id[ref_id]
         if case == "T14":
@@ -199,6 +205,9 @@ def test_matrix(records):
         elif case == "T15":
             ref_obj = replacement(by_id["SM-001b"], record_id="REF-015",
                                   evidence_grade="imported_unchecked")
+        elif case == "T16":
+            ref_obj = replacement(by_id["SM-001b"], record_id="REF-016", outcome_type="conversion",
+                                  label_raw="conversion (%)", assay={"method": "GC"})
 
         v = gates.judge(subject, ref_obj)
         ok = v.verdict == exp_verdict and (exp_dim is None or v.blocking_dimension == exp_dim)

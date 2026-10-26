@@ -56,6 +56,7 @@ class Record:
     catalytic_profile: Dict[str, Any] = field(default_factory=dict)
     tier_meta: Dict[str, Any] = field(default_factory=dict)
     label_raw: Optional[str] = None       # 原文措辞，逐字照抄（口径判定的唯一依据）
+    label_raw_provenance: str = "unknown"  # verbatim | transcribed | inferred | unknown
     evidence_grade: str = "imported_unchecked"  # A_confirmed | imported_unchecked | candidate
 
     @classmethod
@@ -75,6 +76,7 @@ class Record:
             verification=d.get("verification", "unverified"),
             catalytic_profile=d.get("catalytic_profile") or {},
             label_raw=outcome.get("label_raw"),
+            label_raw_provenance=(d.get("_extraction") or {}).get("label_raw_provenance", "unknown"),
             evidence_grade=d.get("evidence_grade") or "imported_unchecked",
         )
 

@@ -201,17 +201,19 @@ def _calibration_check(record: Record, side: str) -> Optional[GateResult]:
     if t == "isolated":
         # 纯化方式是否记录/一致 → 维度 8（软）。此处不再重复要求。
         return None
-    if t in ("gc", "nmr"):
+    if t in ("gc", "nmr", "conversion"):
+        # conversion 与 gc 同属"仪器定量"，同样需要内标/外标与"以何物计"，
+        # 否则转化率无法复算。（B 于 2026-10-25 指出的规则漏项）
         std = record.assay.get("internal_standard")
         basis = record.assay.get("quantification_basis")
         if t == "nmr" and std:
             return None
-        if t == "gc" and std and basis:
+        if t in ("gc", "conversion") and std and basis:
             return None
         missing = []
         if not std:
-            missing.append("内标")
-        if t == "gc" and not basis:
+            missing.append("内标/外标")
+        if t in ("gc", "conversion") and not basis:
             missing.append("定量基准")
         return GateResult(4, UNKNOWN, f"{side} 缺{('、'.join(missing)) or '校准信息'}")
     return None
@@ -256,7 +258,7 @@ def gate_catalyst(user: Record, ref: Record) -> GateResult:
     um, rm = _num(user.conditions, "catalyst_mol_pct"), _num(ref.conditions, "catalyst_mol_pct")
     if um is None or rm is None:
         levels.append("L2"); notes.append("mol% 缺失")
-    elif um and rm and max(um, rm) / min(um, rm) > 3:
+    elif um and rm and max(um, rm) / min(um, rm) > 2:
         levels.append("L2"); notes.append(f"载量相差 {max(um, rm) / min(um, rm):.1f} 倍")
     elif um != rm:
         levels.append("L1"); notes.append(f"载量不同：{um} vs {rm}")
@@ -270,7 +272,8 @@ def gate_conditions(user: Record, ref: Record) -> GateResult:
     ut, rt = _num(user.conditions, "temp_c"), _num(ref.conditions, "temp_c")
     if ut is not None and rt is not None:
         d = abs(ut - rt)
-        if d > 30:
+        # 阈值 20 °C（A 于 2026-10-25 定：Suzuki 里 20 °C 已足以显著改变转化率；20 °C 即 L2）
+        if d >= 20:
             levels.append("L2"); notes.append(f"温度相差 {d:.0f} °C")
         elif d > 0:
             levels.append("L1"); notes.append(f"温度相差 {d:.0f} °C")
@@ -297,12 +300,21 @@ def gate_conditions(user: Record, ref: Record) -> GateResult:
 
 
 def gate_workup(user: Record, ref: Record) -> GateResult:
+    """维度 8 · 后处理与纯化（软）。
+
+    分级（A 于 2026-10-25 定）：
+    - 双方都记录了纯化方式且**明确不同** → L2（柱层析 vs 蒸馏的回收率可差 10 个百分点以上）
+    - 只有一方记录 → L1（无法判定"是否不同"，只提示信息缺失）
+    - 双方都未记录 → L1
+    """
     levels, notes = [], []
     up, rp = _canon(user.purification), _canon(ref.purification)
     if up is None and rp is None:
         levels.append("L1"); notes.append("双方均未记录纯化方式")
+    elif up is None or rp is None:
+        levels.append("L1"); notes.append(f"仅一方记录纯化方式（{up or rp}）")
     elif up != rp:
-        levels.append("L1"); notes.append(f"纯化方式不同：{up} vs {rp}")
+        levels.append("L2"); notes.append(f"纯化方式明确不同：{up} vs {rp}")
     return _soft(8, levels, notes)
 
 

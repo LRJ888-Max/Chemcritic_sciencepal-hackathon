@@ -81,8 +81,17 @@ def evaluate(independent_only: bool = False) -> dict:
         "suite": "independent" if independent_only else "all",
         "accuracy": round(sum(r["verdict_ok"] for r in rows) / len(rows), 3) if rows else 0.0,
         "dimension_accuracy": round(sum(r["dim_ok"] for r in rows) / len(rows), 3) if rows else 0.0,
-        "fpr": round(len(fp) / len(engine_pos), 3) if engine_pos else 0.0,
-        "fnr": round(len(fn) / len(gold_pos), 3) if gold_pos else 0.0,
+        # 分母为 0 时必须输出 null，不能输出 0.0。
+        # 0.0 会被读成"假精确率为 0，完美"，实际是"没有样本，指标无定义"。
+        # （B 于 2026-10-25 指出：除零兜底曾被当成成绩写进报告。）
+        "fpr": round(len(fp) / len(engine_pos), 3) if engine_pos else None,
+        "fnr": round(len(fn) / len(gold_pos), 3) if gold_pos else None,
+        "denominator_fpr": len(engine_pos),
+        "denominator_fnr": len(gold_pos),
+        "defined": bool(engine_pos and gold_pos),
+        # BDA（维度归因准确率）：在小样本上比 FPR 更有分辨力
+        # 它回答"判不能比时，指出的阻断维度对不对"，分母是全部有标注维度的对
+        "bda": round(sum(r["dim_ok"] for r in rows) / len(rows), 3) if rows else None,
         "false_positive": [r["pair_id"] for r in fp],
         "false_negative": [r["pair_id"] for r in fn],
         "errors": [r["pair_id"] for r in rows if not (r["verdict_ok"] and r["dim_ok"])],
@@ -90,10 +99,23 @@ def evaluate(independent_only: bool = False) -> dict:
     }
 
 
+def _fmt(value, denominator) -> str:
+    if value is None:
+        return f"undefined（分母=0，不得写 0.0）"
+    return f"{value}（n={denominator}）"
+
+
 def main() -> int:
     independent_only = "--independent" in sys.argv
     result = evaluate(independent_only)
-    print(json.dumps({k: v for k, v in result.items() if k != "rows"}, ensure_ascii=False, indent=2))
+    printable = {k: v for k, v in result.items() if k != "rows"}
+    print(json.dumps(printable, ensure_ascii=False, indent=2))
+    print()
+    print(f"  FPR  = {_fmt(result['fpr'], result['denominator_fpr'])}")
+    print(f"  FNR  = {_fmt(result['fnr'], result['denominator_fnr'])}")
+    print(f"  BDA  = {_fmt(result['bda'], result['n_pairs'])}  ← 维度归因准确率")
+    if not result["defined"]:
+        print("\n  ⚠ 指标未定义：缺少 COMPARABLE 样本（任一侧）。这不是成绩，是样本不足。")
     if result["errors"]:
         print("\n不一致的用例：")
         for r in result["rows"]:
