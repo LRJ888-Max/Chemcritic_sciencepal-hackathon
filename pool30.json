@@ -1,0 +1,2107 @@
+{
+  "schema_version": "0.3",
+  "notice": "候选池 entry 级记录。数据源 docs/science/Suzuki_Miyaura_文献核验报告.md 表 1（P01–P34）+ docs/science/2026-10-26-开放获取文献核验记录.md（A 回原文核验）。P11/P12/P13/P19/P24 已由 A 回原文核到『表号+entry+脚注』并改 evidence_grade=A_confirmed；其余仍 imported_unchecked。原文未报告字段一律 null。",
+  "replaces": "data/pool15.json（16 条快照，10/25–10/26）",
+  "verification_status": {
+    "A_confirmed": [
+      "P11",
+      "P12",
+      "P13",
+      "P19a",
+      "P19b",
+      "P24a",
+      "P24b",
+      "P24c",
+      "SM-006-e7"
+    ],
+    "imported_unchecked": "其余 22 条",
+    "verified_on": "2026-10-26",
+    "source": "docs/science/2026-10-26-开放获取文献核验记录.md"
+  },
+  "extraction": {
+    "extracted_by": "角色B",
+    "extracted_at": "2026-10-25 → 2026-10-26",
+    "coverage": "34 条池中可抽 29 条 + P24c（0% 行）+ A 追加的 SM-006-e7 = 31。未抽：P02/P09/P10（与 SM-001/004/005 同篇重复）、P08（= SM-006-e7，已由 A 拆条入库）、P05（综述）、P14/P15（付费墙）、P06（A 决定放弃）",
+    "label_raw_provenance": {
+      "verbatim": "原文逐字（A 已核）",
+      "transcribed": "A 报告括注，待替换为原文逐字",
+      "inferred_same_table": "同表推定"
+    }
+  },
+  "subject": {
+    "aryl_halide": "4-bromoanisole",
+    "boronic_acid": "phenylboronic acid",
+    "product": "4-methoxybiphenyl"
+  },
+  "records": [
+    {
+      "record_id": "SM-006-e7",
+      "source_id": "SM-006",
+      "tier": "C",
+      "citation": "Fiebor et al., Beilstein J. Org. Chem. 2018, 14, 1859",
+      "doi": "10.3762/bjoc.14.160",
+      "locator": "Table 2 entry 7 + footnote a（PMC6071702 全文已核）",
+      "outcome": {
+        "value": 95,
+        "unit": "%",
+        "outcome_type": "gc",
+        "label_raw": "Yield (%) 列 = 95；表脚注 a: \"aGC yield.\"",
+        "note": "Table 2 entry 7：K2CO3、H2O、17a 1 mol%、140 °C、4 h。与 entry 1 同篇不同条目（entry 1 为 K3PO4/92%），非独立来源。碱当量原文未在该条目单列，记 null。"
+      },
+      "assay": {
+        "method": "GC",
+        "internal_standard": null,
+        "quantification_basis": null
+      },
+      "conditions": {
+        "catalyst": "SNS-Pd pincer 17a",
+        "catalyst_loading_raw": "1 mol%",
+        "catalyst_mol_pct": 1.0,
+        "ligand": null,
+        "ligand_mol_pct": null,
+        "base": "K2CO3",
+        "base_eq": null,
+        "solvent": "H2O",
+        "temp_c": 140,
+        "time_h": 4.0,
+        "atmosphere": null,
+        "scale_mmol": null,
+        "equivalents": {
+          "aryl_halide": null,
+          "boronic_acid": null
+        },
+        "concentration_m": null
+      },
+      "purification": null,
+      "evidence_grade": "candidate",
+      "verification": "candidate",
+      "catalytic_profile": {
+        "catalyst_form": "molecular_complex",
+        "ligand_family": "non_phosphine",
+        "support": "none",
+        "medium": "aqueous",
+        "activation_mode": "thermal"
+      },
+      "_extraction": {
+        "label_raw_provenance": "verbatim",
+        "assay_basis_source": "表脚注仅写 GC yield；未见内标说明",
+        "missing_fields": [
+          "internal_standard",
+          "quantification_basis",
+          "base_eq",
+          "scale_mmol"
+        ]
+      }
+    },
+    {
+      "record_id": "P11",
+      "source_id": "P11",
+      "tier": "C",
+      "citation": "Gholinejad, Jafarpour & Sansano, RSC Adv. 2026, 16(38), 42714-42723",
+      "doi": "10.1039/d6ra03494b",
+      "locator": "Table 1 entry 3 + 脚注 a（PMC13397079 全文已核，A 2026-10-26）",
+      "outcome": {
+        "value": 96.0,
+        "unit": "%",
+        "outcome_type": "gc",
+        "label_raw": "Yield (%) 列 entry 3 = 96；脚注 a: Yields determined by GC",
+        "note": "同底物 + 同 60 °C；表内载量梯度 0.035→15%、0.07→50%、0.1→96%、0.17→97%；温度梯度 25→20%、50→60%、60→96%；24 h→98%"
+      },
+      "assay": {
+        "method": "GC",
+        "internal_standard": null,
+        "quantification_basis": "GC 面积（未注明归一化方式）",
+        "assay_basis_source": "Table 1 脚注 a: Yields determined by GC；全文未见内标"
+      },
+      "conditions": {
+        "catalyst": "clinochlore-CQDs@Pd",
+        "catalyst_loading_raw": "0.1 mol%",
+        "catalyst_mol_pct": 0.1,
+        "ligand": null,
+        "ligand_mol_pct": null,
+        "base": "K2CO3",
+        "base_eq": 1.5,
+        "solvent": "H2O/EtOH = 1:1, 2 mL",
+        "temp_c": 60,
+        "time_h": 6.0,
+        "atmosphere": null,
+        "scale_mmol": 0.2,
+        "equivalents": {
+          "aryl_halide": 1.0,
+          "boronic_acid": 1.5
+        },
+        "concentration_m": null
+      },
+      "purification": null,
+      "evidence_grade": "A_confirmed",
+      "verification": "verified_with_caveat",
+      "catalytic_profile": {
+        "catalyst_form": "supported",
+        "ligand_family": "none",
+        "support": "solid_support",
+        "medium": "aqueous",
+        "activation_mode": "thermal"
+      },
+      "_extraction": {
+        "label_raw_provenance": "verbatim",
+        "missing_fields": [
+          "assay.internal_standard"
+        ],
+        "needs_A_check": [
+          "页/表/entry 编号",
+          "K2CO3 当量（正文只说 as a base）",
+          "GC 内标与定量基准",
+          "底物用量"
+        ],
+        "assay_basis_source": "Table 1 脚注 a 仅写 'Yields determined by GC'；全文未见内标说明",
+        "calibration": "uncalibrated",
+        "verified_at": "2026-10-26",
+        "verified_by_A": "2026-10-26 开放获取核验记录 §2.5"
+      }
+    },
+    {
+      "record_id": "P12",
+      "source_id": "P12",
+      "tier": "C",
+      "citation": "Hajighasemi, Nahipour, Ghorbani-Choghamarani & Taherinia, Nanoscale Adv. 2023, 5(18), 4925-4933",
+      "doi": "10.1039/d3na00403a",
+      "locator": "Table 3 entry 7（Table 3 无表脚注、Yield 列无上标）",
+      "outcome": {
+        "value": 99.0,
+        "unit": "%",
+        "outcome_type": "unknown",
+        "label_raw": "Yield (%) entry 7 = >99（无上标、无表脚注）",
+        "value_raw": ">99",
+        "value_is_lower_bound": true,
+        "note": "原文未声明口径。Table 2 有脚注 a Isolated yield，Table 3 没有 → 不得推定沿用（A 2026-10-26 决定）"
+      },
+      "assay": {
+        "method": "未声明",
+        "internal_standard": null,
+        "quantification_basis": null,
+        "assay_basis_source": "Table 2 脚注 a = Isolated yield；Table 3 无任何脚注 → 不能沿用"
+      },
+      "conditions": {
+        "catalyst": "Pd(0)-SMTU-boehmite",
+        "catalyst_loading_raw": "5 mg",
+        "catalyst_mol_pct": 0.94,
+        "ligand": null,
+        "ligand_mol_pct": null,
+        "base": "K2CO3",
+        "base_eq": 1.5,
+        "solvent": "PEG-400",
+        "temp_c": 80,
+        "time_h": 1.17,
+        "time_raw": "70 min",
+        "atmosphere": null,
+        "scale_mmol": 1.0,
+        "equivalents": {
+          "aryl_halide": 1.0,
+          "boronic_acid": 1.2
+        },
+        "concentration_m": null
+      },
+      "purification": null,
+      "evidence_grade": "A_confirmed",
+      "verification": "verified_with_caveat",
+      "catalytic_profile": {
+        "catalyst_form": "supported",
+        "ligand_family": "none",
+        "support": "solid_support",
+        "medium": "organic",
+        "activation_mode": "thermal"
+      },
+      "_extraction": {
+        "label_raw_provenance": "verbatim",
+        "missing_fields": [
+          "catalyst_mol_pct",
+          "equivalents.boronic_acid",
+          "atmosphere",
+          "purification"
+        ],
+        "needs_A_check": [
+          "Table 3 行号与 4-溴苯甲醚列的绑定",
+          "5 mg 对应 mol%（缺则维度 6 只能记 L2）",
+          "纯化手段",
+          ">99% 的原文写法"
+        ],
+        "assay_basis_source": "Table 3 无脚注，无法确认口径",
+        "verified_by_A": "2026-10-26 开放获取核验记录 §2.1",
+        "derived": {
+          "catalyst_mol_pct": "由 TON 105 反算 ≈0.94 mol%"
+        }
+      }
+    },
+    {
+      "record_id": "P13",
+      "source_id": "P13",
+      "tier": "C",
+      "citation": "Esteban et al., Polymers 2023, 15(20), 4143",
+      "doi": "10.3390/polym15204143",
+      "locator": "§2.5 General Procedure + 优化表（PMC10611190 全文已核）",
+      "outcome": {
+        "value": 100.0,
+        "unit": "%",
+        "outcome_type": "conversion",
+        "label_raw": "conversion and yield reaction were obtained by GC-MS",
+        "note": "原文报的是转化率而非收率；杂/同偶联 = 100:0。不得折算成分离收率"
+      },
+      "assay": {
+        "method": "GC-MS",
+        "internal_standard": null,
+        "quantification_basis": "以全部峰之和为分母的 GC-MS 定量",
+        "assay_basis_source": "§2.5: by taking all the peaks of the chromatogram as the sum of all reaction products"
+      },
+      "conditions": {
+        "catalyst": "Pd@PP-3（微孔膦聚合物负载 Pd）",
+        "catalyst_loading_raw": "1 mol%",
+        "catalyst_mol_pct": 1.0,
+        "ligand": "polymer-immobilised phosphine",
+        "ligand_mol_pct": null,
+        "base": "Na2CO3",
+        "base_eq": 2.0,
+        "solvent": "EtOH/H2O = 2 mL/3 mL",
+        "temp_c": 80,
+        "time_h": 2.0,
+        "atmosphere": "N2",
+        "scale_mmol": 0.5,
+        "equivalents": {
+          "aryl_halide": 1.0,
+          "boronic_acid": 1.5
+        },
+        "concentration_m": null
+      },
+      "purification": null,
+      "evidence_grade": "A_confirmed",
+      "verification": "verified",
+      "catalytic_profile": {
+        "catalyst_form": "supported",
+        "ligand_family": "phosphine",
+        "support": "solid_support",
+        "medium": "aqueous",
+        "activation_mode": "thermal"
+      },
+      "_extraction": {
+        "label_raw_provenance": "verbatim",
+        "missing_fields": [
+          "purification"
+        ],
+        "needs_A_check": [
+          "100% 是 conversion 的确认（这条决定维度 3 判 FAIL）",
+          "是否有对应的分离收率数字（若有，应另立一条记录）"
+        ],
+        "verified_by_A": "2026-10-26 开放获取核验记录 §2.2"
+      }
+    },
+    {
+      "record_id": "P01",
+      "source_id": "P01",
+      "tier": "A",
+      "citation": "Miyaura, Yanagi & Suzuki, Synth. Commun. 1981, 11(7), 513-519（表 I 第 8 行）",
+      "doi": "10.1080/00397918108063618",
+      "locator": "Table I, entry 8",
+      "outcome": {
+        "value": 88.0,
+        "unit": "%",
+        "outcome_type": "gc",
+        "label_raw": "88% (GLC, based on aryl halide)",
+        "note": "溴苯基准行；与 P02 同条件不同底物，是同批次内部基准"
+      },
+      "assay": {
+        "method": "GLC",
+        "internal_standard": null,
+        "quantification_basis": "aryl halide"
+      },
+      "conditions": {
+        "catalyst": "Pd(PPh3)4",
+        "catalyst_loading_raw": "3 mol%",
+        "catalyst_mol_pct": 3.0,
+        "ligand": "PPh3 (bound)",
+        "ligand_mol_pct": null,
+        "base": "Na2CO3",
+        "base_eq": 2.0,
+        "solvent": "benzene (reflux) + EtOH 助溶",
+        "temp_c": 80,
+        "time_h": 6.0,
+        "atmosphere": "N2",
+        "scale_mmol": 1.0,
+        "equivalents": {
+          "aryl_halide": 1.0,
+          "boronic_acid": 1.1
+        },
+        "concentration_m": null
+      },
+      "purification": null,
+      "evidence_grade": "imported_unchecked",
+      "verification": "pending_locator_check",
+      "substrate": {
+        "aryl_halide": "bromobenzene",
+        "boronic_acid": "phenylboronic acid",
+        "product": "biphenyl"
+      },
+      "catalytic_profile": {
+        "catalyst_form": "molecular_complex",
+        "ligand_family": "phosphine",
+        "support": "none",
+        "medium": "organic",
+        "activation_mode": "thermal"
+      },
+      "_extraction": {
+        "label_raw_provenance": "transcribed",
+        "missing_fields": [
+          "assay.internal_standard"
+        ],
+        "needs_A_check": [
+          "表 I 行号",
+          "GLC 内标（1981 原文很可能用内标，值得查）"
+        ]
+      }
+    },
+    {
+      "record_id": "P16",
+      "source_id": "P16",
+      "tier": "C",
+      "citation": "ACS Omega 2018, 3, 17528（Pd-钙钛矿，低温水热）",
+      "doi": "10.1021/acsomega.8b02622",
+      "locator": "Table（0.2 mmol 微量行）",
+      "outcome": {
+        "value": 99.0,
+        "unit": "%",
+        "outcome_type": "unknown",
+        "label_raw": ">99% BP yield",
+        "note": "原文列名是 'BP yield/%'，未说明 GC 还是分离 → 口径 unknown（T14 的真实样本）"
+      },
+      "assay": {
+        "method": "未注明（原文列名 BP yield/%）",
+        "internal_standard": null,
+        "quantification_basis": null
+      },
+      "conditions": {
+        "catalyst": "Pd-perovskite（Pd 0.64 wt%）",
+        "catalyst_loading_raw": "12.5 mg（BB/Pd = 273）",
+        "catalyst_mol_pct": null,
+        "ligand": null,
+        "ligand_mol_pct": null,
+        "base": "K2CO3",
+        "base_eq": 2.0,
+        "solvent": "i-PrOH/H2O = 1:1",
+        "temp_c": 80,
+        "time_h": 0.5,
+        "atmosphere": null,
+        "scale_mmol": 0.2,
+        "equivalents": {
+          "aryl_halide": 1.0,
+          "boronic_acid": 1.5
+        },
+        "concentration_m": null
+      },
+      "purification": null,
+      "evidence_grade": "imported_unchecked",
+      "verification": "pending_locator_check",
+      "substrate": {
+        "aryl_halide": "bromobenzene",
+        "boronic_acid": "phenylboronic acid",
+        "product": "biphenyl"
+      },
+      "catalytic_profile": {
+        "catalyst_form": "supported",
+        "ligand_family": "none",
+        "support": "solid_support",
+        "medium": "aqueous",
+        "activation_mode": "thermal"
+      },
+      "_extraction": {
+        "label_raw_provenance": "transcribed",
+        "missing_fields": [
+          "outcome.outcome_type 已定 unknown",
+          "catalyst_mol_pct",
+          "atmosphere"
+        ],
+        "needs_A_check": [
+          "'BP yield/%' 到底怎么测的（这决定它是 PASS 还是 NEEDS_EVIDENCE）",
+          "表行号"
+        ]
+      }
+    },
+    {
+      "record_id": "P17",
+      "source_id": "P17",
+      "tier": "C",
+      "citation": "Polymers 2024, 16, 1080（两亲树枝化共聚物包裹 Pd NPs）",
+      "doi": "10.3390/polym16081080",
+      "locator": "Table（溴苯行, 10 h）",
+      "outcome": {
+        "value": 99.0,
+        "unit": "%",
+        "outcome_type": "isolated",
+        "label_raw": "99% (isolated)",
+        "note": "85 °C / 10 h，条件比演示更狠"
+      },
+      "assay": {
+        "method": "isolated",
+        "internal_standard": null,
+        "quantification_basis": "isolated product mass"
+      },
+      "conditions": {
+        "catalyst": "两亲树枝化共聚物包裹 Pd NPs",
+        "catalyst_loading_raw": "200-500 ppm（0.02-0.05 mol%）",
+        "catalyst_mol_pct": 0.05,
+        "ligand": null,
+        "ligand_mol_pct": null,
+        "base": "K2CO3",
+        "base_eq": 2.0,
+        "solvent": "EtOH/H2O = 2.5/2.5 mL",
+        "temp_c": 85,
+        "time_h": 10.0,
+        "atmosphere": null,
+        "scale_mmol": 1.0,
+        "equivalents": {
+          "aryl_halide": 1.0,
+          "boronic_acid": 1.2
+        },
+        "concentration_m": null
+      },
+      "purification": null,
+      "evidence_grade": "imported_unchecked",
+      "verification": "pending_locator_check",
+      "substrate": {
+        "aryl_halide": "bromobenzene",
+        "boronic_acid": "phenylboronic acid",
+        "product": "biphenyl"
+      },
+      "catalytic_profile": {
+        "catalyst_form": "nanoparticle",
+        "ligand_family": "none",
+        "support": "none",
+        "medium": "aqueous",
+        "activation_mode": "thermal"
+      },
+      "_extraction": {
+        "label_raw_provenance": "transcribed",
+        "missing_fields": [
+          "atmosphere",
+          "purification"
+        ],
+        "needs_A_check": [
+          "200-500 ppm 取哪个值（本记录填上界 0.05 mol%）",
+          "纯化手段"
+        ]
+      }
+    },
+    {
+      "record_id": "P18",
+      "source_id": "P18",
+      "tier": "C",
+      "citation": "Molecules 2020, 25, 2951（机械化学 Pd(II)/碳复合材料）",
+      "doi": "10.3390/molecules25122951",
+      "locator": "Table（180 min 行）+ 时间序列（30 min 49%）",
+      "outcome": {
+        "value": 69.0,
+        "unit": "%",
+        "outcome_type": "nmr",
+        "label_raw": "69% (1H NMR, based on PhBr)",
+        "note": "无加热、无大量溶剂 → 溶剂/传质不是唯一变量；NMR 口径不可与分离收率同框"
+      },
+      "assay": {
+        "method": "1H NMR",
+        "internal_standard": null,
+        "quantification_basis": "aryl halide"
+      },
+      "conditions": {
+        "catalyst": "Pd(II)/carbon composite",
+        "catalyst_loading_raw": "2.5 mg",
+        "catalyst_mol_pct": null,
+        "ligand": null,
+        "ligand_mol_pct": null,
+        "base": "K2CO3",
+        "base_eq": 2.0,
+        "solvent": "EtOH 2 mL（球磨）",
+        "temp_c": null,
+        "temp_raw": "球磨，未加热",
+        "time_h": 3.0,
+        "time_raw": "180 min",
+        "atmosphere": "air",
+        "scale_mmol": 0.5,
+        "equivalents": {
+          "aryl_halide": 1.0,
+          "boronic_acid": 1.2
+        },
+        "concentration_m": null
+      },
+      "purification": null,
+      "evidence_grade": "imported_unchecked",
+      "verification": "pending_locator_check",
+      "substrate": {
+        "aryl_halide": "bromobenzene",
+        "boronic_acid": "phenylboronic acid",
+        "product": "biphenyl"
+      },
+      "catalytic_profile": {
+        "catalyst_form": "supported",
+        "ligand_family": "none",
+        "support": "solid_support",
+        "medium": "solventless",
+        "activation_mode": "mechanochemical"
+      },
+      "_extraction": {
+        "label_raw_provenance": "transcribed",
+        "missing_fields": [
+          "catalyst_mol_pct",
+          "temp_c",
+          "assay.internal_standard"
+        ],
+        "needs_A_check": [
+          "NMR 积分基准（以 PhBr 为基准已在报告里写明，但内标是什么？）",
+          "球磨是否算 medium=solventless（有 2 mL EtOH）—— 本记录按溶剂less 填，请 A 确认，这一格决定档归属"
+        ]
+      }
+    },
+    {
+      "record_id": "P19a",
+      "source_id": "P19",
+      "tier": "C",
+      "citation": "Jiang et al., Molecules 2012, 17, 12121-12139（C2 对称 Pd-NHC）",
+      "doi": "10.3390/molecules171012121",
+      "locator": "Table 1 entry 2 + 脚注 b (GC yield)；内标依据见同文 Table 4 脚注",
+      "outcome": {
+        "value": 95.0,
+        "unit": "%",
+        "outcome_type": "gc",
+        "label_raw": "Yield (%) entry 2 = 95；脚注 b: GC yield",
+        "note": "同表 entry 1/2 的碱与时间同时变化（Na2CO3 24 h vs K2CO3 1.5 h）→ 可作同表同口径对照，不得支持『换碱导致差异』的因果"
+      },
+      "assay": {
+        "method": "GC",
+        "internal_standard": "diethylene glycol di-n-butyl ether",
+        "quantification_basis": "GC yield",
+        "assay_basis_source": "同文 Table 4 脚注：GC yield using diethylene glycol di-n-butyl ether as an internal standard"
+      },
+      "conditions": {
+        "catalyst": "Pd(OAc)2",
+        "catalyst_loading_raw": "0.5 mol%",
+        "catalyst_mol_pct": 0.5,
+        "ligand": "7a（C2 对称 NHC 前体）",
+        "ligand_mol_pct": 1.0,
+        "base": "K2CO3",
+        "base_eq": 3.0,
+        "solvent": "toluene",
+        "temp_c": 90,
+        "time_h": 1.5,
+        "atmosphere": null,
+        "scale_mmol": 0.5,
+        "equivalents": {
+          "aryl_halide": 1.0,
+          "boronic_acid": 1.5
+        },
+        "concentration_m": null
+      },
+      "purification": null,
+      "evidence_grade": "A_confirmed",
+      "verification": "verified_with_caveat",
+      "substrate": {
+        "aryl_halide": "bromobenzene",
+        "boronic_acid": "phenylboronic acid",
+        "product": "biphenyl"
+      },
+      "catalytic_profile": {
+        "catalyst_form": "molecular_complex",
+        "ligand_family": "non_phosphine",
+        "support": "none",
+        "medium": "organic",
+        "activation_mode": "thermal"
+      },
+      "_extraction": {
+        "label_raw_provenance": "verbatim",
+        "missing_fields": [
+          "atmosphere",
+          "assay.internal_standard",
+          "assay.quantification_basis"
+        ],
+        "needs_A_check": [
+          "表行号",
+          "GC 内标与基准"
+        ],
+        "two_variables": true,
+        "caveat": {
+          "two_variables": true,
+          "note": "碱与时间同时变化"
+        },
+        "verified_by_A": "2026-10-26 开放获取核验记录 §2.3"
+      }
+    },
+    {
+      "record_id": "P19b",
+      "source_id": "P19",
+      "tier": "C",
+      "citation": "Jiang et al., Molecules 2012, 17, 12121-12139（C2 对称 Pd-NHC）",
+      "doi": "10.3390/molecules171012121",
+      "locator": "Table 1 entry 1 + 脚注 b (GC yield)；内标依据见同文 Table 4 脚注",
+      "outcome": {
+        "value": 12.0,
+        "unit": "%",
+        "outcome_type": "gc",
+        "label_raw": "Yield (%) entry 1 = 12；脚注 b: GC yield",
+        "note": "同表 entry 1/2 的碱与时间同时变化（Na2CO3 24 h vs K2CO3 1.5 h）→ 可作同表同口径对照，不得支持『换碱导致差异』的因果"
+      },
+      "assay": {
+        "method": "GC",
+        "internal_standard": "diethylene glycol di-n-butyl ether",
+        "quantification_basis": "GC yield",
+        "assay_basis_source": "同文 Table 4 脚注：GC yield using diethylene glycol di-n-butyl ether as an internal standard"
+      },
+      "conditions": {
+        "catalyst": "Pd(OAc)2",
+        "catalyst_loading_raw": "0.5 mol%",
+        "catalyst_mol_pct": 0.5,
+        "ligand": "7a（C2 对称 NHC 前体）",
+        "ligand_mol_pct": 1.0,
+        "base": "Na2CO3",
+        "base_eq": 3.0,
+        "solvent": "toluene",
+        "temp_c": 90,
+        "time_h": 24.0,
+        "atmosphere": null,
+        "scale_mmol": 0.5,
+        "equivalents": {
+          "aryl_halide": 1.0,
+          "boronic_acid": 1.5
+        },
+        "concentration_m": null
+      },
+      "purification": null,
+      "evidence_grade": "A_confirmed",
+      "verification": "verified_with_caveat",
+      "substrate": {
+        "aryl_halide": "bromobenzene",
+        "boronic_acid": "phenylboronic acid",
+        "product": "biphenyl"
+      },
+      "catalytic_profile": {
+        "catalyst_form": "molecular_complex",
+        "ligand_family": "non_phosphine",
+        "support": "none",
+        "medium": "organic",
+        "activation_mode": "thermal"
+      },
+      "_extraction": {
+        "label_raw_provenance": "verbatim",
+        "missing_fields": [
+          "atmosphere",
+          "assay.internal_standard",
+          "assay.quantification_basis"
+        ],
+        "needs_A_check": [
+          "12% 的口径标记是否与同表其他行一致（本行由同表推定）",
+          "24 h 是否为该行的真实时间列"
+        ],
+        "two_variables": true,
+        "caveat": {
+          "two_variables": true,
+          "note": "碱与时间同时变化"
+        },
+        "verified_by_A": "2026-10-26 开放获取核验记录 §2.3"
+      }
+    },
+    {
+      "record_id": "P20",
+      "source_id": "P20",
+      "tier": "C",
+      "citation": "Talukder et al., ACS Omega 2020, 5(37), 24018-24032（alpha-二亚胺 Ni/Pd 配合物）",
+      "doi": "10.1021/acsomega.0c03415",
+      "locator": "Table 1 entry 5 + Table 2 entry 2 + Table 3 entry 1（三表脚注 b 均为 isolated）",
+      "outcome": {
+        "value": 85.0,
+        "unit": "%",
+        "outcome_type": "isolated",
+        "label_raw": "Yields (%) 列 = 85；脚注 b: \"Isolated yields from flash column chromatography (n-hexane as the eluent).\"",
+        "note": "Table 1 entry 5：DMF/K2CO3 → Pd A 85%（0.1 mol%、60 °C、4 h）。Table 2 确认温度为 60 °C（40 °C 时 53%、80 °C 时 77%）。Table 3 entry 13 在 0.2 mol% / 1.5 eq 碱下可达 96%。"
+      },
+      "assay": {
+        "method": "isolated (weighed)",
+        "internal_standard": null,
+        "quantification_basis": "isolated product"
+      },
+      "conditions": {
+        "catalyst": "Pd A (α-diimine, acenaphthene-based)",
+        "catalyst_loading_raw": "0.1 mol%",
+        "catalyst_mol_pct": 0.1,
+        "ligand": "alpha-diimine",
+        "ligand_mol_pct": null,
+        "base": "K2CO3",
+        "base_eq": 1.0,
+        "solvent": "DMF",
+        "temp_c": 60,
+        "time_h": 4.0,
+        "atmosphere": null,
+        "scale_mmol": 1.0,
+        "equivalents": {
+          "aryl_halide": 1.0,
+          "boronic_acid": 1.1
+        },
+        "concentration_m": null
+      },
+      "purification": "flash column chromatography (n-hexane)",
+      "evidence_grade": "A_confirmed",
+      "verification": "verified",
+      "substrate": {
+        "aryl_halide": "bromobenzene",
+        "boronic_acid": "phenylboronic acid",
+        "product": "biphenyl"
+      },
+      "catalytic_profile": {
+        "catalyst_form": "molecular_complex",
+        "ligand_family": "non_phosphine",
+        "support": "none",
+        "medium": "organic",
+        "activation_mode": "thermal"
+      },
+      "_extraction": {
+        "label_raw_provenance": "verbatim",
+        "missing_fields": [
+          "temp_c",
+          "time_h",
+          "atmosphere"
+        ],
+        "needs_A_check": [
+          "反应温度与时间（表注未给，读 Experimental）",
+          "本记录刻意保留 temp_c=null，用于测『软维度缺失不阻断』"
+        ],
+        "assay_basis_source": "三表脚注 b 明确为 flash column chromatography 的分离收率",
+        "calibration": "calibrated",
+        "verified_at": "2026-10-26"
+      }
+    },
+    {
+      "record_id": "P21",
+      "source_id": "P21",
+      "tier": "C",
+      "citation": "Sepehrfar et al., RSC Adv. 2026, 16(45), 58585-58605（噻吩基 Pd(II) 膦叶立德 D2）",
+      "doi": "10.1039/d6ra06822g",
+      "locator": "优化表（60 °C 行）",
+      "outcome": {
+        "value": 91.0,
+        "unit": "%",
+        "outcome_type": "isolated",
+        "label_raw": "91% (isolated)",
+        "note": "60 °C 也能 90%+ 的干净证据，但只需 10 min → 催化剂活性远高于 Pd(PPh3)4"
+      },
+      "assay": {
+        "method": "isolated",
+        "internal_standard": null,
+        "quantification_basis": "isolated product mass"
+      },
+      "conditions": {
+        "catalyst": "D2（thienyl Pd(II) phosphonium ylide）",
+        "catalyst_loading_raw": "0.47 mol%",
+        "catalyst_mol_pct": 0.47,
+        "ligand": "phosphonium ylide",
+        "ligand_mol_pct": null,
+        "base": "K2CO3",
+        "base_eq": 1.5,
+        "solvent": "EtOH",
+        "temp_c": 60,
+        "time_h": 0.17,
+        "time_raw": "10 min",
+        "atmosphere": null,
+        "scale_mmol": 0.5,
+        "equivalents": {
+          "aryl_halide": 1.0,
+          "boronic_acid": 1.2
+        },
+        "concentration_m": null
+      },
+      "purification": null,
+      "evidence_grade": "imported_unchecked",
+      "verification": "pending_locator_check",
+      "substrate": {
+        "aryl_halide": "bromobenzene",
+        "boronic_acid": "phenylboronic acid",
+        "product": "biphenyl"
+      },
+      "catalytic_profile": {
+        "catalyst_form": "molecular_complex",
+        "ligand_family": "non_phosphine",
+        "support": "none",
+        "medium": "organic",
+        "activation_mode": "thermal"
+      },
+      "_extraction": {
+        "label_raw_provenance": "transcribed",
+        "missing_fields": [
+          "atmosphere",
+          "purification"
+        ],
+        "needs_A_check": [
+          "膦叶立德归 non_phosphine 还是 phosphine？本记录按 non_phosphine 填（叶立德不是膦配体），请 A 签字；这一格决定它进档 A 还是档 C"
+        ]
+      }
+    },
+    {
+      "record_id": "P22",
+      "source_id": "P22",
+      "tier": "C",
+      "citation": "Abroudi et al., Sci. Rep. 2025, 15（MIL-101(Cr)-PUT-GLUT-Pd）",
+      "doi": "10.1038/s41598-025-22375-7",
+      "locator": "Table（回流行）+ 温度梯度段（41/55/86/91%）",
+      "outcome": {
+        "value": 91.0,
+        "unit": "%",
+        "outcome_type": "isolated",
+        "label_raw": "91% (isolated)",
+        "note": "同表温度梯度 41/55/86/91% → 温度是强变量的直接证据（可做篇内扫描对）"
+      },
+      "assay": {
+        "method": "isolated",
+        "internal_standard": null,
+        "quantification_basis": "isolated product mass"
+      },
+      "conditions": {
+        "catalyst": "MIL-101(Cr)-PUT-GLUT-Pd",
+        "catalyst_loading_raw": "20 mg",
+        "catalyst_mol_pct": null,
+        "ligand": null,
+        "ligand_mol_pct": null,
+        "base": "K2CO3",
+        "base_eq": 2.0,
+        "solvent": "EtOH/H2O = 1:1, 10 mL",
+        "temp_c": null,
+        "temp_raw": "回流",
+        "time_h": 1.0,
+        "atmosphere": null,
+        "scale_mmol": 0.5,
+        "equivalents": {
+          "aryl_halide": 1.0,
+          "boronic_acid": 1.5
+        },
+        "concentration_m": null
+      },
+      "purification": null,
+      "evidence_grade": "imported_unchecked",
+      "verification": "pending_locator_check",
+      "substrate": {
+        "aryl_halide": "bromobenzene",
+        "boronic_acid": "phenylboronic acid",
+        "product": "biphenyl"
+      },
+      "catalytic_profile": {
+        "catalyst_form": "supported",
+        "ligand_family": "none",
+        "support": "solid_support",
+        "medium": "aqueous",
+        "activation_mode": "thermal"
+      },
+      "_extraction": {
+        "label_raw_provenance": "transcribed",
+        "missing_fields": [
+          "catalyst_mol_pct",
+          "temp_c",
+          "atmosphere"
+        ],
+        "needs_A_check": [
+          "回流温度",
+          "20 mg 对应 mol%",
+          "温度梯度的四行数值能否逐行绑定（若能，可扩出 3 对篇内扫描）"
+        ]
+      }
+    },
+    {
+      "record_id": "P23",
+      "source_id": "P23",
+      "tier": "C",
+      "citation": "Kaikake, Takada, Soma & Jin, RSC Adv. 2018, 8(60), 34505-34513（茶碱微球负载 Pd, u-T2/Pd）",
+      "doi": "10.1039/c8ra06476h",
+      "locator": "Table（H2O, 20 °C 行）",
+      "outcome": {
+        "value": 100.0,
+        "unit": "%",
+        "outcome_type": "nmr",
+        "label_raw": "100% (1H NMR)",
+        "note": "纯水 + 20 °C 可达 100%，但催化剂 2 mol% 且为 NMR 口径 → 不可外推为『室温水相普遍 100%』"
+      },
+      "assay": {
+        "method": "1H NMR",
+        "internal_standard": null,
+        "quantification_basis": null
+      },
+      "conditions": {
+        "catalyst": "u-T2/Pd（茶碱微球负载 Pd）",
+        "catalyst_loading_raw": "2.0 mol%",
+        "catalyst_mol_pct": 2.0,
+        "ligand": "theophylline-derived",
+        "ligand_mol_pct": null,
+        "base": "K2CO3",
+        "base_eq": 2.5,
+        "solvent": "H2O",
+        "temp_c": 20,
+        "time_h": 1.0,
+        "atmosphere": null,
+        "scale_mmol": 1.0,
+        "equivalents": {
+          "aryl_halide": 1.0,
+          "boronic_acid": 1.5
+        },
+        "concentration_m": null
+      },
+      "purification": null,
+      "evidence_grade": "imported_unchecked",
+      "verification": "pending_locator_check",
+      "substrate": {
+        "aryl_halide": "bromobenzene",
+        "boronic_acid": "phenylboronic acid",
+        "product": "biphenyl"
+      },
+      "catalytic_profile": {
+        "catalyst_form": "supported",
+        "ligand_family": "non_phosphine",
+        "support": "solid_support",
+        "medium": "aqueous",
+        "activation_mode": "thermal"
+      },
+      "_extraction": {
+        "label_raw_provenance": "transcribed",
+        "missing_fields": [
+          "atmosphere",
+          "assay.internal_standard",
+          "assay.quantification_basis"
+        ],
+        "needs_A_check": [
+          "与 P24b 同为『纯水 20 °C』却 100% vs 8% —— 请确认两条的催化剂载量与时间确实不同（这是 gold set 里最容易被质疑的一对）"
+        ]
+      }
+    },
+    {
+      "record_id": "P24a",
+      "source_id": "P24",
+      "tier": "C",
+      "citation": "Kaikake, Jou, Shitara & Jin, RSC Adv. 2021, 11(56), 35311-35320（PdBTC 7）",
+      "doi": "10.1039/d1ra06177a",
+      "locator": "Table 1 entry 1 + 脚注 a/c（PMC9042804 全文已核）",
+      "outcome": {
+        "value": 98.0,
+        "unit": "%",
+        "outcome_type": "nmr",
+        "label_raw": "Yield (%) entry 1 = 98；脚注 c: Yields were determined by 1H-NMR analysis",
+        "note": "与 entry 2（纯水 8%）、entry 6（THF 0%）构成唯一干净的单变量对照：同表同温同时同载量同碱，只换溶剂"
+      },
+      "assay": {
+        "method": "1H NMR",
+        "internal_standard": null,
+        "quantification_basis": "产物/未反应原料积分比（估算）",
+        "assay_basis_source": "脚注 c 只写 1H-NMR analysis；Experimental 无内标 → uncalibrated"
+      },
+      "conditions": {
+        "catalyst": "PdBTC 7（双茶碱微花 Pd(II)）",
+        "catalyst_loading_raw": "0.1 mol%",
+        "catalyst_mol_pct": 0.1,
+        "ligand": "theophylline-derived bis-N-donor",
+        "ligand_mol_pct": null,
+        "base": "K2CO3",
+        "base_eq": 2.0,
+        "solvent": "H2O-EtOH (1:1) 5.0 mL",
+        "temp_c": 20,
+        "time_h": 2.0,
+        "atmosphere": null,
+        "scale_mmol": 0.5,
+        "equivalents": {
+          "aryl_halide": 1.0,
+          "boronic_acid": 1.2
+        },
+        "concentration_m": null,
+        "time_raw": null
+      },
+      "purification": null,
+      "evidence_grade": "A_confirmed",
+      "verification": "verified_with_caveat",
+      "substrate": {
+        "aryl_halide": "bromobenzene",
+        "boronic_acid": "phenylboronic acid",
+        "product": "biphenyl"
+      },
+      "catalytic_profile": {
+        "catalyst_form": "molecular_complex",
+        "ligand_family": "non_phosphine",
+        "support": "none",
+        "medium": "aqueous",
+        "activation_mode": "thermal"
+      },
+      "_extraction": {
+        "label_raw_provenance": "verbatim",
+        "missing_fields": [
+          "atmosphere",
+          "assay.internal_standard",
+          "assay.quantification_basis"
+        ],
+        "needs_A_check": [
+          "NMR 积分基准/内标（缺则维度 4 第三层 UNKNOWN）",
+          "表行号"
+        ],
+        "verified_by_A": "2026-10-26 开放获取核验记录 §2.4"
+      }
+    },
+    {
+      "record_id": "P24b",
+      "source_id": "P24",
+      "tier": "C",
+      "citation": "Kaikake, Jou, Shitara & Jin, RSC Adv. 2021, 11(56), 35311-35320（PdBTC 7）",
+      "doi": "10.1039/d1ra06177a",
+      "locator": "Table 1 entry 2 + 脚注 a/c（PMC9042804 全文已核）",
+      "outcome": {
+        "value": 8.0,
+        "unit": "%",
+        "outcome_type": "nmr",
+        "label_raw": "Yield (%) entry 2 = 8；脚注 c: Yields were determined by 1H-NMR analysis",
+        "note": "纯水 8% vs 含水醇 98%：同一催化剂，只换溶剂"
+      },
+      "assay": {
+        "method": "1H NMR",
+        "internal_standard": null,
+        "quantification_basis": "产物/未反应原料积分比（估算）",
+        "assay_basis_source": "脚注 c 只写 1H-NMR analysis；Experimental 无内标 → uncalibrated"
+      },
+      "conditions": {
+        "catalyst": "PdBTC 7（双茶碱微花 Pd(II)）",
+        "catalyst_loading_raw": "0.1 mol%",
+        "catalyst_mol_pct": 0.1,
+        "ligand": "theophylline-derived bis-N-donor",
+        "ligand_mol_pct": null,
+        "base": "K2CO3",
+        "base_eq": 2.0,
+        "solvent": "H2O 5.0 mL",
+        "temp_c": 20,
+        "time_h": 2.0,
+        "time_raw": null,
+        "atmosphere": null,
+        "scale_mmol": 0.5,
+        "equivalents": {
+          "aryl_halide": 1.0,
+          "boronic_acid": 1.2
+        },
+        "concentration_m": null
+      },
+      "purification": null,
+      "evidence_grade": "A_confirmed",
+      "verification": "verified_with_caveat",
+      "substrate": {
+        "aryl_halide": "bromobenzene",
+        "boronic_acid": "phenylboronic acid",
+        "product": "biphenyl"
+      },
+      "catalytic_profile": {
+        "catalyst_form": "molecular_complex",
+        "ligand_family": "non_phosphine",
+        "support": "none",
+        "medium": "aqueous",
+        "activation_mode": "thermal"
+      },
+      "_extraction": {
+        "label_raw_provenance": "verbatim",
+        "missing_fields": [
+          "atmosphere",
+          "assay.internal_standard",
+          "assay.quantification_basis"
+        ],
+        "needs_A_check": [
+          "纯水行的口径标记",
+          "纯水行的时间（本记录按同表 2 h 推定，属待核验）"
+        ],
+        "verified_by_A": "2026-10-26 开放获取核验记录 §2.4"
+      }
+    },
+    {
+      "record_id": "P24c",
+      "source_id": "P24",
+      "tier": "C",
+      "citation": "Kaikake, Jou, Shitara & Jin, RSC Adv. 2021, 11(56), 35311-35320（PdBTC 7）",
+      "doi": "10.1039/d1ra06177a",
+      "locator": "Table 1 entry 6 + 脚注 a/c（PMC9042804 全文已核）",
+      "outcome": {
+        "value": 0.0,
+        "unit": "%",
+        "outcome_type": "nmr",
+        "label_raw": "Yield (%) entry 6 = 0；脚注 c: Yields were determined by 1H-NMR analysis",
+        "note": "THF 中 0%（entry 6），同表 entry 5 异丙醇亦为 0%。0 是测量值，不是缺失值"
+      },
+      "assay": {
+        "method": "1H NMR",
+        "internal_standard": null,
+        "quantification_basis": "产物/未反应原料积分比（估算）",
+        "assay_basis_source": "脚注 c 只写 1H-NMR analysis；Experimental 无内标 → uncalibrated"
+      },
+      "conditions": {
+        "catalyst": "PdBTC 7（双茶碱微花 Pd(II)）",
+        "catalyst_loading_raw": "0.1 mol%",
+        "catalyst_mol_pct": 0.1,
+        "ligand": "theophylline-derived bis-N-donor",
+        "ligand_mol_pct": null,
+        "base": "K2CO3",
+        "base_eq": 2.0,
+        "solvent": "THF 5.0 mL",
+        "temp_c": 20,
+        "time_h": 2.0,
+        "time_raw": null,
+        "atmosphere": null,
+        "scale_mmol": 0.5,
+        "equivalents": {
+          "aryl_halide": 1.0,
+          "boronic_acid": 1.2
+        },
+        "concentration_m": null
+      },
+      "purification": null,
+      "evidence_grade": "A_confirmed",
+      "verification": "verified_with_caveat",
+      "substrate": {
+        "aryl_halide": "bromobenzene",
+        "boronic_acid": "phenylboronic acid",
+        "product": "biphenyl"
+      },
+      "catalytic_profile": {
+        "catalyst_form": "molecular_complex",
+        "ligand_family": "non_phosphine",
+        "support": "none",
+        "medium": "organic",
+        "activation_mode": "thermal"
+      },
+      "_extraction": {
+        "label_raw_provenance": "verbatim",
+        "missing_fields": [
+          "atmosphere",
+          "assay.internal_standard"
+        ],
+        "needs_A_check": [
+          "THF 行确实是 0%（不是「未检出」），i-PrOH 同为 0%",
+          "时间（按同表 2 h 推定）"
+        ],
+        "verified_by_A": "2026-10-26 开放获取核验记录 §2.4"
+      }
+    },
+    {
+      "record_id": "P25",
+      "source_id": "P25",
+      "tier": "C",
+      "citation": "Cui et al., Nanomaterials 2024, 14(21), 1690（吡啶 N 富碳纳米片负载 Pd）",
+      "doi": "10.3390/nano14211690",
+      "locator": "Table（100 °C, 50 min 行）",
+      "outcome": {
+        "value": 99.6,
+        "unit": "%",
+        "outcome_type": "unknown",
+        "label_raw": "99.6%",
+        "note": "报告未注口径 → unknown，不推断为 GC"
+      },
+      "assay": {
+        "method": "未注明",
+        "internal_standard": null,
+        "quantification_basis": null
+      },
+      "conditions": {
+        "catalyst": "吡啶 N 富碳纳米片负载 Pd",
+        "catalyst_loading_raw": "0.05 mol%",
+        "catalyst_mol_pct": 0.05,
+        "ligand": null,
+        "ligand_mol_pct": null,
+        "base": "K2CO3",
+        "base_eq": 2.0,
+        "solvent": "H2O/EtOH = 1:3, 10 mL",
+        "temp_c": 100,
+        "time_h": 0.83,
+        "time_raw": "50 min",
+        "atmosphere": "Ar",
+        "scale_mmol": 1.0,
+        "equivalents": {
+          "aryl_halide": 1.0,
+          "boronic_acid": 1.5
+        },
+        "concentration_m": null
+      },
+      "purification": null,
+      "evidence_grade": "imported_unchecked",
+      "verification": "pending_locator_check",
+      "substrate": {
+        "aryl_halide": "bromobenzene",
+        "boronic_acid": "phenylboronic acid",
+        "product": "biphenyl"
+      },
+      "catalytic_profile": {
+        "catalyst_form": "supported",
+        "ligand_family": "none",
+        "support": "solid_support",
+        "medium": "aqueous",
+        "activation_mode": "thermal"
+      },
+      "_extraction": {
+        "label_raw_provenance": "transcribed",
+        "missing_fields": [
+          "outcome.outcome_type 已定 unknown"
+        ],
+        "needs_A_check": [
+          "99.6% 的测定方式（原文表注）—— 一句话就能把这条从 UNKNOWN 变成可用"
+        ]
+      }
+    },
+    {
+      "record_id": "P26",
+      "source_id": "P26",
+      "tier": "C",
+      "citation": "Liu, Sun, Fan & Xu, Front. Chem. 2022, 10, 845274（Schiff 碱-咪唑功能化 MOF 载 Pd 簇）",
+      "doi": "10.3389/fchem.2022.845274",
+      "locator": "Table（2 mmol 行）",
+      "outcome": {
+        "value": 95.3,
+        "unit": "%",
+        "outcome_type": "unknown",
+        "label_raw": "95.3%",
+        "note": "碱为 NaHCO3、溶剂 DMA（无水）→ 偏离演示较多；口径未注"
+      },
+      "assay": {
+        "method": "未注明",
+        "internal_standard": null,
+        "quantification_basis": null
+      },
+      "conditions": {
+        "catalyst": "Schiff 碱-咪唑功能化 MOF 载 Pd 簇",
+        "catalyst_loading_raw": "0.103 mol%（基于溴苯）",
+        "catalyst_mol_pct": 0.103,
+        "ligand": null,
+        "ligand_mol_pct": null,
+        "base": "NaHCO3",
+        "base_eq": 2.0,
+        "solvent": "DMA 5 mL",
+        "temp_c": 90,
+        "time_h": 7.0,
+        "atmosphere": null,
+        "scale_mmol": 2.0,
+        "equivalents": {
+          "aryl_halide": 1.0,
+          "boronic_acid": 1.5
+        },
+        "concentration_m": null
+      },
+      "purification": null,
+      "evidence_grade": "imported_unchecked",
+      "verification": "pending_locator_check",
+      "substrate": {
+        "aryl_halide": "bromobenzene",
+        "boronic_acid": "phenylboronic acid",
+        "product": "biphenyl"
+      },
+      "catalytic_profile": {
+        "catalyst_form": "supported",
+        "ligand_family": "non_phosphine",
+        "support": "solid_support",
+        "medium": "organic",
+        "activation_mode": "thermal"
+      },
+      "_extraction": {
+        "label_raw_provenance": "transcribed",
+        "missing_fields": [
+          "outcome.outcome_type 已定 unknown",
+          "atmosphere"
+        ],
+        "needs_A_check": [
+          "测定方式",
+          "NaHCO3 与碳酸盐是否算「同族碱」（维度 7 判 L1 还是 L2）"
+        ]
+      }
+    },
+    {
+      "record_id": "P27",
+      "source_id": "P27",
+      "tier": "C",
+      "citation": "Feketshane, Vatsha & Bingwa, RSC Adv. 2026, 16(11), 9692-9708（机械化学 Pd 尺寸效应）",
+      "doi": "10.1039/d6ra00004e",
+      "locator": "Table（5 mol% 行，球磨 25 Hz）",
+      "outcome": {
+        "value": 77.0,
+        "unit": "%",
+        "outcome_type": "conversion",
+        "label_raw": "77% conversion (GC, internal standard)",
+        "note": "同底物 + 同碱 + 有水，仍是 77% 转化 → 反证『条件对了就该 90%+』"
+      },
+      "assay": {
+        "method": "GC",
+        "internal_standard": "未注明种类",
+        "quantification_basis": "conversion of aryl halide"
+      },
+      "conditions": {
+        "catalyst": "Pd-based catalyst size series",
+        "catalyst_loading_raw": "5 mol%",
+        "catalyst_mol_pct": 5.0,
+        "ligand": null,
+        "ligand_mol_pct": null,
+        "base": "Na2CO3",
+        "base_eq": 3.0,
+        "solvent": "无常规溶剂；液体添加剂 H2O:MeOH = 1:1, 0.1 mL",
+        "temp_c": 25,
+        "time_h": 1.0,
+        "atmosphere": "air",
+        "scale_mmol": 1.0,
+        "equivalents": {
+          "aryl_halide": 1.0,
+          "boronic_acid": 3.0
+        },
+        "concentration_m": null
+      },
+      "purification": null,
+      "evidence_grade": "imported_unchecked",
+      "verification": "pending_locator_check",
+      "substrate": {
+        "aryl_halide": "bromobenzene",
+        "boronic_acid": "phenylboronic acid",
+        "product": "biphenyl"
+      },
+      "catalytic_profile": {
+        "catalyst_form": "nanoparticle",
+        "ligand_family": "none",
+        "support": "none",
+        "medium": "solventless",
+        "activation_mode": "mechanochemical"
+      },
+      "_extraction": {
+        "label_raw_provenance": "transcribed",
+        "missing_fields": [
+          "purification"
+        ],
+        "needs_A_check": [
+          "催化剂形态（尺寸系列 → 是否 nanoparticle 统一？）",
+          "室温 25 °C 是否原文写 RT",
+          "GC 内标种类"
+        ]
+      }
+    },
+    {
+      "record_id": "P04",
+      "source_id": "P04",
+      "tier": "A",
+      "citation": "Miyaura, Yanagi & Suzuki, Synth. Commun. 1981, 11(7), 513-519（表 II）",
+      "doi": "10.1080/00397918108063618",
+      "locator": "Table II（p-MePhBr 行）",
+      "outcome": {
+        "value": 88.0,
+        "unit": "%",
+        "outcome_type": "gc",
+        "label_raw": "88% (GLC)",
+        "note": "弱给电子底物；与 P02 的 66% 对比说明取代基电子效应"
+      },
+      "assay": {
+        "method": "GLC",
+        "internal_standard": null,
+        "quantification_basis": "aryl halide"
+      },
+      "conditions": {
+        "catalyst": "Pd(PPh3)4",
+        "catalyst_loading_raw": "3 mol%",
+        "catalyst_mol_pct": 3.0,
+        "ligand": "PPh3 (bound)",
+        "ligand_mol_pct": null,
+        "base": "Na2CO3",
+        "base_eq": 2.0,
+        "solvent": "benzene (reflux)",
+        "temp_c": 80,
+        "time_h": 6.0,
+        "atmosphere": "N2",
+        "scale_mmol": 1.0,
+        "equivalents": {
+          "aryl_halide": 1.0,
+          "boronic_acid": 1.1
+        },
+        "concentration_m": null
+      },
+      "purification": null,
+      "evidence_grade": "imported_unchecked",
+      "verification": "pending_locator_check",
+      "substrate": {
+        "aryl_halide": "4-bromotoluene",
+        "boronic_acid": "phenylboronic acid",
+        "product": "4-methylbiphenyl"
+      },
+      "catalytic_profile": {
+        "catalyst_form": "molecular_complex",
+        "ligand_family": "phosphine",
+        "support": "none",
+        "medium": "organic",
+        "activation_mode": "thermal"
+      },
+      "_extraction": {
+        "label_raw_provenance": "transcribed",
+        "missing_fields": [
+          "assay.internal_standard"
+        ],
+        "needs_A_check": [
+          "表 II 行号",
+          "与 P03 同为表 II，需确认三行（p-MeO / o-MeO / p-Me）的先后"
+        ]
+      }
+    },
+    {
+      "record_id": "P28",
+      "source_id": "P28",
+      "tier": "A",
+      "citation": "Leung et al., ACS Omega 2017, 2(5), 1930-1937（三蝶烯单膦配体，10 ppm Pd）",
+      "doi": "10.1021/acsomega.7b00200",
+      "locator": "Table（10 ppm 行）",
+      "outcome": {
+        "value": 99.0,
+        "unit": "%",
+        "outcome_type": "isolated",
+        "label_raw": "99% (isolated)",
+        "note": "10 ppm 载量属另一量级；碱为 K3PO4 非碳酸盐"
+      },
+      "assay": {
+        "method": "isolated",
+        "internal_standard": null,
+        "quantification_basis": "isolated product mass"
+      },
+      "conditions": {
+        "catalyst": "Pd + 三蝶烯单膦配体",
+        "catalyst_loading_raw": "10 ppm（0.001 mol%）+ 配体 20 ppm",
+        "catalyst_mol_pct": 0.001,
+        "ligand": "triptycene monophosphine",
+        "ligand_mol_pct": 0.002,
+        "base": "K3PO4",
+        "base_eq": 2.0,
+        "solvent": "2-甲氧基乙醇 6 mL",
+        "temp_c": 100,
+        "time_h": 24.0,
+        "atmosphere": null,
+        "scale_mmol": 1.0,
+        "equivalents": {
+          "aryl_halide": 1.0,
+          "boronic_acid": 1.25
+        },
+        "concentration_m": null
+      },
+      "purification": null,
+      "evidence_grade": "imported_unchecked",
+      "verification": "pending_locator_check",
+      "substrate": {
+        "aryl_halide": "4-bromotoluene",
+        "boronic_acid": "phenylboronic acid",
+        "product": "4-methylbiphenyl"
+      },
+      "catalytic_profile": {
+        "catalyst_form": "molecular_complex",
+        "ligand_family": "phosphine",
+        "support": "none",
+        "medium": "organic",
+        "activation_mode": "thermal"
+      },
+      "_extraction": {
+        "label_raw_provenance": "transcribed",
+        "missing_fields": [
+          "atmosphere",
+          "purification"
+        ],
+        "needs_A_check": [
+          "表行号",
+          "10 ppm 与 24 h 是本条最具辨识度的两个字段，务必确认"
+        ]
+      }
+    },
+    {
+      "record_id": "P29",
+      "source_id": "P29",
+      "tier": "C",
+      "citation": "Hazarika, Borah, Bora, Silva & Das, PLoS One 2017, 12(9), e0184936（生物合成 Pd NPs）",
+      "doi": "10.1371/journal.pone.0184936",
+      "locator": "Table（第 1 循环）+ Experimental",
+      "outcome": {
+        "value": 95.0,
+        "unit": "%",
+        "outcome_type": "isolated",
+        "label_raw": "95% (isolated, 1st cycle)",
+        "note": "50 °C 纯水 95%；2.5 mmol 规模"
+      },
+      "assay": {
+        "method": "isolated",
+        "internal_standard": null,
+        "quantification_basis": "isolated product mass"
+      },
+      "conditions": {
+        "catalyst": "生物合成 Pd NPs",
+        "catalyst_loading_raw": "10 mg",
+        "catalyst_mol_pct": null,
+        "ligand": null,
+        "ligand_mol_pct": null,
+        "base": "K2CO3",
+        "base_eq": 3.0,
+        "solvent": "H2O 20 mL",
+        "temp_c": 50,
+        "time_h": null,
+        "atmosphere": null,
+        "scale_mmol": 2.5,
+        "equivalents": {
+          "aryl_halide": 1.0,
+          "boronic_acid": 1.3
+        },
+        "concentration_m": null
+      },
+      "purification": null,
+      "evidence_grade": "imported_unchecked",
+      "verification": "pending_locator_check",
+      "substrate": {
+        "aryl_halide": "4-bromotoluene",
+        "boronic_acid": "phenylboronic acid",
+        "product": "4-methylbiphenyl"
+      },
+      "catalytic_profile": {
+        "catalyst_form": "nanoparticle",
+        "ligand_family": "none",
+        "support": "none",
+        "medium": "aqueous",
+        "activation_mode": "thermal"
+      },
+      "_extraction": {
+        "label_raw_provenance": "transcribed",
+        "missing_fields": [
+          "time_h",
+          "catalyst_mol_pct",
+          "atmosphere"
+        ],
+        "needs_A_check": [
+          "反应时间（表注未给，读 Experimental）",
+          "10 mg 对应 mol%"
+        ]
+      }
+    },
+    {
+      "record_id": "P30",
+      "source_id": "P30",
+      "tier": "A",
+      "citation": "Yao, Cao & Zhang, RSC Adv. 2020, 10(70), 42874-42882（光加速能量转移催化）",
+      "doi": "10.1039/d0ra08547b",
+      "locator": "Table（Cs2CO3 行）+ 碱对照（K2CO3 65%）",
+      "outcome": {
+        "value": 93.0,
+        "unit": "%",
+        "outcome_type": "isolated",
+        "label_raw": "93% (isolated)",
+        "note": "需 45 W 蓝光；同表 K2CO3 仅 65% → 碱与光双重变量"
+      },
+      "assay": {
+        "method": "isolated",
+        "internal_standard": null,
+        "quantification_basis": "isolated product mass"
+      },
+      "conditions": {
+        "catalyst": "Pd catalyst 2.5 mol% + PPh3 5 mol%",
+        "catalyst_loading_raw": "2.5 mol%",
+        "catalyst_mol_pct": 2.5,
+        "ligand": "PPh3",
+        "ligand_mol_pct": 5.0,
+        "base": "Cs2CO3",
+        "base_eq": 2.0,
+        "solvent": "DCE-EtOH = 3:1",
+        "temp_c": 25,
+        "temp_raw": "室温",
+        "time_h": 5.0,
+        "atmosphere": null,
+        "scale_mmol": 0.15,
+        "equivalents": {
+          "aryl_halide": 1.0,
+          "boronic_acid": 2.0
+        },
+        "concentration_m": null
+      },
+      "purification": null,
+      "evidence_grade": "imported_unchecked",
+      "verification": "pending_locator_check",
+      "substrate": {
+        "aryl_halide": "4-bromotoluene",
+        "boronic_acid": "phenylboronic acid",
+        "product": "4-methylbiphenyl"
+      },
+      "catalytic_profile": {
+        "catalyst_form": "molecular_complex",
+        "ligand_family": "phosphine",
+        "support": "none",
+        "medium": "organic",
+        "activation_mode": "photochemical"
+      },
+      "_extraction": {
+        "label_raw_provenance": "transcribed",
+        "missing_fields": [
+          "atmosphere",
+          "purification"
+        ],
+        "needs_A_check": [
+          "**受控词表缺 photochemical**：本记录故意填 photochemical 以暴露词表缺口，tier_of() 会返回 problems、tier=None（load_records 保留人工标注 A）。需 A 决定：扩词表，还是把光/电驱动并入 soft 维度标注"
+        ],
+        "note": "这条是『同一张表内换碱 93% vs 65%』的篇内对照来源"
+      }
+    },
+    {
+      "record_id": "P31",
+      "source_id": "P31",
+      "tier": "C",
+      "citation": "Ren et al., RSC Adv. 2020, 10(39), 23080-23090（GO@Tpy-Pd1-xNix 纳米片）",
+      "doi": "10.1039/d0ra02195d",
+      "locator": "Table（35 °C 行）",
+      "outcome": {
+        "value": 96.0,
+        "unit": "%",
+        "outcome_type": "isolated",
+        "label_raw": "96% (isolated)",
+        "note": "35 °C 低温 + 分离收率；碱种类原文未写明"
+      },
+      "assay": {
+        "method": "isolated",
+        "internal_standard": null,
+        "quantification_basis": "isolated product mass"
+      },
+      "conditions": {
+        "catalyst": "GO@Tpy-Pd1-xNix nanosheet",
+        "catalyst_loading_raw": "1 mg",
+        "catalyst_mol_pct": null,
+        "ligand": null,
+        "ligand_mol_pct": null,
+        "base": null,
+        "base_eq": 2.0,
+        "solvent": "未注明（5.0 mL）",
+        "temp_c": 35,
+        "time_h": 8.0,
+        "atmosphere": null,
+        "scale_mmol": 0.3,
+        "equivalents": {
+          "aryl_halide": 1.0,
+          "boronic_acid": 1.17
+        },
+        "concentration_m": null
+      },
+      "purification": null,
+      "evidence_grade": "imported_unchecked",
+      "verification": "pending_locator_check",
+      "substrate": {
+        "aryl_halide": "4-bromotoluene",
+        "boronic_acid": "phenylboronic acid",
+        "product": "4-methylbiphenyl"
+      },
+      "catalytic_profile": {
+        "catalyst_form": "supported",
+        "ligand_family": "non_phosphine",
+        "support": "solid_support",
+        "medium": "organic",
+        "activation_mode": "thermal"
+      },
+      "_extraction": {
+        "label_raw_provenance": "transcribed",
+        "missing_fields": [
+          "base",
+          "solvent",
+          "catalyst_mol_pct",
+          "atmosphere"
+        ],
+        "needs_A_check": [
+          "碱种类（表注只写 base 0.6 mmol）",
+          "溶剂是什么（本条 solvent 缺失，是池里唯一 4 个条件字段同时缺的记录）",
+          "1 mg 对应 mol%"
+        ]
+      }
+    },
+    {
+      "record_id": "P03",
+      "source_id": "P03",
+      "tier": "A",
+      "citation": "Miyaura, Yanagi & Suzuki, Synth. Commun. 1981, 11(7), 513-519（表 II）",
+      "doi": "10.1080/00397918108063618",
+      "locator": "Table II（o-MeOPhBr 行）",
+      "outcome": {
+        "value": 99.0,
+        "unit": "%",
+        "outcome_type": "gc",
+        "label_raw": "99% (GC)",
+        "note": "邻位甲氧基位阻更大却 99% vs 对位 66% → 『甲氧基』本身不是低收率原因"
+      },
+      "assay": {
+        "method": "GLC",
+        "internal_standard": null,
+        "quantification_basis": "aryl halide"
+      },
+      "conditions": {
+        "catalyst": "Pd(PPh3)4",
+        "catalyst_loading_raw": "3 mol%",
+        "catalyst_mol_pct": 3.0,
+        "ligand": "PPh3 (bound)",
+        "ligand_mol_pct": null,
+        "base": "Na2CO3",
+        "base_eq": 2.0,
+        "solvent": "benzene (reflux)",
+        "temp_c": 80,
+        "time_h": 6.0,
+        "atmosphere": "N2",
+        "scale_mmol": 1.0,
+        "equivalents": {
+          "aryl_halide": 1.0,
+          "boronic_acid": 1.1
+        },
+        "concentration_m": null
+      },
+      "purification": null,
+      "evidence_grade": "imported_unchecked",
+      "verification": "pending_locator_check",
+      "substrate": {
+        "aryl_halide": "2-bromoanisole",
+        "boronic_acid": "phenylboronic acid",
+        "product": "2-methoxybiphenyl"
+      },
+      "catalytic_profile": {
+        "catalyst_form": "molecular_complex",
+        "ligand_family": "phosphine",
+        "support": "none",
+        "medium": "organic",
+        "activation_mode": "thermal"
+      },
+      "_extraction": {
+        "label_raw_provenance": "transcribed",
+        "missing_fields": [
+          "assay.internal_standard"
+        ],
+        "needs_A_check": [
+          "表 II 行号（第几行是 o-MeOPhBr）",
+          "substrate 与 P02 同表同条件，仅底物位置不同 → 维度 1 应判 FAIL（D1：位置不同即不同底物）"
+        ]
+      }
+    },
+    {
+      "record_id": "P06",
+      "source_id": "P06",
+      "tier": "A",
+      "citation": "Huff, Koenig, Mitchell & Staszak, Org. Synth. 1998, 75, 53 (Coll. Vol. 10, 102)",
+      "doi": "10.15227/orgsyn.075.0053",
+      "locator": "Procedure 段（粗品与重结晶两个收率）",
+      "outcome": {
+        "value": 86.3,
+        "unit": "%",
+        "outcome_type": "isolated",
+        "label_raw": "96.2% (crude) / 86.3% (after recrystallisation)",
+        "alternate_values": [
+          {
+            "value": 96.2,
+            "label": "crude",
+            "outcome_type": "isolated"
+          }
+        ],
+        "value_selection_rule": "取纯化后值 86.3%；粗品值另存，不得与纯化值混用",
+        "note": "同一 procedure 两个分离值 → gold set 里唯一『口径内部再分层』样本"
+      },
+      "assay": {
+        "method": "isolated",
+        "internal_standard": null,
+        "quantification_basis": "isolated product mass"
+      },
+      "conditions": {
+        "catalyst": "Pd(OAc)2",
+        "catalyst_loading_raw": "0.3 mol%",
+        "catalyst_mol_pct": 0.3,
+        "ligand": "PPh3",
+        "ligand_mol_pct": 0.9,
+        "base": "Na2CO3",
+        "base_eq": 1.2,
+        "solvent": "1-propanol/H2O = 485 mL/95 mL",
+        "temp_c": null,
+        "temp_raw": "回流",
+        "time_h": 0.75,
+        "time_raw": "45 min",
+        "atmosphere": "N2",
+        "scale_mmol": 270.0,
+        "equivalents": {
+          "aryl_halide": 1.0,
+          "boronic_acid": 1.05
+        },
+        "concentration_m": null
+      },
+      "purification": "重结晶",
+      "evidence_grade": "imported_unchecked",
+      "verification": "pending_locator_check",
+      "substrate": {
+        "aryl_halide": "4-bromobenzaldehyde",
+        "boronic_acid": "phenylboronic acid",
+        "product": "4-biphenylcarboxaldehyde"
+      },
+      "catalytic_profile": {
+        "catalyst_form": "molecular_complex",
+        "ligand_family": "phosphine",
+        "support": "none",
+        "medium": "aqueous",
+        "activation_mode": "thermal"
+      },
+      "_extraction": {
+        "label_raw_provenance": "transcribed",
+        "missing_fields": [
+          "temp_c"
+        ],
+        "needs_A_check": [
+          "回流温度（1-ProOH/H2O 体系，原文是否给具体温度）",
+          "两个收率哪个用于对外表述 —— 建议统一用 86.3% 并注明粗品 96.2%",
+          "版权：Org Synth 禁止再分发 PDF，引用只走 DOI"
+        ]
+      }
+    },
+    {
+      "record_id": "P07",
+      "source_id": "P07",
+      "tier": "B",
+      "citation": "Goodson, Wallow & Novak, Org. Synth. 1998, 75, 61 (Coll. Vol. 10, 501), ligandless Pd",
+      "doi": "10.15227/orgsyn.075.0061",
+      "locator": "Procedure 段（蒸馏收率）",
+      "outcome": {
+        "value": 90.3,
+        "unit": "%",
+        "outcome_type": "isolated",
+        "label_raw": "90.3% (distillation)",
+        "note": "『90%』最常见的真实来源类型：芳基碘 + 无膦 + 邻甲苯硼酸，三处偏离"
+      },
+      "assay": {
+        "method": "isolated",
+        "internal_standard": null,
+        "quantification_basis": "isolated product mass"
+      },
+      "conditions": {
+        "catalyst": "Pd(OAc)2",
+        "catalyst_loading_raw": "0.2 mol%",
+        "catalyst_mol_pct": 0.2,
+        "ligand": null,
+        "ligand_mol_pct": null,
+        "base": "K2CO3",
+        "base_eq": 2.5,
+        "solvent": "acetone/H2O = 1:1",
+        "temp_c": null,
+        "temp_raw": "回流",
+        "time_h": 2.0,
+        "atmosphere": "Ar",
+        "scale_mmol": 71.8,
+        "equivalents": {
+          "aryl_halide": 1.0,
+          "boronic_acid": 1.03
+        },
+        "concentration_m": null
+      },
+      "purification": "蒸馏",
+      "evidence_grade": "imported_unchecked",
+      "verification": "pending_locator_check",
+      "substrate": {
+        "aryl_halide": "4-iodoanisole",
+        "boronic_acid": "2-methylphenylboronic acid",
+        "product": "4-methoxy-2'-methylbiphenyl"
+      },
+      "catalytic_profile": {
+        "catalyst_form": "in_situ_salt",
+        "ligand_family": "none",
+        "support": "none",
+        "medium": "aqueous",
+        "activation_mode": "thermal"
+      },
+      "_extraction": {
+        "label_raw_provenance": "transcribed",
+        "missing_fields": [
+          "temp_c"
+        ],
+        "needs_A_check": [
+          "回流温度",
+          "作者行 OCR 残缺（Goodson/Wallow/Novak 由页首残字合并），需以期刊页为准",
+          "维度 1 必须判 FAIL：离去基为碘（D1 已定）"
+        ]
+      }
+    },
+    {
+      "record_id": "P32",
+      "source_id": "P32",
+      "tier": "C",
+      "citation": "Oswal et al., RSC Adv. 2019, 9(39), 22313-22319（超小 Pd NPs，S/Se/N 配体）",
+      "doi": "10.1039/c9ra03498f",
+      "locator": "Table（DMF:H2O 行）+ 溶剂对照（THF 47%、甲苯 38%）",
+      "outcome": {
+        "value": 95.0,
+        "unit": "%",
+        "outcome_type": "unknown",
+        "label_raw": "95%",
+        "note": "吸电子底物；同表 THF 47%、甲苯 38% → 溶剂效应数量级证据；口径未注"
+      },
+      "assay": {
+        "method": "未注明",
+        "internal_standard": null,
+        "quantification_basis": null
+      },
+      "conditions": {
+        "catalyst": "超小 Pd NPs（S/Se/N 配体）",
+        "catalyst_loading_raw": "载量待核验",
+        "catalyst_mol_pct": null,
+        "ligand": "S/Se/N ligand",
+        "ligand_mol_pct": null,
+        "base": "K2CO3",
+        "base_eq": 2.0,
+        "solvent": "DMF:H2O = 3:2, 5 mL",
+        "temp_c": 100,
+        "time_h": 6.0,
+        "atmosphere": null,
+        "scale_mmol": 1.0,
+        "equivalents": {
+          "aryl_halide": 1.0,
+          "boronic_acid": 1.1
+        },
+        "concentration_m": null
+      },
+      "purification": null,
+      "evidence_grade": "imported_unchecked",
+      "verification": "pending_locator_check",
+      "substrate": {
+        "aryl_halide": "4-bromobenzaldehyde",
+        "boronic_acid": "phenylboronic acid",
+        "product": "4-biphenylcarboxaldehyde"
+      },
+      "catalytic_profile": {
+        "catalyst_form": "nanoparticle",
+        "ligand_family": "non_phosphine",
+        "support": "none",
+        "medium": "aqueous",
+        "activation_mode": "thermal"
+      },
+      "_extraction": {
+        "label_raw_provenance": "transcribed",
+        "missing_fields": [
+          "outcome.outcome_type 已定 unknown",
+          "catalyst_mol_pct",
+          "atmosphere"
+        ],
+        "needs_A_check": [
+          "Pd 载量（表注未给）",
+          "测定方式",
+          "溶剂对照四行能否逐行绑定（可扩篇内扫描对）"
+        ]
+      }
+    },
+    {
+      "record_id": "P33",
+      "source_id": "P33",
+      "tier": "C",
+      "citation": "ACS Omega 2024, 9, 17817（磁载双配体 Pd）",
+      "doi": "10.1021/acsomega.3c07133",
+      "locator": "Table（entry 1, 60 min）+ 时间扫描段",
+      "outcome": {
+        "value": 99.0,
+        "unit": "%",
+        "outcome_type": "isolated",
+        "label_raw": "99% (isolated)",
+        "note": "时间扫描 15 min 79% → 60 min 99% → 之后回落 93/84/82/79：产物降解的罕见直接证据"
+      },
+      "assay": {
+        "method": "isolated",
+        "internal_standard": null,
+        "quantification_basis": "isolated product mass"
+      },
+      "conditions": {
+        "catalyst": "磁载双配体 Pd（magnetic dual-ligand Pd）",
+        "catalyst_loading_raw": "2.0 mg",
+        "catalyst_mol_pct": null,
+        "ligand": "dual ligand",
+        "ligand_mol_pct": null,
+        "base": "K2CO3",
+        "base_eq": 2.0,
+        "solvent": "EtOH/H2O = 2:1",
+        "temp_c": 60,
+        "time_h": 1.0,
+        "atmosphere": null,
+        "scale_mmol": 0.5,
+        "equivalents": {
+          "aryl_halide": 1.0,
+          "boronic_acid": 1.2
+        },
+        "concentration_m": null
+      },
+      "purification": null,
+      "evidence_grade": "imported_unchecked",
+      "verification": "pending_locator_check",
+      "substrate": {
+        "aryl_halide": "4-bromoacetophenone",
+        "boronic_acid": "phenylboronic acid",
+        "product": "4-acetylbiphenyl"
+      },
+      "catalytic_profile": {
+        "catalyst_form": "supported",
+        "ligand_family": "non_phosphine",
+        "support": "solid_support",
+        "medium": "aqueous",
+        "activation_mode": "thermal"
+      },
+      "_extraction": {
+        "label_raw_provenance": "transcribed",
+        "missing_fields": [
+          "catalyst_mol_pct",
+          "atmosphere",
+          "purification"
+        ],
+        "needs_A_check": [
+          "2.0 mg 对应 mol%",
+          "时间扫描的完整数值（79/99/93/84/82/79）是否原文逐字，若是，可作为『过程非单调』的唯一证据"
+        ]
+      }
+    },
+    {
+      "record_id": "P34",
+      "source_id": "P34",
+      "tier": "C",
+      "citation": "Yuan & Huynh, Molecules 2012, 17(3), 2491-2517（S 功能化 NHC-Pd(II)，0.001 mol%）",
+      "doi": "10.3390/molecules17032491",
+      "locator": "Table（催化剂 14 行）",
+      "outcome": {
+        "value": 99.0,
+        "unit": "%",
+        "outcome_type": "nmr",
+        "label_raw": ">99% (1H NMR)",
+        "value_raw": ">99",
+        "value_is_lower_bound": true,
+        "note": "纯水 60 °C 24 h，TON 10^5；吸电子底物"
+      },
+      "assay": {
+        "method": "1H NMR",
+        "internal_standard": null,
+        "quantification_basis": null
+      },
+      "conditions": {
+        "catalyst": "S 功能化 NHC-Pd(II)（催化剂 14）",
+        "catalyst_loading_raw": "0.001 mol%",
+        "catalyst_mol_pct": 0.001,
+        "ligand": "S-functionalised NHC",
+        "ligand_mol_pct": null,
+        "base": "K2CO3",
+        "base_eq": 1.4,
+        "solvent": "H2O 1 mL",
+        "temp_c": 60,
+        "time_h": 24.0,
+        "atmosphere": null,
+        "scale_mmol": 1.0,
+        "equivalents": {
+          "aryl_halide": 1.0,
+          "boronic_acid": 1.4
+        },
+        "concentration_m": null
+      },
+      "purification": null,
+      "evidence_grade": "imported_unchecked",
+      "verification": "pending_locator_check",
+      "substrate": {
+        "aryl_halide": "4-bromobenzophenone",
+        "boronic_acid": "phenylboronic acid",
+        "product": "4-benzoylbiphenyl"
+      },
+      "catalytic_profile": {
+        "catalyst_form": "molecular_complex",
+        "ligand_family": "non_phosphine",
+        "support": "none",
+        "medium": "aqueous",
+        "activation_mode": "thermal"
+      },
+      "_extraction": {
+        "label_raw_provenance": "transcribed",
+        "missing_fields": [
+          "atmosphere",
+          "assay.internal_standard"
+        ],
+        "needs_A_check": [
+          "NMR 积分基准",
+          "0.001 mol% 与 24 h 的原文确认（此条是全池载量最低值）"
+        ]
+      }
+    }
+  ]
+}
