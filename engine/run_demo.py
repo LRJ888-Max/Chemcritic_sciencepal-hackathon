@@ -77,10 +77,11 @@ EXPECTED = {
     "T10": ("SM-004.7", NEEDS_EVIDENCE, "outcome_type"),
     "T11": ("SM-002", NEEDS_EVIDENCE, "outcome_type"),
     "T12": ("SM-002", COMPARABLE, None),
-    "T13": ("SM-006-e1", NEEDS_EVIDENCE, "assay"),
+    "T13": ("SM-006-e1", COMPARABLE, None),
     "T14": ("SM-001b", NEEDS_EVIDENCE, "assay"),
     "T15": ("SM-001b", NEEDS_EVIDENCE, "assay"),
-    "T16": ("SM-001b", NEEDS_EVIDENCE, "assay"),
+    "T16": ("SM-001b", COMPARABLE, None),
+    "T17": ("SM-001b", COMPARABLE, None),
 }
 
 
@@ -217,6 +218,24 @@ def test_matrix(records):
         detail = f"{v.verdict:<14} {(v.blocking_dimension or '-'):<20}"
         print(f"  [{flag}] {case:<4} {subject.record_id:<10} vs {ref_id:<10} → {detail} expect={exp_verdict}/{exp_dim or '-'}")
     print(f"\n  结果：{passed} passed, {failed} failed")
+
+    # T17 · C 方案：无内标不阻断比较，但必须标 uncalibrated，且不进档内定位结论
+    ref_uncal = replacement(by_id["SM-001b"], record_id="REF-017", outcome_type="gc",
+                            label_raw="GC yield",
+                            assay={"method": "1H-NMR", "internal_standard": None})
+    subj_uncal = Record(record_id="USER-017", outcome_type="gc", outcome_value=95,
+                        substrate=USER.substrate, conditions=USER.conditions,
+                        assay={"method": "1H-NMR", "internal_standard": None}, tier="A")
+    v17 = gates.judge(subj_uncal, ref_uncal)
+    pl17 = placement_mod.placement(subj_uncal, [ref_uncal])
+    ok17 = (v17.verdict == COMPARABLE and v17.calibration == "uncalibrated"
+            and pl17["status"] == "NO_CALIBRATED_REFERENCE")
+    passed += ok17
+    failed += not ok17
+    print(f"  [{'PASS' if ok17 else 'FAIL'}] T17  user(gc,无内标) vs ref(无内标) → "
+          f"{v17.verdict}/{v17.calibration}, placement={pl17['status']}  "
+          f"expect=COMPARABLE/uncalibrated, NO_CALIBRATED_REFERENCE")
+    print(f"\n  C 方案验收：{passed} passed, {failed} failed（含 T17）")
     return failed == 0
 
 

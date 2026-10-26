@@ -113,6 +113,7 @@ class Verdict:
     blocking_dimension: Optional[str] = None
     unlock_condition: Optional[str] = None
     soft_flags: list = field(default_factory=list)
+    calibration: str = "calibrated"  # calibrated | uncalibrated（C 方案，2026-10-26）
 
     def to_dict(self) -> Dict[str, Any]:
         return {
@@ -121,6 +122,7 @@ class Verdict:
             "verdict": self.verdict,
             "blocking_dimension": self.blocking_dimension,
             "unlock_condition": self.unlock_condition,
+            "calibration": self.calibration,
             "gates": {str(k): v.to_dict() for k, v in sorted(self.gates.items())},
             "soft_flags": self.soft_flags,
         }

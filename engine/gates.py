@@ -160,7 +160,7 @@ _LABEL_HINTS = {
     "conversion": ("conversion", "转化"),
 }
 
-_REQUIRED_EVIDENCE = ("a_confirmed",)  # 小写比对，见 _evidence_check
+_REQUIRED_EVIDENCE = ("a_confirmed", "candidate")  # 小写比对；candidate 可通过，但由 calibration/软标注体现
 
 
 def _label_consistency(record: Record, side: str) -> Optional[GateResult]:
@@ -181,12 +181,16 @@ def _label_consistency(record: Record, side: str) -> Optional[GateResult]:
 
 
 def _evidence_check(record: Record) -> Optional[GateResult]:
-    """文献侧证据等级门槛：未回原文核验的记录不支撑数值比较。"""
-    grade = (record.evidence_grade or "imported_unchecked").strip()
-    if grade.lower() in _REQUIRED_EVIDENCE:
+    """文献侧证据等级门槛。
+
+    - `A_confirmed`：已回原文核对 → 通过
+    - `candidate`：有未决歧义（如校准未注明）→ **通过**，但由此产生的"未校准"
+      由 `calibration_level()` 标注，且不参与档内定位结论（C 方案，2026-10-26）
+    - `imported_unchecked`：从交接表导入、未回原文核对 → 不支撑数值比较
+    """
+    grade = (record.evidence_grade or "imported_unchecked").strip().lower()
+    if grade in _REQUIRED_EVIDENCE:
         return None
-    if grade.lower() == "candidate":
-        return GateResult(4, UNKNOWN, "文献侧记录为候选状态（未完成原文核验），不支撑数值比较")
     return GateResult(
         4, UNKNOWN,
         "文献侧记录尚未回原文核验（imported_unchecked），不支撑数值比较——需 A/B 抽检后升级",
@@ -194,29 +198,45 @@ def _evidence_check(record: Record) -> Optional[GateResult]:
 
 
 def _calibration_check(record: Record, side: str) -> Optional[GateResult]:
-    """定量方法是否足以支撑该口径。返回 None 表示通过。"""
+    """维度 4 · 第三层：定量方法是否足以支撑该口径。
+
+    **C 方案（A 于 2026-10-26 定）：**
+    - 有内标（+ 基准）→ 通过，`calibration = calibrated`
+    - 无内标但**说明了定量方式**（如 "1H-NMR analysis" / "GC area normalization"）
+      → **也通过**，但降级为 `uncalibrated`，由 `calibration_level()` 标注
+    - 连定量方式都没写 → `UNKNOWN`（这才是真的不知道）
+
+    理由：文献普遍不写内标（行业惯例），一律阻断会让可比样本归零；
+    但"未校准"必须显式标注，且**不参与档内定位的结论计算**。
+    """
     t = record.outcome_type
     if t not in ALLOWED_OUTCOME_TYPES:
         return GateResult(4, UNKNOWN, f"{side} 口径未决")
     if t == "isolated":
-        # 纯化方式是否记录/一致 → 维度 8（软）。此处不再重复要求。
+        # 分离称重本身就是绝对标尺
         return None
-    if t in ("gc", "nmr", "conversion"):
-        # conversion 与 gc 同属"仪器定量"，同样需要内标/外标与"以何物计"，
-        # 否则转化率无法复算。（B 于 2026-10-25 指出的规则漏项）
-        std = record.assay.get("internal_standard")
-        basis = record.assay.get("quantification_basis")
-        if t == "nmr" and std:
-            return None
-        if t in ("gc", "conversion") and std and basis:
-            return None
-        missing = []
-        if not std:
-            missing.append("内标/外标")
-        if t in ("gc", "conversion") and not basis:
-            missing.append("定量基准")
-        return GateResult(4, UNKNOWN, f"{side} 缺{('、'.join(missing)) or '校准信息'}")
-    return None
+
+    std = record.assay.get("internal_standard")
+    basis = record.assay.get("quantification_basis")
+    method = str(record.assay.get("method") or "").strip()
+
+    if t == "nmr" and std:
+        return None
+    if t in ("gc", "conversion") and std and basis:
+        return None
+    if method:
+        # 说明了定量方式但无内标 → 通过但标未校准
+        return None
+    return GateResult(4, UNKNOWN, f"{side} 未说明定量方法（连测法都没有）")
+
+
+def calibration_level(record: Record) -> str:
+    """`calibrated`（有绝对标尺）/ `uncalibrated`（仅说明定量方式）。"""
+    if record.outcome_type == "isolated":
+        return "calibrated"
+    if record.assay.get("internal_standard"):
+        return "calibrated"
+    return "uncalibrated"
 
 
 # ---------- 软门槛 ----------
@@ -362,7 +382,16 @@ def judge(user: Record, ref: Record) -> Verdict:
                 soft_flags=_soft_flags(gates),
             )
 
-    return Verdict(user.record_id, ref.record_id, COMPARABLE, gates, soft_flags=_soft_flags(gates))
+    return Verdict(
+        user.record_id, ref.record_id, COMPARABLE, gates,
+        soft_flags=_soft_flags(gates),
+        calibration=_combined_calibration(user, ref),
+    )
+
+
+def _combined_calibration(user: Record, ref: Record) -> str:
+    """任一侧未校准 → 整对的结论标为 uncalibrated。"""
+    return "uncalibrated" if "uncalibrated" in (calibration_level(user), calibration_level(ref)) else "calibrated"
 
 
 def _soft_flags(gates: dict) -> list:

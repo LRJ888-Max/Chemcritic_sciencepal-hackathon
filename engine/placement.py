@@ -92,7 +92,11 @@ def coverage(records: List[Record]) -> Dict[str, Any]:
 
 
 def placement(user: Record, records: List[Record]) -> Dict[str, Any]:
-    """用户落在哪个等价类、哪一档、与档内水平的差距。"""
+    """用户落在哪个等价类、哪一档、与档内水平的差距。
+
+    **C 方案（A 2026-10-26）：** 只有 `calibrated`（有绝对标尺）的参照参与
+    差值计算与结论；`uncalibrated`（仅说明定量方式、无内标）单独列出，供展示。
+    """
     if user.outcome_type not in OUTCOME_ORDER:
         return {
             "status": "UNDEFINED",
@@ -110,15 +114,30 @@ def placement(user: Record, records: List[Record]) -> Dict[str, Any]:
 
     tier = user.tier
     same_tier = [r for r in same_class if r.tier == tier] if tier else []
-    ref = same_tier or same_class
-    values = [r.outcome_value for r in ref if r.outcome_value is not None]
+    pool_ref = same_tier or same_class
+
+    calibrated = [r for r in pool_ref if _level(r) == "calibrated"]
+    uncalibrated = [r for r in pool_ref if _level(r) != "calibrated"]
+    uncal_ids = [r.record_id for r in uncalibrated]
+
+    if not calibrated:
+        return {
+            "status": "NO_CALIBRATED_REFERENCE",
+            "tier": tier,
+            "reason": "同档/同口径下只有未校准参照（无内标，仅说明定量方式）",
+            "uncalibrated_refs": uncal_ids,
+            "action": "可展示这些参照，但不给出'低于档内水平'一类结论；如需结论，需补一条有内标或分离称重的参照",
+        }
+
+    values = [r.outcome_value for r in calibrated if r.outcome_value is not None]
 
     return {
         "status": "PLACED",
         "outcome_type": user.outcome_type,
         "tier": tier,
         "tier_basis": "同档" if same_tier else "同口径（跨档）",
-        "comparables": [r.record_id for r in ref],
+        "comparables": [r.record_id for r in calibrated],
+        "uncalibrated_refs": uncal_ids,
         "observed": user.outcome_value,
         "reference_min": min(values),
         "reference_max": max(values),
@@ -126,6 +145,15 @@ def placement(user: Record, records: List[Record]) -> Dict[str, Any]:
         "delta_vs_min": round(user.outcome_value - min(values), 1),
         "delta_vs_max": round(user.outcome_value - max(values), 1),
     }
+
+
+def _level(record: Record) -> str:
+    """避免循环导入：仅在此处按同一规则判断校准级别。"""
+    if record.outcome_type == "isolated":
+        return "calibrated"
+    if (record.assay or {}).get("internal_standard"):
+        return "calibrated"
+    return "uncalibrated"
 
 
 def sensitivity(user: Record, records: List[Record], tiers: List[str]) -> Dict[str, Any]:
