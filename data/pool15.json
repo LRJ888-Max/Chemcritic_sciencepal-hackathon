@@ -621,21 +621,21 @@
       "tier": "C",
       "citation": "Talukder et al., ACS Omega 2020, 5(37), 24018-24032（alpha-二亚胺 Ni/Pd 配合物）",
       "doi": "10.1021/acsomega.0c03415",
-      "locator": "Table（Pd A 行）+ Experimental",
+      "locator": "Table 1 entry 5 + Table 2 entry 2 + Table 3 entry 1（三表脚注 b 均为 isolated）",
       "outcome": {
         "value": 85.0,
         "unit": "%",
         "outcome_type": "isolated",
-        "label_raw": "85% (isolated, flash chromatography)",
-        "note": "温度原文未给 → 维度 7 记『缺失 L1』而非阻断，是本池唯一一条『缺温度仍可判 COMPARABLE』的样本"
+        "label_raw": "Yields (%) 列 = 85；脚注 b: \"Isolated yields from flash column chromatography (n-hexane as the eluent).\"",
+        "note": "Table 1 entry 5：DMF/K2CO3 → Pd A 85%（0.1 mol%、60 °C、4 h）。Table 2 确认温度为 60 °C（40 °C 时 53%、80 °C 时 77%）。Table 3 entry 13 在 0.2 mol% / 1.5 eq 碱下可达 96%。"
       },
       "assay": {
-        "method": "isolated",
+        "method": "isolated (weighed)",
         "internal_standard": null,
-        "quantification_basis": "isolated product mass"
+        "quantification_basis": "isolated product"
       },
       "conditions": {
-        "catalyst": "Pd A（alpha-diimine Pd complex）",
+        "catalyst": "Pd A (α-diimine, acenaphthene-based)",
         "catalyst_loading_raw": "0.1 mol%",
         "catalyst_mol_pct": 0.1,
         "ligand": "alpha-diimine",
@@ -643,8 +643,8 @@
         "base": "K2CO3",
         "base_eq": 1.0,
         "solvent": "DMF",
-        "temp_c": null,
-        "time_h": null,
+        "temp_c": 60,
+        "time_h": 4.0,
         "atmosphere": null,
         "scale_mmol": 1.0,
         "equivalents": {
@@ -653,9 +653,9 @@
         },
         "concentration_m": null
       },
-      "purification": "快速柱层析",
-      "evidence_grade": "imported_unchecked",
-      "verification": "pending_locator_check",
+      "purification": "flash column chromatography (n-hexane)",
+      "evidence_grade": "A_confirmed",
+      "verification": "verified",
       "substrate": {
         "aryl_halide": "bromobenzene",
         "boronic_acid": "phenylboronic acid",
@@ -669,7 +669,7 @@
         "activation_mode": "thermal"
       },
       "_extraction": {
-        "label_raw_provenance": "transcribed",
+        "label_raw_provenance": "verbatim",
         "missing_fields": [
           "temp_c",
           "time_h",
@@ -678,7 +678,10 @@
         "needs_A_check": [
           "反应温度与时间（表注未给，读 Experimental）",
           "本记录刻意保留 temp_c=null，用于测『软维度缺失不阻断』"
-        ]
+        ],
+        "assay_basis_source": "三表脚注 b 明确为 flash column chromatography 的分离收率",
+        "calibration": "calibrated",
+        "verified_at": "2026-10-26"
       }
     },
     {
