@@ -1,0 +1,102 @@
+{
+  "version": "0.1",
+  "created": "2026-10-26",
+  "purpose": "Knowledge Base 上传清单：文件 → collection → 元数据。C 按本清单上传，A 按 L4-queries 验收。",
+  "collections": {
+    "evidence": {
+      "description": "文献证据：L1 原始 PDF + L2 记录表。回答「有哪些可比先例」。",
+      "retrieval_hint": "按底物名/DOI/表号检索"
+    },
+    "rules": {
+      "description": "判定规则：8 维门槛 + 分档定义。回答「这条能不能比」。",
+      "retrieval_hint": "按维度名/规则名检索"
+    },
+    "aux": {
+      "description": "辅助资产：口径词表、已知陷阱、验收问题集。提高抽取与判定的一致性。",
+      "retrieval_hint": "按口径词/陷阱编号检索"
+    }
+  },
+  "upload_order": ["evidence", "rules", "aux"],
+  "files": [
+    {
+      "layer": "L2_records",
+      "collection": "evidence",
+      "path": "kb/L2-records.md",
+      "type": "record_set",
+      "required": true,
+      "evidence_grade": "mixed（A_confirmed + candidate）",
+      "notes": "22 条记录（8 已核 + 16 候选）；含 locator 与 calibration 级别"
+    },
+    {
+      "layer": "L3_rules",
+      "collection": "rules",
+      "path": "kb/L3-gates.md",
+      "type": "rule",
+      "required": true,
+      "notes": "8 维门槛 + 维度 4 三层 + 结论计算；Agent 判定必须引用本文件"
+    },
+    {
+      "layer": "L3_rules",
+      "collection": "rules",
+      "path": "kb/L3-tier.md",
+      "type": "rule",
+      "required": true,
+      "notes": "档 A/B/C 判据与边界情形；含已知限制"
+    },
+    {
+      "layer": "L4_aux",
+      "collection": "aux",
+      "path": "kb/L4-outcome-lexicon.md",
+      "type": "lexicon",
+      "required": true,
+      "notes": "口径词表：原文表述 → 枚举；抽取层与规则层共用"
+    },
+    {
+      "layer": "L4_aux",
+      "collection": "aux",
+      "path": "kb/L4-pitfalls.md",
+      "type": "pitfall",
+      "required": true,
+      "notes": "7 条已知陷阱，全部真实踩过并已转成规则/测试"
+    },
+    {
+      "layer": "L4_aux",
+      "collection": "aux",
+      "path": "kb/L4-queries.md",
+      "type": "query_set",
+      "required": true,
+      "notes": "12 条验收问题 + 期望结果；每次改提示词后必须跑"
+    }
+  ],
+  "pdfs": {
+    "collection": "evidence",
+    "note": "PDF 不随仓库分发（版权）。由 A 从本地 outputs/2026-10-21-Suzuki文献包/PDF/ 上传。",
+    "count": 11,
+    "files": [
+      { "file": "SM-001_Miyaura1981_HUSCAP.pdf", "source_id": "SM-001", "license": "开放获取（HUSCAP 仓库）", "redistributable": true },
+      { "file": "01_Beilstein2018_SNS-Pd_直接底物.pdf", "source_id": "SM-006", "license": "CC BY（Beilstein）", "redistributable": true },
+      { "file": "02_Molecules2018_Pd-bpydc_直接底物.pdf", "source_id": "SM-004", "license": "CC BY（MDPI）", "redistributable": true },
+      { "file": "03_Polymers2023_Phosphine-polymer.pdf", "source_id": "P13", "license": "CC BY（MDPI）", "redistributable": true },
+      { "file": "04_Polymers2024_Pd-nanoparticles.pdf", "source_id": "-", "license": "CC BY（MDPI）", "redistributable": true },
+      { "file": "05_Molecules2020_Mechanochemical-Suzuki.pdf", "source_id": "-", "license": "CC BY（MDPI）", "redistributable": true },
+      { "file": "06_Molecules2012_NHC-Pd-Suzuki.pdf", "source_id": "P19", "license": "CC BY（MDPI）", "redistributable": true },
+      { "file": "07_ScientificReports2025_Pd-MOF-Suzuki.pdf", "source_id": "-", "license": "CC BY（Springer Nature）", "redistributable": true },
+      { "file": "08_Nanomaterials2024_Pd-carbon-Suzuki.pdf", "source_id": "-", "license": "CC BY（MDPI）", "redistributable": true },
+      { "file": "09_Frontiers2022_Pd-MOF-Suzuki.pdf", "source_id": "-", "license": "CC BY（Frontiers）", "redistributable": true },
+      { "file": "10_Molecules2012_Sulfur-NHC-Pd-Suzuki.pdf", "source_id": "-", "license": "CC BY（MDPI）", "redistributable": true }
+    ],
+    "missing": [
+      { "source_id": "SM-002", "what": "RSC SI", "action": "从 RSC 文章页下载；未存档前只给官方入口" },
+      { "source_id": "SM-005", "what": "ACS Omega 全文", "action": "PMC6641936 可下" }
+    ],
+    "excluded": [
+      { "source_id": "SM-003", "reason": "RSC SI 未落盘；且该条为 NMR 口径，不参与档内定位" }
+    ],
+    "never_upload": ["付费墙全文", "非官方镜像", "34 条未核验候选池原始文件"]
+  },
+  "acceptance": {
+    "tool": "kb/L4-queries.md",
+    "pass_criteria": "A 组 ≥5 条带 locator 命中；B 组 4 条口径判定正确；C 组能引 L3 原文；D 组 2 条不给出被禁止的答案",
+    "fail_action": "回滚提示词或重传；不得降低验收标准"
+  }
+}
