@@ -26,13 +26,13 @@
       "tier": "C",
       "citation": "Gholinejad, Jafarpour & Sansano, RSC Adv. 2026, 16(38), 42714-42723",
       "doi": "10.1039/d6ra03494b",
-      "locator": "主文表格（页/表号待 A 补）+ Experimental",
+      "locator": "Table 1 entry 3（4-溴苯甲醚优化表）+ Table 2 脚注 a（通用条件）",
       "outcome": {
         "value": 96.0,
         "unit": "%",
         "outcome_type": "gc",
-        "label_raw": "96% (GC)",
-        "note": "与演示条件最接近的可比先例之一：同为 60 °C、同为碳酸盐、同为含水醇"
+        "label_raw": "Table 1 列名 Yield (%) = 96；脚注 a: \"Yields determined by GC.\"",
+        "note": "同演示底物（4-溴苯甲醚）、同 60 °C。Table 1 entry 3：0.1 mol% Pd、K2CO3、H2O/EtOH (1:1)、60 °C、6 h → 96%（GC）。同表 entry 11（50 °C）60%、entry 10（25 °C）20%，温度效应明显。"
       },
       "assay": {
         "method": "GC",
@@ -46,21 +46,21 @@
         "ligand": null,
         "ligand_mol_pct": null,
         "base": "K2CO3",
-        "base_eq": null,
-        "solvent": "EtOH/H2O = 1:1",
+        "base_eq": 1.5,
+        "solvent": "H2O/EtOH = 1:1",
         "temp_c": 60,
         "time_h": 6.0,
         "atmosphere": null,
-        "scale_mmol": null,
+        "scale_mmol": 0.2,
         "equivalents": {
-          "aryl_halide": null,
-          "boronic_acid": null
+          "aryl_halide": 1.0,
+          "boronic_acid": 1.5
         },
         "concentration_m": null
       },
       "purification": null,
-      "evidence_grade": "imported_unchecked",
-      "verification": "pending_locator_check",
+      "evidence_grade": "A_confirmed",
+      "verification": "verified_with_caveat",
       "catalytic_profile": {
         "catalyst_form": "supported",
         "ligand_family": "none",
@@ -69,7 +69,7 @@
         "activation_mode": "thermal"
       },
       "_extraction": {
-        "label_raw_provenance": "transcribed",
+        "label_raw_provenance": "verbatim",
         "missing_fields": [
           "base_eq",
           "scale_mmol",
@@ -83,7 +83,10 @@
           "K2CO3 当量（正文只说 as a base）",
           "GC 内标与定量基准",
           "底物用量"
-        ]
+        ],
+        "assay_basis_source": "Table 1 脚注 a 仅写 'Yields determined by GC'；全文未见内标说明",
+        "calibration": "uncalibrated",
+        "verified_at": "2026-10-26"
       }
     },
     {
