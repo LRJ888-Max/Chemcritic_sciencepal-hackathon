@@ -72,12 +72,12 @@ EXPECTED = {
     "T5": ("SM-004.1", NEEDS_EVIDENCE, "outcome_type"),
     "T6": ("SM-004.7", NEEDS_EVIDENCE, "outcome_type"),
     "T7": ("SM-005", COMPARABLE, None),
-    "T8": ("SM-006", BLOCKED, "outcome_type"),
+    "T8": ("SM-006-e1", BLOCKED, "outcome_type"),
     "T9": ("SM-004.7", NEEDS_EVIDENCE, "outcome_type"),  # 参照物改为 SM-006 时见 T9b
     "T10": ("SM-004.7", NEEDS_EVIDENCE, "outcome_type"),
     "T11": ("SM-002", NEEDS_EVIDENCE, "outcome_type"),
     "T12": ("SM-002", COMPARABLE, None),
-    "T13": ("SM-006", NEEDS_EVIDENCE, "assay"),
+    "T13": ("SM-006-e1", NEEDS_EVIDENCE, "assay"),
     "T14": ("SM-001b", NEEDS_EVIDENCE, "assay"),
     "T15": ("SM-001b", NEEDS_EVIDENCE, "assay"),
     "T16": ("SM-001b", NEEDS_EVIDENCE, "assay"),
@@ -171,7 +171,7 @@ def test_matrix(records):
     for case, (ref_id, exp_verdict, exp_dim) in EXPECTED.items():
         subject = USER
         if case == "T9":
-            subject = by_id["SM-006"]
+            subject = by_id["SM-006-e1"]
             ref_id = "SM-004.7"
         elif case == "T10":
             subject = by_id["SM-004.1"]

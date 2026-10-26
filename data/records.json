@@ -352,18 +352,18 @@
       "evidence_note": "证据等级继承自角色 A 的核验记录（docs/science/2026-10-1*/），非导入方独立复核"
     },
     {
-      "record_id": "SM-006",
+      "record_id": "SM-006-e1",
       "source_id": "SM-006",
       "tier": "C",
       "citation": "Fiebor et al., Beilstein J. Org. Chem. 2018, 14, 1859",
       "doi": "10.3762/bjoc.14.160",
-      "locator": "Table 2 entry 1 + footnote a",
+      "locator": "Table 2 entry 1 + footnote a（PMC6071702 全文已核）",
       "outcome": {
         "value": 92,
         "unit": "%",
         "outcome_type": "gc",
-        "label_raw": "GC yield",
-        "note": "内标与校准细节未见于该表脚注"
+        "label_raw": "Yield (%) 列 = 92；表脚注 a: \"aGC yield.\"",
+        "note": "Table 2 entry 1：K3PO4 2 equiv、H2O、17a 1 mol%、140 °C、4 h。同表 entry 7 为 K2CO3 → 95%，是另一个条目（见 pool15 的 SM-006-e7），不得与本条合并。"
       },
       "assay": {
         "method": "GC",
@@ -398,7 +398,12 @@
         "medium": "aqueous",
         "activation_mode": "thermal"
       },
-      "evidence_note": "候选状态：GC 校准未注明，未完成原文核验"
+      "evidence_note": "候选状态：GC 校准未注明，未完成原文核验",
+      "_extraction": {
+        "label_raw_provenance": "verbatim",
+        "assay_basis_source": "表脚注仅写 GC yield；全文未见内标或定量基准说明",
+        "resolved_conflict": "2026-10-26 已用 PMC6071702 原文核对：entry 1=92%/K3PO4，entry 7=95%/K2CO3，两者都对，此前缺 entry 编号导致冲突"
+      }
     }
   ]
 }

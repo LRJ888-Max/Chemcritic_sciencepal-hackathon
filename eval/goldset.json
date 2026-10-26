@@ -16,8 +16,8 @@
     {"pair_id": "G05", "subject": "USER-001", "reference": "SM-004.1", "gold_verdict": "NEEDS_EVIDENCE", "gold_dim": "outcome_type", "status": "seed", "note": "表列名与脚注冲突，口径未决"},
     {"pair_id": "G06", "subject": "USER-001", "reference": "SM-004.7", "gold_verdict": "NEEDS_EVIDENCE", "gold_dim": "outcome_type", "status": "seed", "note": "同上"},
     {"pair_id": "G07", "subject": "USER-001", "reference": "SM-005", "gold_verdict": "COMPARABLE", "gold_dim": null, "status": "seed", "note": "跨档同口径"},
-    {"pair_id": "G08", "subject": "USER-001", "reference": "SM-006", "gold_verdict": "BLOCKED", "gold_dim": "outcome_type", "status": "seed", "note": "分离 vs GC"},
-    {"pair_id": "G09", "subject": "SM-006", "reference": "SM-004.7", "gold_verdict": "NEEDS_EVIDENCE", "gold_dim": "outcome_type", "status": "seed", "note": "SM-004 口径未决；若采信作者 GC 措辞则应为 BLOCKED@assay"},
+    {"pair_id": "G08", "subject": "USER-001", "reference": "SM-006-e1", "gold_verdict": "BLOCKED", "gold_dim": "outcome_type", "status": "seed", "note": "分离 vs GC"},
+    {"pair_id": "G09", "subject": "SM-006-e1", "reference": "SM-004.7", "gold_verdict": "NEEDS_EVIDENCE", "gold_dim": "outcome_type", "status": "seed", "note": "SM-004 口径未决；SM-006-e1 为 Table 2 entry 1（92%/K3PO4）"},
     {"pair_id": "G10", "subject": "SM-004.1", "reference": "SM-004.7", "gold_verdict": "NEEDS_EVIDENCE", "gold_dim": "outcome_type", "status": "seed", "note": "同篇不同条目，另需 non_independent 标记"},
     {"pair_id": "G11", "subject": "USER-011", "reference": "SM-002", "gold_verdict": "NEEDS_EVIDENCE", "gold_dim": "outcome_type", "status": "seed", "note": "用户未填口径"},
     {"pair_id": "G12", "subject": "USER-012", "reference": "SM-002", "gold_verdict": "COMPARABLE", "gold_dim": null, "status": "seed", "note": "声明为分离收率即通过维度 4（纯化一致性下沉到维度 8）；与规则表 T12 同步"}

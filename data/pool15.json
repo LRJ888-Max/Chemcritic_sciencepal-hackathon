@@ -34,7 +34,11 @@
         "label_raw": "96% (GC)",
         "note": "与演示条件最接近的可比先例之一：同为 60 °C、同为碳酸盐、同为含水醇"
       },
-      "assay": { "method": "GC", "internal_standard": null, "quantification_basis": null },
+      "assay": {
+        "method": "GC",
+        "internal_standard": null,
+        "quantification_basis": null
+      },
       "conditions": {
         "catalyst": "clinochlore-CQDs@Pd",
         "catalyst_loading_raw": "0.1 mol%",
@@ -48,7 +52,10 @@
         "time_h": 6.0,
         "atmosphere": null,
         "scale_mmol": null,
-        "equivalents": { "aryl_halide": null, "boronic_acid": null },
+        "equivalents": {
+          "aryl_halide": null,
+          "boronic_acid": null
+        },
         "concentration_m": null
       },
       "purification": null,
@@ -63,8 +70,20 @@
       },
       "_extraction": {
         "label_raw_provenance": "transcribed",
-        "missing_fields": ["base_eq", "scale_mmol", "equivalents", "atmosphere", "assay.internal_standard", "assay.quantification_basis"],
-        "needs_A_check": ["页/表/entry 编号", "K2CO3 当量（正文只说 as a base）", "GC 内标与定量基准", "底物用量"]
+        "missing_fields": [
+          "base_eq",
+          "scale_mmol",
+          "equivalents",
+          "atmosphere",
+          "assay.internal_standard",
+          "assay.quantification_basis"
+        ],
+        "needs_A_check": [
+          "页/表/entry 编号",
+          "K2CO3 当量（正文只说 as a base）",
+          "GC 内标与定量基准",
+          "底物用量"
+        ]
       }
     },
     {
@@ -77,13 +96,17 @@
       "outcome": {
         "value": 99.0,
         "unit": "%",
-        "outcome_type": "isolated",
-        "label_raw": ">99% (isolated)",
+        "outcome_type": "unknown",
+        "label_raw": "Yield (%) 列 = >99；Table 3 无脚注、Yield 列无上标",
         "value_raw": ">99",
         "value_is_lower_bound": true,
-        "note": "报告值为『>99%』，不得写成 99%（下界不等于点值）"
+        "note": "原文 Table 3 entry 7（4-Bromoanisole, 70 min, >99%）未声明是分离还是 GC 收率；Table 2 有脚注 'a Isolated yield'，但 Table 3 没有。按 A 2026-10-26 决定：判 UNKNOWN，不推定沿用 Table 2 的口径。"
       },
-      "assay": { "method": "isolated", "internal_standard": null, "quantification_basis": "isolated product mass" },
+      "assay": {
+        "method": "isolated",
+        "internal_standard": null,
+        "quantification_basis": "isolated product mass"
+      },
       "conditions": {
         "catalyst": "Pd(0)-SMTU-boehmite",
         "catalyst_loading_raw": "5 mg",
@@ -98,7 +121,10 @@
         "time_raw": "70 min",
         "atmosphere": null,
         "scale_mmol": 1.0,
-        "equivalents": { "aryl_halide": 1.0, "boronic_acid": null },
+        "equivalents": {
+          "aryl_halide": 1.0,
+          "boronic_acid": null
+        },
         "concentration_m": null
       },
       "purification": null,
@@ -112,9 +138,20 @@
         "activation_mode": "thermal"
       },
       "_extraction": {
-        "label_raw_provenance": "transcribed",
-        "missing_fields": ["catalyst_mol_pct", "equivalents.boronic_acid", "atmosphere", "purification"],
-        "needs_A_check": ["Table 3 行号与 4-溴苯甲醚列的绑定", "5 mg 对应 mol%（缺则维度 6 只能记 L2）", "纯化手段", ">99% 的原文写法"]
+        "label_raw_provenance": "verbatim",
+        "missing_fields": [
+          "catalyst_mol_pct",
+          "equivalents.boronic_acid",
+          "atmosphere",
+          "purification"
+        ],
+        "needs_A_check": [
+          "Table 3 行号与 4-溴苯甲醚列的绑定",
+          "5 mg 对应 mol%（缺则维度 6 只能记 L2）",
+          "纯化手段",
+          ">99% 的原文写法"
+        ],
+        "assay_basis_source": "Table 3 无脚注，无法确认口径"
       }
     },
     {
@@ -131,7 +168,11 @@
         "label_raw": "100% conversion (GC-MS)",
         "note": "原文报的是转化率而非收率；杂/同偶联 = 100:0。不得折算成分离收率"
       },
-      "assay": { "method": "GC-MS", "internal_standard": null, "quantification_basis": "conversion of aryl halide" },
+      "assay": {
+        "method": "GC-MS",
+        "internal_standard": null,
+        "quantification_basis": "conversion of aryl halide"
+      },
       "conditions": {
         "catalyst": "Pd@PP-3（微孔膦聚合物负载 Pd）",
         "catalyst_loading_raw": "1 mol%",
@@ -145,7 +186,10 @@
         "time_h": 2.0,
         "atmosphere": "N2",
         "scale_mmol": 0.5,
-        "equivalents": { "aryl_halide": 1.0, "boronic_acid": 1.5 },
+        "equivalents": {
+          "aryl_halide": 1.0,
+          "boronic_acid": 1.5
+        },
         "concentration_m": null
       },
       "purification": null,
@@ -160,8 +204,13 @@
       },
       "_extraction": {
         "label_raw_provenance": "transcribed",
-        "missing_fields": ["purification"],
-        "needs_A_check": ["100% 是 conversion 的确认（这条决定维度 3 判 FAIL）", "是否有对应的分离收率数字（若有，应另立一条记录）"]
+        "missing_fields": [
+          "purification"
+        ],
+        "needs_A_check": [
+          "100% 是 conversion 的确认（这条决定维度 3 判 FAIL）",
+          "是否有对应的分离收率数字（若有，应另立一条记录）"
+        ]
       }
     },
     {
@@ -178,7 +227,11 @@
         "label_raw": "95% (GC)",
         "note": "同表内 Na2CO3 行仅 12%（P19b）→ 碱的种类效应在本篇内即数量级"
       },
-      "assay": { "method": "GC", "internal_standard": null, "quantification_basis": null },
+      "assay": {
+        "method": "GC",
+        "internal_standard": null,
+        "quantification_basis": null
+      },
       "conditions": {
         "catalyst": "Pd(OAc)2",
         "catalyst_loading_raw": "0.5 mol%",
@@ -192,7 +245,10 @@
         "time_h": 1.5,
         "atmosphere": null,
         "scale_mmol": 0.5,
-        "equivalents": { "aryl_halide": 1.0, "boronic_acid": 1.5 },
+        "equivalents": {
+          "aryl_halide": 1.0,
+          "boronic_acid": 1.5
+        },
         "concentration_m": null
       },
       "purification": null,
@@ -212,8 +268,17 @@
       },
       "_extraction": {
         "label_raw_provenance": "transcribed",
-        "missing_fields": ["atmosphere", "assay.internal_standard", "assay.quantification_basis"],
-        "needs_A_check": ["表行号", "GC 内标与基准"]
+        "missing_fields": [
+          "atmosphere",
+          "assay.internal_standard",
+          "assay.quantification_basis"
+        ],
+        "needs_A_check": [
+          "表行号",
+          "GC 内标与基准"
+        ],
+        "two_variables": true,
+        "caveat": "K2CO3 用 1.5 h、Na2CO3 用 24 h —— 碱与时间同时变化（Molecules 2012 Table 1）。可作同表同口径的 COMPARABLE 样本，但不得用于支持'换碱导致差异'的因果。"
       }
     },
     {
@@ -230,7 +295,11 @@
         "label_raw": "12% (GC)",
         "note": "与 P19a 同底物同催化剂同溶剂，仅换碱并把时间拉到 24 h：反证『碳酸盐通用』"
       },
-      "assay": { "method": "GC", "internal_standard": null, "quantification_basis": null },
+      "assay": {
+        "method": "GC",
+        "internal_standard": null,
+        "quantification_basis": null
+      },
       "conditions": {
         "catalyst": "Pd(OAc)2",
         "catalyst_loading_raw": "0.5 mol%",
@@ -244,7 +313,10 @@
         "time_h": 24.0,
         "atmosphere": null,
         "scale_mmol": 0.5,
-        "equivalents": { "aryl_halide": 1.0, "boronic_acid": 1.5 },
+        "equivalents": {
+          "aryl_halide": 1.0,
+          "boronic_acid": 1.5
+        },
         "concentration_m": null
       },
       "purification": null,
@@ -264,8 +336,17 @@
       },
       "_extraction": {
         "label_raw_provenance": "inferred_same_table",
-        "missing_fields": ["atmosphere", "assay.internal_standard", "assay.quantification_basis"],
-        "needs_A_check": ["12% 的口径标记是否与同表其他行一致（本行由同表推定）", "24 h 是否为该行的真实时间列"]
+        "missing_fields": [
+          "atmosphere",
+          "assay.internal_standard",
+          "assay.quantification_basis"
+        ],
+        "needs_A_check": [
+          "12% 的口径标记是否与同表其他行一致（本行由同表推定）",
+          "24 h 是否为该行的真实时间列"
+        ],
+        "two_variables": true,
+        "caveat": "K2CO3 用 1.5 h、Na2CO3 用 24 h —— 碱与时间同时变化（Molecules 2012 Table 1）。可作同表同口径的 COMPARABLE 样本，但不得用于支持'换碱导致差异'的因果。"
       }
     },
     {
@@ -282,7 +363,11 @@
         "label_raw": "98% (1H NMR)",
         "note": "同表内纯水 8%（P24b）、THF/i-PrOH 0% → 溶剂族是本篇内最强的变量"
       },
-      "assay": { "method": "1H NMR", "internal_standard": null, "quantification_basis": null },
+      "assay": {
+        "method": "1H NMR",
+        "internal_standard": null,
+        "quantification_basis": null
+      },
       "conditions": {
         "catalyst": "PdBTC 7（双茶碱微花 Pd(II)）",
         "catalyst_loading_raw": "0.1 mol%",
@@ -296,7 +381,10 @@
         "time_h": 2.0,
         "atmosphere": null,
         "scale_mmol": 0.5,
-        "equivalents": { "aryl_halide": 1.0, "boronic_acid": 1.2 },
+        "equivalents": {
+          "aryl_halide": 1.0,
+          "boronic_acid": 1.2
+        },
         "concentration_m": null
       },
       "purification": null,
@@ -316,8 +404,15 @@
       },
       "_extraction": {
         "label_raw_provenance": "transcribed",
-        "missing_fields": ["atmosphere", "assay.internal_standard", "assay.quantification_basis"],
-        "needs_A_check": ["NMR 积分基准/内标（缺则维度 4 第三层 UNKNOWN）", "表行号"]
+        "missing_fields": [
+          "atmosphere",
+          "assay.internal_standard",
+          "assay.quantification_basis"
+        ],
+        "needs_A_check": [
+          "NMR 积分基准/内标（缺则维度 4 第三层 UNKNOWN）",
+          "表行号"
+        ]
       }
     },
     {
@@ -334,7 +429,11 @@
         "label_raw": "8% (1H NMR)",
         "note": "纯水 8% vs 含水醇 98%：同一催化剂，只换溶剂"
       },
-      "assay": { "method": "1H NMR", "internal_standard": null, "quantification_basis": null },
+      "assay": {
+        "method": "1H NMR",
+        "internal_standard": null,
+        "quantification_basis": null
+      },
       "conditions": {
         "catalyst": "PdBTC 7（双茶碱微花 Pd(II)）",
         "catalyst_loading_raw": "0.1 mol%",
@@ -349,7 +448,10 @@
         "time_raw": "同表假定 2 h",
         "atmosphere": null,
         "scale_mmol": 0.5,
-        "equivalents": { "aryl_halide": 1.0, "boronic_acid": 1.2 },
+        "equivalents": {
+          "aryl_halide": 1.0,
+          "boronic_acid": 1.2
+        },
         "concentration_m": null
       },
       "purification": null,
@@ -369,8 +471,15 @@
       },
       "_extraction": {
         "label_raw_provenance": "inferred_same_table",
-        "missing_fields": ["atmosphere", "assay.internal_standard", "assay.quantification_basis"],
-        "needs_A_check": ["纯水行的口径标记", "纯水行的时间（本记录按同表 2 h 推定，属待核验）"]
+        "missing_fields": [
+          "atmosphere",
+          "assay.internal_standard",
+          "assay.quantification_basis"
+        ],
+        "needs_A_check": [
+          "纯水行的口径标记",
+          "纯水行的时间（本记录按同表 2 h 推定，属待核验）"
+        ]
       }
     },
     {
@@ -387,7 +496,11 @@
         "label_raw": "100% (1H NMR)",
         "note": "纯水 + 20 °C 可达 100%，但催化剂 2 mol% 且为 NMR 口径 → 不可外推为『室温水相普遍 100%』"
       },
-      "assay": { "method": "1H NMR", "internal_standard": null, "quantification_basis": null },
+      "assay": {
+        "method": "1H NMR",
+        "internal_standard": null,
+        "quantification_basis": null
+      },
       "conditions": {
         "catalyst": "u-T2/Pd（茶碱微球负载 Pd）",
         "catalyst_loading_raw": "2.0 mol%",
@@ -401,7 +514,10 @@
         "time_h": 1.0,
         "atmosphere": null,
         "scale_mmol": 1.0,
-        "equivalents": { "aryl_halide": 1.0, "boronic_acid": 1.5 },
+        "equivalents": {
+          "aryl_halide": 1.0,
+          "boronic_acid": 1.5
+        },
         "concentration_m": null
       },
       "purification": null,
@@ -421,8 +537,14 @@
       },
       "_extraction": {
         "label_raw_provenance": "transcribed",
-        "missing_fields": ["atmosphere", "assay.internal_standard", "assay.quantification_basis"],
-        "needs_A_check": ["与 P24b 同为『纯水 20 °C』却 100% vs 8% —— 请确认两条的催化剂载量与时间确实不同（这是 gold set 里最容易被质疑的一对）"]
+        "missing_fields": [
+          "atmosphere",
+          "assay.internal_standard",
+          "assay.quantification_basis"
+        ],
+        "needs_A_check": [
+          "与 P24b 同为『纯水 20 °C』却 100% vs 8% —— 请确认两条的催化剂载量与时间确实不同（这是 gold set 里最容易被质疑的一对）"
+        ]
       }
     },
     {
@@ -439,7 +561,11 @@
         "label_raw": "91% (isolated)",
         "note": "60 °C 也能 90%+ 的干净证据，但只需 10 min → 催化剂活性远高于 Pd(PPh3)4"
       },
-      "assay": { "method": "isolated", "internal_standard": null, "quantification_basis": "isolated product mass" },
+      "assay": {
+        "method": "isolated",
+        "internal_standard": null,
+        "quantification_basis": "isolated product mass"
+      },
       "conditions": {
         "catalyst": "D2（thienyl Pd(II) phosphonium ylide）",
         "catalyst_loading_raw": "0.47 mol%",
@@ -454,7 +580,10 @@
         "time_raw": "10 min",
         "atmosphere": null,
         "scale_mmol": 0.5,
-        "equivalents": { "aryl_halide": 1.0, "boronic_acid": 1.2 },
+        "equivalents": {
+          "aryl_halide": 1.0,
+          "boronic_acid": 1.2
+        },
         "concentration_m": null
       },
       "purification": null,
@@ -474,8 +603,13 @@
       },
       "_extraction": {
         "label_raw_provenance": "transcribed",
-        "missing_fields": ["atmosphere", "purification"],
-        "needs_A_check": ["膦叶立德归 non_phosphine 还是 phosphine？本记录按 non_phosphine 填（叶立德不是膦配体），请 A 签字；这一格决定它进档 A 还是档 C"]
+        "missing_fields": [
+          "atmosphere",
+          "purification"
+        ],
+        "needs_A_check": [
+          "膦叶立德归 non_phosphine 还是 phosphine？本记录按 non_phosphine 填（叶立德不是膦配体），请 A 签字；这一格决定它进档 A 还是档 C"
+        ]
       }
     },
     {
@@ -492,7 +626,11 @@
         "label_raw": "85% (isolated, flash chromatography)",
         "note": "温度原文未给 → 维度 7 记『缺失 L1』而非阻断，是本池唯一一条『缺温度仍可判 COMPARABLE』的样本"
       },
-      "assay": { "method": "isolated", "internal_standard": null, "quantification_basis": "isolated product mass" },
+      "assay": {
+        "method": "isolated",
+        "internal_standard": null,
+        "quantification_basis": "isolated product mass"
+      },
       "conditions": {
         "catalyst": "Pd A（alpha-diimine Pd complex）",
         "catalyst_loading_raw": "0.1 mol%",
@@ -506,7 +644,10 @@
         "time_h": null,
         "atmosphere": null,
         "scale_mmol": 1.0,
-        "equivalents": { "aryl_halide": 1.0, "boronic_acid": 1.1 },
+        "equivalents": {
+          "aryl_halide": 1.0,
+          "boronic_acid": 1.1
+        },
         "concentration_m": null
       },
       "purification": "快速柱层析",
@@ -526,8 +667,15 @@
       },
       "_extraction": {
         "label_raw_provenance": "transcribed",
-        "missing_fields": ["temp_c", "time_h", "atmosphere"],
-        "needs_A_check": ["反应温度与时间（表注未给，读 Experimental）", "本记录刻意保留 temp_c=null，用于测『软维度缺失不阻断』"]
+        "missing_fields": [
+          "temp_c",
+          "time_h",
+          "atmosphere"
+        ],
+        "needs_A_check": [
+          "反应温度与时间（表注未给，读 Experimental）",
+          "本记录刻意保留 temp_c=null，用于测『软维度缺失不阻断』"
+        ]
       }
     },
     {
@@ -544,7 +692,11 @@
         "label_raw": "77% conversion (GC, internal standard)",
         "note": "同底物 + 同碱 + 有水，仍是 77% 转化 → 反证『条件对了就该 90%+』"
       },
-      "assay": { "method": "GC", "internal_standard": "未注明种类", "quantification_basis": "conversion of aryl halide" },
+      "assay": {
+        "method": "GC",
+        "internal_standard": "未注明种类",
+        "quantification_basis": "conversion of aryl halide"
+      },
       "conditions": {
         "catalyst": "Pd-based catalyst size series",
         "catalyst_loading_raw": "5 mol%",
@@ -558,7 +710,10 @@
         "time_h": 1.0,
         "atmosphere": "air",
         "scale_mmol": 1.0,
-        "equivalents": { "aryl_halide": 1.0, "boronic_acid": 3.0 },
+        "equivalents": {
+          "aryl_halide": 1.0,
+          "boronic_acid": 3.0
+        },
         "concentration_m": null
       },
       "purification": null,
@@ -578,8 +733,14 @@
       },
       "_extraction": {
         "label_raw_provenance": "transcribed",
-        "missing_fields": ["purification"],
-        "needs_A_check": ["催化剂形态（尺寸系列 → 是否 nanoparticle 统一？）", "室温 25 °C 是否原文写 RT", "GC 内标种类"]
+        "missing_fields": [
+          "purification"
+        ],
+        "needs_A_check": [
+          "催化剂形态（尺寸系列 → 是否 nanoparticle 统一？）",
+          "室温 25 °C 是否原文写 RT",
+          "GC 内标种类"
+        ]
       }
     },
     {
@@ -596,7 +757,11 @@
         "label_raw": "99% (GC)",
         "note": "邻位甲氧基位阻更大却 99% vs 对位 66% → 『甲氧基』本身不是低收率原因"
       },
-      "assay": { "method": "GLC", "internal_standard": null, "quantification_basis": "aryl halide" },
+      "assay": {
+        "method": "GLC",
+        "internal_standard": null,
+        "quantification_basis": "aryl halide"
+      },
       "conditions": {
         "catalyst": "Pd(PPh3)4",
         "catalyst_loading_raw": "3 mol%",
@@ -610,7 +775,10 @@
         "time_h": 6.0,
         "atmosphere": "N2",
         "scale_mmol": 1.0,
-        "equivalents": { "aryl_halide": 1.0, "boronic_acid": 1.1 },
+        "equivalents": {
+          "aryl_halide": 1.0,
+          "boronic_acid": 1.1
+        },
         "concentration_m": null
       },
       "purification": null,
@@ -630,8 +798,13 @@
       },
       "_extraction": {
         "label_raw_provenance": "transcribed",
-        "missing_fields": ["assay.internal_standard"],
-        "needs_A_check": ["表 II 行号（第几行是 o-MeOPhBr）", "substrate 与 P02 同表同条件，仅底物位置不同 → 维度 1 应判 FAIL（D1：位置不同即不同底物）"]
+        "missing_fields": [
+          "assay.internal_standard"
+        ],
+        "needs_A_check": [
+          "表 II 行号（第几行是 o-MeOPhBr）",
+          "substrate 与 P02 同表同条件，仅底物位置不同 → 维度 1 应判 FAIL（D1：位置不同即不同底物）"
+        ]
       }
     },
     {
@@ -647,12 +820,20 @@
         "outcome_type": "isolated",
         "label_raw": "96.2% (crude) / 86.3% (after recrystallisation)",
         "alternate_values": [
-          { "value": 96.2, "label": "crude", "outcome_type": "isolated" }
+          {
+            "value": 96.2,
+            "label": "crude",
+            "outcome_type": "isolated"
+          }
         ],
         "value_selection_rule": "取纯化后值 86.3%；粗品值另存，不得与纯化值混用",
         "note": "同一 procedure 两个分离值 → gold set 里唯一『口径内部再分层』样本"
       },
-      "assay": { "method": "isolated", "internal_standard": null, "quantification_basis": "isolated product mass" },
+      "assay": {
+        "method": "isolated",
+        "internal_standard": null,
+        "quantification_basis": "isolated product mass"
+      },
       "conditions": {
         "catalyst": "Pd(OAc)2",
         "catalyst_loading_raw": "0.3 mol%",
@@ -668,7 +849,10 @@
         "time_raw": "45 min",
         "atmosphere": "N2",
         "scale_mmol": 270.0,
-        "equivalents": { "aryl_halide": 1.0, "boronic_acid": 1.05 },
+        "equivalents": {
+          "aryl_halide": 1.0,
+          "boronic_acid": 1.05
+        },
         "concentration_m": null
       },
       "purification": "重结晶",
@@ -688,8 +872,14 @@
       },
       "_extraction": {
         "label_raw_provenance": "transcribed",
-        "missing_fields": ["temp_c"],
-        "needs_A_check": ["回流温度（1-ProOH/H2O 体系，原文是否给具体温度）", "两个收率哪个用于对外表述 —— 建议统一用 86.3% 并注明粗品 96.2%", "版权：Org Synth 禁止再分发 PDF，引用只走 DOI"]
+        "missing_fields": [
+          "temp_c"
+        ],
+        "needs_A_check": [
+          "回流温度（1-ProOH/H2O 体系，原文是否给具体温度）",
+          "两个收率哪个用于对外表述 —— 建议统一用 86.3% 并注明粗品 96.2%",
+          "版权：Org Synth 禁止再分发 PDF，引用只走 DOI"
+        ]
       }
     },
     {
@@ -706,7 +896,11 @@
         "label_raw": "90.3% (distillation)",
         "note": "『90%』最常见的真实来源类型：芳基碘 + 无膦 + 邻甲苯硼酸，三处偏离"
       },
-      "assay": { "method": "isolated", "internal_standard": null, "quantification_basis": "isolated product mass" },
+      "assay": {
+        "method": "isolated",
+        "internal_standard": null,
+        "quantification_basis": "isolated product mass"
+      },
       "conditions": {
         "catalyst": "Pd(OAc)2",
         "catalyst_loading_raw": "0.2 mol%",
@@ -721,7 +915,10 @@
         "time_h": 2.0,
         "atmosphere": "Ar",
         "scale_mmol": 71.8,
-        "equivalents": { "aryl_halide": 1.0, "boronic_acid": 1.03 },
+        "equivalents": {
+          "aryl_halide": 1.0,
+          "boronic_acid": 1.03
+        },
         "concentration_m": null
       },
       "purification": "蒸馏",
@@ -741,8 +938,14 @@
       },
       "_extraction": {
         "label_raw_provenance": "transcribed",
-        "missing_fields": ["temp_c"],
-        "needs_A_check": ["回流温度", "作者行 OCR 残缺（Goodson/Wallow/Novak 由页首残字合并），需以期刊页为准", "维度 1 必须判 FAIL：离去基为碘（D1 已定）"]
+        "missing_fields": [
+          "temp_c"
+        ],
+        "needs_A_check": [
+          "回流温度",
+          "作者行 OCR 残缺（Goodson/Wallow/Novak 由页首残字合并），需以期刊页为准",
+          "维度 1 必须判 FAIL：离去基为碘（D1 已定）"
+        ]
       }
     },
     {
@@ -759,7 +962,11 @@
         "label_raw": "99% (isolated)",
         "note": "时间扫描 15 min 79% → 60 min 99% → 之后回落 93/84/82/79：产物降解的罕见直接证据"
       },
-      "assay": { "method": "isolated", "internal_standard": null, "quantification_basis": "isolated product mass" },
+      "assay": {
+        "method": "isolated",
+        "internal_standard": null,
+        "quantification_basis": "isolated product mass"
+      },
       "conditions": {
         "catalyst": "磁载双配体 Pd（magnetic dual-ligand Pd）",
         "catalyst_loading_raw": "2.0 mg",
@@ -773,7 +980,10 @@
         "time_h": 1.0,
         "atmosphere": null,
         "scale_mmol": 0.5,
-        "equivalents": { "aryl_halide": 1.0, "boronic_acid": 1.2 },
+        "equivalents": {
+          "aryl_halide": 1.0,
+          "boronic_acid": 1.2
+        },
         "concentration_m": null
       },
       "purification": null,
@@ -793,8 +1003,74 @@
       },
       "_extraction": {
         "label_raw_provenance": "transcribed",
-        "missing_fields": ["catalyst_mol_pct", "atmosphere", "purification"],
-        "needs_A_check": ["2.0 mg 对应 mol%", "时间扫描的完整数值（79/99/93/84/82/79）是否原文逐字，若是，可作为『过程非单调』的唯一证据"]
+        "missing_fields": [
+          "catalyst_mol_pct",
+          "atmosphere",
+          "purification"
+        ],
+        "needs_A_check": [
+          "2.0 mg 对应 mol%",
+          "时间扫描的完整数值（79/99/93/84/82/79）是否原文逐字，若是，可作为『过程非单调』的唯一证据"
+        ]
+      }
+    },
+    {
+      "record_id": "SM-006-e7",
+      "source_id": "SM-006",
+      "tier": "C",
+      "citation": "Fiebor et al., Beilstein J. Org. Chem. 2018, 14, 1859",
+      "doi": "10.3762/bjoc.14.160",
+      "locator": "Table 2 entry 7 + footnote a（PMC6071702 全文已核）",
+      "outcome": {
+        "value": 95,
+        "unit": "%",
+        "outcome_type": "gc",
+        "label_raw": "Yield (%) 列 = 95；表脚注 a: \"aGC yield.\"",
+        "note": "Table 2 entry 7：K2CO3、H2O、17a 1 mol%、140 °C、4 h。与 entry 1 同篇不同条目（entry 1 为 K3PO4/92%），非独立来源。碱当量原文未在该条目单列，记 null。"
+      },
+      "assay": {
+        "method": "GC",
+        "internal_standard": null,
+        "quantification_basis": null
+      },
+      "conditions": {
+        "catalyst": "SNS-Pd pincer 17a",
+        "catalyst_loading_raw": "1 mol%",
+        "catalyst_mol_pct": 1.0,
+        "ligand": null,
+        "ligand_mol_pct": null,
+        "base": "K2CO3",
+        "base_eq": null,
+        "solvent": "H2O",
+        "temp_c": 140,
+        "time_h": 4.0,
+        "atmosphere": null,
+        "scale_mmol": null,
+        "equivalents": {
+          "aryl_halide": null,
+          "boronic_acid": null
+        },
+        "concentration_m": null
+      },
+      "purification": null,
+      "evidence_grade": "candidate",
+      "verification": "candidate",
+      "catalytic_profile": {
+        "catalyst_form": "molecular_complex",
+        "ligand_family": "non_phosphine",
+        "support": "none",
+        "medium": "aqueous",
+        "activation_mode": "thermal"
+      },
+      "_extraction": {
+        "label_raw_provenance": "verbatim",
+        "assay_basis_source": "表脚注仅写 GC yield；未见内标说明",
+        "missing_fields": [
+          "internal_standard",
+          "quantification_basis",
+          "base_eq",
+          "scale_mmol"
+        ]
       }
     }
   ]
