@@ -33,7 +33,7 @@
 | 文件 | 内容 | 交给谁 |
 |---|---|---|
 | [分档定义](rules/分档定义-待签字.md) | 档 A / B / C 的成员判据、判档顺序、6 条记录归档结果 | A 签字 → C 实现 `engine/placement.py` |
-| [8 维门槛规则表](rules/8维门槛规则表-待签字.md) | 4 硬 + 4 软门槛的判定细则、结论优先级、T1–T12 验收用例（实测 12/12 通过） | A 签字 → C 实现 `engine/gates.py` |
+| [8 维门槛规则表](rules/8维门槛规则表-待签字.md) | 4 硬 + 4 软门槛的判定细则、结论优先级、T1–T18 验收用例（引擎 `--selftest` 实测 19 passed, 0 failed） | A 签字 → C 实现 `engine/gates.py` |
 | [机制库 v0](rules/机制库v0-待签字.md) | 9 条机制的化学理由、判别实验、成本、序贯决策树 | A 签字 → A3/A4 调用 |
 
 > 每份文件末尾的 D1–D6 已全部定稿（其中 D1–D5 由技术侧代签，A 可推翻）。实现与文档不一致时以测试为准。
@@ -43,12 +43,22 @@
 | 目录 | 内容 | 状态 |
 |---|---|---|
 | `agents/` | A0–A5 六个 Agent 的提示词与平台配置 | 骨架，可直接粘进 SciencePal |
-| `engine/` | `schemas` / `gates`（8 维门槛）/ `tier`（档位判定）/ `profiles` / `adapter`（接 C 的案例库）/ `placement` / `run_demo` | **可运行**：13 项测试通过，档位 8/8 一致 |
-| `skills/` | `chemcritic-comparability` 可导出 Skill | 骨架 |
+| `engine/` | `schemas` / `gates`（8 维门槛）/ `tier`（档位判定）/ `profiles` / `adapter`（接 C 的案例库）/ `placement` / `run_demo` / `build_bundle`（生成单文件版） | **可运行**：`--selftest` 19 passed, 0 failed；档位 8/8 一致 |
+| `skills/` | `chemcritic-comparability` 可导出 Skill + `scripts/chemcritic_engine.py`（单文件、零依赖，沙箱可直接跑） | v0.2.0 可用；平台注册与验收见 [单文件引擎·平台接入三步](integration/2026-10-27-单文件引擎-平台接入三步.md) |
 | `eval/` | gold set（seed）、FPR/FNR 脚本、baseline 方案 | 脚本可运行；gold set 待 B 独立标注 |
 | `data/` | 8 条 entry 级记录（`records.json`） | 已核验 |
 
-**与 C 的工程合并在进行中**，指令见 [给 C 的合并指令](integration/2026-10-25-给C-的合并指令.md)——以 `test_code/` 为主体，`engine/` 只提供判定内核。
+**平台接入：** 判定权威在 `engine/`，平台侧执行用 `skills/chemcritic-comparability/scripts/chemcritic_engine.py`（同源单文件版，零依赖）。步骤见 [单文件引擎·平台接入三步](integration/2026-10-27-单文件引擎-平台接入三步.md)，历史指令见 [给 C 的合并指令](integration/2026-10-25-给C-的合并指令.md)。
+
+---
+
+## `integration/` — 平台接入与验收
+
+| 文件 | 内容 |
+|---|---|
+| [平台 Agent 搭建包](integration/2026-10-26-平台Agent搭建包.md) | 建 Agent 的 8 步、系统提示词、4 条验收问题 |
+| [引擎判定接入（live-002）](integration/2026-10-27-给C-的合并指令-引擎判定接入.md) | 判定调用契约：输入 Record / 输出证书 JSON |
+| [单文件引擎·平台接入三步](integration/2026-10-27-单文件引擎-平台接入三步.md) | 上传/落地 → Agent 固定调用 → 5 项验收；含沙箱不通时的降级路径 |
 
 ---
 

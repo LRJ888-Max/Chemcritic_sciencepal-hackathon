@@ -1,0 +1,43 @@
+{
+  "_comment": "演示输入：35% 分离收率（对应 README 演示案例）。字段缺省即 null，不得补默认值。",
+  "record_id": "USER-001",
+  "outcome": {
+    "value": 35,
+    "outcome_type": "isolated",
+    "label_raw": "分离收率（柱层析，称重）"
+  },
+  "verification": "user_report",
+  "substrate": {
+    "aryl_halide": "4-bromoanisole",
+    "boronic_acid": "phenylboronic acid",
+    "product": "4-methoxybiphenyl"
+  },
+  "conditions": {
+    "catalyst": "Pd(PPh3)4",
+    "catalyst_mol_pct": 3.0,
+    "ligand": null,
+    "base": "Na2CO3",
+    "base_eq": 2.0,
+    "solvent": "THF",
+    "temp_c": 60,
+    "time_h": 12,
+    "atmosphere": "N2",
+    "scale_mmol": 1.0,
+    "equivalents": {
+      "aryl_halide": 1.0,
+      "boronic_acid": 1.2
+    }
+  },
+  "assay": {
+    "method": "isolated (weighed)",
+    "internal_standard": null,
+    "quantification_basis": "isolated product"
+  },
+  "catalytic_profile": {
+    "catalyst_form": "molecular_complex",
+    "ligand_family": "phosphine",
+    "support": "none",
+    "medium": "organic",
+    "activation_mode": "thermal"
+  }
+}

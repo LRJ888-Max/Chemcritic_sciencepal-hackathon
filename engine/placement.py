@@ -130,21 +130,20 @@ def placement(user: Record, records: List[Record]) -> Dict[str, Any]:
         }
 
     values = [r.outcome_value for r in calibrated if r.outcome_value is not None]
-
     return {
-        "status": "PLACED",
-        "outcome_type": user.outcome_type,
-        "tier": tier,
-        "tier_basis": "同档" if same_tier else "同口径（跨档）",
-        "comparables": [r.record_id for r in calibrated],
-        "uncalibrated_refs": uncal_ids,
-        "observed": user.outcome_value,
-        "reference_min": min(values),
-        "reference_max": max(values),
-        "reference_values": sorted(values),
-        "delta_vs_min": round(user.outcome_value - min(values), 1),
-        "delta_vs_max": round(user.outcome_value - max(values), 1),
-    }
+            "status": "PLACED",
+            "outcome_type": user.outcome_type,
+            "tier": tier,
+            "tier_basis": "同档" if same_tier else "同口径（跨档）",
+            "comparables": [r.record_id for r in calibrated],
+            "uncalibrated_refs": uncal_ids,
+            "observed": user.outcome_value,
+            "reference_min": min(values),
+            "reference_max": max(values),
+            "reference_values": sorted(values),
+            "delta_vs_min": round(user.outcome_value - min(values), 1) if same_tier else None,
+            "delta_vs_max": round(user.outcome_value - max(values), 1) if same_tier else None,
+        }
 
 
 def _level(record: Record) -> str:
