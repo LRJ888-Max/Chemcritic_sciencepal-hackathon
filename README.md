@@ -191,12 +191,32 @@ flowchart TD
 ```text
 README.md
 .gitignore
+bootstrap.sh                    沙箱自举：装到 /workspace/chemcritic 并自检
+rebuild.bat                     本地一键：打包 → 校验 → 19 项自检（push 前必跑）
+agents/                         六个 Agent 的提示词（A0 主控 … A5 记录）
+skills/chemcritic-comparability/
+├── SKILL.md                    可比性 Skill（判定规则 + 调用契约）
+└── scripts/
+    ├── chemcritic_engine.py    单文件判定引擎（零依赖，沙箱可直接跑）
+    └── examples/user_35pct.json
+engine/                         规则引擎源码（唯一事实来源）
+├── gates.py                    8 维门槛判定（确定性，LLM 无权覆盖）
+├── placement.py                等价类、档内定位、双档敏感性
+├── tier.py / profiles.py       分档规则与档位字段补丁表
+├── schemas.py / adapter.py     数据结构与案例库适配
+├── run_demo.py                 三屏演示 + T1–T18 验收矩阵
+└── build_bundle.py             生成上面那个单文件版（改引擎后必须重跑）
+kb/                             知识库（L2 记录、门槛、机制、检索词）
+data/                           records.json（8 条已核验记录）与候选池
+eval/                           gold set 与评测脚本
 docs/
 ├── README.md                    文档索引（建议从这里开始）
 ├── plan/                        现行方案（唯一权威）
 │   ├── 2026-10-25-ChemCritic-多智能体系统技术方案.md
 │   ├── 2026-10-25-ChemCritic-角色分工与每日任务.md
 │   └── 2026-10-25-方向定稿与6天执行方案.md      （背景与竞品分析）
+├── integration/                 平台接入指令与验收记录
+├── review/                      运行诊断与差距判定
 ├── science/                     科学证据
 │   ├── LITERATURE.md            文献与来源索引（DOI、口径、归档结果）
 │   ├── 2026-10-18-...首批5条来源记录.md
@@ -208,7 +228,7 @@ docs/
 
 **未纳入仓库：** `refs/`（PDF、候选池、解析脚本）与 `outputs/`（文献包、预览图），因体积与出版许可限制。文献 DOI 见 [docs/science/LITERATURE.md](docs/science/LITERATURE.md)。
 
-**后续将新增：** `agents/`（六个 Agent 的提示词与配置）、`skills/`（可导出门槛规则）、`engine/`（沙箱规则引擎）、`eval/`（gold set 与评测脚本）。
+**生成关系：** `skills/chemcritic-comparability/scripts/chemcritic_engine.py` 由 `engine/build_bundle.py` 从 `engine/*.py` + `data/records.json` 生成，**不要手改**；改完引擎跑 `python engine/build_bundle.py`，再用 `--check` 校验是否同步。平台接入步骤见 [docs/integration/2026-10-27-单文件引擎-平台接入三步.md](docs/integration/2026-10-27-单文件引擎-平台接入三步.md)。
 
 ---
 

@@ -7,7 +7,7 @@ version: 0.2.0
 # 可比性判定 Skill
 
 > 核心命题：**没有通过硬门槛的数字，不许同框。**
-> 判定由 `scripts/chemcritic_engine.py` 执行；模型只负责把证书翻译成人话，**不得口算、不得改写结论**。
+> 判定由 `/workspace/chemcritic/chemcritic_engine.py` 执行；模型只负责把证书翻译成人话，**不得口算、不得改写结论**。
 
 ## 何时使用
 
@@ -22,21 +22,27 @@ version: 0.2.0
 
 ## 执行（先跑脚本，再说话）
 
+固定路径（自举后一定存在）：`/workspace/chemcritic/chemcritic_engine.py`
+
 ```bash
+# 0. 只有在提示"文件不存在"时才自举（每个新对话一次）
+cd /workspace && rm -rf .cc_src && git clone --depth 1 https://github.com/LRJ888-Max/Chemcritic_sciencepal-hackathon.git .cc_src && bash .cc_src/bootstrap.sh
+
 # 1. 自检：确认沙箱里的引擎是好的（必须看到 19 passed, 0 failed）
-python scripts/chemcritic_engine.py --selftest
+python /workspace/chemcritic/chemcritic_engine.py --selftest
 
 # 2. 判定：把你整理好的 Record JSON 交给引擎
-python scripts/chemcritic_engine.py --json --input user.json
+python /workspace/chemcritic/chemcritic_engine.py --json --input user.json
 
-# 3. 降级：只需要一张几百字节的证书摘要（贴回会话用）
-python scripts/chemcritic_engine.py --brief --input user.json
+# 3. 降级：只留一张证书摘要（贴回会话用；已带 citation / locator）
+python /workspace/chemcritic/chemcritic_engine.py --brief --input user.json
 
 # 4. 换参照集（默认内嵌 8 条已核验 L2 记录）
-python scripts/chemcritic_engine.py --json --input user.json --records refs.json
+python /workspace/chemcritic/chemcritic_engine.py --json --input user.json --records refs.json
 ```
 
 - 零第三方依赖，Python 3.8+；单文件自包含（参照记录内嵌，不依赖工作目录）。
+- `--json` 的每条证书都带 `reference.citation / doi / locator / tier`：**引用照抄证书，不要另找、不要凭记忆补**。
 - 退出码：`0` 成功 / `1` 自检失败 / `2` 输入不合法。
 - 产物由 `engine/build_bundle.py` 从 `engine/*.py` + `data/records.json` 生成，**不要直接改生成文件**。
 
@@ -109,12 +115,16 @@ python scripts/chemcritic_engine.py --json --input user.json --records refs.json
 
 1. **先说来源**：每个 `verdict` 必须能指认脚本输出。没跑到脚本 → 只能回答"本次未执行判定"，不得给结论。
 2. **不得补文献**：模型记忆里的文献、数值、DOI 一律不得作为先例；先例只能来自参照记录集。
-3. **未校准不外推**：`uncalibrated` 的参照只展示，不参与"差 X 个百分点"的结论。
-4. **输出长度**：【结论】/【为什么】/【下一步】三段，默认 ≤20 行；用户说"展开"才给证书明细。
+3. **引用照抄证书**：`reference.citation / locator` 是引擎给的，原文照抄；证书里没有的引用，一个字都不许加。
+4. **未校准不外推**：`uncalibrated` 的参照只展示，不参与"差 X 个百分点"的结论。
+5. **不露内部术语**：`L1` / `L2` / `D1–D8` / `record_id` / `soft_flags` 只进内部证书，用户文案改成化学说法（"溶剂同属非含水体系"）。
+6. **输出长度**：【结论】/【为什么】/【下一步】三段，默认 ≤20 行；用户说"展开"才给证书明细。
 
 ## 实现与验收
 
-- 引擎：`scripts/chemcritic_engine.py`（单文件，纯 stdlib；源头是仓库 `engine/`）
+- 引擎：`/workspace/chemcritic/chemcritic_engine.py`（单文件，纯 stdlib；源头是仓库 `engine/`）
+- 自举：仓库根 `bootstrap.sh`，一条命令装到固定路径并自检，成功打印 `ENGINE_READY`
 - 验收矩阵：`--selftest` → `最终：19 passed, 0 failed`（T1–T18，对应 `docs/rules/8维门槛规则表-待签字.md` §4）
 - 内置参照：`data/records.json` 的 8 条已核验 L2 记录（SM-001…SM-006）
+- 证书字段：`verdict` / `blocking_dimension` / `unlock_condition` / `calibration` / `reference{citation,doi,locator,tier}` / `soft_flags`
 - 口径与规则版本：`gates v0.4 · tier-0.1`

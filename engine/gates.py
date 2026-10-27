@@ -361,6 +361,13 @@ def judge(user: Record, ref: Record) -> Verdict:
 
     ni = _same_source(user, ref)
     rc, sc = calibration_level(ref), calibration_level(user)
+    # 证书自带引用信息：Agent 不必回头翻 records.json 找 citation（10/27 第 2 次运行诊断 · 问题 3）
+    ref_meta = {
+        "citation": ref.citation,
+        "doi": ref.doi,
+        "locator": ref.locator,
+        "tier": ref.tier,
+    }
 
     blocking = None
     for g in HARD_GATES:
@@ -374,6 +381,7 @@ def judge(user: Record, ref: Record) -> Verdict:
             blocking_dimension=GATE_NAMES[blocking.gate],
             unlock_condition=UNLOCK_MESSAGES[blocking.gate],
             soft_flags=_soft_flags(gates),
+            reference_meta=ref_meta,
             calibration=_combined_calibration(user, ref),
             ref_calibration=rc, subject_calibration=sc, non_independent=ni,
         )
@@ -385,6 +393,7 @@ def judge(user: Record, ref: Record) -> Verdict:
                 blocking_dimension=GATE_NAMES[g],
                 unlock_condition=UNLOCK_MESSAGES[g],
                 soft_flags=_soft_flags(gates),
+                reference_meta=ref_meta,
                 calibration=_combined_calibration(user, ref),
                 ref_calibration=rc, subject_calibration=sc, non_independent=ni,
             )
@@ -392,6 +401,7 @@ def judge(user: Record, ref: Record) -> Verdict:
     return Verdict(
         user.record_id, ref.record_id, COMPARABLE, gates,
         soft_flags=_soft_flags(gates),
+        reference_meta=ref_meta,
         calibration=_combined_calibration(user, ref),
         ref_calibration=rc,
         subject_calibration=sc,

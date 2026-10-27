@@ -231,6 +231,8 @@ def brief_payload(subject: Record, records: List[Record]) -> Dict[str, Any]:
                 "v": v.verdict,
                 "block": v.blocking_dimension,
                 "calib": v.calibration,
+                "cit": v.reference_meta.get("citation"),
+                "loc": v.reference_meta.get("locator"),
             }
             for v in (judge(subject, r) for r in records)
         ],

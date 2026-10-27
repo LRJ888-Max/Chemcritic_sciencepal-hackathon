@@ -97,6 +97,8 @@ class Record:
     label_raw: Optional[str] = None       # 原文措辞，逐字照抄（口径判定的唯一依据）
     label_raw_provenance: str = "unknown"  # verbatim | transcribed | inferred | unknown
     evidence_grade: str = "imported_unchecked"  # A_confirmed | imported_unchecked | candidate
+    citation: Optional[str] = None        # 对外引用：作者 + 年份 + 期刊卷页（不做成 model 记忆）
+    doi: Optional[str] = None
 
     @classmethod
     def from_dict(cls, d: Dict[str, Any]) -> "Record":
@@ -117,6 +119,8 @@ class Record:
             label_raw=outcome.get("label_raw"),
             label_raw_provenance=(d.get("_extraction") or {}).get("label_raw_provenance", "unknown"),
             evidence_grade=d.get("evidence_grade") or "imported_unchecked",
+            citation=d.get("citation"),
+            doi=d.get("doi"),
         )
 
     @property
@@ -156,6 +160,7 @@ class Verdict:
     ref_calibration: str = "calibrated"      # 文献侧校准（B 于 10/26 要求拆分，便于归因）
     subject_calibration: str = "calibrated"  # 用户侧校准
     non_independent: bool = False            # 同篇不同条目，不得当两条独立来源
+    reference_meta: Dict[str, Any] = field(default_factory=dict)  # citation/doi/locator/tier
 
     def to_dict(self) -> Dict[str, Any]:
         return {
@@ -168,6 +173,7 @@ class Verdict:
             "ref_calibration": self.ref_calibration,
             "subject_calibration": self.subject_calibration,
             "non_independent": self.non_independent,
+            "reference": self.reference_meta,
             "gates": {str(k): v.to_dict() for k, v in sorted(self.gates.items())},
             "soft_flags": self.soft_flags,
         }
@@ -639,6 +645,13 @@ def judge(user: Record, ref: Record) -> Verdict:
 
     ni = _same_source(user, ref)
     rc, sc = calibration_level(ref), calibration_level(user)
+    # 证书自带引用信息：Agent 不必回头翻 records.json 找 citation（10/27 第 2 次运行诊断 · 问题 3）
+    ref_meta = {
+        "citation": ref.citation,
+        "doi": ref.doi,
+        "locator": ref.locator,
+        "tier": ref.tier,
+    }
 
     blocking = None
     for g in HARD_GATES:
@@ -652,6 +665,7 @@ def judge(user: Record, ref: Record) -> Verdict:
             blocking_dimension=GATE_NAMES[blocking.gate],
             unlock_condition=UNLOCK_MESSAGES[blocking.gate],
             soft_flags=_soft_flags(gates),
+            reference_meta=ref_meta,
             calibration=_combined_calibration(user, ref),
             ref_calibration=rc, subject_calibration=sc, non_independent=ni,
         )
@@ -663,6 +677,7 @@ def judge(user: Record, ref: Record) -> Verdict:
                 blocking_dimension=GATE_NAMES[g],
                 unlock_condition=UNLOCK_MESSAGES[g],
                 soft_flags=_soft_flags(gates),
+                reference_meta=ref_meta,
                 calibration=_combined_calibration(user, ref),
                 ref_calibration=rc, subject_calibration=sc, non_independent=ni,
             )
@@ -670,6 +685,7 @@ def judge(user: Record, ref: Record) -> Verdict:
     return Verdict(
         user.record_id, ref.record_id, COMPARABLE, gates,
         soft_flags=_soft_flags(gates),
+        reference_meta=ref_meta,
         calibration=_combined_calibration(user, ref),
         ref_calibration=rc,
         subject_calibration=sc,
@@ -1641,6 +1657,8 @@ def brief_payload(subject: Record, records: List[Record]) -> Dict[str, Any]:
                 "v": v.verdict,
                 "block": v.blocking_dimension,
                 "calib": v.calibration,
+                "cit": v.reference_meta.get("citation"),
+                "loc": v.reference_meta.get("locator"),
             }
             for v in (judge(subject, r) for r in records)
         ],

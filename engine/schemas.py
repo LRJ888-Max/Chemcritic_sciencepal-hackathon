@@ -58,6 +58,8 @@ class Record:
     label_raw: Optional[str] = None       # 原文措辞，逐字照抄（口径判定的唯一依据）
     label_raw_provenance: str = "unknown"  # verbatim | transcribed | inferred | unknown
     evidence_grade: str = "imported_unchecked"  # A_confirmed | imported_unchecked | candidate
+    citation: Optional[str] = None        # 对外引用：作者 + 年份 + 期刊卷页（不做成 model 记忆）
+    doi: Optional[str] = None
 
     @classmethod
     def from_dict(cls, d: Dict[str, Any]) -> "Record":
@@ -78,6 +80,8 @@ class Record:
             label_raw=outcome.get("label_raw"),
             label_raw_provenance=(d.get("_extraction") or {}).get("label_raw_provenance", "unknown"),
             evidence_grade=d.get("evidence_grade") or "imported_unchecked",
+            citation=d.get("citation"),
+            doi=d.get("doi"),
         )
 
     @property
@@ -117,6 +121,7 @@ class Verdict:
     ref_calibration: str = "calibrated"      # 文献侧校准（B 于 10/26 要求拆分，便于归因）
     subject_calibration: str = "calibrated"  # 用户侧校准
     non_independent: bool = False            # 同篇不同条目，不得当两条独立来源
+    reference_meta: Dict[str, Any] = field(default_factory=dict)  # citation/doi/locator/tier
 
     def to_dict(self) -> Dict[str, Any]:
         return {
@@ -129,6 +134,7 @@ class Verdict:
             "ref_calibration": self.ref_calibration,
             "subject_calibration": self.subject_calibration,
             "non_independent": self.non_independent,
+            "reference": self.reference_meta,
             "gates": {str(k): v.to_dict() for k, v in sorted(self.gates.items())},
             "soft_flags": self.soft_flags,
         }
