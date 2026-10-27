@@ -2,57 +2,73 @@
 
 > **用途：** 回答「有哪些可比先例」。每条都能靠 `locator` 翻回原文。
 > **铁律：** `calibration = uncalibrated` 的记录**可以展示，但不参与档内定位的差值结论**。
-> **数据源：** 机器可读版本在 `data/records.json`（已核 8 条）与 `data/pool15.json`（候选 16 条）。本文件是给人看的镜像。
+> **数据源：** `data/records.json`（8 条已核）+ `data/pool30.json`（含 P35），去重后 40 条。
 
-## A. 已核记录（`data/records.json`，8 条）
+## A. 已核 / 重点记录
 
-| record_id | 文献 | 值 | 口径 | 校准 | 证据等级 | 条件（催化剂/碱/溶剂/温/时） | locator |
+| record_id | 底物 | 值 | 口径 | 校准 | 证据等级 | 催化剂/碱/溶剂/温度/时间 | locator |
 |---|---|---|---|---|---|---|---|
-| SM-001a | Miyaura, Yanagi & Suzuki, Synth. Commun. 1981, 11, 513 | 66 | gc | uncalibrated | A_confirmed | Pd(PPh3)4 / Na2CO3 / benzene / 80 °C / 6 h | Table II, p-MeOPhBr row, footnote |
-| SM-001b | Miyaura, Yanagi & Suzuki, Synth. Commun. 1981, 11, 513 | 40 | isolated | calibrated | A_confirmed | Pd(PPh3)4 / Na2CO3 / benzene / 80 °C / 6 h | Table II, p-MeOPhBr row, value in parentheses |
-| SM-002 | Liu et al., Org. Biomol. Chem. 2011, 9, 1054 | 100 | isolated | calibrated | A_confirmed | PdCl2 / K2CO3 / 50% EtOH/H2O / 25 °C / 0.5 h | SI p.1 general procedure; p.2 Table 1 entry 1 + footnote |
-| SM-003 | Chang et al., Dalton Trans. 2015, 44, 17129 | 95 | nmr | uncalibrated | A_confirmed | Pd(OAc)2 / NaOtBu / THF / 60 °C / 1 h | SI p.3 Table S1 entry 2 + footnote |
-| SM-004.1 | Molecules 2018, 23, 2435 | 35.0 | unknown | calibrated | A_confirmed | Pd-bpydc-La (1) / NaOtBu / MeOH / 30 °C / 8 h | Table 1 entry 1 + footnotes a/c, PDF p.4 |
-| SM-004.7 | Molecules 2018, 23, 2435 | 91.9 | unknown | calibrated | A_confirmed | Pd-bpydc-Ce (2) / NaOtBu / MeOH / 60 °C / 4 h | Table 1 entry 7 + footnotes a/c, PDF p.4 |
-| SM-005 | Dewan et al., ACS Omega 2018, 3, 5327 | 95 | isolated | calibrated | A_confirmed | Pd NPs (papaya peel, biosynthesized) / K2CO3 / H2O / 25 °C / 2 h | Table 1 entry 1 + table footnote; Experimental typical procedure |
-| SM-006-e1 | Fiebor et al., Beilstein J. Org. Chem. 2018, 14, 1859 | 92 | gc | uncalibrated | candidate | SNS-Pd pincer 17a / K3PO4 / H2O / 140 °C / 4 h | Table 2 entry 1 + footnote a（PMC6071702 全文已核） |
+| SM-001a | 4-bromoanisole | 66 | gc | uncalibrated | A_confirmed | Pd(PPh3)4 / Na2CO3 / benzene / 80 / 6h | Table II, p-MeOPhBr row, footnote |
+| SM-001b | 4-bromoanisole | 40 | isolated | calibrated | A_confirmed | Pd(PPh3)4 / Na2CO3 / benzene / 80 / 6h | Table II, p-MeOPhBr row, value in parentheses |
+| SM-002 | 4-bromoanisole | 100 | isolated | calibrated | A_confirmed | PdCl2 / K2CO3 / 50% EtOH/H2O / 25 / 0.5h | SI p.1 general procedure; p.2 Table 1 entry 1 + footnote |
+| SM-003 | 4-bromoanisole | 95 | nmr | uncalibrated | A_confirmed | Pd(OAc)2 / NaOtBu / THF / 60 / 1h | SI p.3 Table S1 entry 2 + footnote |
+| SM-004.1 | 4-bromoanisole | 35.0 | unknown | calibrated | A_confirmed | Pd-bpydc-La (1) / NaOtBu / MeOH / 30 / 8h | Table 1 entry 1 + footnotes a/c, PDF p.4 |
+| SM-004.7 | 4-bromoanisole | 91.9 | unknown | calibrated | A_confirmed | Pd-bpydc-Ce (2) / NaOtBu / MeOH / 60 / 4h | Table 1 entry 7 + footnotes a/c, PDF p.4 |
+| SM-005 | 4-bromoanisole | 95 | isolated | calibrated | A_confirmed | Pd NPs (papaya peel, biosynthesized) / K2CO3 / H2O / 25 / 2h | Table 1 entry 1 + table footnote; Experimental typical procedure |
+| SM-006-e1 | 4-bromoanisole | 92 | gc | uncalibrated | candidate | SNS-Pd pincer 17a / K3PO4 / H2O / 140 / 4h | Table 2 entry 1 + footnote a（PMC6071702 全文已核） |
+| SM-006-e7 | 4-bromoanisole | 95 | gc | uncalibrated | candidate | SNS-Pd pincer 17a / K2CO3 / H2O / 140 / 4.0h | Table 2 entry 7 + footnote a（PMC6071702 全文已核） |
+| P35 | 4-bromoanisole | 95.0 | isolated | calibrated | A_confirmed | Pd(OAc)2（无外加配体） / K3PO4·7H2O / ethylene glycol / 25 / 0.33h | Abstract（原文："...the Suzuki reaction between 4-bromoanisole and phenylboronic acid provided a 95% isolated yield in 20 min"）；正文表格/SI 未核 |
 
-## B. 候选记录（`data/pool15.json`，16 条，均已回原文核对）
+## B. 其余候选记录
 
-| record_id | 文献 | 值 | 口径 | 校准 | 证据等级 | 条件（催化剂/碱/溶剂/温/时） | locator |
+| record_id | 底物 | 值 | 口径 | 校准 | 证据等级 | 催化剂/碱/溶剂/温度/时间 | locator |
 |---|---|---|---|---|---|---|---|
-| P11 | Gholinejad, Jafarpour & Sansano, RSC Adv. 2026, 16(38), 42714-42723 | 96.0 | gc | uncalibrated | A_confirmed | clinochlore-CQDs@Pd / K2CO3 / H2O/EtOH = 1:1 / 60 °C / 6.0 h | Table 1 entry 3（4-溴苯甲醚优化表）+ Table 2 脚注 a（通用条件） |
-| P12 | Hajighasemi, Nahipour, Ghorbani-Choghamarani & Taherinia, Nanoscale Adv. 2023, 5(18), 4925-4933 | 99.0 | unknown | uncalibrated | imported_unchecked | Pd(0)-SMTU-boehmite / K2CO3 / PEG-400 / 80 °C / 1.17 h | Table 3（4-溴苯甲醚行，70 min）+ Experimental |
-| P13 | Esteban et al., Polymers 2023, 15(20), 4143 | 100.0 | conversion | uncalibrated | imported_unchecked | Pd@PP-3（微孔膦聚合物负载 Pd） / Na2CO3 / EtOH/H2O = 2 mL/3 mL / 80 °C / 2.0 h | 优化表（4-溴苯甲醚行）+ 10 mmol 放大实验段 |
-| P19a | Jiang et al., Molecules 2012, 17, 12121-12139（C2 对称 Pd-NHC） | 95.0 | gc | uncalibrated | imported_unchecked | Pd(OAc)2 / K2CO3 / toluene / 90 °C / 1.5 h | Table（K2CO3 行，entry 待 A 补） |
-| P19b | Jiang et al., Molecules 2012, 17, 12121-12139（C2 对称 Pd-NHC） | 12.0 | gc | uncalibrated | imported_unchecked | Pd(OAc)2 / Na2CO3 / toluene / 90 °C / 24.0 h | Table（Na2CO3 行，24 h） |
-| P24a | Kaikake, Jou, Shitara & Jin, RSC Adv. 2021, 11(56), 35311-35320（PdBTC 7） | 98.0 | nmr | uncalibrated | imported_unchecked | PdBTC 7（双茶碱微花 Pd(II)） / K2CO3 / H2O/EtOH = 1:1 / 20 °C / 2.0 h | Table（H2O/EtOH = 1:1 行） |
-| P24b | Kaikake, Jou, Shitara & Jin, RSC Adv. 2021, 11(56), 35311-35320（PdBTC 7） | 8.0 | nmr | uncalibrated | imported_unchecked | PdBTC 7（双茶碱微花 Pd(II)） / K2CO3 / H2O / 20 °C / 2.0 h | Table（H2O 行） |
-| P23 | Kaikake, Takada, Soma & Jin, RSC Adv. 2018, 8(60), 34505-34513（茶碱微球负载 Pd, u-T2/Pd） | 100.0 | nmr | uncalibrated | imported_unchecked | u-T2/Pd（茶碱微球负载 Pd） / K2CO3 / H2O / 20 °C / 1.0 h | Table（H2O, 20 °C 行） |
-| P21 | Sepehrfar et al., RSC Adv. 2026, 16(45), 58585-58605（噻吩基 Pd(II) 膦叶立德 D2） | 91.0 | isolated | calibrated | imported_unchecked | D2（thienyl Pd(II) phosphonium ylide） / K2CO3 / EtOH / 60 °C / 0.17 h | 优化表（60 °C 行） |
-| P20 | Talukder et al., ACS Omega 2020, 5(37), 24018-24032（alpha-二亚胺 Ni/Pd 配合物） | 85.0 | isolated | calibrated | A_confirmed | Pd A (α-diimine, acenaphthene-based) / K2CO3 / DMF / 60 °C / 4.0 h | Table 1 entry 5 + Table 2 entry 2 + Table 3 entry 1（三表脚注 b 均为 isolated） |
-| P27 | Feketshane, Vatsha & Bingwa, RSC Adv. 2026, 16(11), 9692-9708（机械化学 Pd 尺寸效应） | 77.0 | conversion | calibrated | imported_unchecked | Pd-based catalyst size series / Na2CO3 / 无常规溶剂；液体添加剂 H2O:MeOH = 1:1, 0.1 mL / 25 °C / 1.0 h | Table（5 mol% 行，球磨 25 Hz） |
-| P03 | Miyaura, Yanagi & Suzuki, Synth. Commun. 1981, 11(7), 513-519（表 II） | 99.0 | gc | uncalibrated | imported_unchecked | Pd(PPh3)4 / Na2CO3 / benzene (reflux) / 80 °C / 6.0 h | Table II（o-MeOPhBr 行） |
-| P06 | Huff, Koenig, Mitchell & Staszak, Org. Synth. 1998, 75, 53 (Coll. Vol. 10, 102) | 86.3 | isolated | calibrated | imported_unchecked | Pd(OAc)2 / Na2CO3 / 1-propanol/H2O = 485 mL/95 mL / None °C / 0.75 h | Procedure 段（粗品与重结晶两个收率） |
-| P07 | Goodson, Wallow & Novak, Org. Synth. 1998, 75, 61 (Coll. Vol. 10, 501), ligandless Pd | 90.3 | isolated | calibrated | imported_unchecked | Pd(OAc)2 / K2CO3 / acetone/H2O = 1:1 / None °C / 2.0 h | Procedure 段（蒸馏收率） |
-| P33 | ACS Omega 2024, 9, 17817（磁载双配体 Pd） | 99.0 | isolated | calibrated | imported_unchecked | 磁载双配体 Pd（magnetic dual-ligand Pd） / K2CO3 / EtOH/H2O = 2:1 / 60 °C / 1.0 h | Table（entry 1, 60 min）+ 时间扫描段 |
-| SM-006-e7 | Fiebor et al., Beilstein J. Org. Chem. 2018, 14, 1859 | 95 | gc | uncalibrated | candidate | SNS-Pd pincer 17a / K2CO3 / H2O / 140 °C / 4.0 h | Table 2 entry 7 + footnote a（PMC6071702 全文已核） |
+| P11 | 4-bromoanisole | 96.0 | gc | uncalibrated | A_confirmed | clinochlore-CQDs@Pd / K2CO3 / H2O/EtOH = 1:1, 2 mL / 60 / 6.0h | Table 1 entry 3 + 脚注 a（PMC13397079 全文已核，A 2026-10-26） |
+| P12 | 4-bromoanisole | 99.0 | unknown | uncalibrated | A_confirmed | Pd(0)-SMTU-boehmite / K2CO3 / PEG-400 / 80 / 1.17h | Table 3 entry 7（Table 3 无表脚注、Yield 列无上标） |
+| P13 | 4-bromoanisole | 100.0 | conversion | uncalibrated | A_confirmed | Pd@PP-3（微孔膦聚合物负载 Pd） / Na2CO3 / EtOH/H2O = 2 mL/3 mL / 80 / 2.0h | §2.5 General Procedure + 优化表（PMC10611190 全文已核） |
+| P01 | bromobenzene | 88.0 | gc | uncalibrated | imported_unchecked | Pd(PPh3)4 / Na2CO3 / benzene (reflux) + EtOH 助溶 / 80 / 6.0h | Table I, entry 8 |
+| P16 | bromobenzene | 99.0 | unknown | uncalibrated | imported_unchecked | Pd-perovskite（Pd 0.64 wt%） / K2CO3 / i-PrOH/H2O = 1:1 / 80 / 0.5h | Table（0.2 mmol 微量行） |
+| P17 | bromobenzene | 99.0 | isolated | calibrated | imported_unchecked | 两亲树枝化共聚物包裹 Pd NPs / K2CO3 / EtOH/H2O = 2.5/2.5 mL / 85 / 10.0h | Table（溴苯行, 10 h） |
+| P18 | bromobenzene | 69.0 | nmr | uncalibrated | imported_unchecked | Pd(II)/carbon composite / K2CO3 / EtOH 2 mL（球磨） / None / 3.0h | Table（180 min 行）+ 时间序列（30 min 49%） |
+| P19a | bromobenzene | 95.0 | gc | calibrated | A_confirmed | Pd(OAc)2 / K2CO3 / toluene / 90 / 1.5h | Table 1 entry 2 + 脚注 b (GC yield)；内标依据见同文 Table 4 脚注 |
+| P19b | bromobenzene | 12.0 | gc | calibrated | A_confirmed | Pd(OAc)2 / Na2CO3 / toluene / 90 / 24.0h | Table 1 entry 1 + 脚注 b (GC yield)；内标依据见同文 Table 4 脚注 |
+| P20 | bromobenzene | 85.0 | isolated | calibrated | A_confirmed | Pd A (α-diimine, acenaphthene-based) / K2CO3 / DMF / 60 / 4.0h | Table 1 entry 5 + Table 2 entry 2 + Table 3 entry 1（三表脚注 b 均为 isolated） |
+| P21 | bromobenzene | 91.0 | isolated | calibrated | imported_unchecked | D2（thienyl Pd(II) phosphonium ylide） / K2CO3 / EtOH / 60 / 0.17h | 优化表（60 °C 行） |
+| P22 | bromobenzene | 91.0 | isolated | calibrated | imported_unchecked | MIL-101(Cr)-PUT-GLUT-Pd / K2CO3 / EtOH/H2O = 1:1, 10 mL / None / 1.0h | Table（回流行）+ 温度梯度段（41/55/86/91%） |
+| P23 | bromobenzene | 100.0 | nmr | uncalibrated | imported_unchecked | u-T2/Pd（茶碱微球负载 Pd） / K2CO3 / H2O / 20 / 1.0h | Table（H2O, 20 °C 行） |
+| P24a | bromobenzene | 98.0 | nmr | uncalibrated | A_confirmed | PdBTC 7（双茶碱微花 Pd(II)） / K2CO3 / H2O-EtOH (1:1) 5.0 mL / 20 / 2.0h | Table 1 entry 1 + 脚注 a/c（PMC9042804 全文已核） |
+| P24b | bromobenzene | 8.0 | nmr | uncalibrated | A_confirmed | PdBTC 7（双茶碱微花 Pd(II)） / K2CO3 / H2O 5.0 mL / 20 / 2.0h | Table 1 entry 2 + 脚注 a/c（PMC9042804 全文已核） |
+| P24c | bromobenzene | 0.0 | nmr | uncalibrated | A_confirmed | PdBTC 7（双茶碱微花 Pd(II)） / K2CO3 / THF 5.0 mL / 20 / 2.0h | Table 1 entry 6 + 脚注 a/c（PMC9042804 全文已核） |
+| P25 | bromobenzene | 99.6 | unknown | uncalibrated | imported_unchecked | 吡啶 N 富碳纳米片负载 Pd / K2CO3 / H2O/EtOH = 1:3, 10 mL / 100 / 0.83h | Table（100 °C, 50 min 行） |
+| P26 | bromobenzene | 95.3 | unknown | uncalibrated | imported_unchecked | Schiff 碱-咪唑功能化 MOF 载 Pd 簇 / NaHCO3 / DMA 5 mL / 90 / 7.0h | Table（2 mmol 行） |
+| P27 | bromobenzene | 77.0 | conversion | calibrated | imported_unchecked | Pd-based catalyst size series / Na2CO3 / 无常规溶剂；液体添加剂 H2O:MeOH = 1:1, 0.1 mL / 25 / 1.0h | Table（5 mol% 行，球磨 25 Hz） |
+| P04 | 4-bromotoluene | 88.0 | gc | uncalibrated | imported_unchecked | Pd(PPh3)4 / Na2CO3 / benzene (reflux) / 80 / 6.0h | Table II（p-MePhBr 行） |
+| P28 | 4-bromotoluene | 99.0 | isolated | calibrated | imported_unchecked | Pd + 三蝶烯单膦配体 / K3PO4 / 2-甲氧基乙醇 6 mL / 100 / 24.0h | Table（10 ppm 行） |
+| P29 | 4-bromotoluene | 95.0 | isolated | calibrated | imported_unchecked | 生物合成 Pd NPs / K2CO3 / H2O 20 mL / 50 / Noneh | Table（第 1 循环）+ Experimental |
+| P30 | 4-bromotoluene | 93.0 | isolated | calibrated | imported_unchecked | Pd catalyst 2.5 mol% + PPh3 5 mol% / Cs2CO3 / DCE-EtOH = 3:1 / 25 / 5.0h | Table（Cs2CO3 行）+ 碱对照（K2CO3 65%） |
+| P31 | 4-bromotoluene | 96.0 | isolated | calibrated | imported_unchecked | GO@Tpy-Pd1-xNix nanosheet / - / 未注明（5.0 mL） / 35 / 8.0h | Table（35 °C 行） |
+| P03 | 2-bromoanisole | 99.0 | gc | uncalibrated | imported_unchecked | Pd(PPh3)4 / Na2CO3 / benzene (reflux) / 80 / 6.0h | Table II（o-MeOPhBr 行） |
+| P06 | 4-bromobenzaldehyde | 86.3 | isolated | calibrated | imported_unchecked | Pd(OAc)2 / Na2CO3 / 1-propanol/H2O = 485 mL/95 mL / None / 0.75h | Procedure 段（粗品与重结晶两个收率） |
+| P07 | 4-iodoanisole | 90.3 | isolated | calibrated | imported_unchecked | Pd(OAc)2 / K2CO3 / acetone/H2O = 1:1 / None / 2.0h | Procedure 段（蒸馏收率） |
+| P32 | 4-bromobenzaldehyde | 95.0 | unknown | uncalibrated | imported_unchecked | 超小 Pd NPs（S/Se/N 配体） / K2CO3 / DMF:H2O = 3:2, 5 mL / 100 / 6.0h | Table（DMF:H2O 行）+ 溶剂对照（THF 47%、甲苯 38%） |
+| P33 | 4-bromoacetophenone | 99.0 | isolated | calibrated | imported_unchecked | 磁载双配体 Pd（magnetic dual-ligand Pd） / K2CO3 / EtOH/H2O = 2:1 / 60 / 1.0h | Table（entry 1, 60 min）+ 时间扫描段 |
+| P34 | 4-bromobenzophenone | 99.0 | nmr | uncalibrated | imported_unchecked | S 功能化 NHC-Pd(II)（催化剂 14） / K2CO3 / H2O 1 mL / 60 / 24.0h | Table（催化剂 14 行） |
 
 ## C. 关键事实（供检索与追问使用）
 
-- **同演示底物（4-溴苯甲醚）的记录**：SM-001a/001b（66% GC / 40% 分离）、SM-004.1/004.7（口径未决）、SM-005（95% 分离）、P11（96% GC 未校准）、P12（口径未声明）、SM-006-e1/e7（GC 未校准）。
-- **能进入档内定位的（calibrated + 同口径）只有 3 条**：SM-001b（40%）、SM-002（100%）、SM-005（95%），全部是分离收率。
-- **SM-004 的两条 `outcome_type = unknown`**：表列名写 `Yield (%)`、脚注写 `total conversion ... based on GC`，不得当作确定口径。
-- **SM-006-e1 与 SM-006-e7 是同一篇的两个条目**（entry 1 的 K₃PO₄/92%、entry 7 的 K₂CO₃/95%），非独立来源。
-- **P12 的 >99% 口径未声明**（Table 3 无脚注）→ `unknown`；**P13 的 100% 是 GC-MS 转化率**。
-- **P11 提供同底物的温度与载量梯度**：温度 25→20%、50→60%、60→96%；载量 0.035→15%、0.07→50%、0.1→96%。
+- **能进入比较块的记录极少**：40 条记录里，若用户做分离收率，全库只有 **5** 条满足「口径已定 + 已核验 + calibrated」。
+- **同演示底物（4-溴苯甲醚）共 13 条**：其中 4 条可用（SM-001b 40% / SM-002 100% / SM-005 95% / P35 95%），3 条口径未决（SM-004.1、SM-004.7、P12），其余为 GC/NMR 未校准或 conversion。
+- **P35 是跨档迁移目标，不是同档参照**：Chin. J. Catal. 2011，Pd(OAc)₂ 无配体 / 乙二醇 / 室温 / 20 min / 95% isolated；档位 borderline B/C（无配体但介质非水）。
+- **SM-001 一行两个口径**：SM-001a 66%（GC）/ SM-001b 40%（isolated），同篇同行，`non_independent = true`。
+- **SM-006-e1 / e7 同篇不同条目**（entry 1 的 K₃PO₄/92%、entry 7 的 K₂CO₃/95%），非独立来源。
+- **SM-004 两条 `outcome_type = unknown`**：列名 `Yield (%)`、脚注 `total conversion ... based on GC`，不得当确定口径。
 
 ## D. 口径分布（用于判断有没有可比对象）
 
 | 口径 | 条数 | 其中 calibrated |
 |---|---|---|
-| isolated | 8 | 8 |
-| gc | 7 | 0 |
-| nmr | 4 | 0 |
+| isolated | 15 | 15 |
+| gc | 9 | 2 |
+| nmr | 7 | 0 |
 | conversion | 2 | 1 |
-| unknown | 3 | 2 |
+| unknown | 7 | 2 |

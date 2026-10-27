@@ -113,7 +113,10 @@ class Verdict:
     blocking_dimension: Optional[str] = None
     unlock_condition: Optional[str] = None
     soft_flags: list = field(default_factory=list)
-    calibration: str = "calibrated"  # calibrated | uncalibrated（C 方案，2026-10-26）
+    calibration: str = "calibrated"          # 汇总：任一侧 uncalibrated 即 uncalibrated
+    ref_calibration: str = "calibrated"      # 文献侧校准（B 于 10/26 要求拆分，便于归因）
+    subject_calibration: str = "calibrated"  # 用户侧校准
+    non_independent: bool = False            # 同篇不同条目，不得当两条独立来源
 
     def to_dict(self) -> Dict[str, Any]:
         return {
@@ -123,6 +126,9 @@ class Verdict:
             "blocking_dimension": self.blocking_dimension,
             "unlock_condition": self.unlock_condition,
             "calibration": self.calibration,
+            "ref_calibration": self.ref_calibration,
+            "subject_calibration": self.subject_calibration,
+            "non_independent": self.non_independent,
             "gates": {str(k): v.to_dict() for k, v in sorted(self.gates.items())},
             "soft_flags": self.soft_flags,
         }

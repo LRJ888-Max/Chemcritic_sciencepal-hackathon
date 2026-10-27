@@ -54,7 +54,12 @@
         "medium": "organic",
         "activation_mode": "thermal"
       },
-      "evidence_note": "证据等级继承自角色 A 的核验记录（docs/science/2026-10-1*/），非导入方独立复核"
+      "evidence_note": "证据等级继承自角色 A 的核验记录（docs/science/2026-10-1*/），非导入方独立复核",
+      "substrate": {
+        "aryl_halide": "4-bromoanisole",
+        "boronic_acid": "phenylboronic acid",
+        "product": "4-methoxybiphenyl"
+      }
     },
     {
       "record_id": "SM-001b",
@@ -103,7 +108,12 @@
         "medium": "organic",
         "activation_mode": "thermal"
       },
-      "evidence_note": "证据等级继承自角色 A 的核验记录（docs/science/2026-10-1*/），非导入方独立复核"
+      "evidence_note": "证据等级继承自角色 A 的核验记录（docs/science/2026-10-1*/），非导入方独立复核",
+      "substrate": {
+        "aryl_halide": "4-bromoanisole",
+        "boronic_acid": "phenylboronic acid",
+        "product": "4-methoxybiphenyl"
+      }
     },
     {
       "record_id": "SM-002",
@@ -152,7 +162,12 @@
         "medium": "aqueous",
         "activation_mode": "thermal"
       },
-      "evidence_note": "证据等级继承自角色 A 的核验记录（docs/science/2026-10-1*/），非导入方独立复核"
+      "evidence_note": "证据等级继承自角色 A 的核验记录（docs/science/2026-10-1*/），非导入方独立复核",
+      "substrate": {
+        "aryl_halide": "4-bromoanisole",
+        "boronic_acid": "phenylboronic acid",
+        "product": "4-methoxybiphenyl"
+      }
     },
     {
       "record_id": "SM-003",
@@ -201,7 +216,12 @@
         "medium": "organic",
         "activation_mode": "thermal"
       },
-      "evidence_note": "证据等级继承自角色 A 的核验记录（docs/science/2026-10-1*/），非导入方独立复核"
+      "evidence_note": "证据等级继承自角色 A 的核验记录（docs/science/2026-10-1*/），非导入方独立复核",
+      "substrate": {
+        "aryl_halide": "4-bromoanisole",
+        "boronic_acid": "phenylboronic acid",
+        "product": "4-methoxybiphenyl"
+      }
     },
     {
       "record_id": "SM-004.1",
@@ -250,7 +270,12 @@
         "medium": "organic",
         "activation_mode": "thermal"
       },
-      "evidence_note": "证据等级继承自角色 A 的核验记录（docs/science/2026-10-1*/），非导入方独立复核"
+      "evidence_note": "证据等级继承自角色 A 的核验记录（docs/science/2026-10-1*/），非导入方独立复核",
+      "substrate": {
+        "aryl_halide": "4-bromoanisole",
+        "boronic_acid": "phenylboronic acid",
+        "product": "4-methoxybiphenyl"
+      }
     },
     {
       "record_id": "SM-004.7",
@@ -299,7 +324,12 @@
         "medium": "organic",
         "activation_mode": "thermal"
       },
-      "evidence_note": "证据等级继承自角色 A 的核验记录（docs/science/2026-10-1*/），非导入方独立复核"
+      "evidence_note": "证据等级继承自角色 A 的核验记录（docs/science/2026-10-1*/），非导入方独立复核",
+      "substrate": {
+        "aryl_halide": "4-bromoanisole",
+        "boronic_acid": "phenylboronic acid",
+        "product": "4-methoxybiphenyl"
+      }
     },
     {
       "record_id": "SM-005",
@@ -349,7 +379,12 @@
         "activation_mode": "thermal"
       },
       "tier_note": "borderline {B, C}：物理形态命中 R3（纳米颗粒）→ C；操作谱系命中 R6（无配体水相）→ B。主判 C。",
-      "evidence_note": "证据等级继承自角色 A 的核验记录（docs/science/2026-10-1*/），非导入方独立复核"
+      "evidence_note": "证据等级继承自角色 A 的核验记录（docs/science/2026-10-1*/），非导入方独立复核",
+      "substrate": {
+        "aryl_halide": "4-bromoanisole",
+        "boronic_acid": "phenylboronic acid",
+        "product": "4-methoxybiphenyl"
+      }
     },
     {
       "record_id": "SM-006-e1",
@@ -403,6 +438,11 @@
         "label_raw_provenance": "verbatim",
         "assay_basis_source": "表脚注仅写 GC yield；全文未见内标或定量基准说明",
         "resolved_conflict": "2026-10-26 已用 PMC6071702 原文核对：entry 1=92%/K3PO4，entry 7=95%/K2CO3，两者都对，此前缺 entry 编号导致冲突"
+      },
+      "substrate": {
+        "aryl_halide": "4-bromoanisole",
+        "boronic_acid": "phenylboronic acid",
+        "product": "4-methoxybiphenyl"
       }
     }
   ]

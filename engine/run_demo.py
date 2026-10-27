@@ -236,6 +236,16 @@ def test_matrix(records):
           f"{v17.verdict}/{v17.calibration}, placement={pl17['status']}  "
           f"expect=COMPARABLE/uncalibrated, NO_CALIBRATED_REFERENCE")
     print(f"\n  C 方案验收：{passed} passed, {failed} failed（含 T17）")
+
+    # T18 · 同篇不同条目必须标 non_independent（B 指出该字段一直缺）
+    v18 = gates.judge(by_id["SM-001a"], by_id["SM-001b"])
+    ok18 = v18.non_independent is True
+    passed += ok18
+    failed += not ok18
+    print(f"  [{'PASS' if ok18 else 'FAIL'}] T18  SM-001a vs SM-001b → "
+          f"non_independent={v18.non_independent}  expect=True")
+
+    print(f"\n  最终：{passed} passed, {failed} failed（含 T17/T18）")
     return failed == 0
 
 

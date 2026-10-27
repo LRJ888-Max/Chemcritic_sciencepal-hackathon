@@ -28,7 +28,7 @@ CONTROLLED_VOCAB: Dict[str, List[str]] = {
     "ligand_family": ["phosphine", "non_phosphine", "none"],
     "support": ["none", "solid_support"],
     "medium": ["aqueous", "organic", "solventless"],
-    "activation_mode": ["thermal", "mechanochemical", "microwave"],
+    "activation_mode": ["thermal", "mechanochemical", "microwave", "photochemical"],
 }
 
 # (rule_id, 说明, 判定函数, 归入档)

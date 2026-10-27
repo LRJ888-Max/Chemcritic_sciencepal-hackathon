@@ -359,6 +359,9 @@ def judge(user: Record, ref: Record) -> Verdict:
         8: gate_workup(user, ref),
     }
 
+    ni = _same_source(user, ref)
+    rc, sc = calibration_level(ref), calibration_level(user)
+
     blocking = None
     for g in HARD_GATES:
         if gates[g].status == FAIL:
@@ -371,6 +374,8 @@ def judge(user: Record, ref: Record) -> Verdict:
             blocking_dimension=GATE_NAMES[blocking.gate],
             unlock_condition=UNLOCK_MESSAGES[blocking.gate],
             soft_flags=_soft_flags(gates),
+            calibration=_combined_calibration(user, ref),
+            ref_calibration=rc, subject_calibration=sc, non_independent=ni,
         )
 
     for g in HARD_GATES:
@@ -380,13 +385,24 @@ def judge(user: Record, ref: Record) -> Verdict:
                 blocking_dimension=GATE_NAMES[g],
                 unlock_condition=UNLOCK_MESSAGES[g],
                 soft_flags=_soft_flags(gates),
+                calibration=_combined_calibration(user, ref),
+                ref_calibration=rc, subject_calibration=sc, non_independent=ni,
             )
 
     return Verdict(
         user.record_id, ref.record_id, COMPARABLE, gates,
         soft_flags=_soft_flags(gates),
         calibration=_combined_calibration(user, ref),
+        ref_calibration=rc,
+        subject_calibration=sc,
+        non_independent=ni,
     )
+
+
+def _same_source(user: Record, ref: Record) -> bool:
+    """同篇不同条目：不得当作两条独立来源（B 于 2026-10-26 指出该字段一直缺）。"""
+    us, rs = (user.source_id or "").strip(), (ref.source_id or "").strip()
+    return bool(us) and us == rs and user.record_id != ref.record_id
 
 
 def _combined_calibration(user: Record, ref: Record) -> str:
