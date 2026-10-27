@@ -246,7 +246,7 @@ def gate_scale(user: Record, ref: Record) -> GateResult:
     us, rs = _num(user.conditions, "scale_mmol"), _num(ref.conditions, "scale_mmol")
     if us is None or rs is None:
         levels.append("L2"); notes.append("规模/当量缺失")
-    elif rs and (max(us, rs) / min(us, rs)) > 5:
+    elif us and rs and (max(us, rs) / min(us, rs)) > 5:
         levels.append("L1"); notes.append(f"规模相差 {max(us, rs) / min(us, rs):.1f} 倍")
 
     for key, label in (("aryl_halide", "芳基卤"), ("boronic_acid", "硼酸")):
@@ -348,6 +348,36 @@ def _soft(gate: int, levels: list, notes: list) -> GateResult:
 # ---------- 结论 ----------
 
 def judge(user: Record, ref: Record) -> Verdict:
+    # P5b/A-审计：用户没报实测数值时，不存在"可比/不可比"这回事。
+    # 此前会直接走到 COMPARABLE，等于对一个没有数值的实验给出"可并排比较"的结论。
+    if user.outcome_value is None:
+        gates = {g: GateResult(g, UNKNOWN, "用户未提供实测收率数值") for g in range(1, 9)}
+        return Verdict(
+            user.record_id, ref.record_id, NEEDS_EVIDENCE, gates,
+            blocking_dimension=GATE_NAMES[3],
+            unlock_condition="请提供实测收率数值（以及它是分离收率还是仪器定量）",
+            soft_flags=[],
+            calibration=_combined_calibration(user, ref),
+            ref_calibration=calibration_level(ref),
+            subject_calibration=calibration_level(user),
+            non_independent=_same_source(user, ref),
+        )
+
+    # P5b（B 2026-10-27）：用户侧口径必须有原话支撑。
+    # 否则模型可以凭空补一个"分离收率"，引擎照单全收——这是最后一道防线。
+    if user.outcome_type in ("isolated", "gc", "nmr", "conversion") and not (user.label_raw or "").strip():
+        gates = {g: GateResult(g, UNKNOWN, "用户侧收率口径缺少原话支撑") for g in range(1, 9)}
+        return Verdict(
+            user.record_id, ref.record_id, NEEDS_EVIDENCE, gates,
+            blocking_dimension=GATE_NAMES[3],
+            unlock_condition="请说明这个数值是分离收率还是仪器定量（需要用户原话，不接受推定）",
+            soft_flags=[],
+            calibration=_combined_calibration(user, ref),
+            ref_calibration=calibration_level(ref),
+            subject_calibration=calibration_level(user),
+            non_independent=_same_source(user, ref),
+        )
+
     gates = {
         1: gate_substrate(user, ref),
         2: gate_product(user, ref),

@@ -530,7 +530,7 @@ def gate_scale(user: Record, ref: Record) -> GateResult:
     us, rs = _num(user.conditions, "scale_mmol"), _num(ref.conditions, "scale_mmol")
     if us is None or rs is None:
         levels.append("L2"); notes.append("规模/当量缺失")
-    elif rs and (max(us, rs) / min(us, rs)) > 5:
+    elif us and rs and (max(us, rs) / min(us, rs)) > 5:
         levels.append("L1"); notes.append(f"规模相差 {max(us, rs) / min(us, rs):.1f} 倍")
 
     for key, label in (("aryl_halide", "芳基卤"), ("boronic_acid", "硼酸")):
@@ -632,6 +632,36 @@ def _soft(gate: int, levels: list, notes: list) -> GateResult:
 # ---------- 结论 ----------
 
 def judge(user: Record, ref: Record) -> Verdict:
+    # P5b/A-审计：用户没报实测数值时，不存在"可比/不可比"这回事。
+    # 此前会直接走到 COMPARABLE，等于对一个没有数值的实验给出"可并排比较"的结论。
+    if user.outcome_value is None:
+        gates = {g: GateResult(g, UNKNOWN, "用户未提供实测收率数值") for g in range(1, 9)}
+        return Verdict(
+            user.record_id, ref.record_id, NEEDS_EVIDENCE, gates,
+            blocking_dimension=GATE_NAMES[3],
+            unlock_condition="请提供实测收率数值（以及它是分离收率还是仪器定量）",
+            soft_flags=[],
+            calibration=_combined_calibration(user, ref),
+            ref_calibration=calibration_level(ref),
+            subject_calibration=calibration_level(user),
+            non_independent=_same_source(user, ref),
+        )
+
+    # P5b（B 2026-10-27）：用户侧口径必须有原话支撑。
+    # 否则模型可以凭空补一个"分离收率"，引擎照单全收——这是最后一道防线。
+    if user.outcome_type in ("isolated", "gc", "nmr", "conversion") and not (user.label_raw or "").strip():
+        gates = {g: GateResult(g, UNKNOWN, "用户侧收率口径缺少原话支撑") for g in range(1, 9)}
+        return Verdict(
+            user.record_id, ref.record_id, NEEDS_EVIDENCE, gates,
+            blocking_dimension=GATE_NAMES[3],
+            unlock_condition="请说明这个数值是分离收率还是仪器定量（需要用户原话，不接受推定）",
+            soft_flags=[],
+            calibration=_combined_calibration(user, ref),
+            ref_calibration=calibration_level(ref),
+            subject_calibration=calibration_level(user),
+            non_independent=_same_source(user, ref),
+        )
+
     gates = {
         1: gate_substrate(user, ref),
         2: gate_product(user, ref),
@@ -800,6 +830,14 @@ def placement(user: Record, records: List[Record]) -> Dict[str, Any]:
     **C 方案（A 2026-10-26）：** 只有 `calibrated`（有绝对标尺）的参照参与
     差值计算与结论；`uncalibrated`（仅说明定量方式、无内标）单独列出，供展示。
     """
+    if user.outcome_value is None:
+        # 没有实测数值就没有"定位"这回事（审计发现：此前仍返回 PLACED，observed=None）
+        return {
+            "status": "NO_OBSERVED_VALUE",
+            "reason": "用户未提供实测收率数值",
+            "action": "先取得实测值（分离称重或仪器定量），再做档内定位",
+        }
+
     if user.outcome_type not in OUTCOME_ORDER:
         return {
             "status": "UNDEFINED",
@@ -816,7 +854,15 @@ def placement(user: Record, records: List[Record]) -> Dict[str, Any]:
         }
 
     tier = user.tier
-    same_tier = [r for r in same_class if r.tier == tier] if tier else []
+    if not tier:
+        # P5（B 2026-10-27）：档位算不出来时报错，不得静默回退成"跨档全池"
+        return {
+            "status": "TIER_UNKNOWN",
+            "reason": "催化体系档位无法判定（受控词表字段缺失或非法）",
+            "action": "先确认催化剂物理形态与配体族，再做档内定位",
+        }
+
+    same_tier = [r for r in same_class if r.tier == tier]
     pool_ref = same_tier or same_class
 
     calibrated = [r for r in pool_ref if _level(r) == "calibrated"]
@@ -833,6 +879,17 @@ def placement(user: Record, records: List[Record]) -> Dict[str, Any]:
         }
 
     values = [r.outcome_value for r in calibrated if r.outcome_value is not None]
+    if not values:
+        # 有 calibrated 参照但都没有数值 → 不得 min([]) 崩溃
+        return {
+            "status": "NO_REFERENCE_VALUE",
+            "tier": tier,
+            "comparables": [r.record_id for r in calibrated],
+            "reason": "同档同口径的参照存在，但都没有可用数值",
+            "action": "回原文补录参照的收率数值",
+        }
+
+    can_delta = same_tier and user.outcome_value is not None
     return {
             "status": "PLACED",
             "outcome_type": user.outcome_type,
@@ -844,8 +901,10 @@ def placement(user: Record, records: List[Record]) -> Dict[str, Any]:
             "reference_min": min(values),
             "reference_max": max(values),
             "reference_values": sorted(values),
-            "delta_vs_min": round(user.outcome_value - min(values), 1) if same_tier else None,
-            "delta_vs_max": round(user.outcome_value - max(values), 1) if same_tier else None,
+            "reference_count": len(values),
+            # 差值只给"同档 + 用户有值"的情形；跨档一律 None（只并排，不定位）
+            "delta_vs_min": round(user.outcome_value - min(values), 1) if can_delta else None,
+            "delta_vs_max": round(user.outcome_value - max(values), 1) if can_delta else None,
         }
 
 
@@ -899,6 +958,8 @@ USER = Record(
     record_id="USER-001",
     outcome_type="isolated",
     outcome_value=35,
+    label_raw="分离收率（柱层析称重）",
+    label_raw_provenance="verbatim",
     tier="A",
     substrate={
         "aryl_halide": "4-bromoanisole",
@@ -1050,11 +1111,11 @@ def test_matrix(records):
             subject = Record(record_id="USER-011", outcome_type="unknown", outcome_value=35,
                              substrate=USER.substrate, conditions=USER.conditions, assay=USER.assay, tier="A")
         elif case == "T12":
-            subject = Record(record_id="USER-012", outcome_type="isolated", outcome_value=35,
+            subject = Record(record_id="USER-012", outcome_type="isolated", outcome_value=35, label_raw="35%（用户只说 35%，未说明口径）",
                              substrate=USER.substrate, conditions=USER.conditions,
                              assay={"method": "reported as yield"}, tier="A")
         elif case == "T13":
-            subject = Record(record_id="USER-013", outcome_type="gc", outcome_value=66,
+            subject = Record(record_id="USER-013", outcome_type="gc", outcome_value=66, label_raw="GC 66%",
                              substrate=USER.substrate, conditions=USER.conditions,
                              assay={"method": "GC", "internal_standard": None}, tier="A")
         elif case == "T14":
@@ -1065,7 +1126,7 @@ def test_matrix(records):
             subject = USER
         elif case == "T16":
             # conversion 口径缺内标与基准 → 转化率无法复算，必须补证
-            subject = Record(record_id="USER-016", outcome_type="conversion", outcome_value=95,
+            subject = Record(record_id="USER-016", outcome_type="conversion", outcome_value=95, label_raw="转化率 95%",
                              substrate=USER.substrate, conditions=USER.conditions,
                              assay={"method": "conversion"}, tier="A")
 
@@ -1092,7 +1153,7 @@ def test_matrix(records):
     ref_uncal = replacement(by_id["SM-001b"], record_id="REF-017", outcome_type="gc",
                             label_raw="GC yield",
                             assay={"method": "1H-NMR", "internal_standard": None})
-    subj_uncal = Record(record_id="USER-017", outcome_type="gc", outcome_value=95,
+    subj_uncal = Record(record_id="USER-017", outcome_type="gc", outcome_value=95, label_raw="GC 95%",
                         substrate=USER.substrate, conditions=USER.conditions,
                         assay={"method": "1H-NMR", "internal_standard": None}, tier="A")
     v17 = gates.judge(subj_uncal, ref_uncal)

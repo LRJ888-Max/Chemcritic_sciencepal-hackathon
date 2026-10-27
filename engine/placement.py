@@ -97,6 +97,14 @@ def placement(user: Record, records: List[Record]) -> Dict[str, Any]:
     **C 方案（A 2026-10-26）：** 只有 `calibrated`（有绝对标尺）的参照参与
     差值计算与结论；`uncalibrated`（仅说明定量方式、无内标）单独列出，供展示。
     """
+    if user.outcome_value is None:
+        # 没有实测数值就没有"定位"这回事（审计发现：此前仍返回 PLACED，observed=None）
+        return {
+            "status": "NO_OBSERVED_VALUE",
+            "reason": "用户未提供实测收率数值",
+            "action": "先取得实测值（分离称重或仪器定量），再做档内定位",
+        }
+
     if user.outcome_type not in OUTCOME_ORDER:
         return {
             "status": "UNDEFINED",
@@ -113,7 +121,15 @@ def placement(user: Record, records: List[Record]) -> Dict[str, Any]:
         }
 
     tier = user.tier
-    same_tier = [r for r in same_class if r.tier == tier] if tier else []
+    if not tier:
+        # P5（B 2026-10-27）：档位算不出来时报错，不得静默回退成"跨档全池"
+        return {
+            "status": "TIER_UNKNOWN",
+            "reason": "催化体系档位无法判定（受控词表字段缺失或非法）",
+            "action": "先确认催化剂物理形态与配体族，再做档内定位",
+        }
+
+    same_tier = [r for r in same_class if r.tier == tier]
     pool_ref = same_tier or same_class
 
     calibrated = [r for r in pool_ref if _level(r) == "calibrated"]
@@ -130,6 +146,17 @@ def placement(user: Record, records: List[Record]) -> Dict[str, Any]:
         }
 
     values = [r.outcome_value for r in calibrated if r.outcome_value is not None]
+    if not values:
+        # 有 calibrated 参照但都没有数值 → 不得 min([]) 崩溃
+        return {
+            "status": "NO_REFERENCE_VALUE",
+            "tier": tier,
+            "comparables": [r.record_id for r in calibrated],
+            "reason": "同档同口径的参照存在，但都没有可用数值",
+            "action": "回原文补录参照的收率数值",
+        }
+
+    can_delta = same_tier and user.outcome_value is not None
     return {
             "status": "PLACED",
             "outcome_type": user.outcome_type,
@@ -141,8 +168,10 @@ def placement(user: Record, records: List[Record]) -> Dict[str, Any]:
             "reference_min": min(values),
             "reference_max": max(values),
             "reference_values": sorted(values),
-            "delta_vs_min": round(user.outcome_value - min(values), 1) if same_tier else None,
-            "delta_vs_max": round(user.outcome_value - max(values), 1) if same_tier else None,
+            "reference_count": len(values),
+            # 差值只给"同档 + 用户有值"的情形；跨档一律 None（只并排，不定位）
+            "delta_vs_min": round(user.outcome_value - min(values), 1) if can_delta else None,
+            "delta_vs_max": round(user.outcome_value - max(values), 1) if can_delta else None,
         }
 
 

@@ -30,6 +30,8 @@ USER = Record(
     record_id="USER-001",
     outcome_type="isolated",
     outcome_value=35,
+    label_raw="分离收率（柱层析称重）",
+    label_raw_provenance="verbatim",
     tier="A",
     substrate={
         "aryl_halide": "4-bromoanisole",
@@ -181,11 +183,11 @@ def test_matrix(records):
             subject = Record(record_id="USER-011", outcome_type="unknown", outcome_value=35,
                              substrate=USER.substrate, conditions=USER.conditions, assay=USER.assay, tier="A")
         elif case == "T12":
-            subject = Record(record_id="USER-012", outcome_type="isolated", outcome_value=35,
+            subject = Record(record_id="USER-012", outcome_type="isolated", outcome_value=35, label_raw="35%（用户只说 35%，未说明口径）",
                              substrate=USER.substrate, conditions=USER.conditions,
                              assay={"method": "reported as yield"}, tier="A")
         elif case == "T13":
-            subject = Record(record_id="USER-013", outcome_type="gc", outcome_value=66,
+            subject = Record(record_id="USER-013", outcome_type="gc", outcome_value=66, label_raw="GC 66%",
                              substrate=USER.substrate, conditions=USER.conditions,
                              assay={"method": "GC", "internal_standard": None}, tier="A")
         elif case == "T14":
@@ -196,7 +198,7 @@ def test_matrix(records):
             subject = USER
         elif case == "T16":
             # conversion 口径缺内标与基准 → 转化率无法复算，必须补证
-            subject = Record(record_id="USER-016", outcome_type="conversion", outcome_value=95,
+            subject = Record(record_id="USER-016", outcome_type="conversion", outcome_value=95, label_raw="转化率 95%",
                              substrate=USER.substrate, conditions=USER.conditions,
                              assay={"method": "conversion"}, tier="A")
 
@@ -223,7 +225,7 @@ def test_matrix(records):
     ref_uncal = replacement(by_id["SM-001b"], record_id="REF-017", outcome_type="gc",
                             label_raw="GC yield",
                             assay={"method": "1H-NMR", "internal_standard": None})
-    subj_uncal = Record(record_id="USER-017", outcome_type="gc", outcome_value=95,
+    subj_uncal = Record(record_id="USER-017", outcome_type="gc", outcome_value=95, label_raw="GC 95%",
                         substrate=USER.substrate, conditions=USER.conditions,
                         assay={"method": "1H-NMR", "internal_standard": None}, tier="A")
     v17 = gates.judge(subj_uncal, ref_uncal)
@@ -272,3 +274,4 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
