@@ -41,12 +41,17 @@ RULES = [
     ("R5", "ligand_family=non_phosphine", lambda p: p.get("ligand_family") == "non_phosphine", "C"),
     ("R6", "ligand_family=none 且 medium=aqueous",
      lambda p: p.get("ligand_family") == "none" and p.get("medium") == "aqueous", "B"),
+    # R7（2026-10-28）：补上词表漏洞——"无配体 + 非水介质"（如乙二醇、DMF 中的 Pd(OAc)2）
+    # 既不是 A（A 要求膦配体），也不满足 R6（要求水相），此前会掉进兜底被误判成 A。
+    # 判例：P35（Chin. J. Catal. 2011，Pd(OAc)2 / 乙二醇 / 室温）。
+    ("R7", "ligand_family=none 且 medium=organic",
+     lambda p: p.get("ligand_family") == "none" and p.get("medium") == "organic", "B"),
 ]
 
 FALLBACK = ("R0", "兜底：分子配合物 + 膦类配体", "A")
 
 # 主判优先级：物理形态 > 配体族 > 介质（数值越小越优先）
-PRIMARY_PRIORITY = {"R1": 1, "R2": 2, "R3": 3, "R4": 4, "R5": 5, "R6": 6, "R0": 9}
+PRIMARY_PRIORITY = {"R1": 1, "R2": 2, "R3": 3, "R4": 4, "R5": 5, "R6": 6, "R7": 7, "R0": 9}
 
 
 def _validate(profile: Dict[str, Any]) -> List[str]:

@@ -23,6 +23,7 @@
 4. catalyst_form ∈ {supported, bulk_metal} → C   (R4)
 5. ligand_family = non_phosphine          → C   (R5)
 6. ligand_family = none 且 medium = aqueous → B   (R6)
+7. ligand_family = none 且 medium = organic  → B   (R7，2026-10-28 补漏)
 7. 兜底：分子配合物 + 膦类配体              → A   (R0)
 ```
 

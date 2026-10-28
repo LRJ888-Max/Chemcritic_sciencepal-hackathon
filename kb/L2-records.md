@@ -16,8 +16,8 @@
 | SM-004.7 | 4-bromoanisole | 91.9 | unknown | calibrated | A_confirmed | Pd-bpydc-Ce (2) / NaOtBu / MeOH / 60 / 4h | Table 1 entry 7 + footnotes a/c, PDF p.4 |
 | SM-005 | 4-bromoanisole | 95 | isolated | calibrated | A_confirmed | Pd NPs (papaya peel, biosynthesized) / K2CO3 / H2O / 25 / 2h | Table 1 entry 1 + table footnote; Experimental typical procedure |
 | SM-006-e1 | 4-bromoanisole | 92 | gc | uncalibrated | candidate | SNS-Pd pincer 17a / K3PO4 / H2O / 140 / 4h | Table 2 entry 1 + footnote a（PMC6071702 全文已核） |
-| SM-006-e7 | 4-bromoanisole | 95 | gc | uncalibrated | candidate | SNS-Pd pincer 17a / K2CO3 / H2O / 140 / 4.0h | Table 2 entry 7 + footnote a（PMC6071702 全文已核） |
 | P35 | 4-bromoanisole | 95.0 | isolated | calibrated | A_confirmed | Pd(OAc)2（无外加配体） / K3PO4·7H2O / ethylene glycol / 25 / 0.33h | Abstract（原文："...the Suzuki reaction between 4-bromoanisole and phenylboronic acid provided a 95% isolated yield in 20 min"）；正文表格/SI 未核 |
+| SM-006-e7 | 4-bromoanisole | 95 | gc | uncalibrated | candidate | SNS-Pd pincer 17a / K2CO3 / H2O / 140 / 4.0h | Table 2 entry 7 + footnote a（PMC6071702 全文已核） |
 
 ## B. 其余候选记录
 
@@ -26,19 +26,19 @@
 | P11 | 4-bromoanisole | 96.0 | gc | uncalibrated | A_confirmed | clinochlore-CQDs@Pd / K2CO3 / H2O/EtOH = 1:1, 2 mL / 60 / 6.0h | Table 1 entry 3 + 脚注 a（PMC13397079 全文已核，A 2026-10-26） |
 | P12 | 4-bromoanisole | 99.0 | unknown | uncalibrated | A_confirmed | Pd(0)-SMTU-boehmite / K2CO3 / PEG-400 / 80 / 1.17h | Table 3 entry 7（Table 3 无表脚注、Yield 列无上标） |
 | P13 | 4-bromoanisole | 100.0 | conversion | uncalibrated | A_confirmed | Pd@PP-3（微孔膦聚合物负载 Pd） / Na2CO3 / EtOH/H2O = 2 mL/3 mL / 80 / 2.0h | §2.5 General Procedure + 优化表（PMC10611190 全文已核） |
-| P01 | bromobenzene | 88.0 | gc | uncalibrated | imported_unchecked | Pd(PPh3)4 / Na2CO3 / benzene (reflux) + EtOH 助溶 / 80 / 6.0h | Table I, entry 8 |
-| P16 | bromobenzene | 99.0 | unknown | uncalibrated | imported_unchecked | Pd-perovskite（Pd 0.64 wt%） / K2CO3 / i-PrOH/H2O = 1:1 / 80 / 0.5h | Table（0.2 mmol 微量行） |
-| P17 | bromobenzene | 99.0 | isolated | calibrated | imported_unchecked | 两亲树枝化共聚物包裹 Pd NPs / K2CO3 / EtOH/H2O = 2.5/2.5 mL / 85 / 10.0h | Table（溴苯行, 10 h） |
-| P18 | bromobenzene | 69.0 | nmr | uncalibrated | imported_unchecked | Pd(II)/carbon composite / K2CO3 / EtOH 2 mL（球磨） / None / 3.0h | Table（180 min 行）+ 时间序列（30 min 49%） |
 | P19a | bromobenzene | 95.0 | gc | calibrated | A_confirmed | Pd(OAc)2 / K2CO3 / toluene / 90 / 1.5h | Table 1 entry 2 + 脚注 b (GC yield)；内标依据见同文 Table 4 脚注 |
 | P19b | bromobenzene | 12.0 | gc | calibrated | A_confirmed | Pd(OAc)2 / Na2CO3 / toluene / 90 / 24.0h | Table 1 entry 1 + 脚注 b (GC yield)；内标依据见同文 Table 4 脚注 |
 | P20 | bromobenzene | 85.0 | isolated | calibrated | A_confirmed | Pd A (α-diimine, acenaphthene-based) / K2CO3 / DMF / 60 / 4.0h | Table 1 entry 5 + Table 2 entry 2 + Table 3 entry 1（三表脚注 b 均为 isolated） |
-| P21 | bromobenzene | 91.0 | isolated | calibrated | imported_unchecked | D2（thienyl Pd(II) phosphonium ylide） / K2CO3 / EtOH / 60 / 0.17h | 优化表（60 °C 行） |
-| P22 | bromobenzene | 91.0 | isolated | calibrated | imported_unchecked | MIL-101(Cr)-PUT-GLUT-Pd / K2CO3 / EtOH/H2O = 1:1, 10 mL / None / 1.0h | Table（回流行）+ 温度梯度段（41/55/86/91%） |
-| P23 | bromobenzene | 100.0 | nmr | uncalibrated | imported_unchecked | u-T2/Pd（茶碱微球负载 Pd） / K2CO3 / H2O / 20 / 1.0h | Table（H2O, 20 °C 行） |
 | P24a | bromobenzene | 98.0 | nmr | uncalibrated | A_confirmed | PdBTC 7（双茶碱微花 Pd(II)） / K2CO3 / H2O-EtOH (1:1) 5.0 mL / 20 / 2.0h | Table 1 entry 1 + 脚注 a/c（PMC9042804 全文已核） |
 | P24b | bromobenzene | 8.0 | nmr | uncalibrated | A_confirmed | PdBTC 7（双茶碱微花 Pd(II)） / K2CO3 / H2O 5.0 mL / 20 / 2.0h | Table 1 entry 2 + 脚注 a/c（PMC9042804 全文已核） |
 | P24c | bromobenzene | 0.0 | nmr | uncalibrated | A_confirmed | PdBTC 7（双茶碱微花 Pd(II)） / K2CO3 / THF 5.0 mL / 20 / 2.0h | Table 1 entry 6 + 脚注 a/c（PMC9042804 全文已核） |
+| P16 | 4-bromoanisole | 99.0 | gc | calibrated | A_confirmed | Pd-STO(12.5) 钙钛矿（Pd 0.64 wt%，12.5 mg） / K2CO3 / i-PrOH/H2O = 1:1 / 80 / 0.5h | Table 1 entry 2 + 脚注 a; §2.2 定量方法（decaline 内标，GC-14B）（PMC6644052 全文已核） |
+| P01 | bromobenzene | 88.0 | gc | uncalibrated | imported_unchecked | Pd(PPh3)4 / Na2CO3 / benzene (reflux) + EtOH 助溶 / 80 / 6.0h | Table I, entry 8 |
+| P17 | bromobenzene | 99.0 | isolated | calibrated | imported_unchecked | 两亲树枝化共聚物包裹 Pd NPs / K2CO3 / EtOH/H2O = 2.5/2.5 mL / 85 / 10.0h | Table（溴苯行, 10 h） |
+| P18 | bromobenzene | 69.0 | nmr | uncalibrated | imported_unchecked | Pd(II)/carbon composite / K2CO3 / EtOH 2 mL（球磨） / None / 3.0h | Table（180 min 行）+ 时间序列（30 min 49%） |
+| P21 | bromobenzene | 91.0 | isolated | calibrated | imported_unchecked | D2（thienyl Pd(II) phosphonium ylide） / K2CO3 / EtOH / 60 / 0.17h | 优化表（60 °C 行） |
+| P22 | bromobenzene | 91.0 | isolated | calibrated | imported_unchecked | MIL-101(Cr)-PUT-GLUT-Pd / K2CO3 / EtOH/H2O = 1:1, 10 mL / None / 1.0h | Table（回流行）+ 温度梯度段（41/55/86/91%） |
+| P23 | bromobenzene | 100.0 | nmr | uncalibrated | imported_unchecked | u-T2/Pd（茶碱微球负载 Pd） / K2CO3 / H2O / 20 / 1.0h | Table（H2O, 20 °C 行） |
 | P25 | bromobenzene | 99.6 | unknown | uncalibrated | imported_unchecked | 吡啶 N 富碳纳米片负载 Pd / K2CO3 / H2O/EtOH = 1:3, 10 mL / 100 / 0.83h | Table（100 °C, 50 min 行） |
 | P26 | bromobenzene | 95.3 | unknown | uncalibrated | imported_unchecked | Schiff 碱-咪唑功能化 MOF 载 Pd 簇 / NaHCO3 / DMA 5 mL / 90 / 7.0h | Table（2 mmol 行） |
 | P27 | bromobenzene | 77.0 | conversion | calibrated | imported_unchecked | Pd-based catalyst size series / Na2CO3 / 无常规溶剂；液体添加剂 H2O:MeOH = 1:1, 0.1 mL / 25 / 1.0h | Table（5 mol% 行，球磨 25 Hz） |
@@ -68,7 +68,7 @@
 | 口径 | 条数 | 其中 calibrated |
 |---|---|---|
 | isolated | 15 | 15 |
-| gc | 9 | 2 |
+| gc | 10 | 3 |
 | nmr | 7 | 0 |
 | conversion | 2 | 1 |
-| unknown | 7 | 2 |
+| unknown | 6 | 2 |

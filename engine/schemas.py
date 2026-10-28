@@ -51,6 +51,7 @@ class Record:
     tier: Optional[str] = None
     source_id: Optional[str] = None
     locator: Optional[str] = None
+    locator_zh: Optional[str] = None  # 中文定位，供用户文案使用；英文 locator 仍保留供审计
     purification: Optional[str] = None
     verification: str = "unverified"
     catalytic_profile: Dict[str, Any] = field(default_factory=dict)
@@ -60,6 +61,10 @@ class Record:
     evidence_grade: str = "imported_unchecked"  # A_confirmed | imported_unchecked | candidate
     citation: Optional[str] = None        # 对外引用：作者 + 年份 + 期刊卷页（不做成 model 记忆）
     doi: Optional[str] = None
+    inputs_source: Dict[str, str] = field(default_factory=dict)  # 字段路径 → user_stated / unknown
+    input_audit: Dict[str, Any] = field(
+        default_factory=lambda: {"status": "not_declared", "errors": []}
+    )
 
     @classmethod
     def from_dict(cls, d: Dict[str, Any]) -> "Record":
@@ -74,6 +79,7 @@ class Record:
             tier=d.get("tier"),
             source_id=d.get("source_id"),
             locator=d.get("locator"),
+            locator_zh=d.get("locator_zh"),
             purification=d.get("purification"),
             verification=d.get("verification", "unverified"),
             catalytic_profile=d.get("catalytic_profile") or {},
@@ -82,6 +88,7 @@ class Record:
             evidence_grade=d.get("evidence_grade") or "imported_unchecked",
             citation=d.get("citation"),
             doi=d.get("doi"),
+            inputs_source=d.get("inputs_source") or {},
         )
 
     @property

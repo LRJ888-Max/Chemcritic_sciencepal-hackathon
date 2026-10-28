@@ -144,7 +144,8 @@ def gate_assay(user: Record, ref: Record) -> GateResult:
     对其追问比阻断更有用；文献数值若未核验，一旦允许比较就是在制造假精确。
     """
     return (
-        _label_consistency(ref, "reference")
+        _label_consistency(user, "subject")
+        or _label_consistency(ref, "reference")
         or _evidence_check(ref)
         or _calibration_check(user, "subject")
         or _calibration_check(ref, "reference")
@@ -161,6 +162,13 @@ _LABEL_HINTS = {
 }
 
 _REQUIRED_EVIDENCE = ("a_confirmed", "candidate")  # 小写比对；candidate 可通过，但由 calibration/软标注体现
+
+
+def label_supported(record: Record) -> bool:
+    """记录的口径分类是否被其原话明确支撑（用户侧与文献侧同一标准）。"""
+    t = record.outcome_type
+    raw = (record.label_raw or "").strip().lower()
+    return t in ALLOWED_OUTCOME_TYPES and bool(raw) and any(h in raw for h in _LABEL_HINTS[t])
 
 
 def _label_consistency(record: Record, side: str) -> Optional[GateResult]:
@@ -348,6 +356,20 @@ def _soft(gate: int, levels: list, notes: list) -> GateResult:
 # ---------- 结论 ----------
 
 def judge(user: Record, ref: Record) -> Verdict:
+    # 所有返回路径都带完整参照元数据：无实测值时也能直接盘点知识库，
+    # Agent 不应再翻引擎源码找引用或原文措辞。
+    ref_meta = {
+        "citation": ref.citation,
+        "doi": ref.doi,
+        "locator": ref.locator,
+        "locator_zh": ref.locator_zh,
+        "tier": ref.tier,
+        "value": ref.outcome_value,
+        "outcome_type": ref.outcome_type,
+        "label_raw": ref.label_raw,
+        "source_id": ref.source_id,
+    }
+
     # P5b/A-审计：用户没报实测数值时，不存在"可比/不可比"这回事。
     # 此前会直接走到 COMPARABLE，等于对一个没有数值的实验给出"可并排比较"的结论。
     if user.outcome_value is None:
@@ -357,6 +379,7 @@ def judge(user: Record, ref: Record) -> Verdict:
             blocking_dimension=GATE_NAMES[3],
             unlock_condition="请提供实测收率数值（以及它是分离收率还是仪器定量）",
             soft_flags=[],
+            reference_meta=ref_meta,
             calibration=_combined_calibration(user, ref),
             ref_calibration=calibration_level(ref),
             subject_calibration=calibration_level(user),
@@ -372,6 +395,7 @@ def judge(user: Record, ref: Record) -> Verdict:
             blocking_dimension=GATE_NAMES[3],
             unlock_condition="请说明这个数值是分离收率还是仪器定量（需要用户原话，不接受推定）",
             soft_flags=[],
+            reference_meta=ref_meta,
             calibration=_combined_calibration(user, ref),
             ref_calibration=calibration_level(ref),
             subject_calibration=calibration_level(user),
@@ -391,13 +415,6 @@ def judge(user: Record, ref: Record) -> Verdict:
 
     ni = _same_source(user, ref)
     rc, sc = calibration_level(ref), calibration_level(user)
-    # 证书自带引用信息：Agent 不必回头翻 records.json 找 citation（10/27 第 2 次运行诊断 · 问题 3）
-    ref_meta = {
-        "citation": ref.citation,
-        "doi": ref.doi,
-        "locator": ref.locator,
-        "tier": ref.tier,
-    }
 
     blocking = None
     for g in HARD_GATES:

@@ -76,6 +76,14 @@ def load_all_records():
     return records
 
 
+_USER_LABEL = {
+    "isolated": "分离收率（用户报告）",
+    "gc": "GC 收率（用户报告）",
+    "nmr": "核磁定量（用户报告）",
+    "conversion": "转化率（用户报告）",
+}
+
+
 def _synth_user(name: str, spec: dict) -> Record:
     raw = {
         "record_id": name,
@@ -85,7 +93,7 @@ def _synth_user(name: str, spec: dict) -> Record:
         "outcome": {
             "value": spec.get("outcome_value"),
             "outcome_type": spec.get("outcome_type"),
-            "label_raw": "用户现场报告（合成档，非真实实验）",
+            "label_raw": _USER_LABEL.get(spec.get("outcome_type"), "用户现场报告"),
         },
         "tier": spec.get("tier"),
         "evidence_grade": "user_report",

@@ -29,6 +29,7 @@ OUT_PATH = ROOT / "skills" / "chemcritic-comparability" / "scripts" / "chemcriti
 
 SECTIONS = [
     ("schemas", "数据结构（无业务判断；原文未报告的字段一律 None）"),
+    ("input_audit", "用户输入来源审计（禁止历史记忆拼装判定输入）"),
     ("profiles", "档位字段补丁表（记录缺 catalytic_profile 时兜底）"),
     ("tier", "档位判定（受控词表 → 规则 → 主判 / 备选）"),
     ("gates", "8 维门槛判定（确定性，LLM 无权覆盖）"),
@@ -83,6 +84,8 @@ def clean(name: str, body: str) -> str:
         body = re.sub(r"sys\.path\.insert\(.*\n", "", body)
         body = re.sub(r"try:  # 作为子包被.*?replacement = None\n", "", body, flags=re.S)
         body = re.sub(r"^import gates.*\n", "", body, flags=re.M)
+        body = re.sub(r"^import input_audit.*\n", "", body, flags=re.M)
+        body = body.replace("input_audit.audit_input_payload(", "audit_input_payload(")
         body = re.sub(r"^import placement as placement_mod.*\n", "", body, flags=re.M)
         body = re.sub(r"^from schemas import .*\n", "", body, flags=re.M)
 
@@ -104,23 +107,24 @@ HEADER = '''#!/usr/bin/env python3
 ⚠️ 本文件由 engine/build_bundle.py 自动生成，请勿直接编辑。
    改判定逻辑请改 engine/*.py，然后重新运行 `python engine/build_bundle.py`。
 
-内嵌来源：engine/schemas.py · engine/profiles.py · engine/tier.py ·
+内嵌来源：engine/schemas.py · engine/input_audit.py · engine/profiles.py · engine/tier.py ·
           engine/gates.py · engine/placement.py · engine/run_demo.py ·
           data/records.json
 
 契约（平台侧唯一允许的判定入口）：
     输入  Record JSON（见 docs/integration/2026-10-27-给C-的合并指令-引擎判定接入.md §2.1）
-    输出  {"subject", "classes", "coverage", "verdicts", "placement"}
+    输出  {"subject", "inputs_source", "input_audit", "classes", "coverage", "verdicts", "placement"}
 
 铁律：verdict 三值 COMPARABLE / BLOCKED / NEEDS_EVIDENCE 只来自本文件的 judge()；
       LLM 只负责把证书翻译成用户文案，不得改写、不得补"我认为"的结论。
 
 用法：
     python chemcritic_engine.py                          # 三屏演示 + 19 项自检
-    python chemcritic_engine.py --selftest               # 只跑 T1–T18（19 passed, 0 failed）
+    python chemcritic_engine.py --selftest               # 只跑 T1–T22（23 passed, 0 failed）
     python chemcritic_engine.py --json                   # 内置 35% 案例的结构化结论
     python chemcritic_engine.py --json --input user.json # 判定你自己的实验记录
     python chemcritic_engine.py --json --input user.json --records refs.json
+    python chemcritic_engine.py --list-records           # 全部参照的引用/定位/口径/档位
     python chemcritic_engine.py --brief --input user.json # 证书摘要（几百字节，降级贴回会话）
     python chemcritic_engine.py --version
 
@@ -146,9 +150,9 @@ RUNNER = r'''
 
 RECORDS_JSON = r"""__RECORDS__"""
 
-ENGINE_VERSION = "chemcritic-engine/1.0.0"
-RULES_VERSION = "gates v0.4 · tier-0.1"
-CONTRACT_VERSION = "sciencepal-verdict/1"
+ENGINE_VERSION = "chemcritic-engine/1.1.0"
+RULES_VERSION = "gates v0.5 · tier-0.1"
+CONTRACT_VERSION = "sciencepal-verdict/2"
 
 
 # ============================================================================
@@ -158,6 +162,7 @@ CONTRACT_VERSION = "sciencepal-verdict/1"
 def record_from_payload(raw: Dict[str, Any]) -> Record:
     """用户输入 / 单条参照 → Record；缺 catalytic_profile 时查补丁表，再算档位。"""
     record = Record.from_dict(raw)
+    record.input_audit = audit_input_payload(raw)
     if not record.catalytic_profile:
         profile = PROFILES.get(record.record_id or "")
         if profile:
@@ -196,18 +201,49 @@ def load_input(path: str) -> tuple:
         subject = record_from_payload(data["subject"])
         refs = data.get("references") or None
         records = [record_from_payload(r) for r in refs] if refs else None
-        return subject, records
-    return record_from_payload(data), None
+    else:
+        subject, records = record_from_payload(data), None
+    if subject.input_audit["status"] == "rejected":
+        raise ValueError("输入来源审计失败：" + "；".join(subject.input_audit["errors"]))
+    return subject, records
 
 
 def build_payload(subject: Record, records: List[Record]) -> Dict[str, Any]:
     """与 engine/run_demo.py --json 完全同构的输出（这是验收 "diff 应为空" 的依据）。"""
     return {
         "subject": subject.record_id,
+        "inputs_source": subject.inputs_source,
+        "input_audit": subject.input_audit,
         "classes": class_summary(records),
         "coverage": coverage(records),
         "verdicts": [judge(subject, r).to_dict() for r in records],
         "placement": placement(subject, records),
+    }
+
+
+def list_records_payload(records: List[Record]) -> Dict[str, Any]:
+    """知识库盘点：一次返回所有参照，无需用户实测值，也无需读取引擎源码。"""
+    return {
+        "engine": ENGINE_VERSION,
+        "rules": RULES_VERSION,
+        "count": len(records),
+        "records": [
+            {
+                "record_id": r.record_id,
+                "source_id": r.source_id,
+                "citation": r.citation,
+                "doi": r.doi,
+                "locator": r.locator,
+                "locator_zh": r.locator_zh,
+                "value": r.outcome_value,
+                "outcome_type": r.outcome_type,
+                "label_raw": r.label_raw,
+                "calibration": calibration_level(r),
+                "tier": r.tier,
+                "substrate": r.substrate,
+            }
+            for r in records
+        ],
     }
 
 
@@ -218,6 +254,8 @@ def brief_payload(subject: Record, records: List[Record]) -> Dict[str, Any]:
         "engine": ENGINE_VERSION,
         "rules": RULES_VERSION,
         "subject": subject.record_id,
+        "inputs_source": subject.inputs_source,
+        "input_audit": subject.input_audit,
         "placement": {
             "tier": pl.get("tier"),
             "status": pl.get("status"),
@@ -233,6 +271,7 @@ def brief_payload(subject: Record, records: List[Record]) -> Dict[str, Any]:
                 "calib": v.calibration,
                 "cit": v.reference_meta.get("citation"),
                 "loc": v.reference_meta.get("locator"),
+                "loc_zh": v.reference_meta.get("locator_zh"),
             }
             for v in (judge(subject, r) for r in records)
         ],
@@ -264,8 +303,9 @@ def main(argv: Optional[List[str]] = None) -> int:
     parser.add_argument("--json", action="store_true", help="输出结构化结论 JSON")
     parser.add_argument("--brief", action="store_true", help="输出证书摘要（几百字节，降级路径贴回会话用）")
     parser.add_argument("--input", metavar="PATH", help="用户记录 JSON；给出时默认按 JSON 输出")
-    parser.add_argument("--records", metavar="PATH", help="替换参照记录集（默认内嵌 8 条）")
-    parser.add_argument("--selftest", action="store_true", help="只跑 T1–T18 验收矩阵")
+    parser.add_argument("--records", metavar="PATH", help="替换参照记录集（默认使用内嵌记录）")
+    parser.add_argument("--list-records", action="store_true", help="列出全部参照的引用、定位、口径与档位")
+    parser.add_argument("--selftest", action="store_true", help="只跑 T1–T22 验收矩阵")
     parser.add_argument("--version", action="store_true", help="打印引擎与规则版本")
     args = parser.parse_args(argv)
 
@@ -274,6 +314,10 @@ def main(argv: Optional[List[str]] = None) -> int:
         return 0
 
     records = load_records(args.records)
+
+    if args.list_records:
+        print(json.dumps(list_records_payload(records), ensure_ascii=False, indent=2))
+        return 0
 
     subject = USER
     if args.input:

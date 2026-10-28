@@ -23,6 +23,7 @@ except ImportError:  # pragma: no cover
     replacement = None
 
 import gates  # noqa: E402
+import input_audit  # noqa: E402
 import placement as placement_mod  # noqa: E402
 from schemas import BLOCKED, COMPARABLE, NEEDS_EVIDENCE, Record  # noqa: E402
 
@@ -78,7 +79,7 @@ EXPECTED = {
     "T9": ("SM-004.7", NEEDS_EVIDENCE, "outcome_type"),  # 参照物改为 SM-006 时见 T9b
     "T10": ("SM-004.7", NEEDS_EVIDENCE, "outcome_type"),
     "T11": ("SM-002", NEEDS_EVIDENCE, "outcome_type"),
-    "T12": ("SM-002", COMPARABLE, None),
+    "T12": ("SM-002", NEEDS_EVIDENCE, "assay"),  # 用户只说 35%，未声明口径 → 维度 4 第一层：措辞不支撑 isolated
     "T13": ("SM-006-e1", COMPARABLE, None),
     "T14": ("SM-001b", NEEDS_EVIDENCE, "assay"),
     "T15": ("SM-001b", NEEDS_EVIDENCE, "assay"),
@@ -248,6 +249,76 @@ def test_matrix(records):
           f"non_independent={v18.non_independent}  expect=True")
 
     print(f"\n  最终：{passed} passed, {failed} failed（含 T17/T18）")
+
+    # T19 · 迁移目标必须同底物（2026-10-28：此前会把溴苯的 P20 当迁移目标）
+    pl = placement_mod.placement(USER, records)
+    mt_ids = [t["record_id"] for t in pl.get("migration_targets", [])]
+    by_mt = {r.record_id: r for r in records}
+    ok19 = (
+        bool(mt_ids)
+        and all((by_mt[i].substrate or {}).get("aryl_halide") == "4-bromoanisole" for i in mt_ids)
+        and "P20" not in mt_ids
+        and pl.get("delta_vs_min") == -5
+    )
+    passed += ok19
+    failed += not ok19
+    print(f"  [{'PASS' if ok19 else 'FAIL'}] T19  迁移目标同底物 → {mt_ids}  expect 仅 4-溴苯甲醚，delta=-5")
+
+    # T20 · 输入来源审计：记忆不得进入判定；unknown 必须对应 null；当前对话原话可通过
+    valid_raw = {
+        "outcome": {"value": 35, "outcome_type": "isolated", "label_raw": "分离收率"},
+        "conditions": {"base": None},
+        "inputs_source": {"outcome.outcome_type": "user_stated", "conditions.base": "unknown"},
+    }
+    memory_raw = {
+        "conditions": {"base": "Na2CO3"},
+        "inputs_source": {"conditions.base": "memory"},
+    }
+    unknown_bad_raw = {
+        "conditions": {"base": "Na2CO3"},
+        "inputs_source": {"conditions.base": "unknown"},
+    }
+    a_valid = input_audit.audit_input_payload(valid_raw)
+    a_memory = input_audit.audit_input_payload(memory_raw)
+    a_unknown = input_audit.audit_input_payload(unknown_bad_raw)
+    ok20 = (a_valid["status"] == "pass" and a_memory["status"] == "rejected"
+            and a_unknown["status"] == "rejected")
+    passed += ok20
+    failed += not ok20
+    print(f"  [{'PASS' if ok20 else 'FAIL'}] T20  输入来源审计 → valid={a_valid['status']}, "
+          f"memory={a_memory['status']}, unknown非空={a_unknown['status']}")
+
+    # T21 · 全部参照都有中英定位；无实测值的提前返回也带引用与原文措辞
+    no_value = replacement(USER, outcome_value=None)
+    v21 = gates.judge(no_value, by_id["SM-004.1"])
+    meta21 = v21.reference_meta
+    ok21 = (
+        all(r.citation and r.locator and r.locator_zh for r in records)
+        and meta21.get("locator_zh")
+        and "Yield (%)" in (meta21.get("label_raw") or "")
+        and "total conversion" in (meta21.get("label_raw") or "")
+    )
+    passed += ok21
+    failed += not ok21
+    print(f"  [{'PASS' if ok21 else 'FAIL'}] T21  参照元数据完整 → 中英定位齐全，"
+          f"无实测值证书仍带 label_raw/locator_zh")
+
+    # T22 · 即使用户 JSON 错标 isolated，"收了35%"也不得产生档内差值
+    ambiguous = Record(
+        record_id="USER-022", outcome_type="isolated", outcome_value=35,
+        label_raw="收了35%", substrate=USER.substrate, conditions=USER.conditions,
+        assay=USER.assay, tier="A",
+    )
+    v22 = gates.judge(ambiguous, by_id["SM-001b"])
+    pl22 = placement_mod.placement(ambiguous, records)
+    ok22 = (v22.verdict == NEEDS_EVIDENCE and v22.blocking_dimension == "assay"
+            and pl22["status"] == "UNDEFINED" and pl22.get("delta_vs_min") is None)
+    passed += ok22
+    failed += not ok22
+    print(f"  [{'PASS' if ok22 else 'FAIL'}] T22  模糊口径双重拦截 → "
+          f"verdict={v22.verdict}/{v22.blocking_dimension}, placement={pl22['status']}")
+
+    print(f"\n  最终：{passed} passed, {failed} failed（含 T17–T22）")
     return failed == 0
 
 
@@ -256,6 +327,8 @@ def main() -> int:
     if "--json" in sys.argv:
         payload = {
             "subject": USER.record_id,
+            "inputs_source": USER.inputs_source,
+            "input_audit": USER.input_audit,
             "classes": placement_mod.class_summary(records),
             "coverage": placement_mod.coverage(records),
             "verdicts": [gates.judge(USER, r).to_dict() for r in records],
@@ -274,4 +347,4 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-
+

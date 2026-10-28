@@ -96,7 +96,8 @@
         "aryl_halide": "4-bromoanisole",
         "boronic_acid": "phenylboronic acid",
         "product": "4-methoxybiphenyl"
-      }
+      },
+      "locator_zh": "表 2 第 7 行 + 脚注 a（PMC6071702 全文已核）"
     },
     {
       "record_id": "P11",
@@ -167,7 +168,8 @@
         "aryl_halide": "4-bromoanisole",
         "boronic_acid": "phenylboronic acid",
         "product": "4-methoxybiphenyl"
-      }
+      },
+      "locator_zh": "表 1 第 3 行 + 脚注 a（PMC13397079 全文已核）"
     },
     {
       "record_id": "P12",
@@ -245,7 +247,8 @@
         "aryl_halide": "4-bromoanisole",
         "boronic_acid": "phenylboronic acid",
         "product": "4-methoxybiphenyl"
-      }
+      },
+      "locator_zh": "表 3 第 7 行（表 3 无脚注、Yield 列无上标）"
     },
     {
       "record_id": "P13",
@@ -311,7 +314,8 @@
         "aryl_halide": "4-bromoanisole",
         "boronic_acid": "phenylboronic acid",
         "product": "4-methoxybiphenyl"
-      }
+      },
+      "locator_zh": "§2.5 通用操作 + 优化表（PMC10611190 全文已核）"
     },
     {
       "record_id": "P01",
@@ -375,30 +379,36 @@
           "表 I 行号",
           "GLC 内标（1981 原文很可能用内标，值得查）"
         ]
-      }
+      },
+      "locator_zh": "表 I, 第 8 行"
     },
     {
       "record_id": "P16",
       "source_id": "P16",
       "tier": "C",
-      "citation": "ACS Omega 2018, 3, 17528（Pd-钙钛矿，低温水热）",
+      "citation": "Saputra, Sato, Kojima, Hara, Ichikuni & Shimazu, ACS Omega 2018, 3, 17528-17531（Pd-STO 钙钛矿）",
       "doi": "10.1021/acsomega.8b02622",
-      "locator": "Table（0.2 mmol 微量行）",
+      "locator": "Table 1 entry 2 + 脚注 a; §2.2 定量方法（decaline 内标，GC-14B）（PMC6644052 全文已核）",
+      "substrate": {
+        "aryl_halide": "4-bromoanisole",
+        "boronic_acid": "phenylboronic acid",
+        "product": "4-methoxybiphenyl"
+      },
       "outcome": {
         "value": 99.0,
         "unit": "%",
-        "outcome_type": "unknown",
-        "label_raw": ">99% BP yield",
-        "note": "原文列名是 'BP yield/%'，未说明 GC 还是分离 → 口径 unknown（T14 的真实样本）"
+        "outcome_type": "gc",
+        "label_raw": "Table 1 列名 conv./% = 99、yield/% = 99（entry 2, Pd-STO(12.5)）；§2.2: \"...decaline (internal standard) ... analyzed by gas chromatography (GC Shimadzu GC-14B, InertCap-624 column) ...\"",
+        "note": "Table 1 entry 2；同表 entry 5（PA 过量 0.3 mmol）>99/>99。Table 2 才是溴苯数据（>99%），B 原记录把底物误标为 bromobenzene，已纠正为 4-溴苯甲醚。"
       },
       "assay": {
-        "method": "未注明（原文列名 BP yield/%）",
-        "internal_standard": null,
-        "quantification_basis": null
+        "method": "GC",
+        "internal_standard": "decaline (decahydronaphthalene)",
+        "quantification_basis": "product yield"
       },
       "conditions": {
-        "catalyst": "Pd-perovskite（Pd 0.64 wt%）",
-        "catalyst_loading_raw": "12.5 mg（BB/Pd = 273）",
+        "catalyst": "Pd-STO(12.5) 钙钛矿（Pd 0.64 wt%，12.5 mg）",
+        "catalyst_loading_raw": "mol BA/Pd = 273",
         "catalyst_mol_pct": null,
         "ligand": null,
         "ligand_mol_pct": null,
@@ -407,22 +417,17 @@
         "solvent": "i-PrOH/H2O = 1:1",
         "temp_c": 80,
         "time_h": 0.5,
-        "atmosphere": null,
+        "atmosphere": "air",
         "scale_mmol": 0.2,
         "equivalents": {
           "aryl_halide": 1.0,
-          "boronic_acid": 1.5
+          "boronic_acid": 1.0
         },
         "concentration_m": null
       },
-      "purification": null,
-      "evidence_grade": "imported_unchecked",
-      "verification": "pending_locator_check",
-      "substrate": {
-        "aryl_halide": "bromobenzene",
-        "boronic_acid": "phenylboronic acid",
-        "product": "biphenyl"
-      },
+      "purification": "extracted with n-hexane (no chromatography stated)",
+      "evidence_grade": "A_confirmed",
+      "verification": "verified_fulltext",
       "catalytic_profile": {
         "catalyst_form": "supported",
         "ligand_family": "none",
@@ -431,17 +436,13 @@
         "activation_mode": "thermal"
       },
       "_extraction": {
-        "label_raw_provenance": "transcribed",
-        "missing_fields": [
-          "outcome.outcome_type 已定 unknown",
-          "catalyst_mol_pct",
-          "atmosphere"
-        ],
-        "needs_A_check": [
-          "'BP yield/%' 到底怎么测的（这决定它是 PASS 还是 NEEDS_EVIDENCE）",
-          "表行号"
-        ]
-      }
+        "label_raw_provenance": "verbatim",
+        "assay_basis_source": "§2.2 Catalytic Test 明确 decaline 为内标、GC 定量",
+        "verified_at": "2026-10-28",
+        "calibration": "calibrated"
+      },
+      "locator_zh": "表 1 第 2 条及脚注 a；第 2.2 节定量方法",
+      "_source_file": "_selftest.json"
     },
     {
       "record_id": "P17",
@@ -506,7 +507,8 @@
           "200-500 ppm 取哪个值（本记录填上界 0.05 mol%）",
           "纯化手段"
         ]
-      }
+      },
+      "locator_zh": "Table（溴苯行, 10 h）"
     },
     {
       "record_id": "P18",
@@ -574,7 +576,8 @@
           "NMR 积分基准（以 PhBr 为基准已在报告里写明，但内标是什么？）",
           "球磨是否算 medium=solventless（有 2 mL EtOH）—— 本记录按溶剂less 填，请 A 确认，这一格决定档归属"
         ]
-      }
+      },
+      "locator_zh": "Table（180 min 行）+ 时间序列（30 min 49%）"
     },
     {
       "record_id": "P19a",
@@ -647,7 +650,8 @@
           "note": "碱与时间同时变化"
         },
         "verified_by_A": "2026-10-26 开放获取核验记录 §2.3"
-      }
+      },
+      "locator_zh": "表 1 第 2 行 + 脚注 b（GC 收率）；内标依据见同文表 4 脚注"
     },
     {
       "record_id": "P19b",
@@ -720,7 +724,8 @@
           "note": "碱与时间同时变化"
         },
         "verified_by_A": "2026-10-26 开放获取核验记录 §2.3"
-      }
+      },
+      "locator_zh": "表 1 第 1 行 + 脚注 b（GC 收率）；内标依据见同文表 4 脚注"
     },
     {
       "record_id": "P20",
@@ -789,7 +794,8 @@
         "assay_basis_source": "三表脚注 b 明确为 flash column chromatography 的分离收率",
         "calibration": "calibrated",
         "verified_at": "2026-10-26"
-      }
+      },
+      "locator_zh": "表 1 第 5 行 + 表 2 第 2 行 + 表 3 第 1 行（三表脚注 b 均为分离收率）"
     },
     {
       "record_id": "P21",
@@ -854,7 +860,8 @@
         "needs_A_check": [
           "膦叶立德归 non_phosphine 还是 phosphine？本记录按 non_phosphine 填（叶立德不是膦配体），请 A 签字；这一格决定它进档 A 还是档 C"
         ]
-      }
+      },
+      "locator_zh": "优化表（60 °C 行）"
     },
     {
       "record_id": "P22",
@@ -922,7 +929,8 @@
           "20 mg 对应 mol%",
           "温度梯度的四行数值能否逐行绑定（若能，可扩出 3 对篇内扫描）"
         ]
-      }
+      },
+      "locator_zh": "Table（回流行）+ 温度梯度段（41/55/86/91%）"
     },
     {
       "record_id": "P23",
@@ -987,7 +995,8 @@
         "needs_A_check": [
           "与 P24b 同为『纯水 20 °C』却 100% vs 8% —— 请确认两条的催化剂载量与时间确实不同（这是 gold set 里最容易被质疑的一对）"
         ]
-      }
+      },
+      "locator_zh": "Table（H2O, 20 °C 行）"
     },
     {
       "record_id": "P24a",
@@ -1056,7 +1065,8 @@
           "表行号"
         ],
         "verified_by_A": "2026-10-26 开放获取核验记录 §2.4"
-      }
+      },
+      "locator_zh": "表 1 第 1 行 + 脚注 a/c（PMC9042804 全文已核）"
     },
     {
       "record_id": "P24b",
@@ -1125,7 +1135,8 @@
           "纯水行的时间（本记录按同表 2 h 推定，属待核验）"
         ],
         "verified_by_A": "2026-10-26 开放获取核验记录 §2.4"
-      }
+      },
+      "locator_zh": "表 1 第 2 行 + 脚注 a/c（PMC9042804 全文已核）"
     },
     {
       "record_id": "P24c",
@@ -1193,7 +1204,8 @@
           "时间（按同表 2 h 推定）"
         ],
         "verified_by_A": "2026-10-26 开放获取核验记录 §2.4"
-      }
+      },
+      "locator_zh": "表 1 第 6 行 + 脚注 a/c（PMC9042804 全文已核）"
     },
     {
       "record_id": "P25",
@@ -1257,7 +1269,8 @@
         "needs_A_check": [
           "99.6% 的测定方式（原文表注）—— 一句话就能把这条从 UNKNOWN 变成可用"
         ]
-      }
+      },
+      "locator_zh": "Table（100 °C, 50 min 行）"
     },
     {
       "record_id": "P26",
@@ -1322,7 +1335,8 @@
           "测定方式",
           "NaHCO3 与碳酸盐是否算「同族碱」（维度 7 判 L1 还是 L2）"
         ]
-      }
+      },
+      "locator_zh": "Table（2 mmol 行）"
     },
     {
       "record_id": "P27",
@@ -1387,7 +1401,8 @@
           "室温 25 °C 是否原文写 RT",
           "GC 内标种类"
         ]
-      }
+      },
+      "locator_zh": "Table（5 mol% 行，球磨 25 Hz）"
     },
     {
       "record_id": "P04",
@@ -1451,7 +1466,8 @@
           "表 II 行号",
           "与 P03 同为表 II，需确认三行（p-MeO / o-MeO / p-Me）的先后"
         ]
-      }
+      },
+      "locator_zh": "Table II（p-MePhBr 行）"
     },
     {
       "record_id": "P28",
@@ -1516,7 +1532,8 @@
           "表行号",
           "10 ppm 与 24 h 是本条最具辨识度的两个字段，务必确认"
         ]
-      }
+      },
+      "locator_zh": "Table（10 ppm 行）"
     },
     {
       "record_id": "P29",
@@ -1582,7 +1599,8 @@
           "反应时间（表注未给，读 Experimental）",
           "10 mg 对应 mol%"
         ]
-      }
+      },
+      "locator_zh": "Table（第 1 循环）+ Experimental"
     },
     {
       "record_id": "P30",
@@ -1648,7 +1666,8 @@
           "**受控词表缺 photochemical**：本记录故意填 photochemical 以暴露词表缺口，tier_of() 会返回 problems、tier=None（load_records 保留人工标注 A）。需 A 决定：扩词表，还是把光/电驱动并入 soft 维度标注"
         ],
         "note": "这条是『同一张表内换碱 93% vs 65%』的篇内对照来源"
-      }
+      },
+      "locator_zh": "Table（Cs2CO3 行）+ 碱对照（K2CO3 65%）"
     },
     {
       "record_id": "P31",
@@ -1716,7 +1735,8 @@
           "溶剂是什么（本条 solvent 缺失，是池里唯一 4 个条件字段同时缺的记录）",
           "1 mg 对应 mol%"
         ]
-      }
+      },
+      "locator_zh": "Table（35 °C 行）"
     },
     {
       "record_id": "P03",
@@ -1780,7 +1800,8 @@
           "表 II 行号（第几行是 o-MeOPhBr）",
           "substrate 与 P02 同表同条件，仅底物位置不同 → 维度 1 应判 FAIL（D1：位置不同即不同底物）"
         ]
-      }
+      },
+      "locator_zh": "Table II（o-MeOPhBr 行）"
     },
     {
       "record_id": "P06",
@@ -1855,7 +1876,8 @@
           "两个收率哪个用于对外表述 —— 建议统一用 86.3% 并注明粗品 96.2%",
           "版权：Org Synth 禁止再分发 PDF，引用只走 DOI"
         ]
-      }
+      },
+      "locator_zh": "Procedure 段（粗品与重结晶两个收率）"
     },
     {
       "record_id": "P07",
@@ -1921,7 +1943,8 @@
           "作者行 OCR 残缺（Goodson/Wallow/Novak 由页首残字合并），需以期刊页为准",
           "维度 1 必须判 FAIL：离去基为碘（D1 已定）"
         ]
-      }
+      },
+      "locator_zh": "Procedure 段（蒸馏收率）"
     },
     {
       "record_id": "P32",
@@ -1988,7 +2011,8 @@
           "测定方式",
           "溶剂对照四行能否逐行绑定（可扩篇内扫描对）"
         ]
-      }
+      },
+      "locator_zh": "Table（DMF:H2O 行）+ 溶剂对照（THF 47%、甲苯 38%）"
     },
     {
       "record_id": "P33",
@@ -2054,7 +2078,8 @@
           "2.0 mg 对应 mol%",
           "时间扫描的完整数值（79/99/93/84/82/79）是否原文逐字，若是，可作为『过程非单调』的唯一证据"
         ]
-      }
+      },
+      "locator_zh": "Table（entry 1, 60 min）+ 时间扫描段"
     },
     {
       "record_id": "P34",
@@ -2121,7 +2146,8 @@
           "NMR 积分基准",
           "0.001 mol% 与 24 h 的原文确认（此条是全池载量最低值）"
         ]
-      }
+      },
+      "locator_zh": "Table（催化剂 14 行）"
     },
     {
       "record_id": "P35",
@@ -2182,7 +2208,8 @@
         "assay_basis_source": "摘要原句明确写 isolated yield（20 min，95%）",
         "verified_at": "2026-10-26",
         "calibration": "calibrated"
-      }
+      },
+      "locator_zh": "摘要原句（正文表格 / SI 未核）"
     }
   ]
 }

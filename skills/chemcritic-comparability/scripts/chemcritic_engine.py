@@ -5,23 +5,24 @@
 ⚠️ 本文件由 engine/build_bundle.py 自动生成，请勿直接编辑。
    改判定逻辑请改 engine/*.py，然后重新运行 `python engine/build_bundle.py`。
 
-内嵌来源：engine/schemas.py · engine/profiles.py · engine/tier.py ·
+内嵌来源：engine/schemas.py · engine/input_audit.py · engine/profiles.py · engine/tier.py ·
           engine/gates.py · engine/placement.py · engine/run_demo.py ·
           data/records.json
 
 契约（平台侧唯一允许的判定入口）：
     输入  Record JSON（见 docs/integration/2026-10-27-给C-的合并指令-引擎判定接入.md §2.1）
-    输出  {"subject", "classes", "coverage", "verdicts", "placement"}
+    输出  {"subject", "inputs_source", "input_audit", "classes", "coverage", "verdicts", "placement"}
 
 铁律：verdict 三值 COMPARABLE / BLOCKED / NEEDS_EVIDENCE 只来自本文件的 judge()；
       LLM 只负责把证书翻译成用户文案，不得改写、不得补"我认为"的结论。
 
 用法：
     python chemcritic_engine.py                          # 三屏演示 + 19 项自检
-    python chemcritic_engine.py --selftest               # 只跑 T1–T18（19 passed, 0 failed）
+    python chemcritic_engine.py --selftest               # 只跑 T1–T22（23 passed, 0 failed）
     python chemcritic_engine.py --json                   # 内置 35% 案例的结构化结论
     python chemcritic_engine.py --json --input user.json # 判定你自己的实验记录
     python chemcritic_engine.py --json --input user.json --records refs.json
+    python chemcritic_engine.py --list-records           # 全部参照的引用/定位/口径/档位
     python chemcritic_engine.py --brief --input user.json # 证书摘要（几百字节，降级贴回会话）
     python chemcritic_engine.py --version
 
@@ -41,7 +42,7 @@ from typing import Any, Dict, List, Optional
 
 
 # ============================================================================
-# 1/8 · schemas.py —— 数据结构（无业务判断；原文未报告的字段一律 None）
+# 1/9 · schemas.py —— 数据结构（无业务判断；原文未报告的字段一律 None）
 # ============================================================================
 # 数据结构定义（骨架）。
 #
@@ -90,6 +91,7 @@ class Record:
     tier: Optional[str] = None
     source_id: Optional[str] = None
     locator: Optional[str] = None
+    locator_zh: Optional[str] = None  # 中文定位，供用户文案使用；英文 locator 仍保留供审计
     purification: Optional[str] = None
     verification: str = "unverified"
     catalytic_profile: Dict[str, Any] = field(default_factory=dict)
@@ -99,6 +101,10 @@ class Record:
     evidence_grade: str = "imported_unchecked"  # A_confirmed | imported_unchecked | candidate
     citation: Optional[str] = None        # 对外引用：作者 + 年份 + 期刊卷页（不做成 model 记忆）
     doi: Optional[str] = None
+    inputs_source: Dict[str, str] = field(default_factory=dict)  # 字段路径 → user_stated / unknown
+    input_audit: Dict[str, Any] = field(
+        default_factory=lambda: {"status": "not_declared", "errors": []}
+    )
 
     @classmethod
     def from_dict(cls, d: Dict[str, Any]) -> "Record":
@@ -113,6 +119,7 @@ class Record:
             tier=d.get("tier"),
             source_id=d.get("source_id"),
             locator=d.get("locator"),
+            locator_zh=d.get("locator_zh"),
             purification=d.get("purification"),
             verification=d.get("verification", "unverified"),
             catalytic_profile=d.get("catalytic_profile") or {},
@@ -121,6 +128,7 @@ class Record:
             evidence_grade=d.get("evidence_grade") or "imported_unchecked",
             citation=d.get("citation"),
             doi=d.get("doi"),
+            inputs_source=d.get("inputs_source") or {},
         )
 
     @property
@@ -180,7 +188,64 @@ class Verdict:
 
 
 # ============================================================================
-# 2/8 · profiles.py —— 档位字段补丁表（记录缺 catalytic_profile 时兜底）
+# 2/9 · input_audit.py —— 用户输入来源审计（禁止历史记忆拼装判定输入）
+# ============================================================================
+# 用户判定输入的来源审计（不含化学判断）。
+#
+# 目标：让 user.json 的每个外部事实都能追溯来源，禁止把历史对话或账号记忆
+# 拼装成"用户申报过"的实验条件。
+#
+# `inputs_source` 是字段路径到来源的映射，例如：
+#     {"outcome.outcome_type": "user_stated", "conditions.base": "unknown"}
+#
+# 来源只允许：
+# - user_stated：用户在当前对话中明确提供；
+# - unknown：用户未提供或明确表示无法提供，对应字段必须为 null / 缺省；
+# - memory：历史对话或账号记忆。该来源不允许进入判定，审计直接拒绝。
+
+ALLOWED_INPUT_SOURCES = {"user_stated", "memory", "unknown"}
+_MISSING = object()
+
+
+def _value_at_path(payload: Dict[str, Any], path: str) -> Any:
+    current: Any = payload
+    for part in path.split("."):
+        if not isinstance(current, dict) or part not in current:
+            return _MISSING
+        current = current[part]
+    return current
+
+
+def audit_input_payload(payload: Dict[str, Any]) -> Dict[str, Any]:
+    """返回可序列化审计结果；rejected 的输入不得进入判定。"""
+    declared = payload.get("inputs_source")
+    if declared is None:
+        return {"status": "not_declared", "errors": []}
+    if not isinstance(declared, dict):
+        return {"status": "rejected", "errors": ["inputs_source 必须是字段路径到来源的对象"]}
+
+    errors = []
+    for path, source in declared.items():
+        if not isinstance(path, str) or not path.strip():
+            errors.append("inputs_source 含空字段路径")
+            continue
+        if source not in ALLOWED_INPUT_SOURCES:
+            errors.append(f"{path}: 未知来源 {source!r}")
+            continue
+        value = _value_at_path(payload, path)
+        if value is _MISSING:
+            errors.append(f"{path}: 字段路径不存在")
+            continue
+        if source == "memory":
+            errors.append(f"{path}: 历史记忆不得作为判定输入；请改为 null 并标 unknown")
+        elif source == "unknown" and value is not None:
+            errors.append(f"{path}: 标为 unknown 时字段值必须为 null")
+
+    return {"status": "rejected" if errors else "pass", "errors": errors}
+
+
+# ============================================================================
+# 3/9 · profiles.py —— 档位字段补丁表（记录缺 catalytic_profile 时兜底）
 # ============================================================================
 # 档位字段补丁表。
 #
@@ -221,7 +286,7 @@ def profile_for(record_id: Optional[str]) -> Dict[str, str]:
 
 
 # ============================================================================
-# 3/8 · tier.py —— 档位判定（受控词表 → 规则 → 主判 / 备选）
+# 4/9 · tier.py —— 档位判定（受控词表 → 规则 → 主判 / 备选）
 # ============================================================================
 # 档位判定：受控词表 → 规则 → 主判 / 备选（确定性、可审计）。
 #
@@ -261,12 +326,17 @@ RULES = [
     ("R5", "ligand_family=non_phosphine", lambda p: p.get("ligand_family") == "non_phosphine", "C"),
     ("R6", "ligand_family=none 且 medium=aqueous",
      lambda p: p.get("ligand_family") == "none" and p.get("medium") == "aqueous", "B"),
+    # R7（2026-10-28）：补上词表漏洞——"无配体 + 非水介质"（如乙二醇、DMF 中的 Pd(OAc)2）
+    # 既不是 A（A 要求膦配体），也不满足 R6（要求水相），此前会掉进兜底被误判成 A。
+    # 判例：P35（Chin. J. Catal. 2011，Pd(OAc)2 / 乙二醇 / 室温）。
+    ("R7", "ligand_family=none 且 medium=organic",
+     lambda p: p.get("ligand_family") == "none" and p.get("medium") == "organic", "B"),
 ]
 
 FALLBACK = ("R0", "兜底：分子配合物 + 膦类配体", "A")
 
 # 主判优先级：物理形态 > 配体族 > 介质（数值越小越优先）
-PRIMARY_PRIORITY = {"R1": 1, "R2": 2, "R3": 3, "R4": 4, "R5": 5, "R6": 6, "R0": 9}
+PRIMARY_PRIORITY = {"R1": 1, "R2": 2, "R3": 3, "R4": 4, "R5": 5, "R6": 6, "R7": 7, "R0": 9}
 
 
 def _validate(profile: Dict[str, Any]) -> List[str]:
@@ -318,7 +388,7 @@ def tier_of(profile: Optional[Dict[str, Any]]) -> Dict[str, Any]:
 
 
 # ============================================================================
-# 4/8 · gates.py —— 8 维门槛判定（确定性，LLM 无权覆盖）
+# 5/9 · gates.py —— 8 维门槛判定（确定性，LLM 无权覆盖）
 # ============================================================================
 # 8 维门槛判定（骨架，逻辑与 `docs/rules/8维门槛规则表-待签字.md` 一一对应）。
 #
@@ -428,7 +498,8 @@ def gate_assay(user: Record, ref: Record) -> GateResult:
     对其追问比阻断更有用；文献数值若未核验，一旦允许比较就是在制造假精确。
     """
     return (
-        _label_consistency(ref, "reference")
+        _label_consistency(user, "subject")
+        or _label_consistency(ref, "reference")
         or _evidence_check(ref)
         or _calibration_check(user, "subject")
         or _calibration_check(ref, "reference")
@@ -445,6 +516,13 @@ _LABEL_HINTS = {
 }
 
 _REQUIRED_EVIDENCE = ("a_confirmed", "candidate")  # 小写比对；candidate 可通过，但由 calibration/软标注体现
+
+
+def label_supported(record: Record) -> bool:
+    """记录的口径分类是否被其原话明确支撑（用户侧与文献侧同一标准）。"""
+    t = record.outcome_type
+    raw = (record.label_raw or "").strip().lower()
+    return t in ALLOWED_OUTCOME_TYPES and bool(raw) and any(h in raw for h in _LABEL_HINTS[t])
 
 
 def _label_consistency(record: Record, side: str) -> Optional[GateResult]:
@@ -632,6 +710,20 @@ def _soft(gate: int, levels: list, notes: list) -> GateResult:
 # ---------- 结论 ----------
 
 def judge(user: Record, ref: Record) -> Verdict:
+    # 所有返回路径都带完整参照元数据：无实测值时也能直接盘点知识库，
+    # Agent 不应再翻引擎源码找引用或原文措辞。
+    ref_meta = {
+        "citation": ref.citation,
+        "doi": ref.doi,
+        "locator": ref.locator,
+        "locator_zh": ref.locator_zh,
+        "tier": ref.tier,
+        "value": ref.outcome_value,
+        "outcome_type": ref.outcome_type,
+        "label_raw": ref.label_raw,
+        "source_id": ref.source_id,
+    }
+
     # P5b/A-审计：用户没报实测数值时，不存在"可比/不可比"这回事。
     # 此前会直接走到 COMPARABLE，等于对一个没有数值的实验给出"可并排比较"的结论。
     if user.outcome_value is None:
@@ -641,6 +733,7 @@ def judge(user: Record, ref: Record) -> Verdict:
             blocking_dimension=GATE_NAMES[3],
             unlock_condition="请提供实测收率数值（以及它是分离收率还是仪器定量）",
             soft_flags=[],
+            reference_meta=ref_meta,
             calibration=_combined_calibration(user, ref),
             ref_calibration=calibration_level(ref),
             subject_calibration=calibration_level(user),
@@ -656,6 +749,7 @@ def judge(user: Record, ref: Record) -> Verdict:
             blocking_dimension=GATE_NAMES[3],
             unlock_condition="请说明这个数值是分离收率还是仪器定量（需要用户原话，不接受推定）",
             soft_flags=[],
+            reference_meta=ref_meta,
             calibration=_combined_calibration(user, ref),
             ref_calibration=calibration_level(ref),
             subject_calibration=calibration_level(user),
@@ -675,13 +769,6 @@ def judge(user: Record, ref: Record) -> Verdict:
 
     ni = _same_source(user, ref)
     rc, sc = calibration_level(ref), calibration_level(user)
-    # 证书自带引用信息：Agent 不必回头翻 records.json 找 citation（10/27 第 2 次运行诊断 · 问题 3）
-    ref_meta = {
-        "citation": ref.citation,
-        "doi": ref.doi,
-        "locator": ref.locator,
-        "tier": ref.tier,
-    }
 
     blocking = None
     for g in HARD_GATES:
@@ -744,7 +831,7 @@ def _soft_flags(gates: dict) -> list:
 
 
 # ============================================================================
-# 5/8 · placement.py —— 等价类 · 档内定位 · 双档敏感性
+# 6/9 · placement.py —— 等价类 · 档内定位 · 双档敏感性
 # ============================================================================
 # 等价类划分与档内定位（骨架）。
 #
@@ -845,6 +932,13 @@ def placement(user: Record, records: List[Record]) -> Dict[str, Any]:
             "action": "先确认口径（分离 / GC / NMR / 转化率）",
         }
 
+    if not label_supported(user):
+        return {
+            "status": "UNDEFINED",
+            "reason": "用户侧口径分类缺少原话支撑，无法定位",
+            "action": "先让用户明确该数值是分离收率、GC 收率、核磁定量还是转化率",
+        }
+
     same_class = [r for r in records if r.outcome_type == user.outcome_type]
     if not same_class:
         return {
@@ -864,10 +958,21 @@ def placement(user: Record, records: List[Record]) -> Dict[str, Any]:
 
     same_tier = [r for r in same_class if r.tier == tier]
     pool_ref = same_tier or same_class
-
     calibrated = [r for r in pool_ref if _level(r) == "calibrated"]
     uncalibrated = [r for r in pool_ref if _level(r) != "calibrated"]
     uncal_ids = [r.record_id for r in uncalibrated]
+
+    # I2（2026-10-28）：跨档迁移目标——**同底物 + 同产物** + 同口径 + calibrated，但档位不同。
+    # 它们不得参与差值，只用于回答"想突破该往哪个体系走"。
+    migration = [
+        r for r in same_class
+        if _level(r) == "calibrated" and r.tier and r.tier != tier
+        and r.outcome_value is not None and _same_pair(user, r)
+    ]
+    migration_targets = [
+        {"record_id": r.record_id, "value": r.outcome_value, "tier": r.tier}
+        for r in sorted(migration, key=lambda r: r.outcome_value or 0, reverse=True)
+    ]
 
     if not calibrated:
         return {
@@ -905,11 +1010,27 @@ def placement(user: Record, records: List[Record]) -> Dict[str, Any]:
             # 差值只给"同档 + 用户有值"的情形；跨档一律 None（只并排，不定位）
             "delta_vs_min": round(user.outcome_value - min(values), 1) if can_delta else None,
             "delta_vs_max": round(user.outcome_value - max(values), 1) if can_delta else None,
+            # 跨档迁移目标：不参与差值，只回答"换体系能到哪"
+            "migration_targets": migration_targets,
         }
 
 
+def _canon(value) -> str:
+    return str(value or "").strip().lower()
+
+
+def _same_pair(user: Record, ref: Record) -> bool:
+    """底物对 + 产物一致（迁移目标必须同底物，不能建议用户换底物）。"""
+    us, rs = user.substrate or {}, ref.substrate or {}
+    for key in ("aryl_halide", "boronic_acid"):
+        if _canon(us.get(key)) != _canon(rs.get(key)):
+            return False
+    up = _canon(getattr(user, "product", None) or us.get("product"))
+    rp = _canon(getattr(ref, "product", None) or rs.get("product"))
+    return up == rp
+
+
 def _level(record: Record) -> str:
-    """避免循环导入：仅在此处按同一规则判断校准级别。"""
     if record.outcome_type == "isolated":
         return "calibrated"
     if (record.assay or {}).get("internal_standard"):
@@ -942,7 +1063,7 @@ def sensitivity(user: Record, records: List[Record], tiers: List[str]) -> Dict[s
 
 
 # ============================================================================
-# 6/8 · run_demo.py —— 三屏演示与规则表验收矩阵（T1–T18）
+# 7/9 · run_demo.py —— 三屏演示与规则表验收矩阵（T1–T18）
 # ============================================================================
 # 演示入口（骨架）：跑通"35% 分离收率 → 分堆 → 逐条判定 → 档内定位"三屏。
 #
@@ -1006,7 +1127,7 @@ EXPECTED = {
     "T9": ("SM-004.7", NEEDS_EVIDENCE, "outcome_type"),  # 参照物改为 SM-006 时见 T9b
     "T10": ("SM-004.7", NEEDS_EVIDENCE, "outcome_type"),
     "T11": ("SM-002", NEEDS_EVIDENCE, "outcome_type"),
-    "T12": ("SM-002", COMPARABLE, None),
+    "T12": ("SM-002", NEEDS_EVIDENCE, "assay"),  # 用户只说 35%，未声明口径 → 维度 4 第一层：措辞不支撑 isolated
     "T13": ("SM-006-e1", COMPARABLE, None),
     "T14": ("SM-001b", NEEDS_EVIDENCE, "assay"),
     "T15": ("SM-001b", NEEDS_EVIDENCE, "assay"),
@@ -1176,6 +1297,76 @@ def test_matrix(records):
           f"non_independent={v18.non_independent}  expect=True")
 
     print(f"\n  最终：{passed} passed, {failed} failed（含 T17/T18）")
+
+    # T19 · 迁移目标必须同底物（2026-10-28：此前会把溴苯的 P20 当迁移目标）
+    pl = placement_mod.placement(USER, records)
+    mt_ids = [t["record_id"] for t in pl.get("migration_targets", [])]
+    by_mt = {r.record_id: r for r in records}
+    ok19 = (
+        bool(mt_ids)
+        and all((by_mt[i].substrate or {}).get("aryl_halide") == "4-bromoanisole" for i in mt_ids)
+        and "P20" not in mt_ids
+        and pl.get("delta_vs_min") == -5
+    )
+    passed += ok19
+    failed += not ok19
+    print(f"  [{'PASS' if ok19 else 'FAIL'}] T19  迁移目标同底物 → {mt_ids}  expect 仅 4-溴苯甲醚，delta=-5")
+
+    # T20 · 输入来源审计：记忆不得进入判定；unknown 必须对应 null；当前对话原话可通过
+    valid_raw = {
+        "outcome": {"value": 35, "outcome_type": "isolated", "label_raw": "分离收率"},
+        "conditions": {"base": None},
+        "inputs_source": {"outcome.outcome_type": "user_stated", "conditions.base": "unknown"},
+    }
+    memory_raw = {
+        "conditions": {"base": "Na2CO3"},
+        "inputs_source": {"conditions.base": "memory"},
+    }
+    unknown_bad_raw = {
+        "conditions": {"base": "Na2CO3"},
+        "inputs_source": {"conditions.base": "unknown"},
+    }
+    a_valid = audit_input_payload(valid_raw)
+    a_memory = audit_input_payload(memory_raw)
+    a_unknown = audit_input_payload(unknown_bad_raw)
+    ok20 = (a_valid["status"] == "pass" and a_memory["status"] == "rejected"
+            and a_unknown["status"] == "rejected")
+    passed += ok20
+    failed += not ok20
+    print(f"  [{'PASS' if ok20 else 'FAIL'}] T20  输入来源审计 → valid={a_valid['status']}, "
+          f"memory={a_memory['status']}, unknown非空={a_unknown['status']}")
+
+    # T21 · 全部参照都有中英定位；无实测值的提前返回也带引用与原文措辞
+    no_value = replacement(USER, outcome_value=None)
+    v21 = gates.judge(no_value, by_id["SM-004.1"])
+    meta21 = v21.reference_meta
+    ok21 = (
+        all(r.citation and r.locator and r.locator_zh for r in records)
+        and meta21.get("locator_zh")
+        and "Yield (%)" in (meta21.get("label_raw") or "")
+        and "total conversion" in (meta21.get("label_raw") or "")
+    )
+    passed += ok21
+    failed += not ok21
+    print(f"  [{'PASS' if ok21 else 'FAIL'}] T21  参照元数据完整 → 中英定位齐全，"
+          f"无实测值证书仍带 label_raw/locator_zh")
+
+    # T22 · 即使用户 JSON 错标 isolated，"收了35%"也不得产生档内差值
+    ambiguous = Record(
+        record_id="USER-022", outcome_type="isolated", outcome_value=35,
+        label_raw="收了35%", substrate=USER.substrate, conditions=USER.conditions,
+        assay=USER.assay, tier="A",
+    )
+    v22 = gates.judge(ambiguous, by_id["SM-001b"])
+    pl22 = placement_mod.placement(ambiguous, records)
+    ok22 = (v22.verdict == NEEDS_EVIDENCE and v22.blocking_dimension == "assay"
+            and pl22["status"] == "UNDEFINED" and pl22.get("delta_vs_min") is None)
+    passed += ok22
+    failed += not ok22
+    print(f"  [{'PASS' if ok22 else 'FAIL'}] T22  模糊口径双重拦截 → "
+          f"verdict={v22.verdict}/{v22.blocking_dimension}, placement={pl22['status']}")
+
+    print(f"\n  最终：{passed} passed, {failed} failed（含 T17–T22）")
     return failed == 0
 
 
@@ -1244,7 +1435,8 @@ RECORDS_JSON = r"""{
         "aryl_halide": "4-bromoanisole",
         "boronic_acid": "phenylboronic acid",
         "product": "4-methoxybiphenyl"
-      }
+      },
+      "locator_zh": "表 II，p-MeOPhBr 行，脚注"
     },
     {
       "record_id": "SM-001b",
@@ -1298,7 +1490,8 @@ RECORDS_JSON = r"""{
         "aryl_halide": "4-bromoanisole",
         "boronic_acid": "phenylboronic acid",
         "product": "4-methoxybiphenyl"
-      }
+      },
+      "locator_zh": "表 II，p-MeOPhBr 行，括号内数值"
     },
     {
       "record_id": "SM-002",
@@ -1352,7 +1545,8 @@ RECORDS_JSON = r"""{
         "aryl_halide": "4-bromoanisole",
         "boronic_acid": "phenylboronic acid",
         "product": "4-methoxybiphenyl"
-      }
+      },
+      "locator_zh": "补充资料第 1 页通用步骤；第 2 页表 1 第 1 条及脚注"
     },
     {
       "record_id": "SM-003",
@@ -1406,7 +1600,8 @@ RECORDS_JSON = r"""{
         "aryl_halide": "4-bromoanisole",
         "boronic_acid": "phenylboronic acid",
         "product": "4-methoxybiphenyl"
-      }
+      },
+      "locator_zh": "补充资料第 3 页表 S1 第 2 条及脚注"
     },
     {
       "record_id": "SM-004.1",
@@ -1460,7 +1655,8 @@ RECORDS_JSON = r"""{
         "aryl_halide": "4-bromoanisole",
         "boronic_acid": "phenylboronic acid",
         "product": "4-methoxybiphenyl"
-      }
+      },
+      "locator_zh": "表 1 第 1 条及脚注 a/c，PDF 第 4 页"
     },
     {
       "record_id": "SM-004.7",
@@ -1514,7 +1710,8 @@ RECORDS_JSON = r"""{
         "aryl_halide": "4-bromoanisole",
         "boronic_acid": "phenylboronic acid",
         "product": "4-methoxybiphenyl"
-      }
+      },
+      "locator_zh": "表 1 第 7 条及脚注 a/c，PDF 第 4 页"
     },
     {
       "record_id": "SM-005",
@@ -1569,7 +1766,8 @@ RECORDS_JSON = r"""{
         "aryl_halide": "4-bromoanisole",
         "boronic_acid": "phenylboronic acid",
         "product": "4-methoxybiphenyl"
-      }
+      },
+      "locator_zh": "表 1 第 1 条及表脚注；实验部分通用步骤"
     },
     {
       "record_id": "SM-006-e1",
@@ -1628,14 +1826,785 @@ RECORDS_JSON = r"""{
         "aryl_halide": "4-bromoanisole",
         "boronic_acid": "phenylboronic acid",
         "product": "4-methoxybiphenyl"
-      }
+      },
+      "locator_zh": "表 2 第 1 条及脚注 a"
+    },
+    {
+      "record_id": "P11",
+      "source_id": "P11",
+      "tier": "C",
+      "citation": "Gholinejad, Jafarpour & Sansano, RSC Adv. 2026, 16(38), 42714-42723",
+      "doi": "10.1039/d6ra03494b",
+      "locator": "Table 1 entry 3 + 脚注 a（PMC13397079 全文已核，A 2026-10-26）",
+      "outcome": {
+        "value": 96.0,
+        "unit": "%",
+        "outcome_type": "gc",
+        "label_raw": "Yield (%) 列 entry 3 = 96；脚注 a: Yields determined by GC",
+        "note": "同底物 + 同 60 °C；表内载量梯度 0.035→15%、0.07→50%、0.1→96%、0.17→97%；温度梯度 25→20%、50→60%、60→96%；24 h→98%"
+      },
+      "assay": {
+        "method": "GC",
+        "internal_standard": null,
+        "quantification_basis": "GC 面积（未注明归一化方式）",
+        "assay_basis_source": "Table 1 脚注 a: Yields determined by GC；全文未见内标"
+      },
+      "conditions": {
+        "catalyst": "clinochlore-CQDs@Pd",
+        "catalyst_loading_raw": "0.1 mol%",
+        "catalyst_mol_pct": 0.1,
+        "ligand": null,
+        "ligand_mol_pct": null,
+        "base": "K2CO3",
+        "base_eq": 1.5,
+        "solvent": "H2O/EtOH = 1:1, 2 mL",
+        "temp_c": 60,
+        "time_h": 6.0,
+        "atmosphere": null,
+        "scale_mmol": 0.2,
+        "equivalents": {
+          "aryl_halide": 1.0,
+          "boronic_acid": 1.5
+        },
+        "concentration_m": null
+      },
+      "purification": null,
+      "evidence_grade": "A_confirmed",
+      "verification": "verified_with_caveat",
+      "catalytic_profile": {
+        "catalyst_form": "supported",
+        "ligand_family": "none",
+        "support": "solid_support",
+        "medium": "aqueous",
+        "activation_mode": "thermal"
+      },
+      "_extraction": {
+        "label_raw_provenance": "verbatim",
+        "missing_fields": [
+          "assay.internal_standard"
+        ],
+        "needs_A_check": [
+          "页/表/entry 编号",
+          "K2CO3 当量（正文只说 as a base）",
+          "GC 内标与定量基准",
+          "底物用量"
+        ],
+        "assay_basis_source": "Table 1 脚注 a 仅写 'Yields determined by GC'；全文未见内标说明",
+        "calibration": "uncalibrated",
+        "verified_at": "2026-10-26",
+        "verified_by_A": "2026-10-26 开放获取核验记录 §2.5"
+      },
+      "substrate": {
+        "aryl_halide": "4-bromoanisole",
+        "boronic_acid": "phenylboronic acid",
+        "product": "4-methoxybiphenyl"
+      },
+      "locator_zh": "表 1 第 3 条及脚注 a"
+    },
+    {
+      "record_id": "P12",
+      "source_id": "P12",
+      "tier": "C",
+      "citation": "Hajighasemi, Nahipour, Ghorbani-Choghamarani & Taherinia, Nanoscale Adv. 2023, 5(18), 4925-4933",
+      "doi": "10.1039/d3na00403a",
+      "locator": "Table 3 entry 7（Table 3 无表脚注、Yield 列无上标）",
+      "outcome": {
+        "value": 99.0,
+        "unit": "%",
+        "outcome_type": "unknown",
+        "label_raw": "Yield (%) entry 7 = >99（无上标、无表脚注）",
+        "value_raw": ">99",
+        "value_is_lower_bound": true,
+        "note": "原文未声明口径。Table 2 有脚注 a Isolated yield，Table 3 没有 → 不得推定沿用（A 2026-10-26 决定）"
+      },
+      "assay": {
+        "method": "未声明",
+        "internal_standard": null,
+        "quantification_basis": null,
+        "assay_basis_source": "Table 2 脚注 a = Isolated yield；Table 3 无任何脚注 → 不能沿用"
+      },
+      "conditions": {
+        "catalyst": "Pd(0)-SMTU-boehmite",
+        "catalyst_loading_raw": "5 mg",
+        "catalyst_mol_pct": 0.94,
+        "ligand": null,
+        "ligand_mol_pct": null,
+        "base": "K2CO3",
+        "base_eq": 1.5,
+        "solvent": "PEG-400",
+        "temp_c": 80,
+        "time_h": 1.17,
+        "time_raw": "70 min",
+        "atmosphere": null,
+        "scale_mmol": 1.0,
+        "equivalents": {
+          "aryl_halide": 1.0,
+          "boronic_acid": 1.2
+        },
+        "concentration_m": null
+      },
+      "purification": null,
+      "evidence_grade": "A_confirmed",
+      "verification": "verified_with_caveat",
+      "catalytic_profile": {
+        "catalyst_form": "supported",
+        "ligand_family": "none",
+        "support": "solid_support",
+        "medium": "organic",
+        "activation_mode": "thermal"
+      },
+      "_extraction": {
+        "label_raw_provenance": "verbatim",
+        "missing_fields": [
+          "catalyst_mol_pct",
+          "equivalents.boronic_acid",
+          "atmosphere",
+          "purification"
+        ],
+        "needs_A_check": [
+          "Table 3 行号与 4-溴苯甲醚列的绑定",
+          "5 mg 对应 mol%（缺则维度 6 只能记 L2）",
+          "纯化手段",
+          ">99% 的原文写法"
+        ],
+        "assay_basis_source": "Table 3 无脚注，无法确认口径",
+        "verified_by_A": "2026-10-26 开放获取核验记录 §2.1",
+        "derived": {
+          "catalyst_mol_pct": "由 TON 105 反算 ≈0.94 mol%"
+        }
+      },
+      "substrate": {
+        "aryl_halide": "4-bromoanisole",
+        "boronic_acid": "phenylboronic acid",
+        "product": "4-methoxybiphenyl"
+      },
+      "locator_zh": "表 3 第 7 条（无表脚注，Yield 列无上标）"
+    },
+    {
+      "record_id": "P13",
+      "source_id": "P13",
+      "tier": "C",
+      "citation": "Esteban et al., Polymers 2023, 15(20), 4143",
+      "doi": "10.3390/polym15204143",
+      "locator": "§2.5 General Procedure + 优化表（PMC10611190 全文已核）",
+      "outcome": {
+        "value": 100.0,
+        "unit": "%",
+        "outcome_type": "conversion",
+        "label_raw": "conversion and yield reaction were obtained by GC-MS",
+        "note": "原文报的是转化率而非收率；杂/同偶联 = 100:0。不得折算成分离收率"
+      },
+      "assay": {
+        "method": "GC-MS",
+        "internal_standard": null,
+        "quantification_basis": "以全部峰之和为分母的 GC-MS 定量",
+        "assay_basis_source": "§2.5: by taking all the peaks of the chromatogram as the sum of all reaction products"
+      },
+      "conditions": {
+        "catalyst": "Pd@PP-3（微孔膦聚合物负载 Pd）",
+        "catalyst_loading_raw": "1 mol%",
+        "catalyst_mol_pct": 1.0,
+        "ligand": "polymer-immobilised phosphine",
+        "ligand_mol_pct": null,
+        "base": "Na2CO3",
+        "base_eq": 2.0,
+        "solvent": "EtOH/H2O = 2 mL/3 mL",
+        "temp_c": 80,
+        "time_h": 2.0,
+        "atmosphere": "N2",
+        "scale_mmol": 0.5,
+        "equivalents": {
+          "aryl_halide": 1.0,
+          "boronic_acid": 1.5
+        },
+        "concentration_m": null
+      },
+      "purification": null,
+      "evidence_grade": "A_confirmed",
+      "verification": "verified",
+      "catalytic_profile": {
+        "catalyst_form": "supported",
+        "ligand_family": "phosphine",
+        "support": "solid_support",
+        "medium": "aqueous",
+        "activation_mode": "thermal"
+      },
+      "_extraction": {
+        "label_raw_provenance": "verbatim",
+        "missing_fields": [
+          "purification"
+        ],
+        "needs_A_check": [
+          "100% 是 conversion 的确认（这条决定维度 3 判 FAIL）",
+          "是否有对应的分离收率数字（若有，应另立一条记录）"
+        ],
+        "verified_by_A": "2026-10-26 开放获取核验记录 §2.2"
+      },
+      "substrate": {
+        "aryl_halide": "4-bromoanisole",
+        "boronic_acid": "phenylboronic acid",
+        "product": "4-methoxybiphenyl"
+      },
+      "locator_zh": "第 2.5 节通用步骤及优化表"
+    },
+    {
+      "record_id": "P19a",
+      "source_id": "P19",
+      "tier": "C",
+      "citation": "Jiang et al., Molecules 2012, 17, 12121-12139（C2 对称 Pd-NHC）",
+      "doi": "10.3390/molecules171012121",
+      "locator": "Table 1 entry 2 + 脚注 b (GC yield)；内标依据见同文 Table 4 脚注",
+      "outcome": {
+        "value": 95.0,
+        "unit": "%",
+        "outcome_type": "gc",
+        "label_raw": "Yield (%) entry 2 = 95；脚注 b: GC yield",
+        "note": "同表 entry 1/2 的碱与时间同时变化（Na2CO3 24 h vs K2CO3 1.5 h）→ 可作同表同口径对照，不得支持『换碱导致差异』的因果"
+      },
+      "assay": {
+        "method": "GC",
+        "internal_standard": "diethylene glycol di-n-butyl ether",
+        "quantification_basis": "GC yield",
+        "assay_basis_source": "同文 Table 4 脚注：GC yield using diethylene glycol di-n-butyl ether as an internal standard"
+      },
+      "conditions": {
+        "catalyst": "Pd(OAc)2",
+        "catalyst_loading_raw": "0.5 mol%",
+        "catalyst_mol_pct": 0.5,
+        "ligand": "7a（C2 对称 NHC 前体）",
+        "ligand_mol_pct": 1.0,
+        "base": "K2CO3",
+        "base_eq": 3.0,
+        "solvent": "toluene",
+        "temp_c": 90,
+        "time_h": 1.5,
+        "atmosphere": null,
+        "scale_mmol": 0.5,
+        "equivalents": {
+          "aryl_halide": 1.0,
+          "boronic_acid": 1.5
+        },
+        "concentration_m": null
+      },
+      "purification": null,
+      "evidence_grade": "A_confirmed",
+      "verification": "verified_with_caveat",
+      "substrate": {
+        "aryl_halide": "bromobenzene",
+        "boronic_acid": "phenylboronic acid",
+        "product": "biphenyl"
+      },
+      "catalytic_profile": {
+        "catalyst_form": "molecular_complex",
+        "ligand_family": "non_phosphine",
+        "support": "none",
+        "medium": "organic",
+        "activation_mode": "thermal"
+      },
+      "_extraction": {
+        "label_raw_provenance": "verbatim",
+        "missing_fields": [
+          "atmosphere",
+          "assay.internal_standard",
+          "assay.quantification_basis"
+        ],
+        "needs_A_check": [
+          "表行号",
+          "GC 内标与基准"
+        ],
+        "two_variables": true,
+        "caveat": {
+          "two_variables": true,
+          "note": "碱与时间同时变化"
+        },
+        "verified_by_A": "2026-10-26 开放获取核验记录 §2.3"
+      },
+      "locator_zh": "表 1 第 2 条及脚注 b；内标依据见同文表 4 脚注"
+    },
+    {
+      "record_id": "P19b",
+      "source_id": "P19",
+      "tier": "C",
+      "citation": "Jiang et al., Molecules 2012, 17, 12121-12139（C2 对称 Pd-NHC）",
+      "doi": "10.3390/molecules171012121",
+      "locator": "Table 1 entry 1 + 脚注 b (GC yield)；内标依据见同文 Table 4 脚注",
+      "outcome": {
+        "value": 12.0,
+        "unit": "%",
+        "outcome_type": "gc",
+        "label_raw": "Yield (%) entry 1 = 12；脚注 b: GC yield",
+        "note": "同表 entry 1/2 的碱与时间同时变化（Na2CO3 24 h vs K2CO3 1.5 h）→ 可作同表同口径对照，不得支持『换碱导致差异』的因果"
+      },
+      "assay": {
+        "method": "GC",
+        "internal_standard": "diethylene glycol di-n-butyl ether",
+        "quantification_basis": "GC yield",
+        "assay_basis_source": "同文 Table 4 脚注：GC yield using diethylene glycol di-n-butyl ether as an internal standard"
+      },
+      "conditions": {
+        "catalyst": "Pd(OAc)2",
+        "catalyst_loading_raw": "0.5 mol%",
+        "catalyst_mol_pct": 0.5,
+        "ligand": "7a（C2 对称 NHC 前体）",
+        "ligand_mol_pct": 1.0,
+        "base": "Na2CO3",
+        "base_eq": 3.0,
+        "solvent": "toluene",
+        "temp_c": 90,
+        "time_h": 24.0,
+        "atmosphere": null,
+        "scale_mmol": 0.5,
+        "equivalents": {
+          "aryl_halide": 1.0,
+          "boronic_acid": 1.5
+        },
+        "concentration_m": null
+      },
+      "purification": null,
+      "evidence_grade": "A_confirmed",
+      "verification": "verified_with_caveat",
+      "substrate": {
+        "aryl_halide": "bromobenzene",
+        "boronic_acid": "phenylboronic acid",
+        "product": "biphenyl"
+      },
+      "catalytic_profile": {
+        "catalyst_form": "molecular_complex",
+        "ligand_family": "non_phosphine",
+        "support": "none",
+        "medium": "organic",
+        "activation_mode": "thermal"
+      },
+      "_extraction": {
+        "label_raw_provenance": "verbatim",
+        "missing_fields": [
+          "atmosphere",
+          "assay.internal_standard",
+          "assay.quantification_basis"
+        ],
+        "needs_A_check": [
+          "12% 的口径标记是否与同表其他行一致（本行由同表推定）",
+          "24 h 是否为该行的真实时间列"
+        ],
+        "two_variables": true,
+        "caveat": {
+          "two_variables": true,
+          "note": "碱与时间同时变化"
+        },
+        "verified_by_A": "2026-10-26 开放获取核验记录 §2.3"
+      },
+      "locator_zh": "表 1 第 1 条及脚注 b；内标依据见同文表 4 脚注"
+    },
+    {
+      "record_id": "P20",
+      "source_id": "P20",
+      "tier": "C",
+      "citation": "Talukder et al., ACS Omega 2020, 5(37), 24018-24032（alpha-二亚胺 Ni/Pd 配合物）",
+      "doi": "10.1021/acsomega.0c03415",
+      "locator": "Table 1 entry 5 + Table 2 entry 2 + Table 3 entry 1（三表脚注 b 均为 isolated）",
+      "outcome": {
+        "value": 85.0,
+        "unit": "%",
+        "outcome_type": "isolated",
+        "label_raw": "Yields (%) 列 = 85；脚注 b: \"Isolated yields from flash column chromatography (n-hexane as the eluent).\"",
+        "note": "Table 1 entry 5：DMF/K2CO3 → Pd A 85%（0.1 mol%、60 °C、4 h）。Table 2 确认温度为 60 °C（40 °C 时 53%、80 °C 时 77%）。Table 3 entry 13 在 0.2 mol% / 1.5 eq 碱下可达 96%。"
+      },
+      "assay": {
+        "method": "isolated (weighed)",
+        "internal_standard": null,
+        "quantification_basis": "isolated product"
+      },
+      "conditions": {
+        "catalyst": "Pd A (α-diimine, acenaphthene-based)",
+        "catalyst_loading_raw": "0.1 mol%",
+        "catalyst_mol_pct": 0.1,
+        "ligand": "alpha-diimine",
+        "ligand_mol_pct": null,
+        "base": "K2CO3",
+        "base_eq": 1.0,
+        "solvent": "DMF",
+        "temp_c": 60,
+        "time_h": 4.0,
+        "atmosphere": null,
+        "scale_mmol": 1.0,
+        "equivalents": {
+          "aryl_halide": 1.0,
+          "boronic_acid": 1.1
+        },
+        "concentration_m": null
+      },
+      "purification": "flash column chromatography (n-hexane)",
+      "evidence_grade": "A_confirmed",
+      "verification": "verified",
+      "substrate": {
+        "aryl_halide": "bromobenzene",
+        "boronic_acid": "phenylboronic acid",
+        "product": "biphenyl"
+      },
+      "catalytic_profile": {
+        "catalyst_form": "molecular_complex",
+        "ligand_family": "non_phosphine",
+        "support": "none",
+        "medium": "organic",
+        "activation_mode": "thermal"
+      },
+      "_extraction": {
+        "label_raw_provenance": "verbatim",
+        "missing_fields": [
+          "temp_c",
+          "time_h",
+          "atmosphere"
+        ],
+        "needs_A_check": [
+          "反应温度与时间（表注未给，读 Experimental）",
+          "本记录刻意保留 temp_c=null，用于测『软维度缺失不阻断』"
+        ],
+        "assay_basis_source": "三表脚注 b 明确为 flash column chromatography 的分离收率",
+        "calibration": "calibrated",
+        "verified_at": "2026-10-26"
+      },
+      "locator_zh": "表 1 第 5 条、表 2 第 2 条及表 3 第 1 条（三表脚注 b）"
+    },
+    {
+      "record_id": "P24a",
+      "source_id": "P24",
+      "tier": "C",
+      "citation": "Kaikake, Jou, Shitara & Jin, RSC Adv. 2021, 11(56), 35311-35320（PdBTC 7）",
+      "doi": "10.1039/d1ra06177a",
+      "locator": "Table 1 entry 1 + 脚注 a/c（PMC9042804 全文已核）",
+      "outcome": {
+        "value": 98.0,
+        "unit": "%",
+        "outcome_type": "nmr",
+        "label_raw": "Yield (%) entry 1 = 98；脚注 c: Yields were determined by 1H-NMR analysis",
+        "note": "与 entry 2（纯水 8%）、entry 6（THF 0%）构成唯一干净的单变量对照：同表同温同时同载量同碱，只换溶剂"
+      },
+      "assay": {
+        "method": "1H NMR",
+        "internal_standard": null,
+        "quantification_basis": "产物/未反应原料积分比（估算）",
+        "assay_basis_source": "脚注 c 只写 1H-NMR analysis；Experimental 无内标 → uncalibrated"
+      },
+      "conditions": {
+        "catalyst": "PdBTC 7（双茶碱微花 Pd(II)）",
+        "catalyst_loading_raw": "0.1 mol%",
+        "catalyst_mol_pct": 0.1,
+        "ligand": "theophylline-derived bis-N-donor",
+        "ligand_mol_pct": null,
+        "base": "K2CO3",
+        "base_eq": 2.0,
+        "solvent": "H2O-EtOH (1:1) 5.0 mL",
+        "temp_c": 20,
+        "time_h": 2.0,
+        "atmosphere": null,
+        "scale_mmol": 0.5,
+        "equivalents": {
+          "aryl_halide": 1.0,
+          "boronic_acid": 1.2
+        },
+        "concentration_m": null,
+        "time_raw": null
+      },
+      "purification": null,
+      "evidence_grade": "A_confirmed",
+      "verification": "verified_with_caveat",
+      "substrate": {
+        "aryl_halide": "bromobenzene",
+        "boronic_acid": "phenylboronic acid",
+        "product": "biphenyl"
+      },
+      "catalytic_profile": {
+        "catalyst_form": "molecular_complex",
+        "ligand_family": "non_phosphine",
+        "support": "none",
+        "medium": "aqueous",
+        "activation_mode": "thermal"
+      },
+      "_extraction": {
+        "label_raw_provenance": "verbatim",
+        "missing_fields": [
+          "atmosphere",
+          "assay.internal_standard",
+          "assay.quantification_basis"
+        ],
+        "needs_A_check": [
+          "NMR 积分基准/内标（缺则维度 4 第三层 UNKNOWN）",
+          "表行号"
+        ],
+        "verified_by_A": "2026-10-26 开放获取核验记录 §2.4"
+      },
+      "locator_zh": "表 1 第 1 条及脚注 a/c"
+    },
+    {
+      "record_id": "P24b",
+      "source_id": "P24",
+      "tier": "C",
+      "citation": "Kaikake, Jou, Shitara & Jin, RSC Adv. 2021, 11(56), 35311-35320（PdBTC 7）",
+      "doi": "10.1039/d1ra06177a",
+      "locator": "Table 1 entry 2 + 脚注 a/c（PMC9042804 全文已核）",
+      "outcome": {
+        "value": 8.0,
+        "unit": "%",
+        "outcome_type": "nmr",
+        "label_raw": "Yield (%) entry 2 = 8；脚注 c: Yields were determined by 1H-NMR analysis",
+        "note": "纯水 8% vs 含水醇 98%：同一催化剂，只换溶剂"
+      },
+      "assay": {
+        "method": "1H NMR",
+        "internal_standard": null,
+        "quantification_basis": "产物/未反应原料积分比（估算）",
+        "assay_basis_source": "脚注 c 只写 1H-NMR analysis；Experimental 无内标 → uncalibrated"
+      },
+      "conditions": {
+        "catalyst": "PdBTC 7（双茶碱微花 Pd(II)）",
+        "catalyst_loading_raw": "0.1 mol%",
+        "catalyst_mol_pct": 0.1,
+        "ligand": "theophylline-derived bis-N-donor",
+        "ligand_mol_pct": null,
+        "base": "K2CO3",
+        "base_eq": 2.0,
+        "solvent": "H2O 5.0 mL",
+        "temp_c": 20,
+        "time_h": 2.0,
+        "time_raw": null,
+        "atmosphere": null,
+        "scale_mmol": 0.5,
+        "equivalents": {
+          "aryl_halide": 1.0,
+          "boronic_acid": 1.2
+        },
+        "concentration_m": null
+      },
+      "purification": null,
+      "evidence_grade": "A_confirmed",
+      "verification": "verified_with_caveat",
+      "substrate": {
+        "aryl_halide": "bromobenzene",
+        "boronic_acid": "phenylboronic acid",
+        "product": "biphenyl"
+      },
+      "catalytic_profile": {
+        "catalyst_form": "molecular_complex",
+        "ligand_family": "non_phosphine",
+        "support": "none",
+        "medium": "aqueous",
+        "activation_mode": "thermal"
+      },
+      "_extraction": {
+        "label_raw_provenance": "verbatim",
+        "missing_fields": [
+          "atmosphere",
+          "assay.internal_standard",
+          "assay.quantification_basis"
+        ],
+        "needs_A_check": [
+          "纯水行的口径标记",
+          "纯水行的时间（本记录按同表 2 h 推定，属待核验）"
+        ],
+        "verified_by_A": "2026-10-26 开放获取核验记录 §2.4"
+      },
+      "locator_zh": "表 1 第 2 条及脚注 a/c"
+    },
+    {
+      "record_id": "P24c",
+      "source_id": "P24",
+      "tier": "C",
+      "citation": "Kaikake, Jou, Shitara & Jin, RSC Adv. 2021, 11(56), 35311-35320（PdBTC 7）",
+      "doi": "10.1039/d1ra06177a",
+      "locator": "Table 1 entry 6 + 脚注 a/c（PMC9042804 全文已核）",
+      "outcome": {
+        "value": 0.0,
+        "unit": "%",
+        "outcome_type": "nmr",
+        "label_raw": "Yield (%) entry 6 = 0；脚注 c: Yields were determined by 1H-NMR analysis",
+        "note": "THF 中 0%（entry 6），同表 entry 5 异丙醇亦为 0%。0 是测量值，不是缺失值"
+      },
+      "assay": {
+        "method": "1H NMR",
+        "internal_standard": null,
+        "quantification_basis": "产物/未反应原料积分比（估算）",
+        "assay_basis_source": "脚注 c 只写 1H-NMR analysis；Experimental 无内标 → uncalibrated"
+      },
+      "conditions": {
+        "catalyst": "PdBTC 7（双茶碱微花 Pd(II)）",
+        "catalyst_loading_raw": "0.1 mol%",
+        "catalyst_mol_pct": 0.1,
+        "ligand": "theophylline-derived bis-N-donor",
+        "ligand_mol_pct": null,
+        "base": "K2CO3",
+        "base_eq": 2.0,
+        "solvent": "THF 5.0 mL",
+        "temp_c": 20,
+        "time_h": 2.0,
+        "time_raw": null,
+        "atmosphere": null,
+        "scale_mmol": 0.5,
+        "equivalents": {
+          "aryl_halide": 1.0,
+          "boronic_acid": 1.2
+        },
+        "concentration_m": null
+      },
+      "purification": null,
+      "evidence_grade": "A_confirmed",
+      "verification": "verified_with_caveat",
+      "substrate": {
+        "aryl_halide": "bromobenzene",
+        "boronic_acid": "phenylboronic acid",
+        "product": "biphenyl"
+      },
+      "catalytic_profile": {
+        "catalyst_form": "molecular_complex",
+        "ligand_family": "non_phosphine",
+        "support": "none",
+        "medium": "organic",
+        "activation_mode": "thermal"
+      },
+      "_extraction": {
+        "label_raw_provenance": "verbatim",
+        "missing_fields": [
+          "atmosphere",
+          "assay.internal_standard"
+        ],
+        "needs_A_check": [
+          "THF 行确实是 0%（不是「未检出」），i-PrOH 同为 0%",
+          "时间（按同表 2 h 推定）"
+        ],
+        "verified_by_A": "2026-10-26 开放获取核验记录 §2.4"
+      },
+      "locator_zh": "表 1 第 6 条及脚注 a/c"
+    },
+    {
+      "record_id": "P35",
+      "source_id": "P35",
+      "tier": "B",
+      "tier_note": "borderline B/C：无外加配体（B 族特征）但介质为乙二醇（非水相，C 族倾向）→ 双档敏感性分析",
+      "citation": "Liu Chun, Han Na, Yuan Hao, He Xiaoyu, Jin Zilin. Chin. J. Catal. 2011, 32(7), 1204-1207（大连理工）",
+      "doi": "10.3724/SP.J.1088.2011.10225",
+      "locator": "Abstract（原文：\"...the Suzuki reaction between 4-bromoanisole and phenylboronic acid provided a 95% isolated yield in 20 min\"）；正文表格/SI 未核",
+      "substrate": {
+        "aryl_halide": "4-bromoanisole",
+        "boronic_acid": "phenylboronic acid",
+        "product": "4-methoxybiphenyl"
+      },
+      "outcome": {
+        "value": 95.0,
+        "unit": "%",
+        "outcome_type": "isolated",
+        "label_raw": "Abstract: \"...provided a 95% isolated yield in 20 min\"",
+        "note": "优化条件：ArBr 0.5 mmol、ArB(OH)2 0.75 mmol、0.5 mol% Pd(OAc)2、1.0 mmol K3PO4·7H2O、2 mL 乙二醇、室温、20 min。开放获取（cjcatal.com），摘要逐字给出 isolated yield。"
+      },
+      "assay": {
+        "method": "isolated (weighed)",
+        "internal_standard": null,
+        "quantification_basis": "isolated product"
+      },
+      "conditions": {
+        "catalyst": "Pd(OAc)2（无外加配体）",
+        "catalyst_loading_raw": "0.5 mol%",
+        "catalyst_mol_pct": 0.5,
+        "ligand": null,
+        "ligand_mol_pct": null,
+        "base": "K3PO4·7H2O",
+        "base_eq": 2.0,
+        "solvent": "ethylene glycol",
+        "temp_c": 25,
+        "time_h": 0.33,
+        "atmosphere": "air (aerobic)",
+        "scale_mmol": 0.5,
+        "equivalents": {
+          "aryl_halide": 1.0,
+          "boronic_acid": 1.5
+        },
+        "concentration_m": null
+      },
+      "purification": "not stated",
+      "evidence_grade": "A_confirmed",
+      "verification": "verified_abstract_only",
+      "catalytic_profile": {
+        "catalyst_form": "in_situ_salt",
+        "ligand_family": "none",
+        "support": "none",
+        "medium": "organic",
+        "activation_mode": "thermal"
+      },
+      "_extraction": {
+        "label_raw_provenance": "verbatim",
+        "assay_basis_source": "摘要原句明确写 isolated yield（20 min，95%）",
+        "verified_at": "2026-10-26",
+        "calibration": "calibrated"
+      },
+      "locator_zh": "摘要（正文表格及补充资料未核）"
+    },
+    {
+      "record_id": "P16",
+      "source_id": "P16",
+      "tier": "C",
+      "citation": "Saputra, Sato, Kojima, Hara, Ichikuni & Shimazu, ACS Omega 2018, 3, 17528-17531（Pd-STO 钙钛矿）",
+      "doi": "10.1021/acsomega.8b02622",
+      "locator": "Table 1 entry 2 + 脚注 a; §2.2 定量方法（decaline 内标，GC-14B）（PMC6644052 全文已核）",
+      "substrate": {
+        "aryl_halide": "4-bromoanisole",
+        "boronic_acid": "phenylboronic acid",
+        "product": "4-methoxybiphenyl"
+      },
+      "outcome": {
+        "value": 99.0,
+        "unit": "%",
+        "outcome_type": "gc",
+        "label_raw": "Table 1 列名 conv./% = 99、yield/% = 99（entry 2, Pd-STO(12.5)）；§2.2: \"...decaline (internal standard) ... analyzed by gas chromatography (GC Shimadzu GC-14B, InertCap-624 column) ...\"",
+        "note": "Table 1 entry 2；同表 entry 5（PA 过量 0.3 mmol）>99/>99。Table 2 才是溴苯数据（>99%），B 原记录把底物误标为 bromobenzene，已纠正为 4-溴苯甲醚。"
+      },
+      "assay": {
+        "method": "GC",
+        "internal_standard": "decaline (decahydronaphthalene)",
+        "quantification_basis": "product yield"
+      },
+      "conditions": {
+        "catalyst": "Pd-STO(12.5) 钙钛矿（Pd 0.64 wt%，12.5 mg）",
+        "catalyst_loading_raw": "mol BA/Pd = 273",
+        "catalyst_mol_pct": null,
+        "ligand": null,
+        "ligand_mol_pct": null,
+        "base": "K2CO3",
+        "base_eq": 2.0,
+        "solvent": "i-PrOH/H2O = 1:1",
+        "temp_c": 80,
+        "time_h": 0.5,
+        "atmosphere": "air",
+        "scale_mmol": 0.2,
+        "equivalents": {
+          "aryl_halide": 1.0,
+          "boronic_acid": 1.0
+        },
+        "concentration_m": null
+      },
+      "purification": "extracted with n-hexane (no chromatography stated)",
+      "evidence_grade": "A_confirmed",
+      "verification": "verified_fulltext",
+      "catalytic_profile": {
+        "catalyst_form": "supported",
+        "ligand_family": "none",
+        "support": "solid_support",
+        "medium": "aqueous",
+        "activation_mode": "thermal"
+      },
+      "_extraction": {
+        "label_raw_provenance": "verbatim",
+        "assay_basis_source": "§2.2 Catalytic Test 明确 decaline 为内标、GC 定量",
+        "verified_at": "2026-10-28",
+        "calibration": "calibrated"
+      },
+      "locator_zh": "表 1 第 2 条及脚注 a；第 2.2 节定量方法",
+      "_source_file": "_selftest.json"
     }
-  ]
+  ],
+  "merge_note": "2026-10-28 并入 pool30 中 evidence_grade=a_confirmed 的记录：P11, P12, P13, P19a, P19b, P20, P24a, P24b, P24c, P35。仅已回原文核验者进入引擎；候选池其余条目仍留在 data/pool30.json。"
 }"""
 
-ENGINE_VERSION = "chemcritic-engine/1.0.0"
-RULES_VERSION = "gates v0.4 · tier-0.1"
-CONTRACT_VERSION = "sciencepal-verdict/1"
+ENGINE_VERSION = "chemcritic-engine/1.1.0"
+RULES_VERSION = "gates v0.5 · tier-0.1"
+CONTRACT_VERSION = "sciencepal-verdict/2"
 
 
 # ============================================================================
@@ -1645,6 +2614,7 @@ CONTRACT_VERSION = "sciencepal-verdict/1"
 def record_from_payload(raw: Dict[str, Any]) -> Record:
     """用户输入 / 单条参照 → Record；缺 catalytic_profile 时查补丁表，再算档位。"""
     record = Record.from_dict(raw)
+    record.input_audit = audit_input_payload(raw)
     if not record.catalytic_profile:
         profile = PROFILES.get(record.record_id or "")
         if profile:
@@ -1683,18 +2653,49 @@ def load_input(path: str) -> tuple:
         subject = record_from_payload(data["subject"])
         refs = data.get("references") or None
         records = [record_from_payload(r) for r in refs] if refs else None
-        return subject, records
-    return record_from_payload(data), None
+    else:
+        subject, records = record_from_payload(data), None
+    if subject.input_audit["status"] == "rejected":
+        raise ValueError("输入来源审计失败：" + "；".join(subject.input_audit["errors"]))
+    return subject, records
 
 
 def build_payload(subject: Record, records: List[Record]) -> Dict[str, Any]:
     """与 engine/run_demo.py --json 完全同构的输出（这是验收 "diff 应为空" 的依据）。"""
     return {
         "subject": subject.record_id,
+        "inputs_source": subject.inputs_source,
+        "input_audit": subject.input_audit,
         "classes": class_summary(records),
         "coverage": coverage(records),
         "verdicts": [judge(subject, r).to_dict() for r in records],
         "placement": placement(subject, records),
+    }
+
+
+def list_records_payload(records: List[Record]) -> Dict[str, Any]:
+    """知识库盘点：一次返回所有参照，无需用户实测值，也无需读取引擎源码。"""
+    return {
+        "engine": ENGINE_VERSION,
+        "rules": RULES_VERSION,
+        "count": len(records),
+        "records": [
+            {
+                "record_id": r.record_id,
+                "source_id": r.source_id,
+                "citation": r.citation,
+                "doi": r.doi,
+                "locator": r.locator,
+                "locator_zh": r.locator_zh,
+                "value": r.outcome_value,
+                "outcome_type": r.outcome_type,
+                "label_raw": r.label_raw,
+                "calibration": calibration_level(r),
+                "tier": r.tier,
+                "substrate": r.substrate,
+            }
+            for r in records
+        ],
     }
 
 
@@ -1705,6 +2706,8 @@ def brief_payload(subject: Record, records: List[Record]) -> Dict[str, Any]:
         "engine": ENGINE_VERSION,
         "rules": RULES_VERSION,
         "subject": subject.record_id,
+        "inputs_source": subject.inputs_source,
+        "input_audit": subject.input_audit,
         "placement": {
             "tier": pl.get("tier"),
             "status": pl.get("status"),
@@ -1720,6 +2723,7 @@ def brief_payload(subject: Record, records: List[Record]) -> Dict[str, Any]:
                 "calib": v.calibration,
                 "cit": v.reference_meta.get("citation"),
                 "loc": v.reference_meta.get("locator"),
+                "loc_zh": v.reference_meta.get("locator_zh"),
             }
             for v in (judge(subject, r) for r in records)
         ],
@@ -1751,8 +2755,9 @@ def main(argv: Optional[List[str]] = None) -> int:
     parser.add_argument("--json", action="store_true", help="输出结构化结论 JSON")
     parser.add_argument("--brief", action="store_true", help="输出证书摘要（几百字节，降级路径贴回会话用）")
     parser.add_argument("--input", metavar="PATH", help="用户记录 JSON；给出时默认按 JSON 输出")
-    parser.add_argument("--records", metavar="PATH", help="替换参照记录集（默认内嵌 8 条）")
-    parser.add_argument("--selftest", action="store_true", help="只跑 T1–T18 验收矩阵")
+    parser.add_argument("--records", metavar="PATH", help="替换参照记录集（默认使用内嵌记录）")
+    parser.add_argument("--list-records", action="store_true", help="列出全部参照的引用、定位、口径与档位")
+    parser.add_argument("--selftest", action="store_true", help="只跑 T1–T22 验收矩阵")
     parser.add_argument("--version", action="store_true", help="打印引擎与规则版本")
     args = parser.parse_args(argv)
 
@@ -1761,6 +2766,10 @@ def main(argv: Optional[List[str]] = None) -> int:
         return 0
 
     records = load_records(args.records)
+
+    if args.list_records:
+        print(json.dumps(list_records_payload(records), ensure_ascii=False, indent=2))
+        return 0
 
     subject = USER
     if args.input:

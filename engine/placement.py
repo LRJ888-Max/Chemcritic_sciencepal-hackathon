@@ -18,9 +18,11 @@ from typing import Any, Dict, List, Optional
 
 try:  # 作为子包导入
     from . import tier as tier_mod
+    from .gates import label_supported
     from .schemas import Record
 except ImportError:  # 独立脚本运行
     import tier as tier_mod  # type: ignore
+    from gates import label_supported  # type: ignore
     from schemas import Record  # type: ignore
 
 OUTCOME_ORDER = ("isolated", "gc", "nmr", "conversion")
@@ -112,6 +114,13 @@ def placement(user: Record, records: List[Record]) -> Dict[str, Any]:
             "action": "先确认口径（分离 / GC / NMR / 转化率）",
         }
 
+    if not label_supported(user):
+        return {
+            "status": "UNDEFINED",
+            "reason": "用户侧口径分类缺少原话支撑，无法定位",
+            "action": "先让用户明确该数值是分离收率、GC 收率、核磁定量还是转化率",
+        }
+
     same_class = [r for r in records if r.outcome_type == user.outcome_type]
     if not same_class:
         return {
@@ -131,10 +140,21 @@ def placement(user: Record, records: List[Record]) -> Dict[str, Any]:
 
     same_tier = [r for r in same_class if r.tier == tier]
     pool_ref = same_tier or same_class
-
     calibrated = [r for r in pool_ref if _level(r) == "calibrated"]
     uncalibrated = [r for r in pool_ref if _level(r) != "calibrated"]
     uncal_ids = [r.record_id for r in uncalibrated]
+
+    # I2（2026-10-28）：跨档迁移目标——**同底物 + 同产物** + 同口径 + calibrated，但档位不同。
+    # 它们不得参与差值，只用于回答"想突破该往哪个体系走"。
+    migration = [
+        r for r in same_class
+        if _level(r) == "calibrated" and r.tier and r.tier != tier
+        and r.outcome_value is not None and _same_pair(user, r)
+    ]
+    migration_targets = [
+        {"record_id": r.record_id, "value": r.outcome_value, "tier": r.tier}
+        for r in sorted(migration, key=lambda r: r.outcome_value or 0, reverse=True)
+    ]
 
     if not calibrated:
         return {
@@ -172,11 +192,27 @@ def placement(user: Record, records: List[Record]) -> Dict[str, Any]:
             # 差值只给"同档 + 用户有值"的情形；跨档一律 None（只并排，不定位）
             "delta_vs_min": round(user.outcome_value - min(values), 1) if can_delta else None,
             "delta_vs_max": round(user.outcome_value - max(values), 1) if can_delta else None,
+            # 跨档迁移目标：不参与差值，只回答"换体系能到哪"
+            "migration_targets": migration_targets,
         }
 
 
+def _canon(value) -> str:
+    return str(value or "").strip().lower()
+
+
+def _same_pair(user: Record, ref: Record) -> bool:
+    """底物对 + 产物一致（迁移目标必须同底物，不能建议用户换底物）。"""
+    us, rs = user.substrate or {}, ref.substrate or {}
+    for key in ("aryl_halide", "boronic_acid"):
+        if _canon(us.get(key)) != _canon(rs.get(key)):
+            return False
+    up = _canon(getattr(user, "product", None) or us.get("product"))
+    rp = _canon(getattr(ref, "product", None) or rs.get("product"))
+    return up == rp
+
+
 def _level(record: Record) -> str:
-    """避免循环导入：仅在此处按同一规则判断校准级别。"""
     if record.outcome_type == "isolated":
         return "calibrated"
     if (record.assay or {}).get("internal_standard"):
