@@ -24,6 +24,7 @@ except ImportError:  # pragma: no cover
 
 import gates  # noqa: E402
 import input_audit  # noqa: E402
+import leverage as leverage_mod  # noqa: E402
 import placement as placement_mod  # noqa: E402
 from schemas import BLOCKED, COMPARABLE, NEEDS_EVIDENCE, Record  # noqa: E402
 
@@ -166,6 +167,18 @@ def screen_four(records):
               f"form={r.catalytic_profile.get('catalyst_form', '-'):<17} ligand={r.catalytic_profile.get('ligand_family', '-')}")
     print(f"\n  计算值与标注一致：{ok}/{len(records)}")
     return ok == len(records)
+
+
+def screen_five(records):
+    _hr("屏 5 · 补证杠杆：补哪一条，解锁最多")
+    report = leverage_mod.leverage_report(USER, records)
+    for line in leverage_mod.render(report):
+        print(line)
+    corpus = leverage_mod.corpus_leverage(records)
+    print("\n  —— 语料级（补哪几条记录的口径，能新增最多可比对）")
+    for line in leverage_mod.render_corpus(corpus):
+        print(line)
+    return report
 
 
 def test_matrix(records):
@@ -318,7 +331,59 @@ def test_matrix(records):
     print(f"  [{'PASS' if ok22 else 'FAIL'}] T22  模糊口径双重拦截 → "
           f"verdict={v22.verdict}/{v22.blocking_dimension}, placement={pl22['status']}")
 
-    print(f"\n  最终：{passed} passed, {failed} failed（含 T17–T22）")
+    # T23 · 补证杠杆：FAIL 的对绝不能被算成"可解锁"；曲线单调；口径未声明时只指向一条
+    rep = leverage_mod.leverage_report(USER, records)
+    rep2 = leverage_mod.leverage_report(USER, records)
+    permanent_fail = all(
+        row["verdict"] == BLOCKED
+        for row in leverage_mod.pair_profile(USER, records)
+        if row["permanent"]
+    )
+    curve = [c["pairs"] for c in rep["curve"]]
+    plan_fields = {step["field"] for step in rep["plan"]}
+    ok23 = (
+        rep["status"] == "OK"
+        and rep["fixable"] + rep["permanent"] == rep["blocked"]
+        and rep["blocked"] + rep["comparable"] == len(records)
+        and curve == sorted(curve)
+        and (not curve or curve[-1] == rep["fixable"])
+        and permanent_fail
+        and not (plan_fields & {"substrate:subject", "product:subject"})  # 用户底物/产物已记录，不该建议补
+        and rep["plan"] == rep2["plan"]  # 确定性：同输入同计划
+    )
+    passed += ok23
+    failed += not ok23
+    print(f"  [{'PASS' if ok23 else 'FAIL'}] T23  补证杠杆 → blocked={rep['blocked']}, "
+          f"fixable={rep['fixable']}, permanent={rep['permanent']}, "
+          f"curve={curve}, plan={[s['field'] for s in rep['plan']]}")
+
+    # T23b · 口径未声明时，计划只应指向"你的口径声明"，不得让用户先去补文献
+    unclear = Record(record_id="USER-023", outcome_type="isolated", outcome_value=35,
+                     label_raw="", substrate=USER.substrate, conditions=USER.conditions,
+                     assay={"method": "reported as yield"}, tier="A")
+    rep_unclear = leverage_mod.leverage_report(unclear, records)
+    ok23b = (
+        rep_unclear["status"] == "OK"
+        and len(rep_unclear["plan"]) == 1
+        and rep_unclear["plan"][0]["field"] == "caliber:subject"
+    )
+    passed += ok23b
+    failed += not ok23b
+    print(f"  [{'PASS' if ok23b else 'FAIL'}] T23b 口径未声明 → plan="
+          f"{[s['field'] for s in rep_unclear['plan']]} expect 只有 caliber:subject")
+
+    # T23c · 无实测值：不得给出补证排序，应直接要求先给数
+    novalue = Record(record_id="USER-024", outcome_type="isolated", outcome_value=None,
+                     label_raw="分离收率", substrate=USER.substrate, conditions=USER.conditions,
+                     assay=USER.assay, tier="A")
+    rep_novalue = leverage_mod.leverage_report(novalue, records)
+    ok23c = rep_novalue["status"] == "NO_SUBJECT_VALUE" and not rep_novalue["plan"]
+    passed += ok23c
+    failed += not ok23c
+    print(f"  [{'PASS' if ok23c else 'FAIL'}] T23c 无实测值 → status="
+          f"{rep_novalue['status']}, plan={len(rep_novalue['plan'])} expect 空")
+
+    print(f"\n  最终：{passed} passed, {failed} failed（含 T17–T23c）")
     return failed == 0
 
 
@@ -333,6 +398,7 @@ def main() -> int:
             "coverage": placement_mod.coverage(records),
             "verdicts": [gates.judge(USER, r).to_dict() for r in records],
             "placement": placement_mod.placement(USER, records),
+            "leverage": leverage_mod.leverage_report(USER, records),
         }
         print(json.dumps(payload, ensure_ascii=False, indent=2))
         return 0
@@ -340,6 +406,7 @@ def main() -> int:
     screen_one(records)
     screen_two(records)
     screen_three(records)
+    screen_five(records)
     tier_ok = screen_four(records)
     ok = test_matrix(records)
     return 0 if (ok and tier_ok) else 1

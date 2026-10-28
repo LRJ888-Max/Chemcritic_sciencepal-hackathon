@@ -209,12 +209,12 @@
       "pair_id": "G21",
       "subject": "USER-B",
       "reference": "P01",
-      "gold_verdict": "NEEDS_EVIDENCE",
-      "gold_dim": "assay",
+      "gold_verdict": "COMPARABLE",
+      "gold_dim": null,
       "status": "independent",
-      "calibration": null,
-      "basis": "同底物（溴苯）同口径（GC），但 P01 仍为 imported_unchecked（A 未回原文核）→ 维度 4 第二层 UNKNOWN（A4b）",
-      "note": "专门测『未核验不许比』：底物/产物/口径三项全过，朴素基线会放行，我们的规则必须拦住。这是产品主张的核心，也是最容易被砍掉的一条"
+      "calibration": "uncalibrated",
+      "basis": "P01 已于 2026-10-28 回原文核验（表 I entry 8，脚注 b: determined by GLC）→ 底物/口径一致，假设通过；P01 未注明内标 → uncalibrated（可比但不进档内定位）",
+      "note": "原用途是「未核验不许比」的样本；P01 核验后该场景改由 run_demo 的 T15 覆盖（证据等级 imported_unchecked → NEEDS_EVIDENCE）。"
     }
   ],
   "todo_for_B": [

@@ -34,7 +34,8 @@ SECTIONS = [
     ("tier", "档位判定（受控词表 → 规则 → 主判 / 备选）"),
     ("gates", "8 维门槛判定（确定性，LLM 无权覆盖）"),
     ("placement", "等价类 · 档内定位 · 双档敏感性"),
-    ("run_demo", "三屏演示与规则表验收矩阵（T1–T18）"),
+    ("leverage", "补证杠杆（补哪一条解锁最多）· 语料级口径杠杆"),
+    ("run_demo", "三屏演示与规则表验收矩阵（T1–T23c）"),
 ]
 
 BANNER = "# " + "=" * 76
@@ -79,12 +80,20 @@ def clean(name: str, body: str) -> str:
         body = body.replace("tier_mod.tier_of(", "tier_of(")
         # 文件版加载器改名为私有，避免与单文件版（读内嵌数据）同名覆盖。
         body = body.replace("def load_records(", "def _load_records_from_file(")
+    elif name == "leverage":
+        body = re.sub(
+            r"try:  # 作为子包导入.*?\nFIELD_ORDER = \{",
+            "FIELD_ORDER = {",
+            body,
+            flags=re.S,
+        )
     elif name == "run_demo":
         body = body.split("\ndef main() -> int:")[0]
         body = re.sub(r"sys\.path\.insert\(.*\n", "", body)
         body = re.sub(r"try:  # 作为子包被.*?replacement = None\n", "", body, flags=re.S)
         body = re.sub(r"^import gates.*\n", "", body, flags=re.M)
         body = re.sub(r"^import input_audit.*\n", "", body, flags=re.M)
+        body = re.sub(r"^import leverage.*\n", "", body, flags=re.M)
         body = body.replace("input_audit.audit_input_payload(", "audit_input_payload(")
         body = re.sub(r"^import placement as placement_mod.*\n", "", body, flags=re.M)
         body = re.sub(r"^from schemas import .*\n", "", body, flags=re.M)
@@ -108,22 +117,25 @@ HEADER = '''#!/usr/bin/env python3
    改判定逻辑请改 engine/*.py，然后重新运行 `python engine/build_bundle.py`。
 
 内嵌来源：engine/schemas.py · engine/input_audit.py · engine/profiles.py · engine/tier.py ·
-          engine/gates.py · engine/placement.py · engine/run_demo.py ·
+          engine/gates.py · engine/placement.py · engine/leverage.py · engine/run_demo.py ·
           data/records.json
 
 契约（平台侧唯一允许的判定入口）：
     输入  Record JSON（见 docs/integration/2026-10-27-给C-的合并指令-引擎判定接入.md §2.1）
-    输出  {"subject", "inputs_source", "input_audit", "classes", "coverage", "verdicts", "placement"}
+    输出  {"subject", "inputs_source", "input_audit", "classes", "coverage", "verdicts",
+           "placement", "leverage"}
 
 铁律：verdict 三值 COMPARABLE / BLOCKED / NEEDS_EVIDENCE 只来自本文件的 judge()；
       LLM 只负责把证书翻译成用户文案，不得改写、不得补"我认为"的结论。
+      `leverage` 只统计 judge() 的结果（补哪一条解锁最多），同样不由 LLM 生成。
 
 用法：
-    python chemcritic_engine.py                          # 三屏演示 + 19 项自检
-    python chemcritic_engine.py --selftest               # 只跑 T1–T22（23 passed, 0 failed）
+    python chemcritic_engine.py                          # 三屏 + 补证杠杆 + 23 项自检
+    python chemcritic_engine.py --selftest               # 只跑 T1–T23c（26 passed, 0 failed）
     python chemcritic_engine.py --json                   # 内置 35% 案例的结构化结论
     python chemcritic_engine.py --json --input user.json # 判定你自己的实验记录
     python chemcritic_engine.py --json --input user.json --records refs.json
+    python chemcritic_engine.py --leverage               # 补证杠杆：补哪一条解锁最多（含语料级）
     python chemcritic_engine.py --list-records           # 全部参照的引用/定位/口径/档位
     python chemcritic_engine.py --brief --input user.json # 证书摘要（几百字节，降级贴回会话）
     python chemcritic_engine.py --version
@@ -218,6 +230,18 @@ def build_payload(subject: Record, records: List[Record]) -> Dict[str, Any]:
         "coverage": coverage(records),
         "verdicts": [judge(subject, r).to_dict() for r in records],
         "placement": placement(subject, records),
+        "leverage": leverage_report(subject, records),
+    }
+
+
+def evidence_payload(subject: Record, records: List[Record]) -> Dict[str, Any]:
+    """补证杠杆：用户侧"补哪一条解锁最多" + 语料级"补哪几条记录口径可比对翻倍"。"""
+    return {
+        "engine": ENGINE_VERSION,
+        "rules": RULES_VERSION,
+        "subject": subject.record_id,
+        "leverage": leverage_report(subject, records),
+        "corpus": corpus_leverage(records),
     }
 
 
@@ -275,6 +299,7 @@ def brief_payload(subject: Record, records: List[Record]) -> Dict[str, Any]:
             }
             for v in (judge(subject, r) for r in records)
         ],
+        "next_evidence": leverage_report(subject, records)["next"],
     }
 
 
@@ -287,6 +312,13 @@ placement_mod = SimpleNamespace(
     placement=placement,
     sensitivity=sensitivity,
     load_records=load_records,
+)
+leverage_mod = SimpleNamespace(
+    leverage_report=leverage_report,
+    corpus_leverage=corpus_leverage,
+    pair_profile=pair_profile,
+    render=render,
+    render_corpus=render_corpus,
 )
 
 
@@ -305,7 +337,8 @@ def main(argv: Optional[List[str]] = None) -> int:
     parser.add_argument("--input", metavar="PATH", help="用户记录 JSON；给出时默认按 JSON 输出")
     parser.add_argument("--records", metavar="PATH", help="替换参照记录集（默认使用内嵌记录）")
     parser.add_argument("--list-records", action="store_true", help="列出全部参照的引用、定位、口径与档位")
-    parser.add_argument("--selftest", action="store_true", help="只跑 T1–T22 验收矩阵")
+    parser.add_argument("--leverage", action="store_true", help="补证杠杆：补哪一条解锁最多（含语料级）")
+    parser.add_argument("--selftest", action="store_true", help="只跑 T1–T23c 验收矩阵")
     parser.add_argument("--version", action="store_true", help="打印引擎与规则版本")
     args = parser.parse_args(argv)
 
@@ -332,6 +365,10 @@ def main(argv: Optional[List[str]] = None) -> int:
     if args.selftest:
         return 0 if run_selftest(records) else 1
 
+    if args.leverage:
+        print(json.dumps(evidence_payload(subject, records), ensure_ascii=False, indent=2))
+        return 0
+
     if args.brief:
         print(json.dumps(brief_payload(subject, records), ensure_ascii=False, indent=2))
         return 0
@@ -343,6 +380,7 @@ def main(argv: Optional[List[str]] = None) -> int:
     screen_one(records)
     screen_two(records)
     screen_three(records)
+    screen_five(records)
     screen_four(records)
     ok = run_selftest(records)
     return 0 if ok else 1

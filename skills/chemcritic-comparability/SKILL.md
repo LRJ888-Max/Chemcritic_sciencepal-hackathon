@@ -1,7 +1,7 @@
 ---
 name: chemcritic-comparability
-description: 判定两条实验数值（文献或本实验）能否放在同一个比较里。用于文献先例比对、实验复盘、投稿前自查引用是否可比。输出可比性证书：可并列 / 禁止同框 / 需补证，并给出阻断维度与解锁条件。
-version: 0.3.0
+description: 判定两条实验数值（文献或本实验）能否放在同一个比较里。用于文献先例比对、实验复盘、投稿前自查引用是否可比。输出可比性证书：可并列 / 禁止同框 / 需补证，并给出阻断维度与解锁条件；另输出"补哪一条解锁最多"的补证杠杆排序。
+version: 0.4.0
 ---
 
 # 可比性判定 Skill
@@ -28,19 +28,22 @@ version: 0.3.0
 # 0. 只有在提示"文件不存在"时才自举（每个新对话一次）
 cd /workspace && rm -rf .cc_src && git clone --depth 1 https://github.com/LRJ888-Max/Chemcritic_sciencepal-hackathon.git .cc_src && bash .cc_src/bootstrap.sh
 
-# 1. 自检：确认沙箱里的引擎是好的（必须看到 23 passed, 0 failed）
+# 1. 自检：确认沙箱里的引擎是好的（必须看到 26 passed, 0 failed）
 python /workspace/chemcritic/chemcritic_engine.py --selftest
 
 # 2. 判定：把你整理好的 Record JSON 交给引擎
 python /workspace/chemcritic/chemcritic_engine.py --json --input user.json
 
-# 3. 降级：只留一张证书摘要（贴回会话用；已带 citation / locator / locator_zh）
+# 3. 补证杠杆：补哪一条解锁最多（用户侧 + 语料级）
+python /workspace/chemcritic/chemcritic_engine.py --leverage --input user.json
+
+# 4. 降级：只留一张证书摘要（贴回会话用；已带 citation / locator / locator_zh）
 python /workspace/chemcritic/chemcritic_engine.py --brief --input user.json
 
-# 4. 知识库盘点：无需实测值，一次列出全部参照（禁止 grep/sed 翻引擎源码）
+# 5. 知识库盘点：无需实测值，一次列出全部参照（禁止 grep/sed 翻引擎源码）
 python /workspace/chemcritic/chemcritic_engine.py --list-records
 
-# 5. 换参照集（默认使用内嵌已核验记录）
+# 6. 换参照集（默认使用内嵌已核验记录）
 python /workspace/chemcritic/chemcritic_engine.py --json --input user.json --records refs.json
 ```
 
@@ -103,6 +106,27 @@ python /workspace/chemcritic/chemcritic_engine.py --json --input user.json --rec
   需要"复述原文两处措辞"时直接引用它，不要翻源码或记录文件。
 - 知识库盘点用 `--list-records`（一次输出 citation / locator / locator_zh / 数值 / 口径 / 档位）。
 
+## 输出：补证杠杆（`leverage`）
+
+`--json` / `--leverage` 里的 `leverage` 回答"补哪一条解锁最多"。它只统计 `judge()` 的结果，
+不产生任何新判定：
+
+```json
+{"headline": "27 对不能并列：3 对可以靠补证据解决，24 对是确定不同（补也没用）",
+ "blocked": 27, "comparable": 5, "fixable": 3, "permanent": 24,
+ "plan": [{"field": "caliber:reference", "action": "回原文确认该条记录的口径与校准（含内标）",
+           "unlocks_new": 3, "cumulative_pairs": 3}],
+ "curve": [{"fields": 1, "pairs": 3}]}
+```
+
+- `permanent`（硬门槛 `FAIL`）的对**永远不计入可解锁**——补证据改不了"口径不同"这种确定结论。
+- `field` 按"一次真实动作"合并：维度 3 与 4 在文献侧都由"回原文重读一遍"解决，因此合并为
+  `caliber:reference`，不把一次动作虚报成两次工作量。
+- 数值是**上限**（假设补上的证据能通过门槛），不得当作承诺；对用户说"最多解锁 N 对"。
+- `--leverage` 另返回 `corpus`：把参照库自身两两比较，"补齐哪几条记录的口径能让可比对最多"，
+  属于关于文献的可核对结论，可直接引用（当前参照集：496 个两两比较，38 对可直接并列，
+  36 对只缺口径确认，补 3 条记录后 38 → 74）。
+
 ## 8 维门槛（脚本内的判定顺序）
 
 | # | 维度 | 类型 | 通过条件 |
@@ -139,10 +163,10 @@ python /workspace/chemcritic/chemcritic_engine.py --json --input user.json --rec
 
 - 引擎：`/workspace/chemcritic/chemcritic_engine.py`（单文件，纯 stdlib；源头是仓库 `engine/`）
 - 自举：仓库根 `bootstrap.sh`，一条命令装到固定路径并自检，成功打印 `ENGINE_READY`
-- 验收矩阵：`--selftest` → `最终：23 passed, 0 failed`（T1–T22；T20–T22 覆盖输入来源审计、
-  参照元数据完整性与模糊口径双重拦截）
-- 内置参照：`data/records.json` 的 19 条已核验记录（SM-001…SM-006、P11…P35，均带 locator_zh）
+- 验收矩阵：`--selftest` → `最终：26 passed, 0 failed`（T1–T23c；T20–T22 覆盖输入来源审计、
+  参照元数据完整性与模糊口径双重拦截，T23 系列覆盖补证杠杆）
+- 内置参照：`data/records.json` 的 32 条已核验记录（SM-001…SM-006、P01…P38，均带 locator_zh）
 - 证书字段：`verdict` / `blocking_dimension` / `unlock_condition` / `calibration` /
   `reference{citation,doi,locator,locator_zh,value,outcome_type,label_raw,source_id,tier}` / `soft_flags`；
-  顶层另含 `inputs_source` / `input_audit`
+  顶层另含 `inputs_source` / `input_audit` / `leverage`
 - 口径与规则版本：`gates v0.5 · tier-0.1`；引擎 `chemcritic-engine/1.1.0`

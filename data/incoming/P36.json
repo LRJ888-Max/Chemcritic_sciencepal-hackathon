@@ -1,0 +1,62 @@
+{
+  "record_id": "P36",
+  "source_id": "P36",
+  "tier": "A",
+  "citation": "Weeden, Huang, Galloway, Gingrich & Frost, Molecules 2011, 16(8), 6215-6231",
+  "doi": "10.3390/molecules16086215",
+  "locator": "Table 3 entry 4 + 脚注 a/b；§3.2 General Procedure、§3.3 实验段（本地 PDF refs/pdf/molecules-16-06215.pdf p.6223-6226 已核）",
+  "substrate": {
+    "aryl_halide": "4-bromoanisole",
+    "boronic_acid": "phenylboronic acid",
+    "product": "4-methoxybiphenyl"
+  },
+  "outcome": {
+    "value": 50,
+    "unit": "%",
+    "outcome_type": "isolated",
+    "label_raw": "Table 3 列名 Yield (%) a，entry 4（R=H3CO）= 50；脚注 a: \"Isolated yield after purification by column chromatography\"；实验段: \"4-Bromoanisole (125 μL, 1.00 mmol) and phenylboronic acid (183 mg, 1.50 mmol) ... A colorless oil was obtained (92 mg, 50%)\"（分离、称重）",
+    "note": "92 mg / 184.23 = 0.499 mmol，与 1.00 mmol 投料自洽（50% 可复核）。同表 entry 1（溴苯）84%、entry 5（4-溴苯腈）90%、entry 6（2-溴苯甲醚）55%、entry 3 <5%——同一张表内底物电子效应跨度极大，不得跨行外推。"
+  },
+  "assay": {
+    "method": "isolated (weighed)",
+    "internal_standard": null,
+    "quantification_basis": "isolated product"
+  },
+  "conditions": {
+    "catalyst": "Pd(OAc)2 + RO-PTA",
+    "catalyst_loading_raw": "5 mol%",
+    "catalyst_mol_pct": 5,
+    "ligand": "RO-PTA（P,N 配体）",
+    "ligand_mol_pct": 10,
+    "base": "Na2CO3",
+    "base_eq": 2,
+    "solvent": "H2O:CH3CN = 1:1（5 mL）",
+    "temp_c": 80,
+    "time_h": 6,
+    "atmosphere": "N2（Schlenk/drybox）",
+    "scale_mmol": 1,
+    "equivalents": {
+      "aryl_halide": 1,
+      "boronic_acid": 1.5
+    },
+    "concentration_m": null
+  },
+  "purification": "column chromatography（silica gel，5% EtOAc/hexanes）",
+  "evidence_grade": "A_confirmed",
+  "verification": "verified_fulltext",
+  "catalytic_profile": {
+    "catalyst_form": "molecular_complex",
+    "ligand_family": "phosphine",
+    "support": "none",
+    "medium": "aqueous",
+    "activation_mode": "thermal"
+  },
+  "_extraction": {
+    "label_raw_provenance": "verbatim",
+    "assay_basis_source": "脚注 a: Isolated yield after purification by column chromatography；实验段给出质量与百分数",
+    "verified_at": "2026-10-28",
+    "calibration": "calibrated",
+    "note": "这是与演示案例完全同底物、且碱为 Na2CO3、溶剂为含水混合体系的独立报告，值仅 50%。"
+  },
+  "locator_zh": "表 3 第 4 行（4-溴苯甲醚）+ 脚注 a/b；实验部分 3.2/3.3"
+}

@@ -58,7 +58,9 @@
 3. **长度纪律（硬）——默认精简版 ≤20 行，回复"展开"才给完整版**
    - 第一层只输出：结论 / 为什么（≤3 条）/ 下一步（1 条）+ "回复"展开"看判定明细与机制推演"；
    - 第二层（判定明细、逐条比较、机制推演、决策树）仅在用户说"展开"后输出；
-   - **禁止**输出过程自述（"I've searched…"、"No card exists…"等调试话术）；模型思考一律不进用户可见文案。
+   - **禁止**输出过程自述（"I've searched…"、"No card exists…"、"Engine is ready: 19 passed, 0 failed"、"The engine isn't at the expected path…"等调试话术）；模型思考一律不进用户可见文案；
+   - **（2026-10-27 第 2 次实测追加）中间过程消息 content 必须为空**：tool-call 回合只携带 tool_calls，不输出任何文字；最终答案只允许在最后一条消息交付一次，禁止草稿/正式两遍重复输出；
+   - **禁止内部术语进用户文案**：L1/L2/L3、COMPARABLE/BLOCKED/NEEDS_EVIDENCE、record_id、engine、selftest 等一律不出现，改说具体化学差异（对齐 v3 用语规范）。
 
 ## 失败处理
 

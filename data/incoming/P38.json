@@ -1,0 +1,62 @@
+{
+  "record_id": "P38",
+  "source_id": "P38",
+  "tier": "C",
+  "citation": "Lo, Yang, Wu & Chen, Molecules 2021, 26(15), 4426",
+  "doi": "10.3390/molecules26154426",
+  "locator": "Table 2 entry 5（催化剂 3, K2CO3/toluene, 70 °C, 1 h）+ 表注；§3 实验（本地 PDF refs/pdf/molecules-26-04426.pdf 与 JATS XML PMC8347745 双证）",
+  "substrate": {
+    "aryl_halide": "4-bromoacetophenone",
+    "boronic_acid": "phenylboronic acid",
+    "product": "4-acetylbiphenyl"
+  },
+  "outcome": {
+    "value": 95,
+    "unit": "%",
+    "outcome_type": "isolated",
+    "label_raw": "Table 2 entry 5 记「98(95)」：98 = ¹H NMR 转化率，括号内 95 = isolated yield；表注: 1.0 mmol aryl halide, 1.5 mmol phenylboronic acid, 2.0 mmol base, 2 mL solvent；括号内为分离收率",
+    "note": "同一张表内 catalyst 1/2/4/5 与 Cs2CO3/DMSO、DMA、toluene 共 7 个条件并列；仅 catalyst 3 + K2CO3/toluene 达 98(95)。"
+  },
+  "assay": {
+    "method": "1H NMR（转化率）+ isolated（称重）",
+    "internal_standard": null,
+    "quantification_basis": "isolated product"
+  },
+  "conditions": {
+    "catalyst": "indolyl-NNN Pd 配合物 3",
+    "catalyst_loading_raw": "1 mol%",
+    "catalyst_mol_pct": 1,
+    "ligand": "indolyl-NNN（钳形，非膦）",
+    "ligand_mol_pct": null,
+    "base": "K2CO3",
+    "base_eq": 2,
+    "solvent": "toluene（2 mL）",
+    "temp_c": 70,
+    "time_h": 1,
+    "atmosphere": null,
+    "scale_mmol": 1,
+    "equivalents": {
+      "aryl_halide": 1,
+      "boronic_acid": 1.5
+    },
+    "concentration_m": null
+  },
+  "purification": null,
+  "evidence_grade": "A_confirmed",
+  "verification": "verified_fulltext",
+  "catalytic_profile": {
+    "catalyst_form": "molecular_complex",
+    "ligand_family": "non_phosphine",
+    "support": "none",
+    "medium": "organic",
+    "activation_mode": "thermal"
+  },
+  "_extraction": {
+    "label_raw_provenance": "verbatim",
+    "assay_basis_source": "表注说明括号内为分离收率；PDF 正文确认 K2CO3/toluene 为最优组合、conversion up to 98%",
+    "verified_at": "2026-10-28",
+    "calibration": "calibrated",
+    "note": "tier 由 engine/tier.py 从 catalytic_profile 计算（计算值 C），此字段不是证据等级；证据等级见 evidence_grade=A_confirmed。"
+  },
+  "locator_zh": "表 2 第 5 行（催化剂 3, K2CO3/toluene, 70 °C, 1 h）"
+}

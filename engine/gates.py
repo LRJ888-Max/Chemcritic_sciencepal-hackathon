@@ -153,6 +153,23 @@ def gate_assay(user: Record, ref: Record) -> GateResult:
     )
 
 
+def assay_blame(user: Record, ref: Record) -> Optional[str]:
+    """维度 4 的缺证归因：`subject`（用户侧）/ `reference`（文献侧）/ None（无阻断）。
+
+    严格复刻 `gate_assay()` 的合成顺序，因此归因与判定不会互相矛盾。
+    用途：把"缺 assay 证据"翻译成"该补谁的那一条"（见 engine/leverage.py）。
+    """
+    for side, rec in (("subject", user), ("reference", ref)):
+        if _label_consistency(rec, side):
+            return side
+    if _evidence_check(ref):
+        return "reference"
+    for side, rec in (("subject", user), ("reference", ref)):
+        if _calibration_check(rec, side):
+            return side
+    return None
+
+
 # 每个口径在原文措辞里必须能找到的支撑词
 _LABEL_HINTS = {
     "isolated": ("isolated", "分离", "称重", "weighed"),

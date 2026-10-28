@@ -197,7 +197,13 @@ def placement(user: Record, records: List[Record]) -> Dict[str, Any]:
         }
 
 
-def _canon(value) -> str:
+def _canon_pair(value) -> str:
+    """底物/产物名称比较用的规范化（与 gates._canon 不同：这里永不返回 None）。
+
+    ⚠️ 不能叫 `_canon`：单文件 bundle 把各模块拼进同一命名空间，
+    同名函数会互相覆盖（2026-10-28 实测：placement 的版本覆盖了 gates 的版本，
+    使"未记录"被当成空字符串参与比较，软门槛措辞与本地不一致）。
+    """
     return str(value or "").strip().lower()
 
 
@@ -205,10 +211,10 @@ def _same_pair(user: Record, ref: Record) -> bool:
     """底物对 + 产物一致（迁移目标必须同底物，不能建议用户换底物）。"""
     us, rs = user.substrate or {}, ref.substrate or {}
     for key in ("aryl_halide", "boronic_acid"):
-        if _canon(us.get(key)) != _canon(rs.get(key)):
+        if _canon_pair(us.get(key)) != _canon_pair(rs.get(key)):
             return False
-    up = _canon(getattr(user, "product", None) or us.get("product"))
-    rp = _canon(getattr(ref, "product", None) or rs.get("product"))
+    up = _canon_pair(getattr(user, "product", None) or us.get("product"))
+    rp = _canon_pair(getattr(ref, "product", None) or rs.get("product"))
     return up == rp
 
 

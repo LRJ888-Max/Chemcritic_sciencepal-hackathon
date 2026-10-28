@@ -159,6 +159,20 @@
 
 ---
 
+## 附 C：10/28 增补（用户补入 `refs/pdf/` 的新 PDF，已入 `data/` 管线）
+
+> 编号与 `data/records.json` 对齐。P35（Liu 2011, *Chin. J. Catal.* 32, 1204）由 B 单独入库，本报告未展开。
+
+| ID | 文献（作者/年份/期刊/卷页） | DOI / 链接 | 条件（Pd 源与 mol%；碱/当量；溶剂；T；t；底物比） | 收率（测定方式） | 与演示案例的可比性限制 | 状态 |
+|---|---|---|---|---|---|---|
+| P36 | Weeden, Huang, Galloway, Gingrich, Frost, *Molecules* **2011**, *16*(8), 6215–6231 | [10.3390/molecules16086215](https://doi.org/10.3390/molecules16086215) | Pd(OAc)₂ **5 mol%** + RO-PTA 配体 10 mol%；**Na₂CO₃ 2 当量**；H₂O:CH₃CN = 1:1（5 mL）；80 ℃；6 h；4-溴苯甲醚 1.00 mmol : PhB(OH)₂ 1.50 当量 | 4-甲氧基联苯 **50%**（分离，92 mg 称重） | **完全同底物 + 同碱 + 含水混合体系**；差异仅在 Pd 为 Pd(OAc)₂/RO-PTA 而非 Pd(PPh₃)₄；1 mmol 规模；同表内溴苯 84%、4-溴苯腈 90%、2-溴苯甲醚 55% | ✅ 一级（PDF 表 3 entry 4 + §3.2/§3.3） |
+| P37 | Panda, Patra, Acharya, Phaomei, Parida, *RSC Adv.* **2024**, *14*(30), 21269–21276 | [10.1039/d4ra00686k](https://doi.org/10.1039/d4ra00686k) | LaF₃·Pd 15 mg（mol% 原文未给）；**K₂CO₃ 2 当量**；H₂O 3 mL；70 ℃；4 h；溴苯 1 mmol : PhB(OH)₂ 1.5 当量 | 联苯 **85%**（分离） | 溴苯块；同碱、纯水；正文仅明确 50 ℃→62%、70 ℃→85%，80/100 ℃ 两行因表格串行未采信 | ✅ 一级（表 3 entry 3 + 脚注 b）；mol% ⚠️ |
+| P38 | Lo, Yang, Wu, Chen, *Molecules* **2021**, *26*(15), 4426 | [10.3390/molecules26154426](https://doi.org/10.3390/molecules26154426) | Pd 配合物 **3** 1 mol%；**K₂CO₃ 2 当量**；甲苯 2 mL；70 ℃；1 h；4-溴苯乙酮 1.0 mmol : PhB(OH)₂ 1.5 当量 | 4-乙酰基联苯 **95%**（分离；98% 为 ¹H NMR 转化率） | 吸电子芳基溴；同碱、但溶剂为无水甲苯；同表并列 7 个条件，仅 3 + K₂CO₃/甲苯 达 98(95) | ✅ 一级（PDF + JATS XML 双证） |
+
+**附 C 的结论**：P36 与 P02（1981 表 II，40% 分离）构成"同底物 + 碳酸盐 + 含水/苯"的两条独立记录，值分别为 **50%** 与 **40%**。这说明该档先例本身就在 **40–50%**，演示的 35% 与之相差 5–15 个百分点，而非与 80–95% 相差 45 个百分点。
+
+---
+
 ## 附：检索与数据留痕
 
 - 候选池：Europe PMC `OPEN_ACCESS:Y` 全文检索 6 条检索式（`bromobenzene` / `4-bromoanisole` / `4-bromotoluene` + `phenylboronic acid` / `tetrakis(triphenylphosphine)palladium` / `Pd(PPh3)4`），去重后 **374 篇**。

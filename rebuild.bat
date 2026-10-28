@@ -1,4 +1,4 @@
-@echo off
+﻿@echo off
 REM Rebuild the single-file engine and verify it, before pushing to GitHub.
 REM Usage: double-click, or run `rebuild.bat` in this folder.
 setlocal
@@ -20,7 +20,7 @@ echo [2/3] check bundle is in sync with engine\*.py ...
 if errorlevel 1 goto fail
 
 echo.
-echo [3/3] selftest T1-T18 ...
+echo [3/3] selftest T1-T23c ...
 "%PY%" skills\chemcritic-comparability\scripts\chemcritic_engine.py --selftest
 if errorlevel 1 goto fail
 
