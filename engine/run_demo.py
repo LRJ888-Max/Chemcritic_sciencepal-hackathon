@@ -26,7 +26,7 @@ import gates  # noqa: E402
 import input_audit  # noqa: E402
 import leverage as leverage_mod  # noqa: E402
 import placement as placement_mod  # noqa: E402
-from schemas import BLOCKED, COMPARABLE, NEEDS_EVIDENCE, Record  # noqa: E402
+from schemas import BLOCKED, COMPARABLE, FAIL, NEEDS_EVIDENCE, PASS, Record  # noqa: E402
 
 USER = Record(
     record_id="USER-001",

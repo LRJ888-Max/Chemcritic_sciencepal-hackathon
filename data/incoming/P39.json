@@ -1,0 +1,71 @@
+{
+  "record_id": "P39",
+  "source_id": "P39",
+  "tier": "C",
+  "citation": "Materials 2021, 14(4), 800（Pd 负载 AM4-HDA 多孔聚合物，sc-CO2）",
+  "doi": "10.3390/ma14040800",
+  "locator": "§3.4 Coupling Reaction（原文：\"Suzuki-Miyaura coupling reactions of 4-bromoanisole and phenylboronic acid, Scheme 3, were conducted using Pd-containing AM4-HDA porous polymer, catalyzed in sc-CO2 for 2 h ... The reaction conversion of 4-methoxybiphenyl in crude reaction mixtures, determined by 1H-NMR spectroscopy, was 82%, and the isolated yield was 40%.\"）（本地 PDF refs/pdf/NEW-materials-14-00800.pdf 已核）",
+  "substrate": {
+    "aryl_halide": "4-bromoanisole",
+    "boronic_acid": "phenylboronic acid",
+    "product": "4-methoxybiphenyl"
+  },
+  "outcome": {
+    "value": 40.0,
+    "unit": "%",
+    "outcome_type": "isolated",
+    "label_raw": "\"the isolated yield was 40%\"（同一句另报 NMR 转化率 82%）",
+    "note": "同句给出两个数：1H-NMR 转化率 82%（crude mixture）、分离收率 40% → 两者相差 42 个百分点，是「转化率高≠拿到产物」的现成例子。"
+  },
+  "assay": {
+    "method": "isolated (weighed)",
+    "internal_standard": null,
+    "quantification_basis": "isolated product"
+  },
+  "conditions": {
+    "catalyst": "Pd/AM4-HDA 多孔聚合物",
+    "catalyst_loading_raw": "原文未给 mol%",
+    "catalyst_mol_pct": null,
+    "ligand": null,
+    "ligand_mol_pct": null,
+    "base": "原文未给",
+    "base_eq": null,
+    "solvent": "sc-CO2（超临界 CO2）",
+    "temp_c": null,
+    "time_h": 2.0,
+    "atmosphere": "sc-CO2",
+    "scale_mmol": null,
+    "equivalents": {
+      "aryl_halide": 1.0,
+      "boronic_acid": null
+    },
+    "concentration_m": null
+  },
+  "purification": null,
+  "evidence_grade": "A_confirmed",
+  "verification": "verified_with_caveat",
+  "catalytic_profile": {
+    "catalyst_form": "supported",
+    "ligand_family": "none",
+    "support": "solid_support",
+    "medium": "organic",
+    "activation_mode": "thermal"
+  },
+  "_extraction": {
+    "label_raw_provenance": "verbatim",
+    "assay_basis_source": "同句英文原文 \"isolated yield was 40%\"",
+    "verified_at": "2026-10-28",
+    "calibration": "calibrated",
+    "missing_fields": [
+      "catalyst_mol_pct",
+      "base",
+      "temp_c",
+      "scale_mmol"
+    ],
+    "needs_A_check": [
+      "催化剂 mol% / 碱 / 温度（正文该段未给，需读 Scheme 3 与实验部分）"
+    ],
+    "vocab_note": "受控词表 medium 仅 aqueous/organic/solventless，无 supercritical；sc-CO2 按非水介质映射为 organic。activation_mode 取 thermal（sc-CO2 加热）。建议后续把 supercritical 加入词表。"
+  },
+  "locator_zh": "第 3.4 节 偶联反应段（sc-CO2，2 h）"
+}

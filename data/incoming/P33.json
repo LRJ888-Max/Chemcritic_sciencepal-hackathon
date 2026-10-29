@@ -1,0 +1,69 @@
+{
+  "record_id": "P33",
+  "source_id": "P33",
+  "tier": "C",
+  "citation": "ACS Omega 2024, 9, 17817（磁载双配体 Pd）",
+  "doi": "10.1021/acsomega.3c07133",
+  "locator": "Table 1 entry 3（60 min 行）+ 脚注 a（PMC11044249 全文已核）",
+  "outcome": {
+    "value": 99.0,
+    "unit": "%",
+    "outcome_type": "unknown",
+    "label_raw": "99% (isolated)",
+    "note": "时间扫描 15 min 79% → 60 min 99% → 之后回落 93/84/82/79：产物降解的罕见直接证据 **核验纠错**：原记录按 isolated 入库，但全文检索无 isolated/GC/NMR 任何口径说明，且无 General Procedure → outcome_type 改为 unknown。"
+  },
+  "assay": {
+    "method": "isolated",
+    "internal_standard": null,
+    "quantification_basis": "isolated product mass"
+  },
+  "conditions": {
+    "catalyst": "磁载双配体 Pd（magnetic dual-ligand Pd）",
+    "catalyst_loading_raw": "2.0 mg",
+    "catalyst_mol_pct": null,
+    "ligand": "dual ligand",
+    "ligand_mol_pct": null,
+    "base": "K2CO3",
+    "base_eq": 2.0,
+    "solvent": "EtOH/H2O = 2:1",
+    "temp_c": 60,
+    "time_h": 1.0,
+    "atmosphere": null,
+    "scale_mmol": 0.5,
+    "equivalents": {
+      "aryl_halide": 1.0,
+      "boronic_acid": 1.2
+    },
+    "concentration_m": null
+  },
+  "purification": null,
+  "evidence_grade": "A_confirmed",
+  "verification": "verified_with_caveat",
+  "substrate": {
+    "aryl_halide": "4-bromoacetophenone",
+    "boronic_acid": "phenylboronic acid",
+    "product": "4-acetylbiphenyl"
+  },
+  "catalytic_profile": {
+    "catalyst_form": "supported",
+    "ligand_family": "non_phosphine",
+    "support": "solid_support",
+    "medium": "aqueous",
+    "activation_mode": "thermal"
+  },
+  "_extraction": {
+    "label_raw_provenance": "transcribed",
+    "missing_fields": [
+      "catalyst_mol_pct",
+      "atmosphere",
+      "purification"
+    ],
+    "needs_A_check": [
+      "2.0 mg 对应 mol%",
+      "时间扫描的完整数值（79/99/93/84/82/79）是否原文逐字，若是，可作为『过程非单调』的唯一证据"
+    ],
+    "verified_at": "2026-10-28",
+    "verified_by_A": "2026-10-28 逐表逐脚注复核（本地 PDF / JATS 全文）"
+  },
+  "locator_zh": "表 1 第 3 行（60 min）+ 脚注 a"
+}

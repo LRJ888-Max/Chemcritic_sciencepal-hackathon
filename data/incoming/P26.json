@@ -1,0 +1,68 @@
+{
+  "record_id": "P26",
+  "source_id": "P26",
+  "tier": "C",
+  "citation": "Liu, Sun, Fan & Xu, Front. Chem. 2022, 10, 845274（Schiff 碱-咪唑功能化 MOF 载 Pd 簇）",
+  "doi": "10.3389/fchem.2022.845274",
+  "locator": "Table 2 entry 4（Pd0@UIO-66-SB-Im 行）+ 表注 a（PMC8921604 全文已核）",
+  "outcome": {
+    "value": 95.3,
+    "unit": "%",
+    "outcome_type": "unknown",
+    "label_raw": "95.3%",
+    "note": "表头仅 Yield (%)，无口径说明 → unknown（维持）。"
+  },
+  "assay": {
+    "method": "未注明",
+    "internal_standard": null,
+    "quantification_basis": null
+  },
+  "conditions": {
+    "catalyst": "Schiff 碱-咪唑功能化 MOF 载 Pd 簇",
+    "catalyst_loading_raw": "0.103 mol%（基于溴苯）",
+    "catalyst_mol_pct": 0.103,
+    "ligand": null,
+    "ligand_mol_pct": null,
+    "base": "NaHCO3",
+    "base_eq": 2.0,
+    "solvent": "DMA 5 mL",
+    "temp_c": 90,
+    "time_h": 7.0,
+    "atmosphere": null,
+    "scale_mmol": 2.0,
+    "equivalents": {
+      "aryl_halide": 1.0,
+      "boronic_acid": 1.5
+    },
+    "concentration_m": null
+  },
+  "purification": null,
+  "evidence_grade": "A_confirmed",
+  "verification": "verified_fulltext",
+  "substrate": {
+    "aryl_halide": "bromobenzene",
+    "boronic_acid": "phenylboronic acid",
+    "product": "biphenyl"
+  },
+  "catalytic_profile": {
+    "catalyst_form": "supported",
+    "ligand_family": "non_phosphine",
+    "support": "solid_support",
+    "medium": "organic",
+    "activation_mode": "thermal"
+  },
+  "_extraction": {
+    "label_raw_provenance": "transcribed",
+    "missing_fields": [
+      "outcome.outcome_type 已定 unknown",
+      "atmosphere"
+    ],
+    "needs_A_check": [
+      "测定方式",
+      "NaHCO3 与碳酸盐是否算「同族碱」（维度 7 判 L1 还是 L2）"
+    ],
+    "verified_at": "2026-10-28",
+    "verified_by_A": "2026-10-28 逐表逐脚注复核（本地 PDF / JATS 全文）"
+  },
+  "locator_zh": "表 2 第 4 行 + 表注 a"
+}

@@ -1,0 +1,70 @@
+{
+  "record_id": "P32",
+  "source_id": "P32",
+  "tier": "C",
+  "citation": "Oswal et al., RSC Adv. 2019, 9(39), 22313-22319（超小 Pd NPs，S/Se/N 配体）",
+  "doi": "10.1039/c9ra03498f",
+  "locator": "优化表 S. no. 4（DMF:water 3:2 + K2CO3 行）+ 脚注 a（PMC9066620 全文已核）",
+  "outcome": {
+    "value": 95.0,
+    "unit": "%",
+    "outcome_type": "unknown",
+    "label_raw": "95%",
+    "note": "脚注未声明口径 → unknown（维持）；同表溶剂对照 THF 47%、甲苯 38%。"
+  },
+  "assay": {
+    "method": "未注明",
+    "internal_standard": null,
+    "quantification_basis": null
+  },
+  "conditions": {
+    "catalyst": "超小 Pd NPs（S/Se/N 配体）",
+    "catalyst_loading_raw": "载量待核验",
+    "catalyst_mol_pct": null,
+    "ligand": "S/Se/N ligand",
+    "ligand_mol_pct": null,
+    "base": "K2CO3",
+    "base_eq": 2.0,
+    "solvent": "DMF:H2O = 3:2, 5 mL",
+    "temp_c": 100,
+    "time_h": 6.0,
+    "atmosphere": null,
+    "scale_mmol": 1.0,
+    "equivalents": {
+      "aryl_halide": 1.0,
+      "boronic_acid": 1.1
+    },
+    "concentration_m": null
+  },
+  "purification": null,
+  "evidence_grade": "A_confirmed",
+  "verification": "verified_fulltext",
+  "substrate": {
+    "aryl_halide": "4-bromobenzaldehyde",
+    "boronic_acid": "phenylboronic acid",
+    "product": "4-biphenylcarboxaldehyde"
+  },
+  "catalytic_profile": {
+    "catalyst_form": "nanoparticle",
+    "ligand_family": "non_phosphine",
+    "support": "none",
+    "medium": "aqueous",
+    "activation_mode": "thermal"
+  },
+  "_extraction": {
+    "label_raw_provenance": "transcribed",
+    "missing_fields": [
+      "outcome.outcome_type 已定 unknown",
+      "catalyst_mol_pct",
+      "atmosphere"
+    ],
+    "needs_A_check": [
+      "Pd 载量（表注未给）",
+      "测定方式",
+      "溶剂对照四行能否逐行绑定（可扩篇内扫描对）"
+    ],
+    "verified_at": "2026-10-28",
+    "verified_by_A": "2026-10-28 逐表逐脚注复核（本地 PDF / JATS 全文）"
+  },
+  "locator_zh": "优化表第 4 行（DMF:water 3:2 + K2CO3）+ 脚注 a"
+}

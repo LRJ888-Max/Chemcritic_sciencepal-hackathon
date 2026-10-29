@@ -1,0 +1,68 @@
+{
+  "record_id": "P27",
+  "source_id": "P27",
+  "tier": "C",
+  "citation": "Feketshane, Vatsha & Bingwa, RSC Adv. 2026, 16(11), 9692-9708（机械化学 Pd 尺寸效应）",
+  "doi": "10.1039/d6ra00004e",
+  "locator": "Table 3 entry 6（H2O:MeOH 1:1 行）+ 脚注 a（PMC12915526 全文已核）",
+  "outcome": {
+    "value": 77.0,
+    "unit": "%",
+    "outcome_type": "conversion",
+    "label_raw": "77% conversion (GC, internal standard)",
+    "note": "脚注 a 明写 Yield determined by GC analysis using an internal standard（未点名内标）；表头为 Conversion%，故按 conversion 记。"
+  },
+  "assay": {
+    "method": "GC",
+    "internal_standard": "未注明种类",
+    "quantification_basis": "conversion of aryl halide"
+  },
+  "conditions": {
+    "catalyst": "Pd-based catalyst size series",
+    "catalyst_loading_raw": "5 mol%",
+    "catalyst_mol_pct": 5.0,
+    "ligand": null,
+    "ligand_mol_pct": null,
+    "base": "Na2CO3",
+    "base_eq": 3.0,
+    "solvent": "无常规溶剂；液体添加剂 H2O:MeOH = 1:1, 0.1 mL",
+    "temp_c": 25,
+    "time_h": 1.0,
+    "atmosphere": "air",
+    "scale_mmol": 1.0,
+    "equivalents": {
+      "aryl_halide": 1.0,
+      "boronic_acid": 3.0
+    },
+    "concentration_m": null
+  },
+  "purification": null,
+  "evidence_grade": "A_confirmed",
+  "verification": "verified_fulltext",
+  "substrate": {
+    "aryl_halide": "bromobenzene",
+    "boronic_acid": "phenylboronic acid",
+    "product": "biphenyl"
+  },
+  "catalytic_profile": {
+    "catalyst_form": "nanoparticle",
+    "ligand_family": "none",
+    "support": "none",
+    "medium": "solventless",
+    "activation_mode": "mechanochemical"
+  },
+  "_extraction": {
+    "label_raw_provenance": "transcribed",
+    "missing_fields": [
+      "purification"
+    ],
+    "needs_A_check": [
+      "催化剂形态（尺寸系列 → 是否 nanoparticle 统一？）",
+      "室温 25 °C 是否原文写 RT",
+      "GC 内标种类"
+    ],
+    "verified_at": "2026-10-28",
+    "verified_by_A": "2026-10-28 逐表逐脚注复核（本地 PDF / JATS 全文）"
+  },
+  "locator_zh": "表 3 第 6 行（H2O:MeOH 1:1）+ 脚注 a"
+}

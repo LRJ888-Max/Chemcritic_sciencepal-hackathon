@@ -1,0 +1,78 @@
+{
+  "record_id": "P06",
+  "source_id": "P06",
+  "tier": "A",
+  "citation": "Huff, Koenig, Mitchell & Staszak, Org. Synth. 1998, 75, 53 (Coll. Vol. 10, 102)",
+  "doi": "10.15227/orgsyn.075.0053",
+  "locator": "Procedure 1（Vol.75 p.53）：4-bromobenzaldehyde 50.0 g (0.270 mol)、PhB(OH)2 34.6 g (0.284 mol, 1.05 eq)、Pd(OAc)2 0.182 g (0.811 mmol, 0.3 mol%)、PPh3 0.638 g (0.9 mol%)、Na2CO3 0.324 mol (1.20 eq)、1-propanol 485 mL + H2O 95 mL、reflux 45 min；粗品 47.3 g (96.2%)、重结晶 42.5 g (86.3%)（本地 PDF refs/orgsyn_v75p0053.pdf 已核）",
+  "outcome": {
+    "value": 86.3,
+    "unit": "%",
+    "outcome_type": "isolated",
+    "label_raw": "96.2% (crude) / 86.3% (after recrystallisation)；重结晶后 42.5 g 为分离、称重值（isolated, weighed）",
+    "alternate_values": [
+      {
+        "value": 96.2,
+        "label": "crude",
+        "outcome_type": "isolated"
+      }
+    ],
+    "value_selection_rule": "取纯化后值 86.3%；粗品值另存，不得与纯化值混用",
+    "note": "record 取重结晶后的 86.3% 为 isolated 值；粗品 96.2% 为同一操作的另一口径，不得与 86.3% 混用。"
+  },
+  "assay": {
+    "method": "isolated",
+    "internal_standard": null,
+    "quantification_basis": "isolated product mass"
+  },
+  "conditions": {
+    "catalyst": "Pd(OAc)2",
+    "catalyst_loading_raw": "0.3 mol%",
+    "catalyst_mol_pct": 0.3,
+    "ligand": "PPh3",
+    "ligand_mol_pct": 0.9,
+    "base": "Na2CO3",
+    "base_eq": 1.2,
+    "solvent": "1-propanol/H2O = 485 mL/95 mL",
+    "temp_c": null,
+    "temp_raw": "回流",
+    "time_h": 0.75,
+    "time_raw": "45 min",
+    "atmosphere": "N2",
+    "scale_mmol": 270.0,
+    "equivalents": {
+      "aryl_halide": 1.0,
+      "boronic_acid": 1.05
+    },
+    "concentration_m": null
+  },
+  "purification": "重结晶",
+  "evidence_grade": "A_confirmed",
+  "verification": "verified_fulltext",
+  "substrate": {
+    "aryl_halide": "4-bromobenzaldehyde",
+    "boronic_acid": "phenylboronic acid",
+    "product": "4-biphenylcarboxaldehyde"
+  },
+  "catalytic_profile": {
+    "catalyst_form": "molecular_complex",
+    "ligand_family": "phosphine",
+    "support": "none",
+    "medium": "aqueous",
+    "activation_mode": "thermal"
+  },
+  "_extraction": {
+    "label_raw_provenance": "transcribed",
+    "missing_fields": [
+      "temp_c"
+    ],
+    "needs_A_check": [
+      "回流温度（1-ProOH/H2O 体系，原文是否给具体温度）",
+      "两个收率哪个用于对外表述 —— 建议统一用 86.3% 并注明粗品 96.2%",
+      "版权：Org Synth 禁止再分发 PDF，引用只走 DOI"
+    ],
+    "verified_at": "2026-10-28",
+    "verified_by_A": "2026-10-28 逐表逐脚注复核（本地 PDF / JATS 全文）"
+  },
+  "locator_zh": "操作段 1（Vol.75 第 53 页）；粗品 96.2% / 重结晶 86.3%"
+}

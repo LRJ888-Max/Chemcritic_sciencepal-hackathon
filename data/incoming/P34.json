@@ -1,0 +1,70 @@
+{
+  "record_id": "P34",
+  "source_id": "P34",
+  "tier": "C",
+  "citation": "Yuan & Huynh, Molecules 2012, 17(3), 2491-2517（S 功能化 NHC-Pd(II)，0.001 mol%）",
+  "doi": "10.3390/molecules17032491",
+  "locator": "Table 1 entry 3（催化剂 14, 60 °C, 24 h 行）+ 脚注 a/b（PMC6268575 全文已核）",
+  "outcome": {
+    "value": 99.0,
+    "unit": "%",
+    "outcome_type": "nmr",
+    "label_raw": ">99% (1H NMR)",
+    "value_raw": ">99",
+    "value_is_lower_bound": true,
+    "note": "脚注 b 仅写 1H-NMR analysis，无内标 → uncalibrated；0.001 mol% 载量对应 TON≈10^5。"
+  },
+  "assay": {
+    "method": "1H NMR",
+    "internal_standard": null,
+    "quantification_basis": null
+  },
+  "conditions": {
+    "catalyst": "S 功能化 NHC-Pd(II)（催化剂 14）",
+    "catalyst_loading_raw": "0.001 mol%",
+    "catalyst_mol_pct": 0.001,
+    "ligand": "S-functionalised NHC",
+    "ligand_mol_pct": null,
+    "base": "K2CO3",
+    "base_eq": 1.4,
+    "solvent": "H2O 1 mL",
+    "temp_c": 60,
+    "time_h": 24.0,
+    "atmosphere": null,
+    "scale_mmol": 1.0,
+    "equivalents": {
+      "aryl_halide": 1.0,
+      "boronic_acid": 1.4
+    },
+    "concentration_m": null
+  },
+  "purification": null,
+  "evidence_grade": "A_confirmed",
+  "verification": "verified_fulltext",
+  "substrate": {
+    "aryl_halide": "4-bromobenzophenone",
+    "boronic_acid": "phenylboronic acid",
+    "product": "4-benzoylbiphenyl"
+  },
+  "catalytic_profile": {
+    "catalyst_form": "molecular_complex",
+    "ligand_family": "non_phosphine",
+    "support": "none",
+    "medium": "aqueous",
+    "activation_mode": "thermal"
+  },
+  "_extraction": {
+    "label_raw_provenance": "transcribed",
+    "missing_fields": [
+      "atmosphere",
+      "assay.internal_standard"
+    ],
+    "needs_A_check": [
+      "NMR 积分基准",
+      "0.001 mol% 与 24 h 的原文确认（此条是全池载量最低值）"
+    ],
+    "verified_at": "2026-10-28",
+    "verified_by_A": "2026-10-28 逐表逐脚注复核（本地 PDF / JATS 全文）"
+  },
+  "locator_zh": "表 1 第 3 行（催化剂 14，60 ℃，24 h）+ 脚注 a/b"
+}

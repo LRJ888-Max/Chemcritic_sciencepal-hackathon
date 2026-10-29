@@ -1,0 +1,69 @@
+{
+  "record_id": "P07",
+  "source_id": "P07",
+  "tier": "B",
+  "citation": "Goodson, Wallow & Novak, Org. Synth. 1998, 75, 61 (Coll. Vol. 10, 501), ligandless Pd",
+  "doi": "10.15227/orgsyn.075.0061",
+  "locator": "Procedure 1（Vol.75 p.61）：4-iodoanisole 16.8 g (71.8 mmol)、o-tolylboronic acid 10.0 g (73.6 mmol, 1.03 eq)、Pd(OAc)2 3.30 mg (0.02 mmol, 0.2 mol%)、K2CO3 25.0 g (0.180 mol, 2.5 eq)、acetone 200 mL + H2O 200 mL、reflux 2 h；12.8 g (90.3%) 蒸馏（refs/orgsyn_v75p0061.pdf 已核）",
+  "outcome": {
+    "value": 90.3,
+    "unit": "%",
+    "outcome_type": "isolated",
+    "label_raw": "90.3% (distillation)；蒸馏后 12.8 g 为分离、称重值（isolated, weighed）",
+    "note": "离去基为碘（非溴），按闸门维度 1 不得与 4-溴苯甲醚记录同块比较。"
+  },
+  "assay": {
+    "method": "isolated",
+    "internal_standard": null,
+    "quantification_basis": "isolated product mass"
+  },
+  "conditions": {
+    "catalyst": "Pd(OAc)2",
+    "catalyst_loading_raw": "0.2 mol%",
+    "catalyst_mol_pct": 0.2,
+    "ligand": null,
+    "ligand_mol_pct": null,
+    "base": "K2CO3",
+    "base_eq": 2.5,
+    "solvent": "acetone/H2O = 1:1",
+    "temp_c": null,
+    "temp_raw": "回流",
+    "time_h": 2.0,
+    "atmosphere": "Ar",
+    "scale_mmol": 71.8,
+    "equivalents": {
+      "aryl_halide": 1.0,
+      "boronic_acid": 1.03
+    },
+    "concentration_m": null
+  },
+  "purification": "蒸馏",
+  "evidence_grade": "A_confirmed",
+  "verification": "verified_fulltext",
+  "substrate": {
+    "aryl_halide": "4-iodoanisole",
+    "boronic_acid": "2-methylphenylboronic acid",
+    "product": "4-methoxy-2'-methylbiphenyl"
+  },
+  "catalytic_profile": {
+    "catalyst_form": "in_situ_salt",
+    "ligand_family": "none",
+    "support": "none",
+    "medium": "aqueous",
+    "activation_mode": "thermal"
+  },
+  "_extraction": {
+    "label_raw_provenance": "transcribed",
+    "missing_fields": [
+      "temp_c"
+    ],
+    "needs_A_check": [
+      "回流温度",
+      "作者行 OCR 残缺（Goodson/Wallow/Novak 由页首残字合并），需以期刊页为准",
+      "维度 1 必须判 FAIL：离去基为碘（D1 已定）"
+    ],
+    "verified_at": "2026-10-28",
+    "verified_by_A": "2026-10-28 逐表逐脚注复核（本地 PDF / JATS 全文）"
+  },
+  "locator_zh": "操作段 1（Vol.75 第 61 页）；蒸馏后 90.3%"
+}

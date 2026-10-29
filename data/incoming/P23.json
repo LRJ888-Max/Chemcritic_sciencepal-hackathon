@@ -1,0 +1,68 @@
+{
+  "record_id": "P23",
+  "source_id": "P23",
+  "tier": "C",
+  "citation": "Kaikake, Takada, Soma & Jin, RSC Adv. 2018, 8(60), 34505-34513（茶碱微球负载 Pd, u-T2/Pd）",
+  "doi": "10.1039/c8ra06476h",
+  "locator": "Table 1（H2O, 20 °C 行）+ 脚注 a/b（PMC9087375 全文已核）",
+  "outcome": {
+    "value": 100.0,
+    "unit": "%",
+    "outcome_type": "nmr",
+    "label_raw": "100% (1H NMR)",
+    "note": "脚注 b 仅写 1H-NMR analysis，无内标 → uncalibrated；同表温度梯度 20→100 与催化剂载量 0.02–2 mol% 均已扫。"
+  },
+  "assay": {
+    "method": "1H NMR",
+    "internal_standard": null,
+    "quantification_basis": null
+  },
+  "conditions": {
+    "catalyst": "u-T2/Pd（茶碱微球负载 Pd）",
+    "catalyst_loading_raw": "2.0 mol%",
+    "catalyst_mol_pct": 2.0,
+    "ligand": "theophylline-derived",
+    "ligand_mol_pct": null,
+    "base": "K2CO3",
+    "base_eq": 2.5,
+    "solvent": "H2O",
+    "temp_c": 20,
+    "time_h": 1.0,
+    "atmosphere": null,
+    "scale_mmol": 1.0,
+    "equivalents": {
+      "aryl_halide": 1.0,
+      "boronic_acid": 1.5
+    },
+    "concentration_m": null
+  },
+  "purification": null,
+  "evidence_grade": "A_confirmed",
+  "verification": "verified_fulltext",
+  "substrate": {
+    "aryl_halide": "bromobenzene",
+    "boronic_acid": "phenylboronic acid",
+    "product": "biphenyl"
+  },
+  "catalytic_profile": {
+    "catalyst_form": "supported",
+    "ligand_family": "non_phosphine",
+    "support": "solid_support",
+    "medium": "aqueous",
+    "activation_mode": "thermal"
+  },
+  "_extraction": {
+    "label_raw_provenance": "transcribed",
+    "missing_fields": [
+      "atmosphere",
+      "assay.internal_standard",
+      "assay.quantification_basis"
+    ],
+    "needs_A_check": [
+      "与 P24b 同为『纯水 20 °C』却 100% vs 8% —— 请确认两条的催化剂载量与时间确实不同（这是 gold set 里最容易被质疑的一对）"
+    ],
+    "verified_at": "2026-10-28",
+    "verified_by_A": "2026-10-28 逐表逐脚注复核（本地 PDF / JATS 全文）"
+  },
+  "locator_zh": "表 1（H2O、20 ℃ 行）+ 脚注 a/b"
+}

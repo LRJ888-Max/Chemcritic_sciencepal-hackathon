@@ -1,0 +1,71 @@
+{
+  "record_id": "P18",
+  "source_id": "P18",
+  "tier": "C",
+  "citation": "Molecules 2020, 25, 2951（机械化学 Pd(II)/碳复合材料）",
+  "doi": "10.3390/molecules25122951",
+  "locator": "Table 4 entry 7（AC-Pd2, 180 min 行）+ 脚注 a/b（PMC7355770 全文已核；本地 PDF refs/pdf/P18_molecules-25-02951.pdf p.12）",
+  "outcome": {
+    "value": 69.0,
+    "unit": "%",
+    "outcome_type": "nmr",
+    "label_raw": "69% (1H NMR, based on PhBr)",
+    "note": "脚注 b：NMR yield 以限量试剂 PhBr 与产物联苯的相对积分计，无内标 → uncalibrated；30 min 时 49%。"
+  },
+  "assay": {
+    "method": "1H NMR",
+    "internal_standard": null,
+    "quantification_basis": "aryl halide"
+  },
+  "conditions": {
+    "catalyst": "Pd(II)/carbon composite",
+    "catalyst_loading_raw": "2.5 mg",
+    "catalyst_mol_pct": null,
+    "ligand": null,
+    "ligand_mol_pct": null,
+    "base": "K2CO3",
+    "base_eq": 2.0,
+    "solvent": "EtOH 2 mL（球磨）",
+    "temp_c": null,
+    "temp_raw": "球磨，未加热",
+    "time_h": 3.0,
+    "time_raw": "180 min",
+    "atmosphere": "air",
+    "scale_mmol": 0.5,
+    "equivalents": {
+      "aryl_halide": 1.0,
+      "boronic_acid": 1.2
+    },
+    "concentration_m": null
+  },
+  "purification": null,
+  "evidence_grade": "A_confirmed",
+  "verification": "verified_fulltext",
+  "substrate": {
+    "aryl_halide": "bromobenzene",
+    "boronic_acid": "phenylboronic acid",
+    "product": "biphenyl"
+  },
+  "catalytic_profile": {
+    "catalyst_form": "supported",
+    "ligand_family": "none",
+    "support": "solid_support",
+    "medium": "solventless",
+    "activation_mode": "mechanochemical"
+  },
+  "_extraction": {
+    "label_raw_provenance": "transcribed",
+    "missing_fields": [
+      "catalyst_mol_pct",
+      "temp_c",
+      "assay.internal_standard"
+    ],
+    "needs_A_check": [
+      "NMR 积分基准（以 PhBr 为基准已在报告里写明，但内标是什么？）",
+      "球磨是否算 medium=solventless（有 2 mL EtOH）—— 本记录按溶剂less 填，请 A 确认，这一格决定档归属"
+    ],
+    "verified_at": "2026-10-28",
+    "verified_by_A": "2026-10-28 逐表逐脚注复核（本地 PDF / JATS 全文）"
+  },
+  "locator_zh": "表 4 第 7 行（AC-Pd2，180 min）+ 脚注 a/b"
+}

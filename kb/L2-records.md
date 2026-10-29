@@ -2,7 +2,7 @@
 
 > **用途：** 回答「有哪些可比先例」。每条都能靠 `locator` 翻回原文。
 > **铁律：** `calibration = uncalibrated` 的记录**可以展示，但不参与档内定位的差值结论**。
-> **数据源：** `data/records.json`（32 条）+ `data/pool30.json`（35 条），按 record_id 去重后 **43 条**。
+> **数据源：** `data/records.json`（43 条）+ `data/pool30.json`（36 条），按 record_id 去重后 **44 条**。
 > **生成方式：** `python outputs/gen_l2.py`。本文件的统计数字由脚本从 JSON 计算，**不要手改**。
 
 ## A. 已核 / 重点记录
@@ -47,22 +47,23 @@
 | P36 | 4-bromoanisole | 50 | isolated | calibrated | A_confirmed | Pd(OAc)2 + RO-PTA / Na2CO3 / H2O:CH3CN = 1:1（5 mL） / 80 / 6h | Table 3 entry 4 + 脚注 a/b；§3.2 General Procedure、§3.3 实验段（本地 PDF refs/pdf/molecules-16-06215.pdf p.6223-6226 已核） |
 | P37 | bromobenzene | 85 | isolated | calibrated | A_confirmed | LaF3·Pd 纳米催化剂 / K2CO3 / H2O（3 mL） / 70 / 4h | Table 3 entry 3（1a + 2a, H2O, K2CO3, 70 °C, 4 h）+ 脚注 a/b；正文 p.21272（本地 PDF refs/pdf/d4ra00686k.pdf 已核） |
 | P38 | 4-bromoacetophenone | 95 | isolated | calibrated | A_confirmed | indolyl-NNN Pd 配合物 3 / K2CO3 / toluene（2 mL） / 70 / 1h | Table 2 entry 5（催化剂 3, K2CO3/toluene, 70 °C, 1 h）+ 表注；§3 实验（本地 PDF refs/pdf/molecules-26-04426.pdf 与 JATS XML PMC8347745 双证） |
-| P18 | bromobenzene | 69.0 | nmr | uncalibrated | imported_unchecked | Pd(II)/carbon composite / K2CO3 / EtOH 2 mL（球磨） / None / 3.0h | Table（180 min 行）+ 时间序列（30 min 49%） |
-| P23 | bromobenzene | 100.0 | nmr | uncalibrated | imported_unchecked | u-T2/Pd（茶碱微球负载 Pd） / K2CO3 / H2O / 20 / 1.0h | Table（H2O, 20 °C 行） |
-| P25 | bromobenzene | 99.6 | unknown | uncalibrated | imported_unchecked | 吡啶 N 富碳纳米片负载 Pd / K2CO3 / H2O/EtOH = 1:3, 10 mL / 100 / 0.83h | Table（100 °C, 50 min 行） |
-| P26 | bromobenzene | 95.3 | unknown | uncalibrated | imported_unchecked | Schiff 碱-咪唑功能化 MOF 载 Pd 簇 / NaHCO3 / DMA 5 mL / 90 / 7.0h | Table（2 mmol 行） |
-| P27 | bromobenzene | 77.0 | conversion | calibrated | imported_unchecked | Pd-based catalyst size series / Na2CO3 / 无常规溶剂；液体添加剂 H2O:MeOH = 1:1, 0.1 mL / 25 / 1.0h | Table（5 mol% 行，球磨 25 Hz） |
-| P06 | 4-bromobenzaldehyde | 86.3 | isolated | calibrated | imported_unchecked | Pd(OAc)2 / Na2CO3 / 1-propanol/H2O = 485 mL/95 mL / None / 0.75h | Procedure 段（粗品与重结晶两个收率） |
-| P07 | 4-iodoanisole | 90.3 | isolated | calibrated | imported_unchecked | Pd(OAc)2 / K2CO3 / acetone/H2O = 1:1 / None / 2.0h | Procedure 段（蒸馏收率） |
-| P32 | 4-bromobenzaldehyde | 95.0 | unknown | uncalibrated | imported_unchecked | 超小 Pd NPs（S/Se/N 配体） / K2CO3 / DMF:H2O = 3:2, 5 mL / 100 / 6.0h | Table（DMF:H2O 行）+ 溶剂对照（THF 47%、甲苯 38%） |
-| P33 | 4-bromoacetophenone | 99.0 | isolated | calibrated | imported_unchecked | 磁载双配体 Pd（magnetic dual-ligand Pd） / K2CO3 / EtOH/H2O = 2:1 / 60 / 1.0h | Table（entry 1, 60 min）+ 时间扫描段 |
-| P34 | 4-bromobenzophenone | 99.0 | nmr | uncalibrated | imported_unchecked | S 功能化 NHC-Pd(II)（催化剂 14） / K2CO3 / H2O 1 mL / 60 / 24.0h | Table（催化剂 14 行） |
+| P06 | 4-bromobenzaldehyde | 86.3 | isolated | calibrated | A_confirmed | Pd(OAc)2 / Na2CO3 / 1-propanol/H2O = 485 mL/95 mL / None / 0.75h | Procedure 1（Vol.75 p.53）：4-bromobenzaldehyde 50.0 g (0.270 mol)、PhB(OH)2 34.6 g (0.284 mol, 1.05 eq)、Pd(OAc)2 0.182 g (0.811 mmol, 0.3 mol%)、PPh3 0.638 g (0.9 mol%)、Na2CO3 0.324 mol (1.20 eq)、1-propanol 485 mL + H2O 95 mL、reflux 45 min；粗品 47.3 g (96.2%)、重结晶 42.5 g (86.3%)（本地 PDF refs/orgsyn_v75p0053.pdf 已核） |
+| P07 | 4-iodoanisole | 90.3 | isolated | calibrated | A_confirmed | Pd(OAc)2 / K2CO3 / acetone/H2O = 1:1 / None / 2.0h | Procedure 1（Vol.75 p.61）：4-iodoanisole 16.8 g (71.8 mmol)、o-tolylboronic acid 10.0 g (73.6 mmol, 1.03 eq)、Pd(OAc)2 3.30 mg (0.02 mmol, 0.2 mol%)、K2CO3 25.0 g (0.180 mol, 2.5 eq)、acetone 200 mL + H2O 200 mL、reflux 2 h；12.8 g (90.3%) 蒸馏（refs/orgsyn_v75p0061.pdf 已核） |
+| P18 | bromobenzene | 69.0 | nmr | uncalibrated | A_confirmed | Pd(II)/carbon composite / K2CO3 / EtOH 2 mL（球磨） / None / 3.0h | Table 4 entry 7（AC-Pd2, 180 min 行）+ 脚注 a/b（PMC7355770 全文已核；本地 PDF refs/pdf/P18_molecules-25-02951.pdf p.12） |
+| P23 | bromobenzene | 100.0 | nmr | uncalibrated | A_confirmed | u-T2/Pd（茶碱微球负载 Pd） / K2CO3 / H2O / 20 / 1.0h | Table 1（H2O, 20 °C 行）+ 脚注 a/b（PMC9087375 全文已核） |
+| P25 | bromobenzene | 99.6 | unknown | uncalibrated | A_confirmed | 吡啶 N 富碳纳米片负载 Pd / K2CO3 / H2O/EtOH = 1:3, 10 mL / 100 / 0.83h | Table 1 entry 5（Pd/N-CNS800, 50 min 行）+ 脚注 a（PMC11548024 全文已核） |
+| P26 | bromobenzene | 95.3 | unknown | uncalibrated | A_confirmed | Schiff 碱-咪唑功能化 MOF 载 Pd 簇 / NaHCO3 / DMA 5 mL / 90 / 7.0h | Table 2 entry 4（Pd0@UIO-66-SB-Im 行）+ 表注 a（PMC8921604 全文已核） |
+| P27 | bromobenzene | 77.0 | conversion | calibrated | A_confirmed | Pd-based catalyst size series / Na2CO3 / 无常规溶剂；液体添加剂 H2O:MeOH = 1:1, 0.1 mL / 25 / 1.0h | Table 3 entry 6（H2O:MeOH 1:1 行）+ 脚注 a（PMC12915526 全文已核） |
+| P32 | 4-bromobenzaldehyde | 95.0 | unknown | uncalibrated | A_confirmed | 超小 Pd NPs（S/Se/N 配体） / K2CO3 / DMF:H2O = 3:2, 5 mL / 100 / 6.0h | 优化表 S. no. 4（DMF:water 3:2 + K2CO3 行）+ 脚注 a（PMC9066620 全文已核） |
+| P33 | 4-bromoacetophenone | 99.0 | unknown | uncalibrated | A_confirmed | 磁载双配体 Pd（magnetic dual-ligand Pd） / K2CO3 / EtOH/H2O = 2:1 / 60 / 1.0h | Table 1 entry 3（60 min 行）+ 脚注 a（PMC11044249 全文已核） |
+| P34 | 4-bromobenzophenone | 99.0 | nmr | uncalibrated | A_confirmed | S 功能化 NHC-Pd(II)（催化剂 14） / K2CO3 / H2O 1 mL / 60 / 24.0h | Table 1 entry 3（催化剂 14, 60 °C, 24 h 行）+ 脚注 a/b（PMC6268575 全文已核） |
+| P39 | 4-bromoanisole | 40.0 | isolated | calibrated | A_confirmed | Pd/AM4-HDA 多孔聚合物 / 原文未给 / sc-CO2（超临界 CO2） / None / 2.0h | §3.4 Coupling Reaction（原文："Suzuki-Miyaura coupling reactions of 4-bromoanisole and phenylboronic acid, Scheme 3, were conducted using Pd-containing AM4-HDA porous polymer, catalyzed in sc-CO2 for 2 h ... The reaction conversion of 4-methoxybiphenyl in crude reaction mixtures, determined by 1H-NMR spectroscopy, was 82%, and the isolated yield was 40%."）（本地 PDF refs/pdf/NEW-materials-14-00800.pdf 已核） |
 
 ## C. 关键事实（供检索与追问使用）
 
-- **能进入比较块的记录**：43 条中，分离收率且「口径已定 + 已核验 + calibrated」的共 **15** 条。
-- **同演示底物（4-溴苯甲醚）共 15 条**：其中分离收率可用 **5** 条（SM-001b 40% / P36 50% / SM-005 95% / P35 95.0% / SM-002 100%）；口径未决 3 条（SM-004.1、SM-004.7、P12）。
-- **4-溴苯甲醚的分离收率跨度**：SM-001b 40%、P36 50%、SM-005 95%、P35 95.0%、SM-002 100%；即同一底物在不同条件下可差 60 个百分点，**任何单一先例都不能当基准**。
+- **能进入比较块的记录**：44 条中，分离收率且「口径已定 + 已核验 + calibrated」的共 **18** 条。
+- **同演示底物（4-溴苯甲醚）共 16 条**：其中分离收率可用 **6** 条（SM-001b 40% / P39 40.0% / P36 50% / SM-005 95% / P35 95.0% / SM-002 100%）；口径未决 3 条（SM-004.1、SM-004.7、P12）。
+- **4-溴苯甲醚的分离收率跨度**：SM-001b 40%、P39 40.0%、P36 50%、SM-005 95%、P35 95.0%、SM-002 100%；即同一底物在不同条件下可差 60 个百分点，**任何单一先例都不能当基准**。
 - **P35 是跨档迁移目标，不是同档参照**：Chin. J. Catal. 2011，Pd(OAc)₂ 无配体 / 乙二醇 / 室温 / 20 min / 95% isolated；档位 borderline B/C（无配体但介质非水）。
 - **SM-001 一行两个口径**：SM-001a 66%（GC）/ SM-001b 40%（isolated），同篇同行，`non_independent = true`。
 - **SM-006-e1 / e7 同篇不同条目**（entry 1 的 K₃PO₄/92%、entry 7 的 K₂CO₃/95%），非独立来源。
@@ -77,5 +78,5 @@
 | gc | 10 | 3 |
 | nmr | 7 | 0 |
 | conversion | 2 | 1 |
-| unknown | 6 | 2 |
+| unknown | 7 | 2 |
 
