@@ -39,6 +39,17 @@ if [ -d "$SKILL_SRC/scripts/examples" ]; then
   cp -r "$SKILL_SRC/scripts/examples" "$HOME_DIR/examples"
 fi
 
+# 1.5) 可选依赖：rdkit（chemsense 化学感知层；失败只告警不中断——引擎自动降级到别名判同）
+if ! "$PY" -c "import rdkit" >/dev/null 2>&1; then
+  if "$PY" -m pip install --quiet --disable-pip-version-check rdkit >/dev/null 2>&1; then
+    echo "deps:   rdkit installed (chemsense enabled)"
+  else
+    echo "warn:   rdkit install failed; chemsense 降级运行（判定行为不变）"
+  fi
+else
+  echo "deps:   rdkit already present"
+fi
+
 # 2) 技能注册（平台从这里加载 skill；失败只告警不中断）
 if mkdir -p "$SKILLS_ROOT" 2>/dev/null && [ -w "$SKILLS_ROOT" ]; then
   rm -rf "$SKILL_DST"

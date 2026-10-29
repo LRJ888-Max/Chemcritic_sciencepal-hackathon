@@ -27,6 +27,8 @@
     python chemcritic_engine.py --leverage               # 补证杠杆：补哪一条解锁最多（含语料级）
     python chemcritic_engine.py --judge-pair SM-001a P20 # 文献—文献两两判定（双向证书）
     python chemcritic_engine.py --audit-table table.json # 整表审计：哪些行能同框、卡在哪一维
+    python chemcritic_engine.py --replicates reps.json   # 重复实验统计（均值/SD/95% CI，描述性）
+    python chemcritic_engine.py --chemsense "p-bromoanisole" "4-bromoanisole"  # 化学同一性/官能团
     python chemcritic_engine.py --list-records           # 全部参照的引用/定位/口径/档位
     python chemcritic_engine.py --brief --input user.json # 证书摘要（几百字节，降级贴回会话）
     python chemcritic_engine.py --version
@@ -47,7 +49,7 @@ from typing import Any, Dict, List, Optional
 
 
 # ============================================================================
-# 1/10 · schemas.py —— 数据结构（无业务判断；原文未报告的字段一律 None）
+# 1/11 · schemas.py —— 数据结构（无业务判断；原文未报告的字段一律 None）
 # ============================================================================
 # 数据结构定义（骨架）。
 #
@@ -250,7 +252,7 @@ class Verdict:
 
 
 # ============================================================================
-# 2/10 · input_audit.py —— 用户输入来源审计（禁止历史记忆拼装判定输入）
+# 2/11 · input_audit.py —— 用户输入来源审计（禁止历史记忆拼装判定输入）
 # ============================================================================
 # 用户判定输入的来源审计（不含化学判断）。
 #
@@ -307,7 +309,7 @@ def audit_input_payload(payload: Dict[str, Any]) -> Dict[str, Any]:
 
 
 # ============================================================================
-# 3/10 · profiles.py —— 档位字段补丁表（记录缺 catalytic_profile 时兜底）
+# 3/11 · profiles.py —— 档位字段补丁表（记录缺 catalytic_profile 时兜底）
 # ============================================================================
 # 档位字段补丁表。
 #
@@ -348,7 +350,7 @@ def profile_for(record_id: Optional[str]) -> Dict[str, str]:
 
 
 # ============================================================================
-# 4/10 · tier.py —— 档位判定（受控词表 → 规则 → 主判 / 备选）
+# 4/11 · tier.py —— 档位判定（受控词表 → 规则 → 主判 / 备选）
 # ============================================================================
 # 档位判定：受控词表 → 规则 → 主判 / 备选（确定性、可审计）。
 #
@@ -450,7 +452,177 @@ def tier_of(profile: Optional[Dict[str, Any]]) -> Dict[str, Any]:
 
 
 # ============================================================================
-# 5/10 · gates.py —— 8 维门槛判定（确定性，LLM 无权覆盖）
+# 5/11 · chemsense.py —— 化学感知层（RDKit 同一性 / 官能团描述；无 rdkit 自动降级）
+# ============================================================================
+# 化学感知层（chemsense）：RDKit 驱动的底物同一性与分类。
+#
+# 定位（对应 2026-10-30 开发单 Track B1）：
+# - **同一性**：别名表（name_aliases）兜不住的写法变体（如 "p-bromoanisole" vs
+#   "1-bromo-4-methoxybenzene"），通过规范 SMILES 判同。别名表是白名单，
+#   漏一个别名就误判成"不同底物"；SMILES 判同是化学事实，不靠枚举。
+# - **分类**：电子效应基团（EDG/EWG）、杂环、卤素种类——供后续把"同底物"从
+#   字符串相等升级为"同类底物"做准备（当前只用同一性，分类先作为能力暴露）。
+#
+# 设计约束：
+# 1. **可降级**：沙箱可能没装 rdkit。所有入口在 import 失败时返回 None / False，
+#    引擎行为回落到别名表判同——化学感知是增强，不是依赖。
+# 2. **不推断**：本模块只回答"这两个名字是不是同一个化合物"和"它有哪些官能团"，
+#    不输出任何可比性结论。可比性判定仍然只属于 gates。
+# 3. 词表映射手工维护（没有 OPSIN 的沙箱里解析任意 IUPAC 名不现实），
+#    映射表本身进入代码评审；不在表里的名字返回 None，绝不猜。
+#
+# 用法：
+#     python engine/chemsense.py "4-bromoanisole" "p-bromoanisole"
+#     python engine/chemsense.py --classify "3-bromothiophene"
+
+# 名称 → SMILES。键一律小写；查询前做 _norm。
+# 覆盖：库内全部底物对 + 常见英文变体。加底物时同步加这里。
+SUBSTRATE_SMILES: Dict[str, str] = {
+    # aryl halides
+    "bromobenzene": "Brc1ccccc1",
+    "iodobenzene": "Ic1ccccc1",
+    "chlorobenzene": "Clc1ccccc1",
+    "4-bromoanisole": "COc1ccc(Br)cc1",
+    "p-bromoanisole": "COc1ccc(Br)cc1",
+    "1-bromo-4-methoxybenzene": "COc1ccc(Br)cc1",
+    "4-bromotoluene": "Cc1ccc(Br)cc1",
+    "p-bromotoluene": "Cc1ccc(Br)cc1",
+    "1-bromo-4-methylbenzene": "Cc1ccc(Br)cc1",
+    "3-bromothiophene": "Brc1ccsc1",
+    "2-bromothiophene": "Brc1sccc1",
+    "4-bromoacetophenone": "CC(=O)c1ccc(Br)cc1",
+    "1-(4-bromophenyl)ethanone": "CC(=O)c1ccc(Br)cc1",
+    "4-bromobenzonitrile": "N#Cc1ccc(Br)cc1",
+    "4-bromonitrobenzene": "O=[N+]([O-])c1ccc(Br)cc1",
+    "4-bromobenzaldehyde": "O=Cc1ccc(Br)cc1",
+    "4-bromoaniline": "Nc1ccc(Br)cc1",
+    # boronic acids
+    "phenylboronic acid": "OB(O)c1ccccc1",
+    "benzeneboronic acid": "OB(O)c1ccccc1",
+    "4-methoxyphenylboronic acid": "COc1ccc(B(O)O)cc1",
+    "4-methylphenylboronic acid": "Cc1ccc(B(O)O)cc1",
+    "p-tolylboronic acid": "Cc1ccc(B(O)O)cc1",
+    "4-fluorophenylboronic acid": "Fc1ccc(B(O)O)cc1",
+    "4-cyanophenylboronic acid": "N#Cc1ccc(B(O)O)cc1",
+    "3-thienylboronic acid": "OB(O)c1ccsc1",
+    "thiophene-3-boronic acid": "OB(O)c1ccsc1",
+    # products
+    "biphenyl": "c1ccc(-c2ccccc2)cc1",
+    "4-methoxybiphenyl": "COc1ccc(-c2ccccc2)cc1",
+    "4-methylbiphenyl": "Cc1ccc(-c2ccccc2)cc1",
+}
+
+_FGS = [
+    ("edg_alkoxy", "[OX2]([CH3])[c]"),
+    ("edg_alkyl", "[c][CH3]"),
+    ("edg_amine", "[NX3;!$(N[O])][c]"),
+    ("ewg_nitro", "[N+](=O)[O-]"),
+    ("ewg_nitrile", "C#N"),
+    ("ewg_carbonyl", "[CX3](=O)[#6]"),
+    ("ewg_halogen_F", "[c][F]"),
+    ("halide_Br", "[c][Br]"),
+    ("halide_I", "[c][I]"),
+    ("halide_Cl", "[c][Cl]"),
+    ("heteroaryl_S", "c1ccsc1"),
+    ("heteroaryl_N", "c1ccnc1"),
+    ("heteroaryl_O", "c1ccoc1"),
+]
+
+
+def _norm(name: str) -> str:
+    return " ".join(str(name).strip().lower().split())
+
+
+def _mol(name_or_smiles: str):
+    """名字或 SMILES → RDKit Mol；失败返回 None（不猜）。"""
+    try:
+        from rdkit import Chem
+    except Exception:
+        return None
+    s = SUBSTRATE_SMILES.get(_norm(name_or_smiles), name_or_smiles)
+    mol = Chem.MolFromSmiles(s)
+    return mol
+
+
+def canonical(name: str) -> Optional[str]:
+    """名字 → 规范 SMILES；不在映射表或无 rdkit → None。"""
+    mol = _mol(name)
+    if mol is None:
+        return None
+    from rdkit import Chem
+    return Chem.MolToSmiles(mol)
+
+
+def same_compound(name_a: str, name_b: str) -> Optional[bool]:
+    """两个名字是否为同一化合物。
+
+    返回 None = 无法判定（名字不在映射表 / 无 rdkit），调用方回落到别名表。
+    """
+    ca, cb = canonical(name_a), canonical(name_b)
+    if ca is None or cb is None:
+        return None
+    return ca == cb
+
+
+def classify(name: str) -> Optional[Dict[str, Any]]:
+    """名字 → 化学描述（分子量、式、官能团类别）。无 rdkit / 不识别 → None。"""
+    mol = _mol(name)
+    if mol is None:
+        return None
+    from rdkit import Chem
+    from rdkit.Chem import Descriptors, rdMolDescriptors
+    out: Dict[str, Any] = {
+        "input": name,
+        "canonical_smiles": Chem.MolToSmiles(mol),
+        "mol_wt": round(Descriptors.MolWt(mol), 2),
+        "formula": rdMolDescriptors.CalcMolFormula(mol),
+        "aromatic_rings": rdMolDescriptors.CalcNumAromaticRings(mol),
+        "functional_groups": [],
+    }
+    for label, sma in _FGS:
+        patt = Chem.MolFromSmarts(sma)
+        if patt is not None and mol.HasSubstructMatch(patt):
+            out["functional_groups"].append(label)
+    return out
+
+
+def chemsense_payload(names: list, records_lookup_note: bool = False) -> Dict[str, Any]:
+    """CLI 输出：逐名分类 + 两两同一性。"""
+    try:
+        import rdkit  # noqa: F401
+        rdkit_ok = True
+    except Exception:
+        rdkit_ok = False
+    if not rdkit_ok:
+        return {
+            "chemsense": "unavailable（未安装 rdkit；引擎回落到别名表判同，判定行为不变）",
+            "names": names,
+        }
+    entries = []
+    for n in names:
+        c = classify(n)
+        entries.append(c if c is not None else {"input": n, "unrecognized": True,
+                        "note": "不在 SUBSTRATE_SMILES 映射表；本层不猜，绝不推断"})
+    pairs = []
+    for i in range(len(names)):
+        for j in range(i + 1, len(names)):
+            same = same_compound(names[i], names[j])
+            pairs.append({
+                "a": names[i], "b": names[j],
+                "same_compound": same,
+                "note": None if same is not None else "至少一侧未识别，无法判定",
+            })
+    return {
+        "chemsense": "rdkit",
+        "mapping_table_size": len(SUBSTRATE_SMILES),
+        "entries": entries,
+        "pairs": pairs,
+        "boundary": "本输出只是化学同一性与官能团描述；『能不能比』的判定只在 gates。",
+    }
+
+
+# ============================================================================
+# 6/11 · gates.py —— 8 维门槛判定（确定性，LLM 无权覆盖）
 # ============================================================================
 # 8 维门槛判定（骨架，逻辑与 `docs/rules/8维门槛规则表-待签字.md` 一一对应）。
 #
@@ -923,7 +1095,7 @@ def _soft_flags(gates: dict) -> list:
 
 
 # ============================================================================
-# 6/10 · placement.py —— 等价类 · 档内定位 · 双档敏感性
+# 7/11 · placement.py —— 等价类 · 档内定位 · 双档敏感性
 # ============================================================================
 # 等价类划分与档内定位（骨架）。
 #
@@ -1147,14 +1319,48 @@ def _canon_pair(value) -> str:
 
 
 def _same_pair(user: Record, ref: Record) -> bool:
-    """底物对 + 产物一致（迁移目标必须同底物，不能建议用户换底物）。"""
+    """底物对 + 产物一致（迁移目标必须同底物，不能建议用户换底物）。
+
+    三道判据，按序短路：
+    1. 归一化名相等（别名表 + 大小写/空白归一）；
+    2. 化学同一性（chemsense 规范 SMILES 判同，别名表漏项的兜底）；
+    3. 都不行 → 不同底物。
+    """
     us, rs = user.substrate or {}, ref.substrate or {}
     for key in ("aryl_halide", "boronic_acid"):
-        if _canon_pair(us.get(key)) != _canon_pair(rs.get(key)):
-            return False
+        a, b = us.get(key), rs.get(key)
+        if _canon_pair(a) != _canon_pair(b):
+            if not _chem_same(a, b):
+                return False
     up = _canon_pair(getattr(user, "product", None) or us.get("product"))
     rp = _canon_pair(getattr(ref, "product", None) or rs.get("product"))
-    return up == rp
+    if up != rp and not _chem_same(
+        getattr(user, "product", None) or us.get("product"),
+        getattr(ref, "product", None) or rs.get("product"),
+    ):
+        return False
+    return True
+
+
+def _chem_same(a: Any, b: Any) -> bool:
+    """化学同一性判同（只在两侧名字都进得了映射表时给出答案）。
+
+    无 rdkit / 名字不识别 / chemsense 缺席 → False（回落到原字符串判同，行为不变）。
+    单文件 bundle 里 chemsense 段排在 placement 前，same_compound 已在同命名空间；
+    包内运行则走相对导入。
+    """
+    if not isinstance(a, str) or not isinstance(b, str):
+        return False
+    fn = globals().get("same_compound")
+    if fn is None:
+        try:
+            from .chemsense import same_compound as fn  # type: ignore
+        except Exception:
+            return False
+    try:
+        return bool(fn(a, b))
+    except Exception:
+        return False
 
 
 def _level(record: Record) -> str:
@@ -1190,7 +1396,7 @@ def sensitivity(user: Record, records: List[Record], tiers: List[str]) -> Dict[s
 
 
 # ============================================================================
-# 7/10 · leverage.py —— 补证杠杆（补哪一条解锁最多）· 语料级口径杠杆
+# 8/11 · leverage.py —— 补证杠杆（补哪一条解锁最多）· 语料级口径杠杆
 # ============================================================================
 # 补证杠杆：把"不能比"换算成"补哪一条最值"。
 #
@@ -1518,7 +1724,7 @@ def render_corpus(report: Dict[str, Any]) -> List[str]:
 
 
 # ============================================================================
-# 8/10 · run_demo.py —— 三屏演示与规则表验收矩阵（T1–T23c）
+# 9/11 · run_demo.py —— 三屏演示与规则表验收矩阵（T1–T23c）
 # ============================================================================
 # 演示入口（骨架）：跑通"35% 分离收率 → 分堆 → 逐条判定 → 档内定位"三屏。
 #
@@ -4831,7 +5037,7 @@ RECORDS_JSON = r"""{
   "merge_note": "2026-10-28 并入 pool30 中 evidence_grade=a_confirmed 的记录：P11, P12, P13, P19a, P19b, P20, P24a, P24b, P24c, P35。仅已回原文核验者进入引擎；候选池其余条目仍留在 data/pool30.json。"
 }"""
 
-ENGINE_VERSION = "chemcritic-engine/1.3.0"
+ENGINE_VERSION = "chemcritic-engine/1.4.0"
 RULES_VERSION = "gates v0.5 · tier-0.1"
 CONTRACT_VERSION = "sciencepal-verdict/2"
 
@@ -4936,6 +5142,65 @@ def list_records_payload(records: List[Record]) -> Dict[str, Any]:
                 "substrate": r.substrate,
             }
             for r in records
+        ],
+    }
+
+
+# 双侧 95% t 临界值（df 1–30，三位小数）。内嵌以摆脱 scipy 依赖（沙箱确定性）。
+_T_CRIT_95 = {
+    1: 12.706, 2: 4.303, 3: 3.182, 4: 2.776, 5: 2.571, 6: 2.447, 7: 2.365,
+    8: 2.306, 9: 2.262, 10: 2.228, 11: 2.201, 12: 2.179, 13: 2.160, 14: 2.145,
+    15: 2.131, 16: 2.120, 17: 2.110, 18: 2.101, 19: 2.093, 20: 2.086,
+    21: 2.080, 22: 2.074, 23: 2.069, 24: 2.064, 25: 2.060, 26: 2.056,
+    27: 2.052, 28: 2.048, 29: 2.045, 30: 2.042,
+}
+
+
+def replicates_payload(data: Dict[str, Any]) -> Dict[str, Any]:
+    """重复实验统计（Track B3）：用户自报 n 次同口径重复 → 均值 / 样本标准差 / t 置信区间。
+
+    边界（铁律 4 不受影响）：这里只描述**用户自己这组数据**的分散程度，
+    不构成对文献值的区间推断，也不是"正常范围"；与文献的可比性判定
+    仍必须走 --json 主入口。输出文案不得写成"预期/正常可达"。
+    """
+    import statistics as _stats
+    raw = data.get("values") if isinstance(data, dict) else None
+    values: List[float] = []
+    for v in raw or []:
+        try:
+            values.append(float(v))
+        except (TypeError, ValueError):
+            continue
+    if len(values) < 2:
+        raise ValueError("重复实验统计至少需要 2 个数值（values 数组）")
+    n = len(values)
+    mean = _stats.fmean(values)
+    if n == 2:
+        # n=2 时样本标准差仍可算，但置信区间极宽——照实给并提示
+        pass
+    sd = _stats.stdev(values) if n >= 2 else None
+    sem = sd / (n ** 0.5) if sd is not None else None
+    df = n - 1
+    t = _T_CRIT_95.get(df, 1.960)  # df>30 用正态近似，注明
+    ci_half = t * sem if (sem is not None) else None
+    return {
+        "replicates": {
+            "n": n,
+            "values": values,
+            "mean": round(mean, 2),
+            "sd_sample": round(sd, 3) if sd is not None else None,
+            "sem": round(sem, 3) if sem is not None else None,
+            "t_crit_95": t,
+            "df": df,
+            "ci95": [round(mean - ci_half, 2), round(mean + ci_half, 2)]
+            if ci_half is not None else None,
+            "range": [min(values), max(values)],
+        },
+        "boundary": [
+            "这是对用户自报重复数据的描述统计，不是与文献值的比较结论。",
+            "置信区间不得写进『能不能比』的判定；判定仍以 --json 主入口证书为准。",
+            "不得把区间表述为『正常范围』或『预期可达』。",
+            "n<3 时区间极宽，建议如实告知样本量过小。",
         ],
     }
 
@@ -5155,6 +5420,10 @@ def main(argv: Optional[List[str]] = None) -> int:
                         help="文献—文献两两判定：这两条数值能不能放进同一句话")
     parser.add_argument("--audit-table", metavar="PATH",
                         help="整表审计：表格行 JSON（extract.py 候选或记录行）逐行判定同框与卡点")
+    parser.add_argument("--replicates", metavar="PATH",
+                        help="重复实验统计：n 次同口径重复 → 均值/标准差/95% t 置信区间（描述用户数据，非判定）")
+    parser.add_argument("--chemsense", nargs="+", metavar="NAME",
+                        help="化学感知：底物名 → 规范 SMILES/官能团；≥2 名时两两判同")
     parser.add_argument("--selftest", action="store_true", help="只跑 T1–T23c 验收矩阵")
     parser.add_argument("--version", action="store_true", help="打印引擎与规则版本")
     args = parser.parse_args(argv)
@@ -5203,6 +5472,32 @@ def main(argv: Optional[List[str]] = None) -> int:
             print(str(exc), file=sys.stderr)
             return 2
         print(json.dumps(payload, ensure_ascii=False, indent=2))
+        return 0
+
+    if args.replicates:
+        try:
+            with open(args.replicates, "r", encoding="utf-8-sig") as fh:
+                data = json.load(fh)
+        except (OSError, ValueError) as exc:
+            print(f"重复实验文件读取失败：{exc}", file=sys.stderr)
+            return 2
+        try:
+            payload = replicates_payload(data)
+        except ValueError as exc:
+            print(str(exc), file=sys.stderr)
+            return 2
+        print(json.dumps(payload, ensure_ascii=False, indent=2))
+        return 0
+
+    if args.chemsense:
+        fn = globals().get("chemsense_payload")  # bundle：chemsense 段在同命名空间
+        if fn is None:
+            try:
+                from engine.chemsense import chemsense_payload as fn  # 仓库内运行
+            except Exception as exc:
+                print(f"chemsense 不可用：{exc}", file=sys.stderr)
+                return 2
+        print(json.dumps(fn(list(args.chemsense)), ensure_ascii=False, indent=2))
         return 0
 
     subject = USER

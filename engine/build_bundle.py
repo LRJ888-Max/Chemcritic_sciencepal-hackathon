@@ -32,6 +32,7 @@ SECTIONS = [
     ("input_audit", "用户输入来源审计（禁止历史记忆拼装判定输入）"),
     ("profiles", "档位字段补丁表（记录缺 catalytic_profile 时兜底）"),
     ("tier", "档位判定（受控词表 → 规则 → 主判 / 备选）"),
+    ("chemsense", "化学感知层（RDKit 同一性 / 官能团描述；无 rdkit 自动降级）"),
     ("gates", "8 维门槛判定（确定性，LLM 无权覆盖）"),
     ("placement", "等价类 · 档内定位 · 双档敏感性"),
     ("leverage", "补证杠杆（补哪一条解锁最多）· 语料级口径杠杆"),
@@ -80,6 +81,9 @@ def clean(name: str, body: str) -> str:
         body = body.replace("tier_mod.tier_of(", "tier_of(")
         # 文件版加载器改名为私有，避免与单文件版（读内嵌数据）同名覆盖。
         body = body.replace("def load_records(", "def _load_records_from_file(")
+    elif name == "chemsense":
+        # 剥离独立 CLI 入口——bundle 是 __main__，留着会劫持命令行参数。
+        body = re.sub(r'\nif __name__ == "__main__":.*$', "\n", body, flags=re.S)
     elif name == "leverage":
         body = re.sub(
             r"try:  # 作为子包导入.*?\nFIELD_ORDER = \{",
@@ -138,6 +142,8 @@ HEADER = '''#!/usr/bin/env python3
     python chemcritic_engine.py --leverage               # 补证杠杆：补哪一条解锁最多（含语料级）
     python chemcritic_engine.py --judge-pair SM-001a P20 # 文献—文献两两判定（双向证书）
     python chemcritic_engine.py --audit-table table.json # 整表审计：哪些行能同框、卡在哪一维
+    python chemcritic_engine.py --replicates reps.json   # 重复实验统计（均值/SD/95% CI，描述性）
+    python chemcritic_engine.py --chemsense "p-bromoanisole" "4-bromoanisole"  # 化学同一性/官能团
     python chemcritic_engine.py --list-records           # 全部参照的引用/定位/口径/档位
     python chemcritic_engine.py --brief --input user.json # 证书摘要（几百字节，降级贴回会话）
     python chemcritic_engine.py --version
@@ -164,7 +170,7 @@ RUNNER = r'''
 
 RECORDS_JSON = r"""__RECORDS__"""
 
-ENGINE_VERSION = "chemcritic-engine/1.3.0"
+ENGINE_VERSION = "chemcritic-engine/1.4.0"
 RULES_VERSION = "gates v0.5 · tier-0.1"
 CONTRACT_VERSION = "sciencepal-verdict/2"
 
@@ -269,6 +275,65 @@ def list_records_payload(records: List[Record]) -> Dict[str, Any]:
                 "substrate": r.substrate,
             }
             for r in records
+        ],
+    }
+
+
+# 双侧 95% t 临界值（df 1–30，三位小数）。内嵌以摆脱 scipy 依赖（沙箱确定性）。
+_T_CRIT_95 = {
+    1: 12.706, 2: 4.303, 3: 3.182, 4: 2.776, 5: 2.571, 6: 2.447, 7: 2.365,
+    8: 2.306, 9: 2.262, 10: 2.228, 11: 2.201, 12: 2.179, 13: 2.160, 14: 2.145,
+    15: 2.131, 16: 2.120, 17: 2.110, 18: 2.101, 19: 2.093, 20: 2.086,
+    21: 2.080, 22: 2.074, 23: 2.069, 24: 2.064, 25: 2.060, 26: 2.056,
+    27: 2.052, 28: 2.048, 29: 2.045, 30: 2.042,
+}
+
+
+def replicates_payload(data: Dict[str, Any]) -> Dict[str, Any]:
+    """重复实验统计（Track B3）：用户自报 n 次同口径重复 → 均值 / 样本标准差 / t 置信区间。
+
+    边界（铁律 4 不受影响）：这里只描述**用户自己这组数据**的分散程度，
+    不构成对文献值的区间推断，也不是"正常范围"；与文献的可比性判定
+    仍必须走 --json 主入口。输出文案不得写成"预期/正常可达"。
+    """
+    import statistics as _stats
+    raw = data.get("values") if isinstance(data, dict) else None
+    values: List[float] = []
+    for v in raw or []:
+        try:
+            values.append(float(v))
+        except (TypeError, ValueError):
+            continue
+    if len(values) < 2:
+        raise ValueError("重复实验统计至少需要 2 个数值（values 数组）")
+    n = len(values)
+    mean = _stats.fmean(values)
+    if n == 2:
+        # n=2 时样本标准差仍可算，但置信区间极宽——照实给并提示
+        pass
+    sd = _stats.stdev(values) if n >= 2 else None
+    sem = sd / (n ** 0.5) if sd is not None else None
+    df = n - 1
+    t = _T_CRIT_95.get(df, 1.960)  # df>30 用正态近似，注明
+    ci_half = t * sem if (sem is not None) else None
+    return {
+        "replicates": {
+            "n": n,
+            "values": values,
+            "mean": round(mean, 2),
+            "sd_sample": round(sd, 3) if sd is not None else None,
+            "sem": round(sem, 3) if sem is not None else None,
+            "t_crit_95": t,
+            "df": df,
+            "ci95": [round(mean - ci_half, 2), round(mean + ci_half, 2)]
+            if ci_half is not None else None,
+            "range": [min(values), max(values)],
+        },
+        "boundary": [
+            "这是对用户自报重复数据的描述统计，不是与文献值的比较结论。",
+            "置信区间不得写进『能不能比』的判定；判定仍以 --json 主入口证书为准。",
+            "不得把区间表述为『正常范围』或『预期可达』。",
+            "n<3 时区间极宽，建议如实告知样本量过小。",
         ],
     }
 
@@ -488,6 +553,10 @@ def main(argv: Optional[List[str]] = None) -> int:
                         help="文献—文献两两判定：这两条数值能不能放进同一句话")
     parser.add_argument("--audit-table", metavar="PATH",
                         help="整表审计：表格行 JSON（extract.py 候选或记录行）逐行判定同框与卡点")
+    parser.add_argument("--replicates", metavar="PATH",
+                        help="重复实验统计：n 次同口径重复 → 均值/标准差/95% t 置信区间（描述用户数据，非判定）")
+    parser.add_argument("--chemsense", nargs="+", metavar="NAME",
+                        help="化学感知：底物名 → 规范 SMILES/官能团；≥2 名时两两判同")
     parser.add_argument("--selftest", action="store_true", help="只跑 T1–T23c 验收矩阵")
     parser.add_argument("--version", action="store_true", help="打印引擎与规则版本")
     args = parser.parse_args(argv)
@@ -536,6 +605,32 @@ def main(argv: Optional[List[str]] = None) -> int:
             print(str(exc), file=sys.stderr)
             return 2
         print(json.dumps(payload, ensure_ascii=False, indent=2))
+        return 0
+
+    if args.replicates:
+        try:
+            with open(args.replicates, "r", encoding="utf-8-sig") as fh:
+                data = json.load(fh)
+        except (OSError, ValueError) as exc:
+            print(f"重复实验文件读取失败：{exc}", file=sys.stderr)
+            return 2
+        try:
+            payload = replicates_payload(data)
+        except ValueError as exc:
+            print(str(exc), file=sys.stderr)
+            return 2
+        print(json.dumps(payload, ensure_ascii=False, indent=2))
+        return 0
+
+    if args.chemsense:
+        fn = globals().get("chemsense_payload")  # bundle：chemsense 段在同命名空间
+        if fn is None:
+            try:
+                from engine.chemsense import chemsense_payload as fn  # 仓库内运行
+            except Exception as exc:
+                print(f"chemsense 不可用：{exc}", file=sys.stderr)
+                return 2
+        print(json.dumps(fn(list(args.chemsense)), ensure_ascii=False, indent=2))
         return 0
 
     subject = USER

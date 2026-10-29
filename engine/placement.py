@@ -237,14 +237,48 @@ def _canon_pair(value) -> str:
 
 
 def _same_pair(user: Record, ref: Record) -> bool:
-    """底物对 + 产物一致（迁移目标必须同底物，不能建议用户换底物）。"""
+    """底物对 + 产物一致（迁移目标必须同底物，不能建议用户换底物）。
+
+    三道判据，按序短路：
+    1. 归一化名相等（别名表 + 大小写/空白归一）；
+    2. 化学同一性（chemsense 规范 SMILES 判同，别名表漏项的兜底）；
+    3. 都不行 → 不同底物。
+    """
     us, rs = user.substrate or {}, ref.substrate or {}
     for key in ("aryl_halide", "boronic_acid"):
-        if _canon_pair(us.get(key)) != _canon_pair(rs.get(key)):
-            return False
+        a, b = us.get(key), rs.get(key)
+        if _canon_pair(a) != _canon_pair(b):
+            if not _chem_same(a, b):
+                return False
     up = _canon_pair(getattr(user, "product", None) or us.get("product"))
     rp = _canon_pair(getattr(ref, "product", None) or rs.get("product"))
-    return up == rp
+    if up != rp and not _chem_same(
+        getattr(user, "product", None) or us.get("product"),
+        getattr(ref, "product", None) or rs.get("product"),
+    ):
+        return False
+    return True
+
+
+def _chem_same(a: Any, b: Any) -> bool:
+    """化学同一性判同（只在两侧名字都进得了映射表时给出答案）。
+
+    无 rdkit / 名字不识别 / chemsense 缺席 → False（回落到原字符串判同，行为不变）。
+    单文件 bundle 里 chemsense 段排在 placement 前，same_compound 已在同命名空间；
+    包内运行则走相对导入。
+    """
+    if not isinstance(a, str) or not isinstance(b, str):
+        return False
+    fn = globals().get("same_compound")
+    if fn is None:
+        try:
+            from .chemsense import same_compound as fn  # type: ignore
+        except Exception:
+            return False
+    try:
+        return bool(fn(a, b))
+    except Exception:
+        return False
 
 
 def _level(record: Record) -> str:
