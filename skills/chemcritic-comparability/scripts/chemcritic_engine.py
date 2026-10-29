@@ -25,6 +25,8 @@
     python chemcritic_engine.py --json --input user.json # 判定你自己的实验记录
     python chemcritic_engine.py --json --input user.json --records refs.json
     python chemcritic_engine.py --leverage               # 补证杠杆：补哪一条解锁最多（含语料级）
+    python chemcritic_engine.py --judge-pair SM-001a P20 # 文献—文献两两判定（双向证书）
+    python chemcritic_engine.py --audit-table table.json # 整表审计：哪些行能同框、卡在哪一维
     python chemcritic_engine.py --list-records           # 全部参照的引用/定位/口径/档位
     python chemcritic_engine.py --brief --input user.json # 证书摘要（几百字节，降级贴回会话）
     python chemcritic_engine.py --version
@@ -781,7 +783,20 @@ def _soft(gate: int, levels: list, notes: list) -> GateResult:
     if not levels:
         return GateResult(gate, PASS, "无明显差异")
     level = "L2" if "L2" in levels else "L1"
-    return GateResult(gate, PASS, "；".join(notes), level=level)
+    # 2026-10-29 修：缺失不是差异。None 渲染成「未记录」；一方缺失时不写「不同」。
+    # 依据 kb/L3-gates.md「未记录属待补，不属原因」+ 提示词 v8 行 240。
+    # 注意：不要在这里 import re——单文件 bundle 由多模块拼接而成，
+    # gates 段历史上没有 import re，加依赖会在 --json 路径上直接 NameError。
+    fixed = []
+    for n in notes:
+        n = str(n).replace("：None vs ", "：未记录 vs ").replace(" vs None", " vs 未记录")
+        if "不同：未记录 vs " in n:
+            head, tail = n.split("不同：未记录 vs ", 1)
+            n = f"{head}未记录（参照为 {tail}）"
+        elif "不同：" in n and n.endswith(" vs 未记录"):
+            n = f"{n.split('不同：', 1)[0]}未记录（您未提供）"
+        fixed.append(n)
+    return GateResult(gate, PASS, "；".join(fixed), level=level)
 
 
 # ---------- 结论 ----------
@@ -988,12 +1003,37 @@ def coverage(records: List[Record]) -> Dict[str, Any]:
     }
 
 
+def ensure_keys(d: dict) -> dict:
+    """给每个 placement 状态补齐字段键（值可为 None / []，但键必须在）。
+
+    依据 v8 行 103-111：提示词把 reference_values / reference_count / delta_vs_min
+    当成恒存在字段来读（「Z 必须取自 placement.delta_vs_min」）。若某些 status 下整键
+    缺失，agent 读到的是 undefined 而不是 null，它会以为"没有这个字段"，于是要么崩，
+    要么自己补一个——补就是编造。
+    """
+    for k, default in (("reference_values", []), ("reference_count", 0),
+                       ("delta_vs_min", None), ("delta_vs_max", None),
+                       ("comparables", []), ("migration_targets", []),
+                       ("observed", None), ("uncalibrated_refs", [])):
+        d.setdefault(k, default)
+    return d
+
+
 def placement(user: Record, records: List[Record]) -> Dict[str, Any]:
     """用户落在哪个等价类、哪一档、与档内水平的差距。
 
     **C 方案（A 2026-10-26）：** 只有 `calibrated`（有绝对标尺）的参照参与
     差值计算与结论；`uncalibrated`（仅说明定量方式、无内标）单独列出，供展示。
+
+    2026-10-30：所有状态分支统一过 `ensure_keys`——v8 把 reference_values /
+    reference_count / delta_vs_min 当恒存在字段读，任何分支缺键都会让 agent
+    读到 undefined 后自行补值（补即编造）。键必须在，值可以为 null / []。
     """
+    return ensure_keys(_placement_impl(user, records))
+
+
+def _placement_impl(user: Record, records: List[Record]) -> Dict[str, Any]:
+    """placement 的内部实现；键补齐由包装层 placement() 负责。"""
     if user.outcome_value is None:
         # 没有实测数值就没有"定位"这回事（审计发现：此前仍返回 PLACED，observed=None）
         return {
@@ -1016,7 +1056,11 @@ def placement(user: Record, records: List[Record]) -> Dict[str, Any]:
             "action": "先让用户明确该数值是分离收率、GC 收率、核磁定量还是转化率",
         }
 
-    same_class = [r for r in records if r.outcome_type == user.outcome_type]
+    # 2026-10-29 修：参照池必须同时满足「同口径」与「同底物对」。
+    # 原实现只按 outcome_type 过滤，导致 4-溴苯甲醚的池子里混进 4-溴甲苯（P28/P30），
+    # 3-溴噻吩这种库外底物也拿到同一个池子并算出 delta=0。
+    same_class = [r for r in records
+                  if r.outcome_type == user.outcome_type and _same_pair(user, r)]
     if not same_class:
         return {
             "status": "NO_COMPARABLE",
@@ -4721,7 +4765,7 @@ RECORDS_JSON = r"""{
   "merge_note": "2026-10-28 并入 pool30 中 evidence_grade=a_confirmed 的记录：P11, P12, P13, P19a, P19b, P20, P24a, P24b, P24c, P35。仅已回原文核验者进入引擎；候选池其余条目仍留在 data/pool30.json。"
 }"""
 
-ENGINE_VERSION = "chemcritic-engine/1.2.0"
+ENGINE_VERSION = "chemcritic-engine/1.3.0"
 RULES_VERSION = "gates v0.5 · tier-0.1"
 CONTRACT_VERSION = "sciencepal-verdict/2"
 
@@ -4830,6 +4874,138 @@ def list_records_payload(records: List[Record]) -> Dict[str, Any]:
     }
 
 
+def judge_pair_payload(records: List[Record], id_a: str, id_b: str) -> Dict[str, Any]:
+    """文献—文献两两判定：回答「这两条数值能不能放进同一句话」。
+
+    与用户判定共用同一 judge()，无新增判定逻辑；输出双向证书
+    （assay 措辞审计不对称时，两向结论可能不同，对外取较严者）。
+    """
+    by_id = {r.record_id: r for r in records}
+    missing = [i for i in (id_a, id_b) if i not in by_id]
+    if missing:
+        raise ValueError("未知记录 ID：" + ", ".join(missing) + "（用 --list-records 查全部 ID）")
+    fwd = judge(by_id[id_a], by_id[id_b])
+    rev = judge(by_id[id_b], by_id[id_a])
+    return {
+        "engine": ENGINE_VERSION,
+        "rules": RULES_VERSION,
+        "pair": [id_a, id_b],
+        "comparable": fwd.verdict == COMPARABLE and rev.verdict == COMPARABLE,
+        "verdict_consistent": fwd.verdict == rev.verdict,
+        "forward": fwd.to_dict(),
+        "reverse": rev.to_dict(),
+        "note": "forward=以第一条为判定主体；两向结论不一致时，对外以较严者为准，不合并。",
+    }
+
+
+def _row_to_payload(raw: Dict[str, Any], index: int) -> Dict[str, Any]:
+    """整表审计的行归一：接受完整记录 JSON，或 extract.py 的候选行。"""
+    row = dict(raw)
+    if "outcome" not in row and (row.get("values_found") or row.get("row_raw")):
+        value = None
+        for v in row.get("values_found") or []:
+            try:
+                x = float(v)
+            except (TypeError, ValueError):
+                continue
+            if 0 < x <= 100:
+                value = x
+                break
+        row = {
+            "record_id": row.get("record_id"),
+            "source_id": row.get("source_id"),
+            "locator": row.get("locator"),
+            "evidence_grade": row.get("evidence_grade") or "imported_unchecked",
+            "outcome": {
+                "value": value,
+                "outcome_type": row.get("outcome_type") or "unknown",
+                "label_raw": row.get("row_raw") or row.get("label_raw"),
+            },
+        }
+    if not row.get("record_id"):
+        row["record_id"] = f"ROW-{index:02d}"
+    return row
+
+
+def audit_table_payload(rows_raw: List[Dict[str, Any]], records: List[Record]) -> Dict[str, Any]:
+    """整表审计：一张文献结果表里，哪些行能同框、卡在哪一维、对库有没有可比值。
+
+    行的 evidence_grade 由操作者声明（extract 候选默认 imported_unchecked），
+    引擎不猜：未核验行按 NEEDS_EVIDENCE 处理，这是诚实性的落点。
+    """
+    rows = [record_from_payload(_row_to_payload(r, i)) for i, r in enumerate(rows_raw, start=1)]
+    if len(rows) < 2:
+        raise ValueError("整表审计至少需要 2 行")
+
+    within = []
+    blocked_by: Dict[str, int] = {}
+    for i in range(len(rows)):
+        for j in range(i + 1, len(rows)):
+            v = judge(rows[i], rows[j])
+            within.append({
+                "a": rows[i].record_id,
+                "b": rows[j].record_id,
+                "verdict": v.verdict,
+                "blocking_dimension": v.blocking_dimension,
+                "non_independent": v.non_independent,
+            })
+            if v.blocking_dimension:
+                blocked_by[v.blocking_dimension] = blocked_by.get(v.blocking_dimension, 0) + 1
+
+    vs_library = []
+    for row in rows:
+        comparable_refs = []
+        checked = 0
+        for r in records:
+            if r.record_id == row.record_id:
+                continue
+            checked += 1
+            v = judge(row, r)
+            if v.verdict == COMPARABLE:
+                comparable_refs.append({
+                    "ref": r.record_id,
+                    "value": r.outcome_value,
+                    "outcome_type": r.outcome_type,
+                    "citation": r.citation,
+                    "locator_zh": r.locator_zh,
+                })
+        vs_library.append({
+            "row": row.record_id,
+            "value": row.outcome_value,
+            "outcome_type": row.outcome_type,
+            "evidence_grade": row.evidence_grade,
+            "label_raw": row.label_raw,
+            "library_size": checked,
+            "comparable_count": len(comparable_refs),
+            "comparable_refs": comparable_refs[:3],
+        })
+
+    return {
+        "engine": ENGINE_VERSION,
+        "rules": RULES_VERSION,
+        "rows": [
+            {
+                "row": r.record_id,
+                "value": r.outcome_value,
+                "outcome_type": r.outcome_type,
+                "evidence_grade": r.evidence_grade,
+            }
+            for r in rows
+        ],
+        "within_pairs": within,
+        "vs_library": vs_library,
+        "summary": {
+            "row_count": len(rows),
+            "within_pair_count": len(within),
+            "within_comparable": sum(1 for w in within if w["verdict"] == COMPARABLE),
+            "within_blocked": sum(1 for w in within if w["verdict"] == BLOCKED),
+            "within_needs_evidence": sum(1 for w in within if w["verdict"] == NEEDS_EVIDENCE),
+            "blocked_by": blocked_by,
+            "rows_with_library_match": sum(1 for x in vs_library if x["comparable_count"]),
+        },
+    }
+
+
 def brief_payload(subject: Record, records: List[Record]) -> Dict[str, Any]:
     """降级路径用：几百字节的证书摘要，可直接贴回会话（本地跑 + 会话编排）。"""
     pl = placement(subject, records)
@@ -4897,6 +5073,10 @@ def main(argv: Optional[List[str]] = None) -> int:
     parser.add_argument("--records", metavar="PATH", help="替换参照记录集（默认使用内嵌记录）")
     parser.add_argument("--list-records", action="store_true", help="列出全部参照的引用、定位、口径与档位")
     parser.add_argument("--leverage", action="store_true", help="补证杠杆：补哪一条解锁最多（含语料级）")
+    parser.add_argument("--judge-pair", nargs=2, metavar=("ID_A", "ID_B"),
+                        help="文献—文献两两判定：这两条数值能不能放进同一句话")
+    parser.add_argument("--audit-table", metavar="PATH",
+                        help="整表审计：表格行 JSON（extract.py 候选或记录行）逐行判定同框与卡点")
     parser.add_argument("--selftest", action="store_true", help="只跑 T1–T23c 验收矩阵")
     parser.add_argument("--version", action="store_true", help="打印引擎与规则版本")
     args = parser.parse_args(argv)
@@ -4909,6 +5089,39 @@ def main(argv: Optional[List[str]] = None) -> int:
 
     if args.list_records:
         print(json.dumps(list_records_payload(records), ensure_ascii=False, indent=2))
+        return 0
+
+    if args.judge_pair:
+        try:
+            payload = judge_pair_payload(records, args.judge_pair[0], args.judge_pair[1])
+        except ValueError as exc:
+            print(str(exc), file=sys.stderr)
+            return 2
+        print(json.dumps(payload, ensure_ascii=False, indent=2))
+        return 0
+
+    if args.audit_table:
+        try:
+            with open(args.audit_table, "r", encoding="utf-8-sig") as fh:
+                data = json.load(fh)
+        except (OSError, ValueError) as exc:
+            print(f"表格文件读取失败：{exc}", file=sys.stderr)
+            return 2
+        if isinstance(data, dict) and isinstance(data.get("candidates"), list):
+            rows_raw = data["candidates"]      # extract.py --json 输出
+        elif isinstance(data, dict) and isinstance(data.get("rows"), list):
+            rows_raw = data["rows"]
+        elif isinstance(data, list):
+            rows_raw = data
+        else:
+            print("表格格式不合法：需要行数组，或含 rows/candidates 数组的对象", file=sys.stderr)
+            return 2
+        try:
+            payload = audit_table_payload(rows_raw, records)
+        except ValueError as exc:
+            print(str(exc), file=sys.stderr)
+            return 2
+        print(json.dumps(payload, ensure_ascii=False, indent=2))
         return 0
 
     subject = USER

@@ -1,0 +1,368 @@
+{
+  "schema_version": "0.1",
+  "batch": "B-2026-10-27-01",
+  "status": "CANDIDATE_UNSIGNED",
+  "notice": "本文件为角色B 于 2026-10-27 从 PMC 开放获取全文自动抽取 + 人工逐条核对表行/脚注所得的候选批次。全部记录 evidence_grade=imported_unchecked，**未进入 data/pool30.json、不参与引擎判定**。A 逐条签核后由 B 提升等级并合并。",
+  "why_this_batch": "演示底物 4-溴苯甲醚 的可比参照过少（pool30 中 档A×分离收率 = 0，全靠 SM-001b 一条）。本批次定向补同底物记录，优先带明确 locator 的表行；不以增加数量为目标。",
+  "harvest": {
+    "sources": "PMC 开放获取全文（NCBI E-utilities esearch/efetch）",
+    "queries": [
+      "\"4-bromoanisole\" AND suzuki（命中 194 篇）",
+      "\"4-bromoanisole\" AND \"tetrakis\"（命中 37 篇）",
+      "\"4-bromoanisole\" AND \"isolated yield\" AND phenylboronic（命中 27 篇）"
+    ],
+    "scanned_articles": 124,
+    "tables_with_target_row": 8,
+    "sentence_level_hits": 39,
+    "kept": 7,
+    "rejected_reason_top": [
+      "底物不是 4-溴苯甲醚（只是在引言/方法里被提到）",
+      "硼酸不是苯硼酸（杂芳基/取代苯硼酸）",
+      "纯化/定量方式完全未写，连推测依据都没有",
+      "与库内 P12/P13 同篇重复（已合并为同篇新条目）"
+    ]
+  },
+  "records": [
+    {
+      "record_id": "CB-01",
+      "source_id": "CB-01",
+      "citation": "Rahman, M.; Zhang, J.; Zhao, Q. et al. Organometallics 2022, 41(16), 2281-2290",
+      "doi": "10.1021/acs.organomet.2c00262",
+      "pmcid": "PMC10686539",
+      "locator": "Experimental section, 4-methoxybiphenyl 条目：\"the reaction of 4-bromoanisole (18.7 mg, 0.10 mmol) with phenylboronic acid (24.4 mg, 0.20 mmol) afforded the title compound (16.0 mg, 87%) as a white solid\"",
+      "substrate": { "aryl_halide": "4-bromoanisole", "boronic_acid": "phenylboronic acid", "product": "4-methoxybiphenyl" },
+      "outcome": {
+        "value": 87.0,
+        "outcome_type": "isolated",
+        "label_raw": "(16.0 mg, 87%) as a white solid",
+        "note": "质量与百分比并列给出，且附 1H/13C NMR 表征 → 分离收率（称重）"
+      },
+      "assay": {
+        "method": "isolated（纯化后称重 + NMR 表征）",
+        "internal_standard": null,
+        "quantification_basis": "纯化产物质量",
+        "assay_basis_source": "Experimental：质量(mg)与收率(%)同时给出，产物为白色固体"
+      },
+      "conditions": {
+        "catalyst": "Pd-PEPPSI NHC（咖啡因衍生，2–4）",
+        "catalyst_mol_pct": 2.0,
+        "ligand": "NHC（caffeine-derived）",
+        "ligand_mol_pct": null,
+        "base": "Table 1 条件（KOH/H2O 或碳酸盐，需按 entry 确认）",
+        "base_eq": 3.0,
+        "solvent": "Table 1 条件（需按 entry 确认）",
+        "temp_c": null,
+        "time_h": 15.0,
+        "atmosphere": null,
+        "scale_mmol": 0.1,
+        "equivalents": { "aryl_halide": 1.0, "boronic_acid": 2.0 },
+        "concentration_m": 0.2
+      },
+      "tier": "C",
+      "tier_basis": "ligand_family=non_phosphine（NHC）→ R5",
+      "evidence_grade": "imported_unchecked",
+      "verification": "pending_locator_check",
+      "_b_review": {
+        "value_confidence": "high",
+        "caliber_confidence": "high",
+        "condition_confidence": "medium",
+        "must_check": "回 Table 1 确认 4-溴苯甲醚+苯硼酸 对应的是哪一条 entry，补齐 base/solvent/temp_c；若不补，D6/D7 只能记 L1 缺失",
+        "proposed_grade": "candidate"
+      }
+    },
+    {
+      "record_id": "CB-02",
+      "source_id": "CB-02",
+      "citation": "Purohit, S.; Oswal, P.; Bahuguna, A. et al. RSC Adv. 2024, 14(37), 27092-27109",
+      "doi": "10.1039/d4ra03401e",
+      "pmcid": "PMC11348857",
+      "locator": "Table 2（\"Results of C–C coupling reaction of different aryl halides with phenylboronic acid under optimized reaction conditions\"）entry 8 + 脚注 a",
+      "substrate": { "aryl_halide": "4-bromoanisole", "boronic_acid": "phenylboronic acid", "product": "4-methoxybiphenyl" },
+      "outcome": {
+        "value": 61.0,
+        "outcome_type": "unknown",
+        "label_raw": "∼61%",
+        "note": "原文用「∼」近似值，且表脚注未声明收率定义（正文只说产物经 1H NMR 与已知物比对确认）→ 口径按未声明处理，不得推定 isolated"
+      },
+      "assay": {
+        "method": "未声明",
+        "internal_standard": null,
+        "quantification_basis": null,
+        "assay_basis_source": "Table 2 脚注 a 只列反应条件，无收率定义"
+      },
+      "conditions": {
+        "catalyst": "GO–TeN–Pd(0)（有机碲配体固载于氧化石墨烯）",
+        "catalyst_mol_pct": 0.108,
+        "ligand": "organotellurium",
+        "ligand_mol_pct": null,
+        "base": "K2CO3",
+        "base_eq": 2.0,
+        "solvent": "DMF/H2O = 4:1（5.0 mL）",
+        "temp_c": 100.0,
+        "time_h": 12.0,
+        "atmosphere": null,
+        "scale_mmol": 1.0,
+        "equivalents": { "aryl_halide": 1.0, "boronic_acid": 1.2 },
+        "concentration_m": null
+      },
+      "tier": "C",
+      "tier_basis": "catalyst_form=supported → R4",
+      "evidence_grade": "imported_unchecked",
+      "verification": "pending_locator_check",
+      "_b_review": {
+        "value_confidence": "high",
+        "caliber_confidence": "n/a（原文未声明）",
+        "condition_confidence": "high",
+        "must_check": "只需确认 entry 8 对应 4-溴苯甲醚（表内底物列在 XML 中为文本，已确认）；口径不改，保持 unknown",
+        "proposed_grade": "candidate",
+        "demo_value": "这是「文献给近似值 + 不写口径」的实例，可作 D3 UNKNOWN 分支的教学样本"
+      }
+    },
+    {
+      "record_id": "CB-03",
+      "source_id": "CB-03",
+      "citation": "Weeden, J. A.; Huang, R.; Galloway, K. D. et al. Molecules 2011, 16(8), 6215-6231",
+      "doi": "10.3390/molecules16086215",
+      "pmcid": "PMC6264329",
+      "locator": "Table 3（\"Coupling of aryl halides with phenylboronic acid catalyzed by RO-PTA/Pd(OAc)2\"）entry 4 + 脚注 a/b；Experimental \"4-Methoxy-1,1'-biphenyl\" 条目",
+      "substrate": { "aryl_halide": "4-bromoanisole", "boronic_acid": "phenylboronic acid", "product": "4-methoxybiphenyl" },
+      "outcome": {
+        "value": 50.0,
+        "outcome_type": "isolated",
+        "label_raw": "Table 3 entry 4 = 50；脚注 a: Isolated yield after purification by column chromatography",
+        "note": "**entry 映射待确认**：Experimental 写「Table 4, entry 4」，但该文 Table 4 是晶体学数据表（疑为原文笔误）；Product 名 4-Methoxy-1,1'-biphenyl 与 4-溴苯甲醚+苯硼酸 一致"
+      },
+      "assay": {
+        "method": "isolated（柱层析后称重）",
+        "internal_standard": null,
+        "quantification_basis": "纯化产物质量",
+        "assay_basis_source": "Table 3 脚注 a: Isolated yield after purification by column chromatography"
+      },
+      "conditions": {
+        "catalyst": "Pd(OAc)2 + RO-PTA（水溶性膦）",
+        "catalyst_mol_pct": null,
+        "ligand": "RO-PTA（phosphine）",
+        "ligand_mol_pct": null,
+        "base": "见原文条件（水相体系）",
+        "base_eq": null,
+        "solvent": "H2O/MeCN = 1:1",
+        "temp_c": 80.0,
+        "time_h": 6.0,
+        "atmosphere": null,
+        "scale_mmol": 1.0,
+        "equivalents": { "aryl_halide": 1.0, "boronic_acid": 1.5 },
+        "concentration_m": null
+      },
+      "tier": "A",
+      "tier_basis": "molecular_complex + ligand_family=phosphine → R0（水相不改变档：R6 要求 ligand=none）",
+      "evidence_grade": "imported_unchecked",
+      "verification": "pending_locator_check",
+      "_b_review": {
+        "value_confidence": "medium",
+        "caliber_confidence": "high",
+        "condition_confidence": "medium",
+        "must_check": "回 PDF 看 Table 3 的底物列（XML 中结构式为图，取不到），确认 entry 4 = 4-溴苯甲醚；同时补齐碱与载量",
+        "proposed_grade": "candidate",
+        "strategic_value": "若成立，这是 (档A × 分离收率) 的第二条记录 —— 与 SM-001b 的 40% 构成 40–50% 的两点区间，演示可讲「同档同口径有两条，范围 40–50%，你 35% 略低但仍在量级内」，这是目前最缺的一句话"
+      }
+    },
+    {
+      "record_id": "CB-04",
+      "source_id": "CB-04",
+      "citation": "Lo, P. K.; Yang, C. Y.; Wu, W. Y. et al. Molecules 2021, 26(15), 4426",
+      "doi": "10.3390/molecules26154426",
+      "pmcid": "PMC8347745",
+      "locator": "Table 2（\"Suzuki coupling reaction catalyzed by new palladium complexes\"）entries 20–21 + 脚注 a/b",
+      "substrate": { "aryl_halide": "4-bromoanisole", "boronic_acid": "phenylboronic acid", "product": "4-methoxybiphenyl" },
+      "outcome": {
+        "value": 11.0,
+        "outcome_type": "conversion",
+        "label_raw": "entry 21 = 11（Conversion (%) b）；脚注 b: Determined by 1H NMR",
+        "note": "同表 entry 20（1 h）= trace。这是**低转化**样本，不是低收率样本 —— 两条不能混"
+      },
+      "assay": {
+        "method": "1H NMR",
+        "internal_standard": null,
+        "quantification_basis": "conversion（未注明归一化方式）",
+        "assay_basis_source": "Table 2 脚注 b: Determined by 1H NMR"
+      },
+      "conditions": {
+        "catalyst": "Pd 配合物 3",
+        "catalyst_mol_pct": 1.0,
+        "ligand": null,
+        "ligand_mol_pct": null,
+        "base": "K2CO3",
+        "base_eq": 2.0,
+        "solvent": "toluene（2 mL）",
+        "temp_c": 70.0,
+        "time_h": 2.0,
+        "atmosphere": null,
+        "scale_mmol": 1.0,
+        "equivalents": { "aryl_halide": 1.0, "boronic_acid": 1.5 },
+        "concentration_m": null
+      },
+      "tier": "C",
+      "tier_basis": "配体族待确认（若为膦配体则应改判 A）",
+      "evidence_grade": "imported_unchecked",
+      "verification": "pending_locator_check",
+      "_b_review": {
+        "value_confidence": "high",
+        "caliber_confidence": "high",
+        "condition_confidence": "high",
+        "must_check": "确认 catalyst 3 的配体族（决定档 A/C）",
+        "proposed_grade": "candidate",
+        "demo_value": "它是「同底物 + 明确写 1H NMR 定量」的干净 conversion 样本，可与 P13 的 GC-MS conversion 对照，测 D3「conversion ≠ yield」"
+      }
+    },
+    {
+      "record_id": "CB-05",
+      "source_id": "CB-05",
+      "citation": "Al-Hawary, S. I. S.; Saleh, R. O.; AlBajalan, A. R. et al. Sci. Rep. 2024, 14",
+      "doi": "10.1038/s41598-024-58310-5",
+      "pmcid": "PMC10985085",
+      "locator": "Table 6（\"Preparing various derivatives in the SMC reaction via Pd-DPyE@MCM-41@MNP\"）row 9b + 脚注 aIsolated yield",
+      "substrate": { "aryl_halide": "4-bromoanisole", "boronic_acid": "phenylboronic acid", "product": "4-methoxybiphenyl" },
+      "outcome": {
+        "value": 95.0,
+        "outcome_type": "isolated",
+        "label_raw": "row: 9b | 4-Bromoanisole | 25 | 95 | ... ；脚注 aIsolated yield",
+        "note": "**列映射未确认**：XML 表头缺失，25 与 95 谁是时间、谁是收率需回 PDF 核对"
+      },
+      "assay": {
+        "method": "isolated（据脚注 a）",
+        "internal_standard": null,
+        "quantification_basis": "纯化产物质量",
+        "assay_basis_source": "Table 6 脚注 a: Isolated yield"
+      },
+      "conditions": {
+        "catalyst": "Pd-DPyE@MCM-41@MNP（磁性介孔固载）",
+        "catalyst_mol_pct": null,
+        "ligand": null,
+        "ligand_mol_pct": null,
+        "base": null,
+        "base_eq": null,
+        "solvent": null,
+        "temp_c": null,
+        "time_h": null,
+        "atmosphere": null,
+        "scale_mmol": null,
+        "equivalents": null,
+        "concentration_m": null
+      },
+      "tier": "C",
+      "tier_basis": "catalyst_form=supported",
+      "evidence_grade": "imported_unchecked",
+      "verification": "pending_locator_check",
+      "_b_review": {
+        "value_confidence": "low",
+        "caliber_confidence": "high",
+        "condition_confidence": "low",
+        "must_check": "回 PDF 看 Table 6 表头与行 9b 各列含义，再补条件；表头没对上之前**不得入库**",
+        "proposed_grade": "imported_unchecked（先不升）"
+      }
+    },
+    {
+      "record_id": "CB-06",
+      "source_id": "CB-06",
+      "citation": "Esteban, N.; Claros, M.; Álvarez, C. et al. Polymers 2023, 15(20), 4143",
+      "doi": "10.3390/polym15204143",
+      "pmcid": "PMC10611190",
+      "locator": "Table 4（\"Suzuki−Miyaura reactions of aryl bromides and chlorides with phenylboronic acid catalyzed by Pd@PP-3\"）entry 26 (b) + 脚注 b/c",
+      "substrate": { "aryl_halide": "4-bromoanisole", "boronic_acid": "phenylboronic acid", "product": "4-methoxybiphenyl" },
+      "outcome": {
+        "value": 90.0,
+        "outcome_type": "unknown",
+        "label_raw": "26 b | 4-Bromoanisole | Pd@PP-3 | 90 | 82:8 ；脚注 b: 仅用水作溶剂",
+        "note": "与库内 P13（同篇，Table 3 entry 1，conversion 100）是**同篇不同 entry**；90 的列义（收率或转化率）未确认"
+      },
+      "assay": {
+        "method": "未声明（需回 PDF 表头）",
+        "internal_standard": null,
+        "quantification_basis": null,
+        "assay_basis_source": "Table 4 脚注仅给出溶剂与对照条件"
+      },
+      "conditions": {
+        "catalyst": "Pd@PP-3（微孔膦聚合物固载）",
+        "catalyst_mol_pct": null,
+        "ligand": null,
+        "ligand_mol_pct": null,
+        "base": null,
+        "base_eq": null,
+        "solvent": "H2O（仅水）",
+        "temp_c": null,
+        "time_h": null,
+        "atmosphere": null,
+        "scale_mmol": null,
+        "equivalents": null,
+        "concentration_m": null
+      },
+      "tier": "C",
+      "tier_basis": "catalyst_form=supported",
+      "evidence_grade": "imported_unchecked",
+      "verification": "pending_locator_check",
+      "_b_review": {
+        "value_confidence": "low",
+        "caliber_confidence": "low",
+        "condition_confidence": "low",
+        "must_check": "回 PDF 表头确认 90 与 82:8 的含义（收率/转化率、选择性）",
+        "proposed_grade": "imported_unchecked（先不升）"
+      }
+    },
+    {
+      "record_id": "CB-07",
+      "source_id": "CB-07",
+      "citation": "Hajighasemi, Z.; Nahipour, A.; Ghorbani-Choghamarani, A. et al. Nanoscale Adv. 2023, 5(18), 4925-4933",
+      "doi": "10.1039/d3na00403a",
+      "pmcid": "PMC10496902",
+      "locator": "Suzuki–Miyaura 表（\"Suzuki–Miyaura coupling reaction catalyzed by Pd(0)-SMTU-boehmite\"）entry 7",
+      "substrate": { "aryl_halide": "4-bromoanisole", "boronic_acid": "phenylboronic acid", "product": "4-methoxybiphenyl" },
+      "outcome": {
+        "value": 99.0,
+        "outcome_type": "unknown",
+        "label_raw": "7 | 4-Bromoanisole | 70 | >99 | 105 | 90 | 84–86",
+        "note": "**与库内 P12 同篇**：P12 记 99 / unknown / Nanoscale Adv.；本条给出该值的 locator（表中 entry 7，70 min）并说明口径同样未声明。用途：为 P12 补定位，不作为新记录"
+      },
+      "assay": {
+        "method": "未声明",
+        "internal_standard": null,
+        "quantification_basis": null,
+        "assay_basis_source": "表脚注为空；表中给出熔点 84–86 °C，暗示产物经分离，但收率定义未写"
+      },
+      "conditions": {
+        "catalyst": "Pd(0)-SMTU-boehmite",
+        "catalyst_mol_pct": null,
+        "ligand": null,
+        "ligand_mol_pct": null,
+        "base": null,
+        "base_eq": null,
+        "solvent": null,
+        "temp_c": null,
+        "time_h": null,
+        "time_min": 70,
+        "atmosphere": null,
+        "scale_mmol": null,
+        "equivalents": null,
+        "concentration_m": null
+      },
+      "tier": "C",
+      "tier_basis": "catalyst_form=supported",
+      "evidence_grade": "imported_unchecked",
+      "verification": "pending_locator_check",
+      "_b_review": {
+        "value_confidence": "high",
+        "caliber_confidence": "n/a（原文未声明）",
+        "condition_confidence": "low",
+        "must_check": "只作 P12 的 locator 补充，不要新增记录（避免同一篇文献被计两次）",
+        "proposed_grade": "not_a_new_record"
+      }
+    }
+  ],
+  "signoff_checklist_for_A": [
+    "CB-03 优先：回 PDF 看 Table 3 底物列，确认 entry 4 = 4-溴苯甲醚；成立则 (档A×分离收率) 从 1 条变 2 条",
+    "CB-01：补 Table 1 对应 entry 的 base/solvent/temp",
+    "CB-02：口径保持 unknown（原文未声明），不要改",
+    "CB-05 / CB-06：表头没对上前不得入库",
+    "CB-07：只更新 P12 的 locator，不新增记录",
+    "签核后由 B 把 evidence_grade 改为 candidate 并合并进 pool30，同时重跑 goldset 与 17 项矩阵"
+  ]
+}

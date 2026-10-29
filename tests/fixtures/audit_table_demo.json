@@ -1,0 +1,28 @@
+{
+  "note": "整表审计演示输入：混合三种行形态——extract.py 候选行、完整记录行（同底物不同口径）、完整记录行（口径未决）。",
+  "rows": [
+    {
+      "source_id": "demo-paper",
+      "locator": "p.3 table#1 row2",
+      "row_raw": "Entry 2 | PhB(OH)2 | 66",
+      "values_found": ["66"],
+      "evidence_grade": "imported_unchecked"
+    },
+    {
+      "record_id": "T-ISO-35",
+      "evidence_grade": "A_confirmed",
+      "outcome": {"value": 35, "outcome_type": "isolated", "label_raw": "isolated yield (column chromatography)"},
+      "substrate": {"aryl_halide": "4-bromoanisole", "boronic_acid": "phenylboronic acid", "product": "4-methoxybiphenyl"},
+      "conditions": {"solvent": "THF", "temp_c": 60},
+      "assay": {"method": "isolated (weighed)", "quantification_basis": "isolated product"}
+    },
+    {
+      "record_id": "T-GC-66",
+      "evidence_grade": "A_confirmed",
+      "outcome": {"value": 66, "outcome_type": "gc", "label_raw": "GC yield"},
+      "substrate": {"aryl_halide": "4-bromoanisole", "boronic_acid": "phenylboronic acid", "product": "4-methoxybiphenyl"},
+      "conditions": {"solvent": "THF", "temp_c": 60},
+      "assay": {"method": "GC", "quantification_basis": "GC area"}
+    }
+  ]
+}

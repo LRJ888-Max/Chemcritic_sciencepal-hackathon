@@ -1,0 +1,182 @@
+{
+  "meta": {
+    "purpose": "引擎契约回归：把人工测过、判定过的事实固化成断言，改代码后跑一遍就知道有没有改坏。",
+    "discipline": [
+      "每条 expect 都必须能追到一条规则依据（rule 字段）。允许改断言，但必须同时改 rule，且 rule 要写清为什么。",
+      "断言描述的是「正确行为」，不是「当前行为」。当前不通过的条目，就是待修的 bug，不是断言写错了。",
+      "ref_set 用精确集合，不用「包含」。多一条和少一条都是错，多出来的往往是底物污染。"
+    ],
+    "engine_relative_records_note": "引擎内嵌 records.json（32 条 / 5 种底物），单文件可独立运行，不依赖 cwd。"
+  },
+  "base_input": {
+    "record_id": "USER-001",
+    "substrate": {
+      "aryl_halide": "4-bromoanisole",
+      "boronic_acid": "phenylboronic acid",
+      "product": "4-methoxybiphenyl"
+    },
+    "conditions": {
+      "catalyst": "Pd(PPh3)4",
+      "catalyst_mol_pct": null,
+      "base": null,
+      "base_eq": null,
+      "solvent": "THF",
+      "temp_c": 60,
+      "time_h": 12,
+      "atmosphere": null,
+      "scale_mmol": 1.0,
+      "equivalents": { "aryl_halide": 1.0, "boronic_acid": null }
+    },
+    "assay": { "method": null, "internal_standard": null, "quantification_basis": null },
+    "catalytic_profile": {
+      "catalyst_form": "molecular_complex",
+      "ligand_family": "phosphine",
+      "support": "none",
+      "medium": "organic",
+      "activation_mode": "thermal"
+    }
+  },
+  "cases": [
+    {
+      "id": "C1",
+      "name": "主场景 · 4-溴苯甲醚 × 分离收率 35%",
+      "origin": "线上 R1 / T1 实际输入",
+      "patch": {
+        "outcome": { "value": 35, "outcome_type": "isolated", "label_raw": "35% 分离收率" }
+      },
+      "expect": {
+        "status_in": ["PLACED"],
+        "ref_set": [40, 50],
+        "delta_equals": -5,
+        "detail_not_contains": ["None vs"]
+      },
+      "rule": "同底物 + 同产物 + 同口径(isolated) + 同档(A) 的已核验记录只有 SM-001b(40) 与 P36(50)；SM-002/P35 为档 B、SM-005 为档 C，P30/P28 为 4-溴甲苯，均不得进池。min=40，故 35 对 40 差 -5。"
+    },
+    {
+      "id": "C2",
+      "name": "残缺输入 · 只说「收了 35%」，口径未定",
+      "origin": "线上 R4 / T7 实际输入",
+      "patch": {
+        "outcome": { "value": 35, "outcome_type": "unknown", "label_raw": "收了35%" }
+      },
+      "expect": {
+        "status_in": ["UNDEFINED"],
+        "delta_is_null": true
+      },
+      "rule": "口径未决时不得定位、不得给差值。这是 T7 那次「替用户定为分离收率」的防线。"
+    },
+    {
+      "id": "C3",
+      "name": "库外底物 · 3-溴噻吩 × 分离收率 40%",
+      "origin": "线上 R2 / T4 / T4b 实际输入",
+      "patch": {
+        "substrate": {
+          "aryl_halide": "3-bromothiophene",
+          "boronic_acid": "phenylboronic acid",
+          "product": "3-phenylthiophene"
+        },
+        "outcome": { "value": 40, "outcome_type": "isolated", "label_raw": "40% 分离收率" }
+      },
+      "expect": {
+        "delta_is_null": true,
+        "ref_set": [],
+        "blocking_contains": ["substrate"]
+      },
+      "rule": "库内无该底物对。参照池应为空，delta 必须为 null。当前返回 PLACED / delta=0，是「拿 4-溴苯甲醚的 40 跟用户的 40 相减」，属跨底物计算。"
+    },
+    {
+      "id": "C4",
+      "name": "跨口径 · 溴苯 × GC 内标 90%",
+      "origin": "线上 R3 / T5 实际输入",
+      "patch": {
+        "substrate": {
+          "aryl_halide": "bromobenzene",
+          "boronic_acid": "phenylboronic acid",
+          "product": "biphenyl"
+        },
+        "outcome": { "value": 90, "outcome_type": "gc", "label_raw": "GC 内标 90%" },
+        "assay": {
+          "method": "gc",
+          "internal_standard": "dodecane",
+          "quantification_basis": "calibration curve"
+        }
+      },
+      "expect": {
+        "delta_is_null": true
+      },
+      "rule": "无同档同口径 calibrated 参照时不得给差值。允许 status 为 NO_CALIBRATED_REFERENCE 或 NO_COMPARABLE，但 delta 必须为 null。"
+    },
+    {
+      "id": "C5",
+      "name": "口径推定 · outcome_type=isolated 但 label_raw 为空",
+      "origin": "v5 洞 2 的模板行为（模型自行填口径）",
+      "patch": {
+        "outcome": { "value": 35, "outcome_type": "isolated", "label_raw": null }
+      },
+      "expect": {
+        "status_in": ["UNDEFINED"],
+        "delta_is_null": true
+      },
+      "rule": "用户侧口径分类必须有原话支撑（label_supported）。模型推定但不给原话时必须降级为 UNDEFINED，不得放行。"
+    },
+    {
+      "id": "C6",
+      "name": "对称检验 · 4-溴甲苯 × 分离收率 99%",
+      "origin": "底物隔离的对照组（与 C1 互为镜像）",
+      "patch": {
+        "substrate": {
+          "aryl_halide": "4-bromotoluene",
+          "boronic_acid": "phenylboronic acid",
+          "product": "4-methylbiphenyl"
+        },
+        "outcome": { "value": 99, "outcome_type": "isolated", "label_raw": "99% 分离收率" }
+      },
+      "expect": {
+        "status_in": ["PLACED"],
+        "ref_set": [93, 99]
+      },
+      "rule": "4-溴甲苯的档 A × 分离收率记录为 P28(99) 与 P30(93)。若池中出现 40 / 50，说明与 C1 互相污染，底物过滤仍未生效。C1 与 C6 必须同时通过，单边通过等于没修。"
+    },
+    {
+      "id": "C7",
+      "name": "口径与原话矛盾 · 原话写着 GC，却标 isolated",
+      "origin": "v8 铁律 10 + input_audit 的第二道防线",
+      "patch": {
+        "outcome": { "value": 35, "outcome_type": "isolated", "label_raw": "GC 内标 35%" }
+      },
+      "expect": {
+        "status_in": ["UNDEFINED"],
+        "delta_is_null": true
+      },
+      "rule": "label_raw 里的口径词与 outcome_type 必须一致。原话是 GC 却标 isolated，说明模型把口径改了名——这与「收了 35% 写成 isolated」是同一类错，但更隐蔽，因为它带着一个假的原话。"
+    },
+    {
+      "id": "C8",
+      "name": "登记表完整性 · --list-records 的每条记录都可引用",
+      "origin": "v8 新增依赖：--list-records + locator_zh + label_raw",
+      "patch": null,
+      "expect": {
+        "list_records": {
+          "count_min": 32,
+          "substrate_min": 5,
+          "required_fields": ["record_id", "citation", "locator", "locator_zh", "value", "outcome_type", "label_raw", "tier", "calibration"],
+          "locator_zh_nonempty": true
+        }
+      },
+      "rule": "v8 行 99/191 要求用户文案的定位一律用 locator_zh；行 192 要求复述原文时逐字取 label_raw。任何一条缺 locator_zh 或 label_raw，agent 就只能退回英文 locator 或自行编造，两条都违反铁律 6。"
+    },
+    {
+      "id": "C9",
+      "name": "字段稳定性 · 非 PLACED 状态时键名集合",
+      "origin": "v8 行 103-111 假定 placement 恒定含 reference_values / reference_count",
+      "patch": {
+        "outcome": { "value": 35, "outcome_type": "unknown", "label_raw": "收了35%" }
+      },
+      "expect": {
+        "status_in": ["UNDEFINED"],
+        "placement_keys_required": ["status", "reference_values", "reference_count", "delta_vs_min"]
+      },
+      "rule": "v8 把 placement.reference_values / reference_count / delta_vs_min 当成一定存在的字段来读。若某些 status 下这些键直接缺失（而不是给 null / 空数组），agent 读到 undefined，可能崩，也可能自己补一个——补就是编造。允许值为 null 或 []，但键必须在。"
+    }
+  ]
+}

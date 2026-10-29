@@ -93,12 +93,37 @@ def coverage(records: List[Record]) -> Dict[str, Any]:
     }
 
 
+def ensure_keys(d: dict) -> dict:
+    """给每个 placement 状态补齐字段键（值可为 None / []，但键必须在）。
+
+    依据 v8 行 103-111：提示词把 reference_values / reference_count / delta_vs_min
+    当成恒存在字段来读（「Z 必须取自 placement.delta_vs_min」）。若某些 status 下整键
+    缺失，agent 读到的是 undefined 而不是 null，它会以为"没有这个字段"，于是要么崩，
+    要么自己补一个——补就是编造。
+    """
+    for k, default in (("reference_values", []), ("reference_count", 0),
+                       ("delta_vs_min", None), ("delta_vs_max", None),
+                       ("comparables", []), ("migration_targets", []),
+                       ("observed", None), ("uncalibrated_refs", [])):
+        d.setdefault(k, default)
+    return d
+
+
 def placement(user: Record, records: List[Record]) -> Dict[str, Any]:
     """用户落在哪个等价类、哪一档、与档内水平的差距。
 
     **C 方案（A 2026-10-26）：** 只有 `calibrated`（有绝对标尺）的参照参与
     差值计算与结论；`uncalibrated`（仅说明定量方式、无内标）单独列出，供展示。
+
+    2026-10-30：所有状态分支统一过 `ensure_keys`——v8 把 reference_values /
+    reference_count / delta_vs_min 当恒存在字段读，任何分支缺键都会让 agent
+    读到 undefined 后自行补值（补即编造）。键必须在，值可以为 null / []。
     """
+    return ensure_keys(_placement_impl(user, records))
+
+
+def _placement_impl(user: Record, records: List[Record]) -> Dict[str, Any]:
+    """placement 的内部实现；键补齐由包装层 placement() 负责。"""
     if user.outcome_value is None:
         # 没有实测数值就没有"定位"这回事（审计发现：此前仍返回 PLACED，observed=None）
         return {
@@ -121,7 +146,11 @@ def placement(user: Record, records: List[Record]) -> Dict[str, Any]:
             "action": "先让用户明确该数值是分离收率、GC 收率、核磁定量还是转化率",
         }
 
-    same_class = [r for r in records if r.outcome_type == user.outcome_type]
+    # 2026-10-29 修：参照池必须同时满足「同口径」与「同底物对」。
+    # 原实现只按 outcome_type 过滤，导致 4-溴苯甲醚的池子里混进 4-溴甲苯（P28/P30），
+    # 3-溴噻吩这种库外底物也拿到同一个池子并算出 delta=0。
+    same_class = [r for r in records
+                  if r.outcome_type == user.outcome_type and _same_pair(user, r)]
     if not same_class:
         return {
             "status": "NO_COMPARABLE",

@@ -1,0 +1,24 @@
+--- g_old.py	2026-10-29 11:49:46.142153500 +0800
++++ g_new.py	2026-10-29 11:49:46.215256300 +0800
+@@ -367,7 +367,20 @@
+     if not levels:
+         return GateResult(gate, PASS, "无明显差异")
+     level = "L2" if "L2" in levels else "L1"
+-    return GateResult(gate, PASS, "；".join(notes), level=level)
++    # 2026-10-29 修：缺失不是差异。None 渲染成「未记录」；一方缺失时不写「不同」。
++    # 依据 kb/L3-gates.md「未记录属待补，不属原因」+ 提示词 v8 行 240。
++    # 注意：不要在这里 import re——单文件 bundle 由多模块拼接而成，
++    # gates 段历史上没有 import re，加依赖会在 --json 路径上直接 NameError。
++    fixed = []
++    for n in notes:
++        n = str(n).replace("：None vs ", "：未记录 vs ").replace(" vs None", " vs 未记录")
++        if "不同：未记录 vs " in n:
++            head, tail = n.split("不同：未记录 vs ", 1)
++            n = f"{head}未记录（参照为 {tail}）"
++        elif "不同：" in n and n.endswith(" vs 未记录"):
++            n = f"{n.split('不同：', 1)[0]}未记录（您未提供）"
++        fixed.append(n)
++    return GateResult(gate, PASS, "；".join(fixed), level=level)
+ 
+ 
+ # ---------- 结论 ----------
