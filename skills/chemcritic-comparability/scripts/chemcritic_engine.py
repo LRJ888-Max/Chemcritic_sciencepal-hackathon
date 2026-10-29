@@ -4760,6 +4760,72 @@ RECORDS_JSON = r"""{
       },
       "locator_zh": "第 3.4 节 偶联反应段（sc-CO2，2 h）",
       "_source_file": "P39.json"
+    },
+    {
+      "record_id": "PMC-9043785-3c-01",
+      "source_id": "PMC-9043785-3c",
+      "tier": "C",
+      "citation": "Çakır, Kavukcu, Karabıyık, Rethinam, Türkmen, RSC Adv. 2021, 11, 37684（腈基功能化 NHC-Pd）",
+      "doi": "10.1039/d1ra07231e",
+      "pmcid": "PMC9043785",
+      "locator": "Table 3c, entry 1 (Cat. 2a / KOH / H2O-2-propanol row)",
+      "outcome": {
+        "value": 80.0,
+        "unit": "%",
+        "outcome_type": "isolated",
+        "label_raw": "表头逐字: \"Entry | Cat. | Base | Solvent | Yield (%)\"；行逐字: \"1 | 2a | KOH | H2O/2-propanol | 80\"",
+        "note": "表3c脚注未写口径。签核依据：同文正文 gram-scale 语句 \"biphenyl was obtained in an 86% isolated yield\"，且同文表3d（同类反应 scope 表）脚注 a 明写 \"Isolated yields\"。据此推定 isolated，evidence_grade 停在 candidate。"
+      },
+      "assay": {
+        "method": "isolated (推定，依据见 outcome.note)",
+        "internal_standard": null,
+        "quantification_basis": "isolated product"
+      },
+      "conditions": {
+        "catalyst": "NHC-Pd 2a（腈基功能化 NHC 钯配合物）",
+        "catalyst_loading_raw": "0.2 mol%",
+        "catalyst_mol_pct": 0.2,
+        "ligand": "nitrile-functionalized NHC",
+        "ligand_mol_pct": null,
+        "base": "KOH",
+        "base_eq": 0.5,
+        "solvent": "H2O/2-propanol",
+        "temp_c": 82,
+        "time_h": 0.5,
+        "atmosphere": "air",
+        "scale_mmol": 1.0,
+        "equivalents": {
+          "aryl_halide": 1.0,
+          "boronic_acid": 1.0
+        },
+        "concentration_m": null
+      },
+      "purification": null,
+      "evidence_grade": "candidate",
+      "verification": "candidate（表行+脚注逐字核对；口径为有原文依据的推定，待 A 级复核表3c原刊确认）",
+      "substrate": {
+        "aryl_halide": "bromobenzene",
+        "boronic_acid": "phenylboronic acid",
+        "product": "biphenyl"
+      },
+      "catalytic_profile": {
+        "catalyst_form": "molecular_complex",
+        "ligand_family": "non_phosphine",
+        "support": "none",
+        "medium": "aqueous",
+        "activation_mode": "thermal"
+      },
+      "_extraction": {
+        "label_raw_provenance": "verbatim (PMC publisher XML → typeset replica PDF → pdfplumber)",
+        "pipeline": "refs/pmc9043785_table3c.pdf → extract.py → 人工签核",
+        "missing_fields": [
+          "purification"
+        ],
+        "assay_basis_source": "正文 isolated yield 语句 + 表3d脚注",
+        "calibration": "calibrated",
+        "verified_at": "2026-10-30"
+      },
+      "locator_zh": "表 3c 第 1 条（Cat. 2a / KOH / H2O-2-propanol 行）"
     }
   ],
   "merge_note": "2026-10-28 并入 pool30 中 evidence_grade=a_confirmed 的记录：P11, P12, P13, P19a, P19b, P20, P24a, P24b, P24c, P35。仅已回原文核验者进入引擎；候选池其余条目仍留在 data/pool30.json。"
@@ -4902,15 +4968,27 @@ def _row_to_payload(raw: Dict[str, Any], index: int) -> Dict[str, Any]:
     """整表审计的行归一：接受完整记录 JSON，或 extract.py 的候选行。"""
     row = dict(raw)
     if "outcome" not in row and (row.get("values_found") or row.get("row_raw")):
+        # 结果列约定在表尾（Entry 编号在首列）；先试行尾单元格，退回 values_found 末个
         value = None
-        for v in row.get("values_found") or []:
+        raw_row = row.get("row_raw") or ""
+        cells = [c.strip() for c in raw_row.split("|")] if raw_row else []
+        for cell in reversed(cells):
             try:
-                x = float(v)
-            except (TypeError, ValueError):
+                x = float(cell)
+            except ValueError:
                 continue
             if 0 < x <= 100:
                 value = x
                 break
+        if value is None:
+            for v in reversed(row.get("values_found") or []):
+                try:
+                    x = float(v)
+                except (TypeError, ValueError):
+                    continue
+                if 0 < x <= 100:
+                    value = x
+                    break
         row = {
             "record_id": row.get("record_id"),
             "source_id": row.get("source_id"),
@@ -5108,7 +5186,10 @@ def main(argv: Optional[List[str]] = None) -> int:
             print(f"表格文件读取失败：{exc}", file=sys.stderr)
             return 2
         if isinstance(data, dict) and isinstance(data.get("candidates"), list):
-            rows_raw = data["candidates"]      # extract.py --json 输出
+            rows_raw = data["candidates"]      # extract.py --json 输出（单 PDF dict）
+        elif isinstance(data, list) and data and isinstance(data[0], dict) \
+                and isinstance(data[0].get("candidates"), list):
+            rows_raw = [c for item in data for c in item["candidates"]]  # extract 多 PDF 数组
         elif isinstance(data, dict) and isinstance(data.get("rows"), list):
             rows_raw = data["rows"]
         elif isinstance(data, list):

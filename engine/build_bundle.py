@@ -301,15 +301,27 @@ def _row_to_payload(raw: Dict[str, Any], index: int) -> Dict[str, Any]:
     """整表审计的行归一：接受完整记录 JSON，或 extract.py 的候选行。"""
     row = dict(raw)
     if "outcome" not in row and (row.get("values_found") or row.get("row_raw")):
+        # 结果列约定在表尾（Entry 编号在首列）；先试行尾单元格，退回 values_found 末个
         value = None
-        for v in row.get("values_found") or []:
+        raw_row = row.get("row_raw") or ""
+        cells = [c.strip() for c in raw_row.split("|")] if raw_row else []
+        for cell in reversed(cells):
             try:
-                x = float(v)
-            except (TypeError, ValueError):
+                x = float(cell)
+            except ValueError:
                 continue
             if 0 < x <= 100:
                 value = x
                 break
+        if value is None:
+            for v in reversed(row.get("values_found") or []):
+                try:
+                    x = float(v)
+                except (TypeError, ValueError):
+                    continue
+                if 0 < x <= 100:
+                    value = x
+                    break
         row = {
             "record_id": row.get("record_id"),
             "source_id": row.get("source_id"),
@@ -507,7 +519,10 @@ def main(argv: Optional[List[str]] = None) -> int:
             print(f"表格文件读取失败：{exc}", file=sys.stderr)
             return 2
         if isinstance(data, dict) and isinstance(data.get("candidates"), list):
-            rows_raw = data["candidates"]      # extract.py --json 输出
+            rows_raw = data["candidates"]      # extract.py --json 输出（单 PDF dict）
+        elif isinstance(data, list) and data and isinstance(data[0], dict) \
+                and isinstance(data[0].get("candidates"), list):
+            rows_raw = [c for item in data for c in item["candidates"]]  # extract 多 PDF 数组
         elif isinstance(data, dict) and isinstance(data.get("rows"), list):
             rows_raw = data["rows"]
         elif isinstance(data, list):
