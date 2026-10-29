@@ -66,6 +66,18 @@ NEEDS_EVIDENCE = "NEEDS_EVIDENCE"
 
 ALLOWED_OUTCOME_TYPES = {"isolated", "gc", "nmr", "conversion"}
 
+# 外部壳（前端/集成层）传来的收率基准字段 → 内部口径。
+# 只做同义映射，不做推断；映射不到的一律 unknown。
+YIELD_BASIS_MAP = {
+    "isolated": "isolated", "分离": "isolated", "分离收率": "isolated", "称重": "isolated",
+    "gc": "gc", "glc": "gc", "气相": "gc", "gc收率": "gc", "gc 收率": "gc",
+    "nmr": "nmr", "核磁": "nmr", "核磁定量": "nmr", "1h nmr": "nmr", "1h-nmr": "nmr",
+    "conversion": "conversion", "转化": "conversion", "转化率": "conversion",
+}
+
+# 名称归一（别名 → 规范名），键与值都按去空白小写比对
+_ALIAS_FIELDS = ("aryl_halide", "boronic_acid", "product")
+
 GATE_NAMES = {
     1: "substrate",
     2: "product",
@@ -79,6 +91,49 @@ GATE_NAMES = {
 
 HARD_GATES = (1, 2, 3, 4)
 SOFT_GATES = (5, 6, 7, 8)
+
+
+def _norm_key(value: Any) -> str:
+    return " ".join(str(value).split()).lower()
+
+
+def resolve_outcome_type(outcome: Dict[str, Any]) -> str:
+    """口径：outcome_type 优先；缺失时用外部壳的 yield_basis 做同义映射；都没有 → unknown。
+
+    映射表只含同义写法（分离/isolated、气相/GC、核磁/NMR、转化/conversion），
+    不做任何"看起来像"的推断——映射不到就是 unknown。
+    """
+    raw = _norm_key(outcome.get("outcome_type") or "")
+    if raw:
+        return raw
+    basis = _norm_key(outcome.get("yield_basis") or "")
+    return YIELD_BASIS_MAP.get(basis, "unknown")
+
+
+def resolve_label_raw(outcome: Dict[str, Any]) -> Optional[str]:
+    """原文措辞：label_raw 优先，其次外部壳的 user_verbatim（逐字照抄，不改写、不概括）。"""
+    for key in ("label_raw", "user_verbatim"):
+        value = outcome.get(key)
+        if isinstance(value, str) and value.strip():
+            return value
+    return None
+
+
+def apply_aliases(record: "Record", aliases: Any) -> None:
+    """按 name_aliases（别名 → 规范名）归一底物与产物名称。
+
+    只改名称，不改数值、不改口径、不改任何判定依据——同义归一不是证据升级。
+    """
+    if not isinstance(aliases, dict) or not aliases:
+        return
+    table = {_norm_key(k): v for k, v in aliases.items() if isinstance(v, str)}
+    for name in _ALIAS_FIELDS:
+        value = record.substrate.get(name)
+        if not isinstance(value, str):
+            continue
+        canonical = table.get(_norm_key(value))
+        if canonical:
+            record.substrate[name] = canonical
 
 
 @dataclass
@@ -112,13 +167,13 @@ class Record:
     @classmethod
     def from_dict(cls, d: Dict[str, Any]) -> "Record":
         outcome = d.get("outcome") or {}
-        return cls(
+        record = cls(
             record_id=d["record_id"],
-            outcome_type=(outcome.get("outcome_type") or "unknown").lower(),
+            outcome_type=resolve_outcome_type(outcome),
             outcome_value=outcome.get("value"),
             assay=d.get("assay") or {},
             conditions=d.get("conditions") or {},
-            substrate=d.get("substrate") or {},
+            substrate=dict(d.get("substrate") or {}),
             tier=d.get("tier"),
             source_id=d.get("source_id"),
             locator=d.get("locator"),
@@ -126,13 +181,15 @@ class Record:
             purification=d.get("purification"),
             verification=d.get("verification", "unverified"),
             catalytic_profile=d.get("catalytic_profile") or {},
-            label_raw=outcome.get("label_raw"),
+            label_raw=resolve_label_raw(outcome),
             label_raw_provenance=(d.get("_extraction") or {}).get("label_raw_provenance", "unknown"),
             evidence_grade=d.get("evidence_grade") or "imported_unchecked",
             citation=d.get("citation"),
             doi=d.get("doi"),
             inputs_source=d.get("inputs_source") or {},
         )
+        apply_aliases(record, d.get("name_aliases"))
+        return record
 
     @property
     def is_verified(self) -> bool:
@@ -1784,7 +1841,51 @@ def test_matrix(records):
     print(f"  [{'PASS' if ok23c else 'FAIL'}] T23c 无实测值 → status="
           f"{rep_novalue['status']}, plan={len(rep_novalue['plan'])} expect 空")
 
-    print(f"\n  最终：{passed} passed, {failed} failed（含 T17–T23c）")
+    # T24 · 外部壳字段兼容：yield_basis → 口径，user_verbatim → 原文措辞
+    ext_raw = {
+        "record_id": "USER-025",
+        "outcome": {"value": 35, "yield_basis": "分离", "user_verbatim": "柱层析后称重得 35%"},
+        "substrate": {"aryl_halide": "4-bromoanisole", "boronic_acid": "phenylboronic acid",
+                      "product": "4-methoxybiphenyl"},
+        "conditions": {"catalyst": "Pd(PPh3)4", "base": "Na2CO3", "solvent": "THF", "temp_c": 60},
+        "assay": {"method": "isolated (weighed)", "quantification_basis": "isolated product"},
+        "catalytic_profile": USER.catalytic_profile,
+    }
+    ext_rec = Record.from_dict(ext_raw)
+    v24 = gates.judge(ext_rec, by_id["SM-001b"])
+    ok24 = (
+        ext_rec.outcome_type == "isolated"
+        and ext_rec.label_raw == "柱层析后称重得 35%"
+        and v24.verdict == COMPARABLE and v24.blocking_dimension is None
+    )
+    passed += ok24
+    failed += not ok24
+    print(f"  [{'PASS' if ok24 else 'FAIL'}] T24  外部壳字段 → 口径={ext_rec.outcome_type}, "
+          f"措辞={'有' if ext_rec.label_raw else '无'}, verdict={v24.verdict}")
+
+    # T25 · 名称别名归一：中文名按 name_aliases 映射后才参与底物/产物比对
+    alias_raw = {
+        "record_id": "USER-026",
+        "name_aliases": {"4-溴苯甲醚": "4-bromoanisole", "苯硼酸": "phenylboronic acid",
+                         "4-甲氧基联苯": "4-methoxybiphenyl"},
+        "outcome": {"value": 35, "outcome_type": "isolated", "label_raw": "分离收率"},
+        "substrate": {"aryl_halide": "4-溴苯甲醚", "boronic_acid": "苯硼酸", "product": "4-甲氧基联苯"},
+        "conditions": {"catalyst": "Pd(PPh3)4", "base": "Na2CO3", "solvent": "THF", "temp_c": 60},
+        "assay": {"method": "isolated (weighed)", "quantification_basis": "isolated product"},
+        "catalytic_profile": USER.catalytic_profile,
+    }
+    alias_rec = Record.from_dict(alias_raw)
+    v25 = gates.judge(alias_rec, by_id["SM-001b"])
+    ok25 = (
+        alias_rec.substrate.get("aryl_halide") == "4-bromoanisole"
+        and v25.gates[1].status == PASS and v25.gates[2].status == PASS
+    )
+    passed += ok25
+    failed += not ok25
+    print(f"  [{'PASS' if ok25 else 'FAIL'}] T25  别名归一 → 底物={alias_rec.substrate.get('aryl_halide')}, "
+          f"gate1={v25.gates[1].status}, gate2={v25.gates[2].status}")
+
+    print(f"\n  最终：{passed} passed, {failed} failed（含 T17–T25）")
     return failed == 0
 
 
@@ -3840,7 +3941,7 @@ RECORDS_JSON = r"""{
   "merge_note": "2026-10-28 并入 pool30 中 evidence_grade=a_confirmed 的记录：P11, P12, P13, P19a, P19b, P20, P24a, P24b, P24c, P35。仅已回原文核验者进入引擎；候选池其余条目仍留在 data/pool30.json。"
 }"""
 
-ENGINE_VERSION = "chemcritic-engine/1.1.0"
+ENGINE_VERSION = "chemcritic-engine/1.2.0"
 RULES_VERSION = "gates v0.5 · tier-0.1"
 CONTRACT_VERSION = "sciencepal-verdict/2"
 

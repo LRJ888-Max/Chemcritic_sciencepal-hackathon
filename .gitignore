@@ -2,6 +2,9 @@
 refs/
 outputs/
 _gh_push/
+_push/
+.workbuddy/
+*.bak-*
 
 # 文献与数据文件（受出版社许可限制 / 体积过大）
 *.pdf
@@ -27,5 +30,3 @@ __pycache__/
 .pytest_cache/
 .venv/
 venv/
-
-.workbuddy/

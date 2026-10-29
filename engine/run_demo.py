@@ -383,7 +383,51 @@ def test_matrix(records):
     print(f"  [{'PASS' if ok23c else 'FAIL'}] T23c 无实测值 → status="
           f"{rep_novalue['status']}, plan={len(rep_novalue['plan'])} expect 空")
 
-    print(f"\n  最终：{passed} passed, {failed} failed（含 T17–T23c）")
+    # T24 · 外部壳字段兼容：yield_basis → 口径，user_verbatim → 原文措辞
+    ext_raw = {
+        "record_id": "USER-025",
+        "outcome": {"value": 35, "yield_basis": "分离", "user_verbatim": "柱层析后称重得 35%"},
+        "substrate": {"aryl_halide": "4-bromoanisole", "boronic_acid": "phenylboronic acid",
+                      "product": "4-methoxybiphenyl"},
+        "conditions": {"catalyst": "Pd(PPh3)4", "base": "Na2CO3", "solvent": "THF", "temp_c": 60},
+        "assay": {"method": "isolated (weighed)", "quantification_basis": "isolated product"},
+        "catalytic_profile": USER.catalytic_profile,
+    }
+    ext_rec = Record.from_dict(ext_raw)
+    v24 = gates.judge(ext_rec, by_id["SM-001b"])
+    ok24 = (
+        ext_rec.outcome_type == "isolated"
+        and ext_rec.label_raw == "柱层析后称重得 35%"
+        and v24.verdict == COMPARABLE and v24.blocking_dimension is None
+    )
+    passed += ok24
+    failed += not ok24
+    print(f"  [{'PASS' if ok24 else 'FAIL'}] T24  外部壳字段 → 口径={ext_rec.outcome_type}, "
+          f"措辞={'有' if ext_rec.label_raw else '无'}, verdict={v24.verdict}")
+
+    # T25 · 名称别名归一：中文名按 name_aliases 映射后才参与底物/产物比对
+    alias_raw = {
+        "record_id": "USER-026",
+        "name_aliases": {"4-溴苯甲醚": "4-bromoanisole", "苯硼酸": "phenylboronic acid",
+                         "4-甲氧基联苯": "4-methoxybiphenyl"},
+        "outcome": {"value": 35, "outcome_type": "isolated", "label_raw": "分离收率"},
+        "substrate": {"aryl_halide": "4-溴苯甲醚", "boronic_acid": "苯硼酸", "product": "4-甲氧基联苯"},
+        "conditions": {"catalyst": "Pd(PPh3)4", "base": "Na2CO3", "solvent": "THF", "temp_c": 60},
+        "assay": {"method": "isolated (weighed)", "quantification_basis": "isolated product"},
+        "catalytic_profile": USER.catalytic_profile,
+    }
+    alias_rec = Record.from_dict(alias_raw)
+    v25 = gates.judge(alias_rec, by_id["SM-001b"])
+    ok25 = (
+        alias_rec.substrate.get("aryl_halide") == "4-bromoanisole"
+        and v25.gates[1].status == PASS and v25.gates[2].status == PASS
+    )
+    passed += ok25
+    failed += not ok25
+    print(f"  [{'PASS' if ok25 else 'FAIL'}] T25  别名归一 → 底物={alias_rec.substrate.get('aryl_halide')}, "
+          f"gate1={v25.gates[1].status}, gate2={v25.gates[2].status}")
+
+    print(f"\n  最终：{passed} passed, {failed} failed（含 T17–T25）")
     return failed == 0
 
 

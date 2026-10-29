@@ -162,7 +162,7 @@ RUNNER = r'''
 
 RECORDS_JSON = r"""__RECORDS__"""
 
-ENGINE_VERSION = "chemcritic-engine/1.1.0"
+ENGINE_VERSION = "chemcritic-engine/1.2.0"
 RULES_VERSION = "gates v0.5 · tier-0.1"
 CONTRACT_VERSION = "sciencepal-verdict/2"
 

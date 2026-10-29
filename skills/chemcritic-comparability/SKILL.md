@@ -72,6 +72,9 @@ python /workspace/chemcritic/chemcritic_engine.py --json --input user.json --rec
 ```
 
 - `outcome.outcome_type` 只能是 `isolated` / `gc` / `nmr` / `conversion`；不确定就写 `unknown`，引擎会判 `NEEDS_EVIDENCE`。
+- 外部壳字段兼容（1.2.0 起）：`outcome.yield_basis`（分离 / GC / 核磁 / 转化）可直接代替
+  `outcome_type`；`outcome.user_verbatim` 会作为 `label_raw` 的原文措辞；`name_aliases`
+  （别名 → 规范名）用于把中文名归一后再比对。三者都只做同义映射，不改判定、不升级证据。
 - `inputs_source`（可选但强烈建议）：字段路径 → 来源。只允许 `user_stated`（用户本次明确提供）
   或 `unknown`（未提供，对应字段必须 null）。**`memory` 会被引擎直接拒绝（退出码 2）**——
   历史对话或账号记忆里的条件不得拼进 user.json。不声明时证书标 `not_declared`。
