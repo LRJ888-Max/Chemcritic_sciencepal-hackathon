@@ -1,0 +1,69 @@
+{
+  "record_id": "P47",
+  "source_id": "P47",
+  "tier": "C",
+  "citation": "Metabolites 2023, 13(2), 141（吲哚-咖啡酸酰胺杂合体）",
+  "doi": "10.3390/metabo13020141",
+  "locator": "§2.2 合成段 + §2.2.1 化合物 3a + Table 1（列名 Isolated Yield (%)，3a = 85）（PMC9966950 全文已核）",
+  "locator_zh": "2.2 节合成段 + 2.2.1 化合物 3a + 表 1",
+  "substrate": {
+    "acid": "4-amino-3-hydroxybenzoic acid",
+    "amine": "5-aminoindole",
+    "product": "4-amino-3-hydroxy-N-(1H-indol-5-yl)benzamide"
+  },
+  "outcome": {
+    "value": 85.0,
+    "unit": "%",
+    "outcome_type": "isolated",
+    "label_raw": "Table 1 列名 Isolated Yield (%)，3a = 85（分离；产物经 flash 柱层析）",
+    "note": "3a 的结构由 §2.2.1 明确命名（4-Amino-3-hydroxy-N-(1H-indol-5-yl)benzamide），据此反推酸为 4-氨基-3-羟基苯甲酸。"
+  },
+  "assay": {
+    "method": "isolated (weighed)",
+    "internal_standard": null,
+    "quantification_basis": "isolated product"
+  },
+  "conditions": {
+    "catalyst": "EDCI（缩合试剂，非催化量）",
+    "catalyst_loading_raw": "1.1 mmol / 0.75 mmol 底物",
+    "catalyst_mol_pct": null,
+    "ligand": "HOBt（1.1 mmol）",
+    "ligand_mol_pct": null,
+    "base": "DIPEA",
+    "base_eq": 1.47,
+    "solvent": "CH3CN（5 mL）",
+    "temp_c": 25,
+    "time_h": null,
+    "atmosphere": null,
+    "scale_mmol": 0.75,
+    "equivalents": {
+      "acid": 1.0,
+      "amine": 1.0
+    },
+    "concentration_m": 0.15
+  },
+  "purification": "flash column chromatography（SiO2，n-hexane:EA = 10:1）",
+  "evidence_grade": "A_confirmed",
+  "verification": "verified_with_caveat",
+  "catalytic_profile": {
+    "catalyst_form": "in_situ_salt",
+    "ligand_family": "non_phosphine",
+    "support": "none",
+    "medium": "organic",
+    "activation_mode": "thermal"
+  },
+  "_extraction": {
+    "label_raw_provenance": "verbatim",
+    "assay_basis_source": "表 1 列名即 Isolated Yield",
+    "verified_at": "2026-10-31",
+    "calibration": "calibrated",
+    "missing_fields": [
+      "time_h",
+      "catalyst_mol_pct"
+    ],
+    "needs_A_check": [
+      "室温反应时长（2.2 节被截断，未取到具体小时数）"
+    ],
+    "note": "EDCI/HOBt 为化学计量缩合试剂，catalyst_form 记 in_situ_salt 仅为占位，不代表催化循环。"
+  }
+}

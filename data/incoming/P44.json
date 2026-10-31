@@ -1,0 +1,62 @@
+{
+  "record_id": "P44",
+  "source_id": "P44",
+  "tier": "C",
+  "citation": "Molecules 2025, 30(4), 910（电驱动不对称转移氢化）",
+  "doi": "10.3390/molecules30040910",
+  "locator": "Table 1 entry 1（Standard Conditions）+ 表注：acetophenone 0.1 M、L1 4.5 mol%、Mn(CO)5Br 3 mol%、i-PrOH、60 ℃、2 F/mol；表列 Conversion 58 / Selectivity 99（本地 PDF refs/pdf/NEW-molecules-30-00910.pdf 已核）",
+  "locator_zh": "表 1 第 1 行（标准条件）+ 表注",
+  "substrate": {
+    "ketone": "acetophenone",
+    "hydride_source": "i-PrOH",
+    "product": "1-phenylethanol"
+  },
+  "outcome": {
+    "value": 58.0,
+    "unit": "%",
+    "outcome_type": "conversion",
+    "label_raw": "Table 1 列名 Conversion/% entry 1 = 58（表注：Selectivity = isolate yield/conversion，同列 99）",
+    "note": "只录转化率 58%，不把 selectivity 99% 折算成收率——原文未直接给分离收率，按规则不换算。"
+  },
+  "assay": {
+    "method": "HPLC（手性柱，用于 ee）",
+    "internal_standard": null,
+    "quantification_basis": "conversion"
+  },
+  "conditions": {
+    "catalyst": "Mn(CO)5Br",
+    "catalyst_loading_raw": "3 mol%",
+    "catalyst_mol_pct": 3.0,
+    "ligand": "(1R,2R)-N1,N2-二甲基环己烷-1,2-二胺 L1",
+    "ligand_mol_pct": 4.5,
+    "base": "Et4NBF4（电解质，0.05 M）",
+    "base_eq": null,
+    "solvent": "i-PrOH（20 mL）",
+    "temp_c": 60,
+    "time_h": null,
+    "atmosphere": null,
+    "scale_mmol": null,
+    "equivalents": {
+      "ketone": 1.0,
+      "hydride_source": null
+    },
+    "concentration_m": 0.1
+  },
+  "purification": null,
+  "evidence_grade": "A_confirmed",
+  "verification": "verified_fulltext",
+  "catalytic_profile": {
+    "catalyst_form": "molecular_complex",
+    "ligand_family": "non_phosphine",
+    "support": "none",
+    "medium": "organic",
+    "activation_mode": "thermal"
+  },
+  "_extraction": {
+    "label_raw_provenance": "verbatim",
+    "assay_basis_source": "表 1 列名 Conversion/%，表注给出 selectivity 定义",
+    "verified_at": "2026-10-31",
+    "calibration": "uncalibrated",
+    "vocab_note": "activation_mode 词表无 electrochemical，按 60 ℃ 加热记为 thermal；建议后续补词表值。"
+  }
+}

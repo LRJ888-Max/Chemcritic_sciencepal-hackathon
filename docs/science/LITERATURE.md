@@ -38,17 +38,19 @@
 | **P37** | Panda et al., *RSC Adv.* 2024, 14, 21269–21276 | 85% | 分离 | A | ✅ `A_confirmed`（Table 3 entry 3 + 脚注 b） |
 | **P38** | Lo et al., *Molecules* 2021, 26, 4426 | 95% | 分离（表内括号值；98% 为 ¹H NMR 转化率） | A | ✅ `A_confirmed`（Table 2 entry 5 + 表注） |
 | **P39** | *Materials* 2021, 14, 800（Pd/AM4-HDA，sc-CO₂） | **40%** | 分离（同句另报 NMR 转化率 82%） | C | ✅ `A_confirmed`（§3.4 原文 "the isolated yield was 40%"） |
+| **P40** | *Sci. Rep.* 2024, 14, 7688（Pd-DPyE@MCM-41@MNP） | 95% | 分离 | C | ✅ `A_confirmed`（Table 6 entry 9b + 脚注 a "Isolated yield"） |
+| **P41** | 同上（同篇、不同底物：溴苯） | 97% | 分离 | C | ✅ `A_confirmed`（Table 6 entry 7b） |
 | — | Rahman et al., *Organometallics* 2022, 41, 2281–2290 | 待核验 | 未声明 | C（暂） | ❌ Table 1 为图，正文只说 entries 7–9「high efficiency」 |
 
 > **P36 的分量：** 与演示案例**完全同底物**（4-溴苯甲醚 + 苯硼酸）、**碱为 Na₂CO₃**、**溶剂为含水混合体系**（H₂O:MeCN = 1:1，80 ℃，6 h），分离收率 **50%**。
 > 加上 SM-001b 的 40% 与 P39 的 40%，"同底物 + 碳酸盐/碱性 + 非纯有机介质"这一档已有三条落在 **40–50%**，**不是 80–95%**。
 >
-> **新增后同底物（4-溴苯甲醚）分离收率参照：40% / 40% / 50% / 95% / 95% / 100%**（6 条）—— 中位数 95%、但下沿到 40%，且**最低的三条恰好是条件最接近演示的三条**，说明该底物的收率分布极宽，单点先例不能当基准。
+> **新增后同底物（4-溴苯甲醚）分离收率参照：40% / 40% / 50% / 95% / 95% / 95% / 100%**（**7 条**）—— 中位数 95%、但下沿到 40%，且**最低的三条恰好是条件最接近演示的三条**，说明该底物的收率分布极宽，单点先例不能当基准。
 
 
 ---
 
-## 二、文献清单（23 个本地 PDF 文件，含扩展背景）
+## 二、文献清单（24 个本地 PDF 文件，含扩展背景）
 
 | # | 文献 | DOI | 与演示反应的关系 |
 |---|---|---|---|
@@ -109,3 +111,36 @@ SM-002 与 SM-003 的关键数据在 RSC 官方 SI 中；旧版直链（`www.rsc
 | C | 仅有元数据或摘要，数值一律写 `待核验` |
 
 > 本项目中**不存在"没读到原文却填了数字"**的条目；未确认的内容一律记 `UNKNOWN`。
+
+---
+
+## 五、反应类型扩展（2026-10-31）
+
+需求：不再只收 Suzuki。引擎在 2026-10-31 已把底物比对从写死的 `aryl_halide + boronic_acid` 泛化为**任意两个非产物键**，所以 Heck（芳卤+烯烃）、Sonogashira（芳卤+炔）、Buchwald（芳卤+胺）、CuAAC（叠氮+炔）、转移氢化（酮+氢源）都能进同一个判定框架。
+
+**当前语料按反应类型的分布（148 条）：**
+
+| reaction_class | 条数 | 底物键示例 |
+|---|---:|---|
+| heck | 51 | `aryl_halide` + `alkene` / `acrylate` |
+| suzuki | 46 | `aryl_halide` + `boronic_acid` |
+| sonogashira | 25 | `aryl_halide` + `alkyne` |
+| buchwald_hartwig | 17 | `aryl_halide` + `amine` |
+| kumada | 4 | `aryl_halide` + `organometallic` |
+| **click_cuaac** | 1 | `azide` + `alkyne` |
+| **transfer_hydrogenation** | 1 | `ketone` + `hydride_source` |
+
+**本轮新增（三条都是 A_confirmed）：**
+
+| ID | 反应 | 底物 → 产物 | 值 | 口径 | 来源 |
+|---|---|---|---:|---|---|
+| **P42** | Sonogashira | 碘苯 + 苯乙炔 → 二苯乙炔 | 88% | 分离 | *Beilstein J. Org. Chem.* 2019, 15, 284 |
+| **P43** | CuAAC | 苄基叠氮 + 苯乙炔 → 1-苄基-4-苯基三唑 | 88% | 分离 | *Beilstein J. Org. Chem.* 2025, 21, 1544 |
+| **P44** | 转移氢化 | 苯乙酮 + i-PrOH → 1-苯乙醇 | 58% | 转化率 | *Molecules* 2025, 30, 910 |
+| **P45** | 有氧氧化 | 1-苯乙醇 + 空气 → 苯乙酮 | 94% | 分离 | *Molecules* 2022, 27, 3727 |
+| **P46** | 硝基还原 | 硝基苯 + H2 → 苯胺 | >99% | 分离 | *Commun. Chem.* 2025 |
+| **P47** | 酰胺缩合 | 5-氨基吲哚 + 4-氨基-3-羟基苯甲酸 → 苯甲酰胺 | 85% | 分离 | *Metabolites* 2023, 13, 141 |
+
+**新增的分类规则**（`engine/placement.py::_KIND_BY_KEY`）：`azide → click_cuaac`、`ketone/hydride_source → transfer_hydrogenation`、`acid → amide_coupling`（酰胺缩合规则已就位，尚待第一条记录）。
+
+**仍然缺的类**：酰胺缩合、酯化/水解、氧化、硝基还原、保护基脱除。这些都不是架构问题——`check()` 只要求**两个及以上非产物底物键**，任何双分子反应都能入册。缺的是**可下载全文 + 明确收率**的文献：ACS/RSC 的 PDF 对脚本一律 403，只能人工下载。

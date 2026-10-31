@@ -1,0 +1,70 @@
+{
+  "record_id": "P41",
+  "source_id": "P41",
+  "tier": "C",
+  "citation": "Sci. Rep. 2024, 14, 7688（Pd-DPyE@MCM-41@MNP 磁载 Pd 催化剂）",
+  "doi": "10.1038/s41598-024-58310-5",
+  "locator": "Table 6 entry 7b（Bromobenzene, 15 min, 97）+ 脚注 a \"Isolated yield\"（PMC10985085 全文已核）",
+  "locator_zh": "表 6 第 7b 行（溴苯，15 min）+ 脚注 a",
+  "substrate": {
+    "aryl_halide": "bromobenzene",
+    "boronic_acid": "phenylboronic acid",
+    "product": "biphenyl"
+  },
+  "outcome": {
+    "value": 97.0,
+    "unit": "%",
+    "outcome_type": "isolated",
+    "label_raw": "Table 6 列名 Yield a (%)，entry 7b（Bromobenzene, 15 min）= 97；脚注 a: \"Isolated yield\"（分离、称重）",
+    "note": "与 P40 同篇不同底物，属独立条目；不得与 4-溴苯甲醚条目合并。"
+  },
+  "assay": {
+    "method": "isolated (weighed)",
+    "internal_standard": null,
+    "quantification_basis": "isolated product"
+  },
+  "conditions": {
+    "catalyst": "Pd-DPyE@MCM-41@MNP",
+    "catalyst_loading_raw": "6 mg（mol% 原文未给）",
+    "catalyst_mol_pct": null,
+    "ligand": "DPyE（二吡啶胺型，非膦）",
+    "ligand_mol_pct": null,
+    "base": "Na2CO3",
+    "base_eq": 3.0,
+    "solvent": "PEG-400 2 mL",
+    "temp_c": 60,
+    "atmosphere": null,
+    "scale_mmol": 1.0,
+    "equivalents": {
+      "aryl_halide": 1.0,
+      "boronic_acid": 1.0
+    },
+    "concentration_m": null,
+    "time_h": 0.25,
+    "time_raw": "15 min"
+  },
+  "purification": null,
+  "evidence_grade": "A_confirmed",
+  "verification": "verified_with_caveat",
+  "catalytic_profile": {
+    "catalyst_form": "supported",
+    "ligand_family": "non_phosphine",
+    "support": "solid_support",
+    "medium": "organic",
+    "activation_mode": "thermal"
+  },
+  "_extraction": {
+    "label_raw_provenance": "verbatim",
+    "assay_basis_source": "表 6 脚注 a: \"Isolated yield\"",
+    "verified_at": "2026-10-29",
+    "calibration": "calibrated",
+    "missing_fields": [
+      "catalyst_mol_pct",
+      "atmosphere"
+    ],
+    "needs_A_check": [
+      "6 mg 对应 mol%（缺则维度 6 只能记 L2）",
+      "苯硼酸当量（表 4 优化段记 1 mmol : 1 mmol）"
+    ]
+  }
+}

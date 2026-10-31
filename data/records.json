@@ -8094,6 +8094,531 @@
     "merged_by": "scripts/merge_corpus_records.py",
     "promoted_on": "2026-10-31"
    }
+  },
+  {
+   "record_id": "P40",
+   "source_id": "P40",
+   "tier": "C",
+   "citation": "Sci. Rep. 2024, 14, 7688（Pd-DPyE@MCM-41@MNP 磁载 Pd 催化剂）",
+   "doi": "10.1038/s41598-024-58310-5",
+   "locator": "Table 6 entry 9b（4-Bromoanisole, 25 min, 95）+ 脚注 a \"Isolated yield\"；条件取自 Table 4/5 优化段与摘要（60 ℃ / PEG-400 / Na2CO3 / 6 mg）（PMC10985085 全文已核）",
+   "locator_zh": "表 6 第 9b 行（4-溴苯甲醚，25 min）+ 脚注 a",
+   "substrate": {
+    "aryl_halide": "4-bromoanisole",
+    "boronic_acid": "phenylboronic acid",
+    "product": "4-methoxybiphenyl"
+   },
+   "outcome": {
+    "value": 95.0,
+    "unit": "%",
+    "outcome_type": "isolated",
+    "label_raw": "Table 6 列名 Yield a (%)，entry 9b（4-Bromoanisole, 25 min）= 95；脚注 a: \"Isolated yield\"（分离、称重）",
+    "note": "同一张表另有 entry 7b 溴苯 15 min 97%。芳基碘代条目在同一表中普遍更快（10–20 min），与本条不构成同底物比较。"
+   },
+   "assay": {
+    "method": "isolated (weighed)",
+    "internal_standard": null,
+    "quantification_basis": "isolated product"
+   },
+   "conditions": {
+    "catalyst": "Pd-DPyE@MCM-41@MNP",
+    "catalyst_loading_raw": "6 mg（mol% 原文未给）",
+    "catalyst_mol_pct": null,
+    "ligand": "DPyE（二吡啶胺型，非膦）",
+    "ligand_mol_pct": null,
+    "base": "Na2CO3",
+    "base_eq": 3.0,
+    "solvent": "PEG-400 2 mL",
+    "temp_c": 60,
+    "atmosphere": null,
+    "scale_mmol": 1.0,
+    "equivalents": {
+     "aryl_halide": 1.0,
+     "boronic_acid": 1.0
+    },
+    "concentration_m": null,
+    "time_h": 0.42,
+    "time_raw": "25 min"
+   },
+   "purification": null,
+   "evidence_grade": "A_confirmed",
+   "verification": "verified_with_caveat",
+   "catalytic_profile": {
+    "catalyst_form": "supported",
+    "ligand_family": "non_phosphine",
+    "support": "solid_support",
+    "medium": "organic",
+    "activation_mode": "thermal"
+   },
+   "_extraction": {
+    "label_raw_provenance": "verbatim",
+    "assay_basis_source": "表 6 脚注 a: \"Isolated yield\"",
+    "verified_at": "2026-10-29",
+    "calibration": "calibrated",
+    "missing_fields": [
+     "catalyst_mol_pct",
+     "atmosphere"
+    ],
+    "needs_A_check": [
+     "6 mg 对应 mol%（缺则维度 6 只能记 L2）",
+     "苯硼酸当量（表 4 优化段记 1 mmol : 1 mmol）"
+    ]
+   }
+  },
+  {
+   "record_id": "P41",
+   "source_id": "P41",
+   "tier": "C",
+   "citation": "Sci. Rep. 2024, 14, 7688（Pd-DPyE@MCM-41@MNP 磁载 Pd 催化剂）",
+   "doi": "10.1038/s41598-024-58310-5",
+   "locator": "Table 6 entry 7b（Bromobenzene, 15 min, 97）+ 脚注 a \"Isolated yield\"（PMC10985085 全文已核）",
+   "locator_zh": "表 6 第 7b 行（溴苯，15 min）+ 脚注 a",
+   "substrate": {
+    "aryl_halide": "bromobenzene",
+    "boronic_acid": "phenylboronic acid",
+    "product": "biphenyl"
+   },
+   "outcome": {
+    "value": 97.0,
+    "unit": "%",
+    "outcome_type": "isolated",
+    "label_raw": "Table 6 列名 Yield a (%)，entry 7b（Bromobenzene, 15 min）= 97；脚注 a: \"Isolated yield\"（分离、称重）",
+    "note": "与 P40 同篇不同底物，属独立条目；不得与 4-溴苯甲醚条目合并。"
+   },
+   "assay": {
+    "method": "isolated (weighed)",
+    "internal_standard": null,
+    "quantification_basis": "isolated product"
+   },
+   "conditions": {
+    "catalyst": "Pd-DPyE@MCM-41@MNP",
+    "catalyst_loading_raw": "6 mg（mol% 原文未给）",
+    "catalyst_mol_pct": null,
+    "ligand": "DPyE（二吡啶胺型，非膦）",
+    "ligand_mol_pct": null,
+    "base": "Na2CO3",
+    "base_eq": 3.0,
+    "solvent": "PEG-400 2 mL",
+    "temp_c": 60,
+    "atmosphere": null,
+    "scale_mmol": 1.0,
+    "equivalents": {
+     "aryl_halide": 1.0,
+     "boronic_acid": 1.0
+    },
+    "concentration_m": null,
+    "time_h": 0.25,
+    "time_raw": "15 min"
+   },
+   "purification": null,
+   "evidence_grade": "A_confirmed",
+   "verification": "verified_with_caveat",
+   "catalytic_profile": {
+    "catalyst_form": "supported",
+    "ligand_family": "non_phosphine",
+    "support": "solid_support",
+    "medium": "organic",
+    "activation_mode": "thermal"
+   },
+   "_extraction": {
+    "label_raw_provenance": "verbatim",
+    "assay_basis_source": "表 6 脚注 a: \"Isolated yield\"",
+    "verified_at": "2026-10-29",
+    "calibration": "calibrated",
+    "missing_fields": [
+     "catalyst_mol_pct",
+     "atmosphere"
+    ],
+    "needs_A_check": [
+     "6 mg 对应 mol%（缺则维度 6 只能记 L2）",
+     "苯硼酸当量（表 4 优化段记 1 mmol : 1 mmol）"
+    ]
+   }
+  },
+  {
+   "record_id": "P42",
+   "source_id": "P42",
+   "tier": "C",
+   "citation": "Beilstein J. Org. Chem. 2019, 15, 284（γ-戊内酯基离子液体中的 Sonogashira 偶联）",
+   "doi": "10.3762/bjoc.15.284",
+   "locator": "Results and Discussion 段，循环实验首轮：\"3a was isolated with a yield of 88%\"；Table 3 entry 1 同值（本地 PDF refs/pdf/NEW-bjoc-15-284.pdf 已核）",
+   "locator_zh": "结果与讨论段（循环首轮）+ 表 3 第 1 行",
+   "substrate": {
+    "aryl_halide": "iodobenzene",
+    "alkyne": "phenylacetylene",
+    "product": "diphenylacetylene"
+   },
+   "outcome": {
+    "value": 88.0,
+    "unit": "%",
+    "outcome_type": "isolated",
+    "label_raw": "正文：\"3a was isolated with a yield of 88%\"（分离、称重）",
+    "note": "同一篇报 22 个交叉偶联产物，分离收率 72–99%；本条取模型反应 3a 的首轮值。"
+   },
+   "assay": {
+    "method": "isolated (weighed)",
+    "internal_standard": null,
+    "quantification_basis": "isolated product"
+   },
+   "conditions": {
+    "catalyst": "PdCl2(PPh3)2",
+    "catalyst_loading_raw": "0.5 mol%",
+    "catalyst_mol_pct": 0.5,
+    "ligand": "PPh3（配位于 Pd）",
+    "ligand_mol_pct": null,
+    "base": "Et3N",
+    "base_eq": 1.5,
+    "solvent": "[BMIM][BF4] 离子液体 0.8 mL",
+    "temp_c": 55,
+    "time_h": 2.0,
+    "atmosphere": null,
+    "scale_mmol": 0.5,
+    "equivalents": {
+     "aryl_halide": 1.0,
+     "alkyne": 1.5
+    },
+    "concentration_m": null
+   },
+   "purification": "戊烷萃取（10 × 5 mL）",
+   "evidence_grade": "A_confirmed",
+   "verification": "verified_fulltext",
+   "catalytic_profile": {
+    "catalyst_form": "molecular_complex",
+    "ligand_family": "phosphine",
+    "support": "none",
+    "medium": "organic",
+    "activation_mode": "thermal"
+   },
+   "_extraction": {
+    "label_raw_provenance": "verbatim",
+    "assay_basis_source": "正文明确 isolated 与质量",
+    "verified_at": "2026-10-31",
+    "calibration": "calibrated",
+    "note": "含 CuI 1 mol% 助催化；本条按 Pd 计载量。"
+   }
+  },
+  {
+   "record_id": "P43",
+   "source_id": "P43",
+   "tier": "C",
+   "citation": "Beilstein J. Org. Chem. 2025, 21, 1544–1551（生物基溶剂 Cyrene 中的 CuAAC）",
+   "doi": "10.3762/bjoc.21.117",
+   "locator": "Cyrene 段：\"the GC analysis showed complete conversion, and after the workup procedure, 88% 3a was isolated with 98.5% purity\"（本地 PDF refs/pdf/NEW-bjoc-21-117.pdf 已核）",
+   "locator_zh": "Cyrene 溶剂段（3a，12 h）",
+   "substrate": {
+    "azide": "benzyl azide",
+    "alkyne": "phenylacetylene",
+    "product": "1-benzyl-4-phenyl-1H-1,2,3-triazole"
+   },
+   "outcome": {
+    "value": 88.0,
+    "unit": "%",
+    "outcome_type": "isolated",
+    "label_raw": "正文：\"88% 3a was isolated with 98.5% purity\"（分离、称重；同段另报 GC 完全转化）",
+    "note": "同篇报取代三唑 50–96%；本条取模型反应 3a。GC 说完全转化、分离只有 88%——转化率与分离收率不可互替的现成例子。"
+   },
+   "assay": {
+    "method": "isolated (weighed)",
+    "internal_standard": null,
+    "quantification_basis": "isolated product"
+   },
+   "conditions": {
+    "catalyst": "CuI",
+    "catalyst_loading_raw": "1 mol%",
+    "catalyst_mol_pct": 1.0,
+    "ligand": null,
+    "ligand_mol_pct": null,
+    "base": "Et3N",
+    "base_eq": 0.1,
+    "solvent": "Cyrene（2.5 mL）",
+    "temp_c": 30,
+    "time_h": 12.0,
+    "atmosphere": null,
+    "scale_mmol": 1.0,
+    "equivalents": {
+     "azide": 1.15,
+     "alkyne": 1.0
+    },
+    "concentration_m": null
+   },
+   "purification": null,
+   "evidence_grade": "A_confirmed",
+   "verification": "verified_fulltext",
+   "catalytic_profile": {
+    "catalyst_form": "in_situ_salt",
+    "ligand_family": "none",
+    "support": "none",
+    "medium": "organic",
+    "activation_mode": "thermal"
+   },
+   "_extraction": {
+    "label_raw_provenance": "verbatim",
+    "assay_basis_source": "正文明确 isolated 与纯度",
+    "verified_at": "2026-10-31",
+    "calibration": "calibrated"
+   }
+  },
+  {
+   "record_id": "P44",
+   "source_id": "P44",
+   "tier": "C",
+   "citation": "Molecules 2025, 30(4), 910（电驱动不对称转移氢化）",
+   "doi": "10.3390/molecules30040910",
+   "locator": "Table 1 entry 1（Standard Conditions）+ 表注：acetophenone 0.1 M、L1 4.5 mol%、Mn(CO)5Br 3 mol%、i-PrOH、60 ℃、2 F/mol；表列 Conversion 58 / Selectivity 99（本地 PDF refs/pdf/NEW-molecules-30-00910.pdf 已核）",
+   "locator_zh": "表 1 第 1 行（标准条件）+ 表注",
+   "substrate": {
+    "ketone": "acetophenone",
+    "hydride_source": "i-PrOH",
+    "product": "1-phenylethanol"
+   },
+   "outcome": {
+    "value": 58.0,
+    "unit": "%",
+    "outcome_type": "conversion",
+    "label_raw": "Table 1 列名 Conversion/% entry 1 = 58（表注：Selectivity = isolate yield/conversion，同列 99）",
+    "note": "只录转化率 58%，不把 selectivity 99% 折算成收率——原文未直接给分离收率，按规则不换算。"
+   },
+   "assay": {
+    "method": "HPLC（手性柱，用于 ee）",
+    "internal_standard": null,
+    "quantification_basis": "conversion"
+   },
+   "conditions": {
+    "catalyst": "Mn(CO)5Br",
+    "catalyst_loading_raw": "3 mol%",
+    "catalyst_mol_pct": 3.0,
+    "ligand": "(1R,2R)-N1,N2-二甲基环己烷-1,2-二胺 L1",
+    "ligand_mol_pct": 4.5,
+    "base": "Et4NBF4（电解质，0.05 M）",
+    "base_eq": null,
+    "solvent": "i-PrOH（20 mL）",
+    "temp_c": 60,
+    "time_h": null,
+    "atmosphere": null,
+    "scale_mmol": null,
+    "equivalents": {
+     "ketone": 1.0,
+     "hydride_source": null
+    },
+    "concentration_m": 0.1
+   },
+   "purification": null,
+   "evidence_grade": "A_confirmed",
+   "verification": "verified_fulltext",
+   "catalytic_profile": {
+    "catalyst_form": "molecular_complex",
+    "ligand_family": "non_phosphine",
+    "support": "none",
+    "medium": "organic",
+    "activation_mode": "thermal"
+   },
+   "_extraction": {
+    "label_raw_provenance": "verbatim",
+    "assay_basis_source": "表 1 列名 Conversion/%，表注给出 selectivity 定义",
+    "verified_at": "2026-10-31",
+    "calibration": "uncalibrated",
+    "vocab_note": "activation_mode 词表无 electrochemical，按 60 ℃ 加热记为 thermal；建议后续补词表值。"
+   }
+  },
+  {
+   "record_id": "P45",
+   "source_id": "P45",
+   "tier": "C",
+   "citation": "Molecules 2022, 27(12), 3727（Bi(NO3)3/Keto-ABNO 有氧氧化醇）",
+   "doi": "10.3390/molecules27123727",
+   "locator": "Scheme 4 克级段：\"the oxidation of 1-phenylethanol (20 mmol) was carried out under optimized conditions to give 2.294 g of acetophenone with an isolated yield of 94%\"；条件取自表注：1a 1 mmol、Bi(NO3)3·5H2O 10 mol%、Keto-ABNO 5 mol%、CH3CN 2 mL、65 ℃、2 h、air balloon（PMC9230008 全文已核）",
+   "locator_zh": "Scheme 4 克级实验段 + 条件表注",
+   "substrate": {
+    "alcohol": "1-phenylethanol",
+    "oxidant": "air",
+    "product": "acetophenone"
+   },
+   "outcome": {
+    "value": 94.0,
+    "unit": "%",
+    "outcome_type": "isolated",
+    "label_raw": "正文：\"2.294 g of acetophenone with an isolated yield of 94%\"（分离、称重）",
+    "note": "20 mmol 克级；同条件小试（1 mmol）为优化表标准条件。2.294 g / 120.15 = 19.1 mmol，与 20 mmol 投料一致，可复核。"
+   },
+   "assay": {
+    "method": "isolated (weighed)",
+    "internal_standard": null,
+    "quantification_basis": "isolated product"
+   },
+   "conditions": {
+    "catalyst": "Bi(NO3)3·5H2O",
+    "catalyst_loading_raw": "10 mol%",
+    "catalyst_mol_pct": 10.0,
+    "ligand": "Keto-ABNO（有机助催化剂，非金属配体）",
+    "ligand_mol_pct": 5.0,
+    "base": null,
+    "base_eq": null,
+    "solvent": "CH3CN（2 mL/1 mmol）",
+    "temp_c": 65,
+    "time_h": 2.0,
+    "atmosphere": "air balloon",
+    "scale_mmol": 20.0,
+    "equivalents": {
+     "alcohol": 1.0,
+     "oxidant": null
+    },
+    "concentration_m": 0.5
+   },
+   "purification": null,
+   "evidence_grade": "A_confirmed",
+   "verification": "verified_fulltext",
+   "catalytic_profile": {
+    "catalyst_form": "in_situ_salt",
+    "ligand_family": "non_phosphine",
+    "support": "none",
+    "medium": "organic",
+    "activation_mode": "thermal"
+   },
+   "_extraction": {
+    "label_raw_provenance": "verbatim",
+    "assay_basis_source": "克级段明确 isolated yield 与质量",
+    "verified_at": "2026-10-31",
+    "calibration": "calibrated"
+   }
+  },
+  {
+   "record_id": "P46",
+   "source_id": "P46",
+   "tier": "C",
+   "citation": "Communications Chemistry 2025（硅负载铜催化硝基芳烃加氢）",
+   "doi": "10.1038/s42004-025-01867-7",
+   "locator": "Catalytic activity evaluation + 结果段：\"gas pressure of 10 kg at 70 °C ... over 99% isolated yield of aniline\"；典型操作：61.5 mg nitrobenzene + 45 mg catalyst + 2 mL MeOH（PMC12864793 全文已核）",
+   "locator_zh": "催化活性评价段 + 结果段（70 ℃、10 kg 氢压）",
+   "substrate": {
+    "nitro": "nitrobenzene",
+    "reductant": "H2",
+    "product": "aniline"
+   },
+   "outcome": {
+    "value": 99.0,
+    "unit": "%",
+    "outcome_type": "isolated",
+    "label_raw": "正文：\"over 99% isolated yield of aniline\"（分离；同段报 selectivity 100%）",
+    "value_raw": ">99",
+    "value_is_lower_bound": true,
+    "note": "原文写 over 99%，按 99 取下界并标 value_is_lower_bound。同一段另有一套 60 ℃/10 h 的 GC 筛选条件，勿与本条混用。"
+   },
+   "assay": {
+    "method": "isolated (weighed)",
+    "internal_standard": null,
+    "quantification_basis": "isolated product"
+   },
+   "conditions": {
+    "catalyst": "CuSi-600 Red（铜硅酸盐）",
+    "catalyst_loading_raw": "45 mg / 0.5 mmol 底物",
+    "catalyst_mol_pct": null,
+    "ligand": null,
+    "ligand_mol_pct": null,
+    "base": null,
+    "base_eq": null,
+    "solvent": "MeOH（2 mL）",
+    "temp_c": 70,
+    "time_h": null,
+    "atmosphere": "H2（约 10 kg 压力）",
+    "scale_mmol": 0.5,
+    "equivalents": {
+     "nitro": 1.0,
+     "reductant": null
+    },
+    "concentration_m": 0.25
+   },
+   "purification": null,
+   "evidence_grade": "A_confirmed",
+   "verification": "verified_with_caveat",
+   "catalytic_profile": {
+    "catalyst_form": "supported",
+    "ligand_family": "none",
+    "support": "solid_support",
+    "medium": "organic",
+    "activation_mode": "thermal"
+   },
+   "_extraction": {
+    "label_raw_provenance": "verbatim",
+    "assay_basis_source": "正文明确 isolated yield",
+    "verified_at": "2026-10-31",
+    "calibration": "calibrated",
+    "missing_fields": [
+     "time_h",
+     "catalyst_mol_pct"
+    ],
+    "needs_A_check": [
+     "70 ℃/10 kg 那一组的具体反应时间（原文未在该句给出）"
+    ]
+   }
+  },
+  {
+   "record_id": "P47",
+   "source_id": "P47",
+   "tier": "C",
+   "citation": "Metabolites 2023, 13(2), 141（吲哚-咖啡酸酰胺杂合体）",
+   "doi": "10.3390/metabo13020141",
+   "locator": "§2.2 合成段 + §2.2.1 化合物 3a + Table 1（列名 Isolated Yield (%)，3a = 85）（PMC9966950 全文已核）",
+   "locator_zh": "2.2 节合成段 + 2.2.1 化合物 3a + 表 1",
+   "substrate": {
+    "acid": "4-amino-3-hydroxybenzoic acid",
+    "amine": "5-aminoindole",
+    "product": "4-amino-3-hydroxy-N-(1H-indol-5-yl)benzamide"
+   },
+   "outcome": {
+    "value": 85.0,
+    "unit": "%",
+    "outcome_type": "isolated",
+    "label_raw": "Table 1 列名 Isolated Yield (%)，3a = 85（分离；产物经 flash 柱层析）",
+    "note": "3a 的结构由 §2.2.1 明确命名（4-Amino-3-hydroxy-N-(1H-indol-5-yl)benzamide），据此反推酸为 4-氨基-3-羟基苯甲酸。"
+   },
+   "assay": {
+    "method": "isolated (weighed)",
+    "internal_standard": null,
+    "quantification_basis": "isolated product"
+   },
+   "conditions": {
+    "catalyst": "EDCI（缩合试剂，非催化量）",
+    "catalyst_loading_raw": "1.1 mmol / 0.75 mmol 底物",
+    "catalyst_mol_pct": null,
+    "ligand": "HOBt（1.1 mmol）",
+    "ligand_mol_pct": null,
+    "base": "DIPEA",
+    "base_eq": 1.47,
+    "solvent": "CH3CN（5 mL）",
+    "temp_c": 25,
+    "time_h": null,
+    "atmosphere": null,
+    "scale_mmol": 0.75,
+    "equivalents": {
+     "acid": 1.0,
+     "amine": 1.0
+    },
+    "concentration_m": 0.15
+   },
+   "purification": "flash column chromatography（SiO2，n-hexane:EA = 10:1）",
+   "evidence_grade": "A_confirmed",
+   "verification": "verified_with_caveat",
+   "catalytic_profile": {
+    "catalyst_form": "in_situ_salt",
+    "ligand_family": "non_phosphine",
+    "support": "none",
+    "medium": "organic",
+    "activation_mode": "thermal"
+   },
+   "_extraction": {
+    "label_raw_provenance": "verbatim",
+    "assay_basis_source": "表 1 列名即 Isolated Yield",
+    "verified_at": "2026-10-31",
+    "calibration": "calibrated",
+    "missing_fields": [
+     "time_h",
+     "catalyst_mol_pct"
+    ],
+    "needs_A_check": [
+     "室温反应时长（2.2 节被截断，未取到具体小时数）"
+    ],
+    "note": "EDCI/HOBt 为化学计量缩合试剂，catalyst_form 记 in_situ_salt 仅为占位，不代表催化循环。"
+   }
   }
  ],
  "merge_note": "2026-10-28 并入 pool30 中 evidence_grade=a_confirmed 的记录：P11, P12, P13, P19a, P19b, P20, P24a, P24b, P24c, P35。仅已回原文核验者进入引擎；候选池其余条目仍留在 data/pool30.json。\n2026-10-31：从 literature corpus 晋升 96 条 candidate（11 张表）。全部 evidence_grade=candidate，未经 PDF 逐字核验，口径由表头/题注逐字支撑；晋升与拒绝原因见 data/incoming/corpus_promote_2026-10-31.json 与 docs/plan/2026-10-31-语料层晋升.md。"

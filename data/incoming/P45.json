@@ -1,0 +1,61 @@
+{
+  "record_id": "P45",
+  "source_id": "P45",
+  "tier": "C",
+  "citation": "Molecules 2022, 27(12), 3727（Bi(NO3)3/Keto-ABNO 有氧氧化醇）",
+  "doi": "10.3390/molecules27123727",
+  "locator": "Scheme 4 克级段：\"the oxidation of 1-phenylethanol (20 mmol) was carried out under optimized conditions to give 2.294 g of acetophenone with an isolated yield of 94%\"；条件取自表注：1a 1 mmol、Bi(NO3)3·5H2O 10 mol%、Keto-ABNO 5 mol%、CH3CN 2 mL、65 ℃、2 h、air balloon（PMC9230008 全文已核）",
+  "locator_zh": "Scheme 4 克级实验段 + 条件表注",
+  "substrate": {
+    "alcohol": "1-phenylethanol",
+    "oxidant": "air",
+    "product": "acetophenone"
+  },
+  "outcome": {
+    "value": 94.0,
+    "unit": "%",
+    "outcome_type": "isolated",
+    "label_raw": "正文：\"2.294 g of acetophenone with an isolated yield of 94%\"（分离、称重）",
+    "note": "20 mmol 克级；同条件小试（1 mmol）为优化表标准条件。2.294 g / 120.15 = 19.1 mmol，与 20 mmol 投料一致，可复核。"
+  },
+  "assay": {
+    "method": "isolated (weighed)",
+    "internal_standard": null,
+    "quantification_basis": "isolated product"
+  },
+  "conditions": {
+    "catalyst": "Bi(NO3)3·5H2O",
+    "catalyst_loading_raw": "10 mol%",
+    "catalyst_mol_pct": 10.0,
+    "ligand": "Keto-ABNO（有机助催化剂，非金属配体）",
+    "ligand_mol_pct": 5.0,
+    "base": null,
+    "base_eq": null,
+    "solvent": "CH3CN（2 mL/1 mmol）",
+    "temp_c": 65,
+    "time_h": 2.0,
+    "atmosphere": "air balloon",
+    "scale_mmol": 20.0,
+    "equivalents": {
+      "alcohol": 1.0,
+      "oxidant": null
+    },
+    "concentration_m": 0.5
+  },
+  "purification": null,
+  "evidence_grade": "A_confirmed",
+  "verification": "verified_fulltext",
+  "catalytic_profile": {
+    "catalyst_form": "in_situ_salt",
+    "ligand_family": "non_phosphine",
+    "support": "none",
+    "medium": "organic",
+    "activation_mode": "thermal"
+  },
+  "_extraction": {
+    "label_raw_provenance": "verbatim",
+    "assay_basis_source": "克级段明确 isolated yield 与质量",
+    "verified_at": "2026-10-31",
+    "calibration": "calibrated"
+  }
+}

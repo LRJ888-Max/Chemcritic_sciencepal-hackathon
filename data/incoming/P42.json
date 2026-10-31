@@ -1,0 +1,62 @@
+{
+  "record_id": "P42",
+  "source_id": "P42",
+  "tier": "C",
+  "citation": "Beilstein J. Org. Chem. 2019, 15, 284（γ-戊内酯基离子液体中的 Sonogashira 偶联）",
+  "doi": "10.3762/bjoc.15.284",
+  "locator": "Results and Discussion 段，循环实验首轮：\"3a was isolated with a yield of 88%\"；Table 3 entry 1 同值（本地 PDF refs/pdf/NEW-bjoc-15-284.pdf 已核）",
+  "locator_zh": "结果与讨论段（循环首轮）+ 表 3 第 1 行",
+  "substrate": {
+    "aryl_halide": "iodobenzene",
+    "alkyne": "phenylacetylene",
+    "product": "diphenylacetylene"
+  },
+  "outcome": {
+    "value": 88.0,
+    "unit": "%",
+    "outcome_type": "isolated",
+    "label_raw": "正文：\"3a was isolated with a yield of 88%\"（分离、称重）",
+    "note": "同一篇报 22 个交叉偶联产物，分离收率 72–99%；本条取模型反应 3a 的首轮值。"
+  },
+  "assay": {
+    "method": "isolated (weighed)",
+    "internal_standard": null,
+    "quantification_basis": "isolated product"
+  },
+  "conditions": {
+    "catalyst": "PdCl2(PPh3)2",
+    "catalyst_loading_raw": "0.5 mol%",
+    "catalyst_mol_pct": 0.5,
+    "ligand": "PPh3（配位于 Pd）",
+    "ligand_mol_pct": null,
+    "base": "Et3N",
+    "base_eq": 1.5,
+    "solvent": "[BMIM][BF4] 离子液体 0.8 mL",
+    "temp_c": 55,
+    "time_h": 2.0,
+    "atmosphere": null,
+    "scale_mmol": 0.5,
+    "equivalents": {
+      "aryl_halide": 1.0,
+      "alkyne": 1.5
+    },
+    "concentration_m": null
+  },
+  "purification": "戊烷萃取（10 × 5 mL）",
+  "evidence_grade": "A_confirmed",
+  "verification": "verified_fulltext",
+  "catalytic_profile": {
+    "catalyst_form": "molecular_complex",
+    "ligand_family": "phosphine",
+    "support": "none",
+    "medium": "organic",
+    "activation_mode": "thermal"
+  },
+  "_extraction": {
+    "label_raw_provenance": "verbatim",
+    "assay_basis_source": "正文明确 isolated 与质量",
+    "verified_at": "2026-10-31",
+    "calibration": "calibrated",
+    "note": "含 CuI 1 mol% 助催化；本条按 Pd 计载量。"
+  }
+}

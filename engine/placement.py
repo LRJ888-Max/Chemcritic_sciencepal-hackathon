@@ -360,6 +360,15 @@ def _product_state(user: Record, ref: Record) -> str:
 # 后者由标题关键词粗归类（PMC9301730 标题是 "Buchwald–Hartwig-Type Amination"，
 # 底物却是芳卤 + 硼酸酯），键名来自底物名本身，错得更少。
 _KIND_BY_KEY = (
+    # 2026-10-31 扩类：先放"键名唯一"的规则，避免被后面的通用胺/炔规则吃掉。
+    # CuAAC 的底物键是 azide + alkyne；若不先判 azide，会被 sonogashira 抢先。
+    (("azide",), "click_cuaac"),
+    (("boc",), "boc_deprotection"),
+    (("nitro",), "nitro_reduction"),
+    (("carboxylic_acid",), "esterification"),
+    (("ketone", "hydride_source", "hydrogen_source"), "transfer_hydrogenation"),
+    (("alcohol",), "oxidation"),
+    (("acid", "carboxyl"), "amide_coupling"),
     (("boronic_acid", "boronic", "boronate"), "suzuki"),
     (("alkene", "olefin", "acrylate"), "heck"),
     (("alkyne", "acetylene", "ethynyl"), "sonogashira"),

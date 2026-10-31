@@ -1,0 +1,70 @@
+{
+  "record_id": "P46",
+  "source_id": "P46",
+  "tier": "C",
+  "citation": "Communications Chemistry 2025（硅负载铜催化硝基芳烃加氢）",
+  "doi": "10.1038/s42004-025-01867-7",
+  "locator": "Catalytic activity evaluation + 结果段：\"gas pressure of 10 kg at 70 °C ... over 99% isolated yield of aniline\"；典型操作：61.5 mg nitrobenzene + 45 mg catalyst + 2 mL MeOH（PMC12864793 全文已核）",
+  "locator_zh": "催化活性评价段 + 结果段（70 ℃、10 kg 氢压）",
+  "substrate": {
+    "nitro": "nitrobenzene",
+    "reductant": "H2",
+    "product": "aniline"
+  },
+  "outcome": {
+    "value": 99.0,
+    "unit": "%",
+    "outcome_type": "isolated",
+    "label_raw": "正文：\"over 99% isolated yield of aniline\"（分离；同段报 selectivity 100%）",
+    "value_raw": ">99",
+    "value_is_lower_bound": true,
+    "note": "原文写 over 99%，按 99 取下界并标 value_is_lower_bound。同一段另有一套 60 ℃/10 h 的 GC 筛选条件，勿与本条混用。"
+  },
+  "assay": {
+    "method": "isolated (weighed)",
+    "internal_standard": null,
+    "quantification_basis": "isolated product"
+  },
+  "conditions": {
+    "catalyst": "CuSi-600 Red（铜硅酸盐）",
+    "catalyst_loading_raw": "45 mg / 0.5 mmol 底物",
+    "catalyst_mol_pct": null,
+    "ligand": null,
+    "ligand_mol_pct": null,
+    "base": null,
+    "base_eq": null,
+    "solvent": "MeOH（2 mL）",
+    "temp_c": 70,
+    "time_h": null,
+    "atmosphere": "H2（约 10 kg 压力）",
+    "scale_mmol": 0.5,
+    "equivalents": {
+      "nitro": 1.0,
+      "reductant": null
+    },
+    "concentration_m": 0.25
+  },
+  "purification": null,
+  "evidence_grade": "A_confirmed",
+  "verification": "verified_with_caveat",
+  "catalytic_profile": {
+    "catalyst_form": "supported",
+    "ligand_family": "none",
+    "support": "solid_support",
+    "medium": "organic",
+    "activation_mode": "thermal"
+  },
+  "_extraction": {
+    "label_raw_provenance": "verbatim",
+    "assay_basis_source": "正文明确 isolated yield",
+    "verified_at": "2026-10-31",
+    "calibration": "calibrated",
+    "missing_fields": [
+      "time_h",
+      "catalyst_mol_pct"
+    ],
+    "needs_A_check": [
+      "70 ℃/10 kg 那一组的具体反应时间（原文未在该句给出）"
+    ]
+  }
+}

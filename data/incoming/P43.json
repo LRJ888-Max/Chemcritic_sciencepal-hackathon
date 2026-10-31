@@ -1,0 +1,61 @@
+{
+  "record_id": "P43",
+  "source_id": "P43",
+  "tier": "C",
+  "citation": "Beilstein J. Org. Chem. 2025, 21, 1544–1551（生物基溶剂 Cyrene 中的 CuAAC）",
+  "doi": "10.3762/bjoc.21.117",
+  "locator": "Cyrene 段：\"the GC analysis showed complete conversion, and after the workup procedure, 88% 3a was isolated with 98.5% purity\"（本地 PDF refs/pdf/NEW-bjoc-21-117.pdf 已核）",
+  "locator_zh": "Cyrene 溶剂段（3a，12 h）",
+  "substrate": {
+    "azide": "benzyl azide",
+    "alkyne": "phenylacetylene",
+    "product": "1-benzyl-4-phenyl-1H-1,2,3-triazole"
+  },
+  "outcome": {
+    "value": 88.0,
+    "unit": "%",
+    "outcome_type": "isolated",
+    "label_raw": "正文：\"88% 3a was isolated with 98.5% purity\"（分离、称重；同段另报 GC 完全转化）",
+    "note": "同篇报取代三唑 50–96%；本条取模型反应 3a。GC 说完全转化、分离只有 88%——转化率与分离收率不可互替的现成例子。"
+  },
+  "assay": {
+    "method": "isolated (weighed)",
+    "internal_standard": null,
+    "quantification_basis": "isolated product"
+  },
+  "conditions": {
+    "catalyst": "CuI",
+    "catalyst_loading_raw": "1 mol%",
+    "catalyst_mol_pct": 1.0,
+    "ligand": null,
+    "ligand_mol_pct": null,
+    "base": "Et3N",
+    "base_eq": 0.1,
+    "solvent": "Cyrene（2.5 mL）",
+    "temp_c": 30,
+    "time_h": 12.0,
+    "atmosphere": null,
+    "scale_mmol": 1.0,
+    "equivalents": {
+      "azide": 1.15,
+      "alkyne": 1.0
+    },
+    "concentration_m": null
+  },
+  "purification": null,
+  "evidence_grade": "A_confirmed",
+  "verification": "verified_fulltext",
+  "catalytic_profile": {
+    "catalyst_form": "in_situ_salt",
+    "ligand_family": "none",
+    "support": "none",
+    "medium": "organic",
+    "activation_mode": "thermal"
+  },
+  "_extraction": {
+    "label_raw_provenance": "verbatim",
+    "assay_basis_source": "正文明确 isolated 与纯度",
+    "verified_at": "2026-10-31",
+    "calibration": "calibrated"
+  }
+}
