@@ -2368,20 +2368,46 @@ def screen_three(records):
 def screen_four(records):
     _hr("屏 4 · 档位判定审计（字段 → 规则 → 结果，全程可复现）")
     print("  档位由 engine/tier.py 从受控词表字段计算，不读人工标注；标注仅用于交叉校验。\n")
-    ok = 0
+    # 三态，只有第三种是失败：
+    #   OK        有标注 && 计算一致
+    #   未标注    没有人工标注（语料晋升的 candidate）——不是矛盾，是"还没人核"，不能说成已核验
+    #   MISMATCH  有标注 && 计算不一致 —— 真错误（规则或字段有问题）
+    # 2026-10-31：原先写 `ok == len(records)`，140 条里有 36 条 candidate 没有标注，于是
+    # 永远 104/140 → run_demo 退出码恒为 1，而屏幕上是"29 passed, 0 failed"。
+    # 症状很坏：脚本/CI 判失败，人看输出判成功。三态之后两者一致。
+    annotated_n = agree_n = 0
+    mismatches = []
     for r in records:
         meta = r.tier_meta or {}
         rules = ", ".join(f"{x['rule_id']}" for x in meta.get("rules", [])) or "-"
         borderline = "/".join(meta.get("borderline", [])) or "-"
         annotated = meta.get("annotated") or "-"
         computed = meta.get("tier") or "-"
-        same = "OK" if annotated == computed else "MISMATCH"
-        ok += annotated == computed
-        print(f"  {r.record_id:<10} tier={computed:<3} (标注 {annotated:<3}) {same:<8} "
+        if annotated == "-":
+            state = "未标注"
+        elif annotated == computed:
+            state = "OK"
+            annotated_n += 1
+            agree_n += 1
+        else:
+            state = "MISMATCH"
+            annotated_n += 1
+            mismatches.append((r.record_id, annotated, computed))
+        print(f"  {r.record_id:<10} tier={computed:<3} (标注 {annotated:<3}) {state:<8} "
               f"rules={rules:<8} borderline={borderline:<6} conf={meta.get('confidence', '-'):<7} "
               f"form={r.catalytic_profile.get('catalyst_form', '-'):<17} ligand={r.catalytic_profile.get('ligand_family', '-')}")
-    print(f"\n  计算值与标注一致：{ok}/{len(records)}")
-    return ok == len(records)
+
+    unannotated_n = sum(1 for r in records if not (r.tier_meta or {}).get("annotated"))
+    undetermined_n = sum(1 for r in records if not (r.tier_meta or {}).get("tier"))
+    if mismatches:
+        shown = "、".join(f"{rid}(标注{a}/计算{b})" for rid, a, b in mismatches[:3])
+        print(f"\n  交叉校验：{agree_n}/{annotated_n} 条有标注的记录一致；**{len(mismatches)} 条不一致**（{shown}）")
+    else:
+        print(f"\n  交叉校验：{agree_n}/{annotated_n} 条有标注的记录全部一致（0 条不一致）")
+    print(f"  未标注：{unannotated_n} 条（语料晋升 candidate —— 有计算档位，但没有人工核验；"
+          f"对外只能说『计算为 X 档』，不能说『已核验为 X 档』）")
+    print(f"  无法定档：{undetermined_n} 条（缺受控字段，只并排、不定档）")
+    return not mismatches
 
 
 def screen_five(records):
