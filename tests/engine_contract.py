@@ -31,6 +31,7 @@ import argparse
 import copy
 import json
 import os
+import re
 import subprocess
 import sys
 import tempfile
@@ -311,6 +312,57 @@ def load_cases(path: str) -> tuple[dict, list[dict]]:
     return doc.get("base_input", {}), doc.get("cases", [])
 
 
+def check_single_source_of_truth(engine: str) -> list[str]:
+    """C11 · 版本号与能力必须只有一处定义（2026-10-31 修的正是这类漂移）。
+
+    背景：`find_substrate_payload` 曾只写在 build_bundle.py 的 RUNNER 模板里，
+    于是单文件版有、包内模式没有；`run_demo.py` 用 `globals().get()` 兜底 → T26 静默 SKIP，
+    队友跑 `python engine/run_demo.py` 看到「28 全过」会以为覆盖完整。
+    版本号当时也写死在 RUNNER 里，包内模式根本读不到自己是哪个版本。
+
+    三条判据：版本号单一来源、包内模式接得上、bundle 未过期。
+    """
+    fails: list[str] = []
+    engine_dir = os.path.join(ROOT, "engine")
+
+    ver_path = os.path.join(engine_dir, "version.py")
+    if not os.path.exists(ver_path):
+        return ["engine/version.py 缺失：版本号失去了唯一来源"]
+    ns: dict = {}
+    with open(ver_path, encoding="utf-8") as f:
+        exec(compile(f.read(), ver_path, "exec"), ns)
+    src_ver = ns.get("ENGINE_VERSION")
+    if not src_ver:
+        fails.append("engine/version.py 里没有 ENGINE_VERSION")
+
+    # 判据 1：RUNNER 模板里不许再写死版本号（写死必然与 version.py 漂）
+    bb = os.path.join(engine_dir, "build_bundle.py")
+    with open(bb, encoding="utf-8") as f:
+        bb_src = f.read()
+    if re.search(r'^ENGINE_VERSION\s*=\s*"', bb_src, re.M):
+        fails.append("engine/build_bundle.py 里仍写死了 ENGINE_VERSION；版本号应只在 version.py")
+
+    # 判据 2：实现放在 corpus_query（SECTIONS 之一），且包内入口真的导入它
+    cq = os.path.join(engine_dir, "corpus_query.py")
+    with open(cq, encoding="utf-8") as f:
+        cq_src = f.read()
+    if "def find_substrate_payload" not in cq_src:
+        fails.append("engine/corpus_query.py 里没有 find_substrate_payload —— 又退回 bundle 专属了")
+    rd = os.path.join(engine_dir, "run_demo.py")
+    with open(rd, encoding="utf-8") as f:
+        rd_src = f.read()
+    if "from corpus_query import find_substrate_payload" not in rd_src:
+        fails.append("engine/run_demo.py 没有导入 find_substrate_payload —— T26 在包内模式会静默 SKIP")
+
+    # 判据 3：被测引擎自报版本 == 源码版本（bundle 未过期）
+    payload, err = run_list_records(engine)
+    if payload is None:
+        fails.append(f"--list-records 失败，无法核对版本：{err}")
+    elif payload.get("engine") != src_ver:
+        fails.append(f"引擎自报 {payload.get('engine')}，源码是 {src_ver}（bundle 未重新生成？）")
+    return fails
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description="引擎契约回归")
     ap.add_argument("--engine", default=DEFAULT_ENGINE, help="待测引擎文件（默认仓库内 bundle）")
@@ -441,8 +493,21 @@ def main() -> int:
             if not args.quiet:
                 print(f"  {cid}  {name}  →  pass")
 
+    # C11 · 工程结构断言（不进 cases.json：它测的不是引擎行为，是代码有没有被拆到两条路径上）
+    c11_fails = check_single_source_of_truth(args.engine)
+    if c11_fails:
+        failed += 1
+        print("  C11  单一事实来源 · 版本号 / find_substrate 定义位置  →  FAIL")
+        for f in c11_fails:
+            print(f"      {f}")
+        print()
+    else:
+        passed += 1
+        if not args.quiet:
+            print("  C11  单一事实来源 · 版本号 / find_substrate 定义位置  →  pass")
+
     print()
-    print(f"  结果：{passed} passed, {failed} failed, {errored} error（共 {len(cases)} 条）")
+    print(f"  结果：{passed} passed, {failed} failed, {errored} error（共 {len(cases) + 1} 条，含 C11）")
 
     if args.snapshot and snapshot:
         with open(args.snapshot, "w", encoding="utf-8") as f:

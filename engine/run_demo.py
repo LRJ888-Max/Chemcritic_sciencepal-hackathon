@@ -26,6 +26,7 @@ import gates  # noqa: E402
 import input_audit  # noqa: E402
 import leverage as leverage_mod  # noqa: E402
 import placement as placement_mod  # noqa: E402
+from corpus_query import find_substrate_payload  # noqa: E402
 from schemas import BLOCKED, COMPARABLE, FAIL, NEEDS_EVIDENCE, PASS, Record  # noqa: E402
 
 USER = Record(
@@ -430,9 +431,11 @@ def test_matrix(records):
     # T26 · 按底物盘点必须精确同一化合物
     # 子串匹配会把 1-chloro-4-iodobenzene 算进 iodobenzene，平台实测因此报出 41 条
     # （真实 31 条），并在同一份报告里既写"芳基卤=1-氯-4-碘苯"又说"共 41 条碘苯记录"。
+    # 该函数在 corpus_query.py（唯一实现），单文件版由 SECTIONS 内联、包内模式由上面的 import 提供，
+    # 两条路径都该有；取不到说明模块拆分被改坏了，不再静默跳过。
     finder = globals().get("find_substrate_payload")
     if finder is None:
-        print("  [SKIP] T26  按底物精确匹配（包内模式无此函数，仅单文件版校验）")
+        print("  [SKIP] T26  按底物精确匹配（未找到 corpus_query.find_substrate_payload）")
     else:
         q26 = finder(records, ["iodobenzene"])["queries"][0]
         exact26 = sum(1 for r in records
