@@ -1,0 +1,5357 @@
+{
+ "schema": "chemcritic.promote.v1",
+ "notice": "晋升候选：脚本按规则从语料层抽出的 entry 形状，尚未人工核验。核验通过才写 data/records.json，evidence_grade 最高 candidate。",
+ "counts": {
+  "tables": 26,
+  "entries": 246
+ },
+ "tables": [
+  {
+   "unit_id": "PMC9301730-T1",
+   "corpus_id": "PMC9301730",
+   "reaction_class": "buchwald_hartwig",
+   "header": [
+    "entry",
+    "catalyst",
+    "yield 4b (%)",
+    "yield 5b (%)"
+   ],
+   "source": {
+    "citation": "Phenylboronic Ester-Activated Aryl Iodide-Selective Buchwald–Hartwig-Type Amination toward Bioactivity Assay",
+    "journal": "ACS Omega",
+    "year": "2022",
+    "doi": "10.1021/acsomega.2c01092",
+    "pmcid": "PMC9301730",
+    "label": null,
+    "caption": "Screening of Nickel and Palladium Catalysts for the Activator-Promoted Buchwald–Hartwig-Type Aminationa",
+    "footnote": "aReaction conditions: 1b (1.0 mmol), 2a (3.0 mmol), 3a (1.3 mmol), and K3PO4 (3 mmol). The yield was determined by GC analysis using mesitylene as an external standard.bWithout 3a."
+   },
+   "caliber": {
+    "outcome_type": "gc",
+    "quote": ". The yield was determined by GC analysis using mesitylene as an extern",
+    "from": "caption_or_footnote"
+   },
+   "parsed": {
+    "aryl_halide": "1-chloro-4-iodobenzene",
+    "partner_field": "boronic_acid",
+    "partner": "phenylboronic ester",
+    "generic_substrate": false,
+    "bare_names": [],
+    "base": "K3PO4",
+    "solvent": null,
+    "temp_c": null,
+    "time_h": null,
+    "internal_standard": "external standard",
+    "catalyst": "Ni(acac)2",
+    "feeds": [
+     [
+      "1-chloro-4-iodobenzene",
+      1.0,
+      "mmol"
+     ],
+     [
+      "toluidine",
+      3.0,
+      "mmol"
+     ],
+     [
+      "phenylboronic ester",
+      1.3,
+      "mmol"
+     ],
+     [
+      "K3PO4",
+      3.0,
+      "mmol"
+     ]
+    ],
+    "label_map_size": 3
+   },
+   "entries": [
+    {
+     "unit_id": "PMC9301730-T1",
+     "row": [
+      "1",
+      "Ni(acac)2",
+      "94",
+      "trace"
+     ],
+     "locator": "T1, entry 1",
+     "value": 94.0,
+     "value_raw": "94",
+     "notes": [],
+     "catalyst_raw": "Ni(acac)2"
+    },
+    {
+     "unit_id": "PMC9301730-T1",
+     "row": [
+      "2b",
+      "Ni(acac)2",
+      "0",
+      "0"
+     ],
+     "locator": "T1, entry 2b",
+     "value": 0.0,
+     "value_raw": "0",
+     "notes": [],
+     "catalyst_raw": "Ni(acac)2"
+    },
+    {
+     "unit_id": "PMC9301730-T1",
+     "row": [
+      "3",
+      "NiI2",
+      "21",
+      "12"
+     ],
+     "locator": "T1, entry 3",
+     "value": 21.0,
+     "value_raw": "21",
+     "notes": [],
+     "catalyst_raw": "NiI2"
+    },
+    {
+     "unit_id": "PMC9301730-T1",
+     "row": [
+      "4",
+      "NiCl2",
+      "59",
+      "13"
+     ],
+     "locator": "T1, entry 4",
+     "value": 59.0,
+     "value_raw": "59",
+     "notes": [],
+     "catalyst_raw": "NiCl2"
+    },
+    {
+     "unit_id": "PMC9301730-T1",
+     "row": [
+      "5",
+      "NiCl2(dme)",
+      "72",
+      "4"
+     ],
+     "locator": "T1, entry 5",
+     "value": 72.0,
+     "value_raw": "72",
+     "notes": [],
+     "catalyst_raw": "NiCl2(dme)"
+    },
+    {
+     "unit_id": "PMC9301730-T1",
+     "row": [
+      "6",
+      "Ni(PPh3)4",
+      "19",
+      "3"
+     ],
+     "locator": "T1, entry 6",
+     "value": 19.0,
+     "value_raw": "19",
+     "notes": [],
+     "catalyst_raw": "Ni(PPh3)4"
+    },
+    {
+     "unit_id": "PMC9301730-T1",
+     "row": [
+      "7",
+      "Ni(cod)2",
+      "11",
+      "5"
+     ],
+     "locator": "T1, entry 7",
+     "value": 11.0,
+     "value_raw": "11",
+     "notes": [],
+     "catalyst_raw": "Ni(cod)2"
+    },
+    {
+     "unit_id": "PMC9301730-T1",
+     "row": [
+      "8",
+      "Ni(acac)2·2H2O",
+      "62",
+      "trace"
+     ],
+     "locator": "T1, entry 8",
+     "value": 62.0,
+     "value_raw": "62",
+     "notes": [],
+     "catalyst_raw": "Ni(acac)2·2H2O"
+    },
+    {
+     "unit_id": "PMC9301730-T1",
+     "row": [
+      "9",
+      "Pd(acac)2",
+      "0",
+      "98"
+     ],
+     "locator": "T1, entry 9",
+     "value": 0.0,
+     "value_raw": "0",
+     "notes": [],
+     "catalyst_raw": "Pd(acac)2"
+    },
+    {
+     "unit_id": "PMC9301730-T1",
+     "row": [
+      "11",
+      "Pd(OAc)2",
+      "0",
+      "91"
+     ],
+     "locator": "T1, entry 11",
+     "value": 0.0,
+     "value_raw": "0",
+     "notes": [],
+     "catalyst_raw": "Pd(OAc)2"
+    }
+   ]
+  },
+  {
+   "unit_id": "PMC12305527-T1",
+   "corpus_id": "PMC12305527",
+   "reaction_class": "buchwald_hartwig",
+   "header": [
+    "Entry",
+    "Catalyst",
+    "GC yield (%)",
+    "Conversion (%)",
+    "Selectivity (%)"
+   ],
+   "source": {
+    "citation": "Application of palladium nanoparticles supported on ordered mesoporous oxides for C–N and C <svg xmlns=\"http://www.w3.or",
+    "journal": "RSC Advances",
+    "year": "2025",
+    "doi": "10.1039/d5ra02824h",
+    "pmcid": "PMC12305527",
+    "label": null,
+    "caption": "The yield, conversion and selectivity obtained for each reaction during the catalyst screening study",
+    "footnote": ""
+   },
+   "caliber": {
+    "outcome_type": "gc",
+    "quote": "GC yield (%)",
+    "from": "header"
+   },
+   "parsed": {
+    "aryl_halide": null,
+    "partner_field": null,
+    "partner": null,
+    "generic_substrate": true,
+    "bare_names": [],
+    "base": null,
+    "solvent": null,
+    "temp_c": null,
+    "time_h": null,
+    "internal_standard": null,
+    "catalyst": "Pd–Co3O4",
+    "feeds": [],
+    "label_map_size": 0
+   },
+   "entries": [
+    {
+     "unit_id": "PMC12305527-T1",
+     "row": [
+      "1",
+      "Pd–Co3O4",
+      "24",
+      "30",
+      "50"
+     ],
+     "locator": "T1, entry 1",
+     "value": 24.0,
+     "value_raw": "24",
+     "notes": [],
+     "catalyst_raw": "Pd–Co3O4"
+    },
+    {
+     "unit_id": "PMC12305527-T1",
+     "row": [
+      "2",
+      "Pd–Mn3O4",
+      "82",
+      "88",
+      "100"
+     ],
+     "locator": "T1, entry 2",
+     "value": 82.0,
+     "value_raw": "82",
+     "notes": [],
+     "catalyst_raw": "Pd–Mn3O4"
+    },
+    {
+     "unit_id": "PMC12305527-T1",
+     "row": [
+      "3",
+      "Pd–NiO",
+      "20",
+      "32",
+      "33"
+     ],
+     "locator": "T1, entry 3",
+     "value": 20.0,
+     "value_raw": "20",
+     "notes": [],
+     "catalyst_raw": "Pd–NiO"
+    },
+    {
+     "unit_id": "PMC12305527-T1",
+     "row": [
+      "4",
+      "Pd–CeO2",
+      "97",
+      "100",
+      "100"
+     ],
+     "locator": "T1, entry 4",
+     "value": 97.0,
+     "value_raw": "97",
+     "notes": [],
+     "catalyst_raw": "Pd–CeO2"
+    },
+    {
+     "unit_id": "PMC12305527-T1",
+     "row": [
+      "5",
+      "Pd–TiO2",
+      "61",
+      "65",
+      "100"
+     ],
+     "locator": "T1, entry 5",
+     "value": 61.0,
+     "value_raw": "61",
+     "notes": [],
+     "catalyst_raw": "Pd–TiO2"
+    }
+   ]
+  },
+  {
+   "unit_id": "PMC12305527-T2",
+   "corpus_id": "PMC12305527",
+   "reaction_class": "buchwald_hartwig",
+   "header": [
+    "Entry",
+    "Catalyst",
+    "Temperature (°C)",
+    "Base",
+    "GC yield (%)",
+    "Conversion (%)",
+    "Selectivity (%)"
+   ],
+   "source": {
+    "citation": "Application of palladium nanoparticles supported on ordered mesoporous oxides for C–N and C <svg xmlns=\"http://www.w3.or",
+    "journal": "RSC Advances",
+    "year": "2025",
+    "doi": "10.1039/d5ra02824h",
+    "pmcid": "PMC12305527",
+    "label": null,
+    "caption": "Evaluation of the optimal reaction parameters, including bases and temperaturea",
+    "footnote": "aReaction conditions: aniline (1.2 equiv., 1.2 mmol), 4-bromotoluene (1 equiv., 1 mmol), catalyst (50 mg) and base (2 equiv., 1.5 mmol), 6 h."
+   },
+   "caliber": {
+    "outcome_type": "gc",
+    "quote": "GC yield (%)",
+    "from": "header"
+   },
+   "parsed": {
+    "aryl_halide": "4-bromotoluene",
+    "partner_field": "amine",
+    "partner": "aniline",
+    "generic_substrate": false,
+    "bare_names": [
+     "aniline (1.2 equiv.",
+     "4-bromotoluene (1 equiv."
+    ],
+    "base": "K2CO3",
+    "solvent": "toluene",
+    "temp_c": null,
+    "time_h": 6.0,
+    "internal_standard": null,
+    "catalyst": "No catalyst",
+    "feeds": [],
+    "label_map_size": 0
+   },
+   "entries": [
+    {
+     "unit_id": "PMC12305527-T2",
+     "row": [
+      "3",
+      "Pd–CeO2",
+      "25",
+      "K2CO3",
+      "24",
+      "30",
+      "100"
+     ],
+     "locator": "T2, entry 3",
+     "value": 24.0,
+     "value_raw": "24",
+     "notes": [],
+     "catalyst_raw": "Pd–CeO2"
+    },
+    {
+     "unit_id": "PMC12305527-T2",
+     "row": [
+      "4",
+      "Pd–CeO2",
+      "50",
+      "K2CO3",
+      "60",
+      "63",
+      "100"
+     ],
+     "locator": "T2, entry 4",
+     "value": 60.0,
+     "value_raw": "60",
+     "notes": [],
+     "catalyst_raw": "Pd–CeO2"
+    },
+    {
+     "unit_id": "PMC12305527-T2",
+     "row": [
+      "5",
+      "Pd–CeO2",
+      "80",
+      "K2CO3",
+      "97",
+      "100",
+      "100"
+     ],
+     "locator": "T2, entry 5",
+     "value": 97.0,
+     "value_raw": "97",
+     "notes": [],
+     "catalyst_raw": "Pd–CeO2"
+    },
+    {
+     "unit_id": "PMC12305527-T2",
+     "row": [
+      "6",
+      "Pd–CeO2",
+      "80",
+      "KOH",
+      "61",
+      "70",
+      "100"
+     ],
+     "locator": "T2, entry 6",
+     "value": 61.0,
+     "value_raw": "61",
+     "notes": [],
+     "catalyst_raw": "Pd–CeO2"
+    },
+    {
+     "unit_id": "PMC12305527-T2",
+     "row": [
+      "7",
+      "Pd–CeO2",
+      "80",
+      "NEt3",
+      "23",
+      "32",
+      "80"
+     ],
+     "locator": "T2, entry 7",
+     "value": 23.0,
+     "value_raw": "23",
+     "notes": [],
+     "catalyst_raw": "Pd–CeO2"
+    },
+    {
+     "unit_id": "PMC12305527-T2",
+     "row": [
+      "8",
+      "Pd–CeO2",
+      "80",
+      "Cs2CO3",
+      "55",
+      "60",
+      "33"
+     ],
+     "locator": "T2, entry 8",
+     "value": 55.0,
+     "value_raw": "55",
+     "notes": [],
+     "catalyst_raw": "Pd–CeO2"
+    },
+    {
+     "unit_id": "PMC12305527-T2",
+     "row": [
+      "9",
+      "Pd–CeO2",
+      "80",
+      "Na2CO3",
+      "63",
+      "66",
+      "100"
+     ],
+     "locator": "T2, entry 9",
+     "value": 63.0,
+     "value_raw": "63",
+     "notes": [],
+     "catalyst_raw": "Pd–CeO2"
+    }
+   ]
+  },
+  {
+   "unit_id": "PMC12305527-T3",
+   "corpus_id": "PMC12305527",
+   "reaction_class": "buchwald_hartwig",
+   "header": [
+    "Entry",
+    "Catalyst",
+    "Conversion (%)",
+    "Selectivity (%)",
+    "GC yield (%)"
+   ],
+   "source": {
+    "citation": "Application of palladium nanoparticles supported on ordered mesoporous oxides for C–N and C <svg xmlns=\"http://www.w3.or",
+    "journal": "RSC Advances",
+    "year": "2025",
+    "doi": "10.1039/d5ra02824h",
+    "pmcid": "PMC12305527",
+    "label": null,
+    "caption": "The yields, conversions, and selectivity obtained for each reaction during the catalyst screening study for Sonogashira coupling reactionsa",
+    "footnote": "aReaction conditions: phenylacetylene (1.2 equiv., 1.2 mmol), 4-bromoacetophenone (1 equiv., 1 mmol), catalyst (50 mg) and K2CO3 (2 equiv., 1.5 mmol), 80 °C, 6 h."
+   },
+   "caliber": {
+    "outcome_type": "gc",
+    "quote": "GC yield (%)",
+    "from": "header"
+   },
+   "parsed": {
+    "aryl_halide": "4-bromoacetophenone",
+    "partner_field": "alkyne",
+    "partner": "phenylacetylene",
+    "generic_substrate": false,
+    "bare_names": [
+     "phenylacetylene (1.2 equiv.",
+     "4-bromoacetophenone (1 equiv."
+    ],
+    "base": "K2CO3",
+    "solvent": null,
+    "temp_c": 80.0,
+    "time_h": 6.0,
+    "internal_standard": null,
+    "catalyst": "Pd–Co3O4",
+    "feeds": [],
+    "label_map_size": 0
+   },
+   "entries": [
+    {
+     "unit_id": "PMC12305527-T3",
+     "row": [
+      "1",
+      "Pd–Co3O4",
+      "100",
+      "100",
+      "90"
+     ],
+     "locator": "T3, entry 1",
+     "value": 90.0,
+     "value_raw": "90",
+     "notes": [],
+     "catalyst_raw": "Pd–Co3O4"
+    },
+    {
+     "unit_id": "PMC12305527-T3",
+     "row": [
+      "2",
+      "Pd–Mn2O4",
+      "88",
+      "100",
+      "88"
+     ],
+     "locator": "T3, entry 2",
+     "value": 88.0,
+     "value_raw": "88",
+     "notes": [],
+     "catalyst_raw": "Pd–Mn2O4"
+    },
+    {
+     "unit_id": "PMC12305527-T3",
+     "row": [
+      "3",
+      "Pd–NiO",
+      "32",
+      "50",
+      "30"
+     ],
+     "locator": "T3, entry 3",
+     "value": 30.0,
+     "value_raw": "30",
+     "notes": [],
+     "catalyst_raw": "Pd–NiO"
+    },
+    {
+     "unit_id": "PMC12305527-T3",
+     "row": [
+      "4",
+      "Pd–CeO2",
+      "61",
+      "100",
+      "60"
+     ],
+     "locator": "T3, entry 4",
+     "value": 60.0,
+     "value_raw": "60",
+     "notes": [],
+     "catalyst_raw": "Pd–CeO2"
+    },
+    {
+     "unit_id": "PMC12305527-T3",
+     "row": [
+      "5",
+      "Pd–TiO2",
+      "58",
+      "100",
+      "58"
+     ],
+     "locator": "T3, entry 5",
+     "value": 58.0,
+     "value_raw": "58",
+     "notes": [],
+     "catalyst_raw": "Pd–TiO2"
+    }
+   ]
+  },
+  {
+   "unit_id": "PMC9086392-T1",
+   "corpus_id": "PMC9086392",
+   "reaction_class": "heck",
+   "header": [
+    "Entry",
+    "Pd (mol%)",
+    "Solvent",
+    "Base",
+    "Time (min.)",
+    "Yield (%)b"
+   ],
+   "source": {
+    "citation": "Preparation of a novel palladium catalytic hydrogel based on graphene oxide/chitosan NPs and cellulose nanowhiskers†",
+    "journal": "RSC Advances",
+    "year": "2018",
+    "doi": "10.1039/c8ra06623j",
+    "pmcid": "PMC9086392",
+    "label": null,
+    "caption": "Optimization of reaction temperature for the model coupling reactiona",
+    "footnote": "aReaction conditions: iodobenzene, methyl acrylate, catalyst, base and solvent.bIsolated yield."
+   },
+   "caliber": {
+    "outcome_type": "isolated",
+    "quote": ", catalyst, base and solvent.bIsolated yield.",
+    "from": "caption_or_footnote"
+   },
+   "parsed": {
+    "aryl_halide": "iodobenzene",
+    "partner_field": "alkene",
+    "partner": "methyl acrylate",
+    "generic_substrate": false,
+    "bare_names": [
+     "iodobenzene",
+     "methyl acrylate"
+    ],
+    "base": "K2CO3",
+    "solvent": "benzene",
+    "temp_c": null,
+    "time_h": null,
+    "internal_standard": null,
+    "catalyst": "0.20",
+    "feeds": [],
+    "label_map_size": 0
+   },
+   "entries": [
+    {
+     "unit_id": "PMC9086392-T1",
+     "row": [
+      "1",
+      "0.20",
+      "Toluene",
+      "K2CO3",
+      "60",
+      "75"
+     ],
+     "locator": "T1, entry 1",
+     "value": 75.0,
+     "value_raw": "75",
+     "notes": [],
+     "catalyst_raw": "0.20"
+    },
+    {
+     "unit_id": "PMC9086392-T1",
+     "row": [
+      "2",
+      "0.20",
+      "DMF",
+      "K2CO3",
+      "50",
+      "79"
+     ],
+     "locator": "T1, entry 2",
+     "value": 79.0,
+     "value_raw": "79",
+     "notes": [],
+     "catalyst_raw": "0.20"
+    },
+    {
+     "unit_id": "PMC9086392-T1",
+     "row": [
+      "3",
+      "0.20",
+      "EtOH",
+      "K2CO3",
+      "40",
+      "80"
+     ],
+     "locator": "T1, entry 3",
+     "value": 80.0,
+     "value_raw": "80",
+     "notes": [],
+     "catalyst_raw": "0.20"
+    },
+    {
+     "unit_id": "PMC9086392-T1",
+     "row": [
+      "4",
+      "0.20",
+      "H2O",
+      "K2CO3",
+      "60",
+      "60"
+     ],
+     "locator": "T1, entry 4",
+     "value": 60.0,
+     "value_raw": "60",
+     "notes": [],
+     "catalyst_raw": "0.20"
+    },
+    {
+     "unit_id": "PMC9086392-T1",
+     "row": [
+      "5",
+      "0.20",
+      "EtOH/H2O",
+      "K2CO3",
+      "35",
+      "96"
+     ],
+     "locator": "T1, entry 5",
+     "value": 96.0,
+     "value_raw": "96",
+     "notes": [],
+     "catalyst_raw": "0.20"
+    },
+    {
+     "unit_id": "PMC9086392-T1",
+     "row": [
+      "6",
+      "0.20",
+      "EtOH/H2O",
+      "NaOAc",
+      "60",
+      "77"
+     ],
+     "locator": "T1, entry 6",
+     "value": 77.0,
+     "value_raw": "77",
+     "notes": [],
+     "catalyst_raw": "0.20"
+    },
+    {
+     "unit_id": "PMC9086392-T1",
+     "row": [
+      "7",
+      "0.20",
+      "EtOH/H2O",
+      "NEt3",
+      "60",
+      "65"
+     ],
+     "locator": "T1, entry 7",
+     "value": 65.0,
+     "value_raw": "65",
+     "notes": [],
+     "catalyst_raw": "0.20"
+    },
+    {
+     "unit_id": "PMC9086392-T1",
+     "row": [
+      "8",
+      "0.20",
+      "EtOH/H2O",
+      "NaHCO3",
+      "65",
+      "85"
+     ],
+     "locator": "T1, entry 8",
+     "value": 85.0,
+     "value_raw": "85",
+     "notes": [],
+     "catalyst_raw": "0.20"
+    },
+    {
+     "unit_id": "PMC9086392-T1",
+     "row": [
+      "9",
+      "0.20",
+      "EtOH/H2O",
+      "t-BuOK",
+      "50",
+      "79"
+     ],
+     "locator": "T1, entry 9",
+     "value": 79.0,
+     "value_raw": "79",
+     "notes": [],
+     "catalyst_raw": "0.20"
+    },
+    {
+     "unit_id": "PMC9086392-T1",
+     "row": [
+      "11",
+      "0.15",
+      "EtOH/H2O",
+      "K2CO3",
+      "35",
+      "83"
+     ],
+     "locator": "T1, entry 11",
+     "value": 83.0,
+     "value_raw": "83",
+     "notes": [],
+     "catalyst_raw": "0.15"
+    },
+    {
+     "unit_id": "PMC9086392-T1",
+     "row": [
+      "12",
+      "0.10",
+      "EtOH/H2O",
+      "K2CO",
+      "40",
+      "75"
+     ],
+     "locator": "T1, entry 12",
+     "value": 75.0,
+     "value_raw": "75",
+     "notes": [],
+     "catalyst_raw": "0.10"
+    },
+    {
+     "unit_id": "PMC9086392-T1",
+     "row": [
+      "13",
+      "0.25",
+      "EtOH/H2O",
+      "K2CO",
+      "30",
+      "90"
+     ],
+     "locator": "T1, entry 13",
+     "value": 90.0,
+     "value_raw": "90",
+     "notes": [],
+     "catalyst_raw": "0.25"
+    },
+    {
+     "unit_id": "PMC9086392-T1",
+     "row": [
+      "14",
+      "0.0",
+      "EtOH/H2O",
+      "K2CO",
+      "120",
+      "0.0"
+     ],
+     "locator": "T1, entry 14",
+     "value": 0.0,
+     "value_raw": "0.0",
+     "notes": [],
+     "catalyst_raw": "0.0"
+    }
+   ]
+  },
+  {
+   "unit_id": "PMC9086392-T2",
+   "corpus_id": "PMC9086392",
+   "reaction_class": "heck",
+   "header": [
+    "Entry",
+    "Olefin",
+    "X",
+    "R1",
+    "Time (min)",
+    "Yield (%)b"
+   ],
+   "source": {
+    "citation": "Preparation of a novel palladium catalytic hydrogel based on graphene oxide/chitosan NPs and cellulose nanowhiskers†",
+    "journal": "RSC Advances",
+    "year": "2018",
+    "doi": "10.1039/c8ra06623j",
+    "pmcid": "PMC9086392",
+    "label": null,
+    "caption": "Mizoroki–Heck reaction coupling reaction of different aryl halides with olefinsa",
+    "footnote": "aReaction conditions: iodobenzene, methyl acrylate, catalyst, base and solvent.bIsolated yield."
+   },
+   "caliber": {
+    "outcome_type": "isolated",
+    "quote": ", catalyst, base and solvent.bIsolated yield.",
+    "from": "caption_or_footnote"
+   },
+   "parsed": {
+    "aryl_halide": "iodobenzene",
+    "partner_field": "alkene",
+    "partner": "methyl acrylate",
+    "generic_substrate": false,
+    "bare_names": [
+     "iodobenzene",
+     "methyl acrylate"
+    ],
+    "base": null,
+    "solvent": "benzene",
+    "temp_c": null,
+    "time_h": null,
+    "internal_standard": null,
+    "catalyst": "Styrene",
+    "feeds": [],
+    "label_map_size": 0
+   },
+   "entries": [
+    {
+     "unit_id": "PMC9086392-T2",
+     "row": [
+      "1",
+      "Styrene",
+      "I",
+      "H",
+      "30",
+      "98"
+     ],
+     "locator": "T2, entry 1",
+     "value": 98.0,
+     "value_raw": "98",
+     "notes": [],
+     "catalyst_raw": "Styrene"
+    },
+    {
+     "unit_id": "PMC9086392-T2",
+     "row": [
+      "2",
+      "Methyl acrylate",
+      "I",
+      "H",
+      "35",
+      "96"
+     ],
+     "locator": "T2, entry 2",
+     "value": 96.0,
+     "value_raw": "96",
+     "notes": [],
+     "catalyst_raw": "Methyl acrylate"
+    },
+    {
+     "unit_id": "PMC9086392-T2",
+     "row": [
+      "3",
+      "Methyl acrylate",
+      "I",
+      "NH2",
+      "40",
+      "92"
+     ],
+     "locator": "T2, entry 3",
+     "value": 92.0,
+     "value_raw": "92",
+     "notes": [],
+     "catalyst_raw": "Methyl acrylate"
+    },
+    {
+     "unit_id": "PMC9086392-T2",
+     "row": [
+      "4",
+      "Methyl methacrylate",
+      "I",
+      "H",
+      "35",
+      "95"
+     ],
+     "locator": "T2, entry 4",
+     "value": 95.0,
+     "value_raw": "95",
+     "notes": [],
+     "catalyst_raw": "Methyl methacrylate"
+    },
+    {
+     "unit_id": "PMC9086392-T2",
+     "row": [
+      "5",
+      "Acrylonitrile",
+      "I",
+      "H",
+      "30",
+      "99"
+     ],
+     "locator": "T2, entry 5",
+     "value": 99.0,
+     "value_raw": "99",
+     "notes": [],
+     "catalyst_raw": "Acrylonitrile"
+    },
+    {
+     "unit_id": "PMC9086392-T2",
+     "row": [
+      "6",
+      "Methyl methacrylate",
+      "Br",
+      "H",
+      "55",
+      "95"
+     ],
+     "locator": "T2, entry 6",
+     "value": 95.0,
+     "value_raw": "95",
+     "notes": [],
+     "catalyst_raw": "Methyl methacrylate"
+    },
+    {
+     "unit_id": "PMC9086392-T2",
+     "row": [
+      "7",
+      "Styrene",
+      "Br",
+      "H",
+      "40",
+      "97"
+     ],
+     "locator": "T2, entry 7",
+     "value": 97.0,
+     "value_raw": "97",
+     "notes": [],
+     "catalyst_raw": "Styrene"
+    },
+    {
+     "unit_id": "PMC9086392-T2",
+     "row": [
+      "8",
+      "Acrylonitrile",
+      "Br",
+      "H",
+      "45",
+      "95"
+     ],
+     "locator": "T2, entry 8",
+     "value": 95.0,
+     "value_raw": "95",
+     "notes": [],
+     "catalyst_raw": "Acrylonitrile"
+    },
+    {
+     "unit_id": "PMC9086392-T2",
+     "row": [
+      "9",
+      "Acrylonitrile",
+      "Br",
+      "NH2",
+      "65",
+      "90"
+     ],
+     "locator": "T2, entry 9",
+     "value": 90.0,
+     "value_raw": "90",
+     "notes": [],
+     "catalyst_raw": "Acrylonitrile"
+    },
+    {
+     "unit_id": "PMC9086392-T2",
+     "row": [
+      "10",
+      "Methyl acrylate",
+      "Br",
+      "H",
+      "60",
+      "93"
+     ],
+     "locator": "T2, entry 10",
+     "value": 93.0,
+     "value_raw": "93",
+     "notes": [],
+     "catalyst_raw": "Methyl acrylate"
+    },
+    {
+     "unit_id": "PMC9086392-T2",
+     "row": [
+      "11",
+      "Styrene",
+      "Cl",
+      "H",
+      "120",
+      "87"
+     ],
+     "locator": "T2, entry 11",
+     "value": 87.0,
+     "value_raw": "87",
+     "notes": [],
+     "catalyst_raw": "Styrene"
+    },
+    {
+     "unit_id": "PMC9086392-T2",
+     "row": [
+      "12",
+      "Methyl methacrylate",
+      "Cl",
+      "H",
+      "180",
+      "81"
+     ],
+     "locator": "T2, entry 12",
+     "value": 81.0,
+     "value_raw": "81",
+     "notes": [],
+     "catalyst_raw": "Methyl methacrylate"
+    }
+   ]
+  },
+  {
+   "unit_id": "PMC7511807-T1",
+   "corpus_id": "PMC7511807",
+   "reaction_class": "heck",
+   "header": [
+    "Entry",
+    "Solvent",
+    "Base",
+    "Temp. (°C)",
+    "Catalyst (mol%)",
+    "Time (h)",
+    "Yieldb (%)"
+   ],
+   "source": {
+    "citation": "Synthesis of nano magnetic supported NHC-palladium and investigation of its applications as a catalyst in the Mizoroki-H",
+    "journal": "Heliyon",
+    "year": "2020",
+    "doi": "10.1016/j.heliyon.2020.e04946",
+    "pmcid": "PMC7511807",
+    "label": null,
+    "caption": "Optimization of the reaction conditions.a",
+    "footnote": "aReaction conditions: styrene, 4-iodotoluene, base (2 mmol), Fe3O4@Si–NHC–Pd and solvent (2 ml). bYields of isolated product."
+   },
+   "caliber": {
+    "outcome_type": "isolated",
+    "quote": "nd solvent (2 ml). bYields of isolated product.",
+    "from": "caption_or_footnote"
+   },
+   "parsed": {
+    "aryl_halide": "4-iodotoluene",
+    "partner_field": "alkene",
+    "partner": "styrene",
+    "generic_substrate": false,
+    "bare_names": [
+     "styrene",
+     "4-iodotoluene"
+    ],
+    "base": "Et3N",
+    "solvent": "toluene",
+    "temp_c": null,
+    "time_h": null,
+    "internal_standard": null,
+    "catalyst": "DMF",
+    "feeds": [
+     [
+      "base",
+      2.0,
+      "mmol"
+     ]
+    ],
+    "label_map_size": 0
+   },
+   "entries": [
+    {
+     "unit_id": "PMC7511807-T1",
+     "row": [
+      "1",
+      "DMF",
+      "Et3N",
+      "90",
+      "0.272",
+      "7",
+      "90%"
+     ],
+     "locator": "T1, entry 1",
+     "value": 90.0,
+     "value_raw": "90%",
+     "notes": [
+      "原始单元格非纯数值：'90%'（数值为按首位数字提取，需人工确认）"
+     ],
+     "catalyst_raw": "DMF"
+    },
+    {
+     "unit_id": "PMC7511807-T1",
+     "row": [
+      "2",
+      "DMSO",
+      "Et3N",
+      "90",
+      "0.272",
+      "8",
+      "73%"
+     ],
+     "locator": "T1, entry 2",
+     "value": 73.0,
+     "value_raw": "73%",
+     "notes": [
+      "原始单元格非纯数值：'73%'（数值为按首位数字提取，需人工确认）"
+     ],
+     "catalyst_raw": "DMSO"
+    },
+    {
+     "unit_id": "PMC7511807-T1",
+     "row": [
+      "3",
+      "CH3CN",
+      "Et3N",
+      "90",
+      "0.272",
+      "7",
+      "61%"
+     ],
+     "locator": "T1, entry 3",
+     "value": 61.0,
+     "value_raw": "61%",
+     "notes": [
+      "原始单元格非纯数值：'61%'（数值为按首位数字提取，需人工确认）"
+     ],
+     "catalyst_raw": "CH3CN"
+    },
+    {
+     "unit_id": "PMC7511807-T1",
+     "row": [
+      "4",
+      "EtOH",
+      "Et3N",
+      "90",
+      "0.272",
+      "9",
+      "80%"
+     ],
+     "locator": "T1, entry 4",
+     "value": 80.0,
+     "value_raw": "80%",
+     "notes": [
+      "原始单元格非纯数值：'80%'（数值为按首位数字提取，需人工确认）"
+     ],
+     "catalyst_raw": "EtOH"
+    },
+    {
+     "unit_id": "PMC7511807-T1",
+     "row": [
+      "5",
+      "EtOH/H2O",
+      "Et3N",
+      "90",
+      "0.272",
+      "8",
+      "85%"
+     ],
+     "locator": "T1, entry 5",
+     "value": 85.0,
+     "value_raw": "85%",
+     "notes": [
+      "原始单元格非纯数值：'85%'（数值为按首位数字提取，需人工确认）"
+     ],
+     "catalyst_raw": "EtOH/H2O"
+    },
+    {
+     "unit_id": "PMC7511807-T1",
+     "row": [
+      "6",
+      "H2O",
+      "Et3N",
+      "90",
+      "0.272",
+      "8",
+      "95%"
+     ],
+     "locator": "T1, entry 6",
+     "value": 95.0,
+     "value_raw": "95%",
+     "notes": [
+      "原始单元格非纯数值：'95%'（数值为按首位数字提取，需人工确认）"
+     ],
+     "catalyst_raw": "H2O"
+    },
+    {
+     "unit_id": "PMC7511807-T1",
+     "row": [
+      "7",
+      "DMF/H2O",
+      "Et3N",
+      "90",
+      "0.272",
+      "9",
+      "95%"
+     ],
+     "locator": "T1, entry 7",
+     "value": 95.0,
+     "value_raw": "95%",
+     "notes": [
+      "原始单元格非纯数值：'95%'（数值为按首位数字提取，需人工确认）"
+     ],
+     "catalyst_raw": "DMF/H2O"
+    },
+    {
+     "unit_id": "PMC7511807-T1",
+     "row": [
+      "8",
+      "H2O",
+      "K2CO3",
+      "90",
+      "0.272",
+      "9",
+      "78%"
+     ],
+     "locator": "T1, entry 8",
+     "value": 78.0,
+     "value_raw": "78%",
+     "notes": [
+      "原始单元格非纯数值：'78%'（数值为按首位数字提取，需人工确认）"
+     ],
+     "catalyst_raw": "H2O"
+    },
+    {
+     "unit_id": "PMC7511807-T1",
+     "row": [
+      "9",
+      "H2O",
+      "Cs2CO3",
+      "90",
+      "0.272",
+      "8",
+      "85%"
+     ],
+     "locator": "T1, entry 9",
+     "value": 85.0,
+     "value_raw": "85%",
+     "notes": [
+      "原始单元格非纯数值：'85%'（数值为按首位数字提取，需人工确认）"
+     ],
+     "catalyst_raw": "H2O"
+    },
+    {
+     "unit_id": "PMC7511807-T1",
+     "row": [
+      "10",
+      "H2O",
+      "Na2CO3",
+      "90",
+      "0.272",
+      "6",
+      "61%"
+     ],
+     "locator": "T1, entry 10",
+     "value": 61.0,
+     "value_raw": "61%",
+     "notes": [
+      "原始单元格非纯数值：'61%'（数值为按首位数字提取，需人工确认）"
+     ],
+     "catalyst_raw": "H2O"
+    },
+    {
+     "unit_id": "PMC7511807-T1",
+     "row": [
+      "11",
+      "H2O",
+      "Et3N",
+      "100",
+      "0.272",
+      "7",
+      "95%"
+     ],
+     "locator": "T1, entry 11",
+     "value": 95.0,
+     "value_raw": "95%",
+     "notes": [
+      "原始单元格非纯数值：'95%'（数值为按首位数字提取，需人工确认）"
+     ],
+     "catalyst_raw": "H2O"
+    },
+    {
+     "unit_id": "PMC7511807-T1",
+     "row": [
+      "12",
+      "H2O",
+      "Et3N",
+      "110",
+      "0.272",
+      "7",
+      "98%"
+     ],
+     "locator": "T1, entry 12",
+     "value": 98.0,
+     "value_raw": "98%",
+     "notes": [
+      "原始单元格非纯数值：'98%'（数值为按首位数字提取，需人工确认）"
+     ],
+     "catalyst_raw": "H2O"
+    },
+    {
+     "unit_id": "PMC7511807-T1",
+     "row": [
+      "13",
+      "H2O",
+      "Et3N",
+      "90",
+      "0.136",
+      "10",
+      "80%"
+     ],
+     "locator": "T1, entry 13",
+     "value": 80.0,
+     "value_raw": "80%",
+     "notes": [
+      "原始单元格非纯数值：'80%'（数值为按首位数字提取，需人工确认）"
+     ],
+     "catalyst_raw": "H2O"
+    },
+    {
+     "unit_id": "PMC7511807-T1",
+     "row": [
+      "14",
+      "H2O",
+      "Et3N",
+      "90",
+      "0.204",
+      "9",
+      "90%"
+     ],
+     "locator": "T1, entry 14",
+     "value": 90.0,
+     "value_raw": "90%",
+     "notes": [
+      "原始单元格非纯数值：'90%'（数值为按首位数字提取，需人工确认）"
+     ],
+     "catalyst_raw": "H2O"
+    }
+   ]
+  },
+  {
+   "unit_id": "PMC7511807-T2",
+   "corpus_id": "PMC7511807",
+   "reaction_class": "heck",
+   "header": [
+    "Entry",
+    "R1",
+    "X",
+    "R2",
+    "Product",
+    "Time (h)",
+    "Yieldb (%)"
+   ],
+   "source": {
+    "citation": "Synthesis of nano magnetic supported NHC-palladium and investigation of its applications as a catalyst in the Mizoroki-H",
+    "journal": "Heliyon",
+    "year": "2020",
+    "doi": "10.1016/j.heliyon.2020.e04946",
+    "pmcid": "PMC7511807",
+    "label": null,
+    "caption": "Heck reaction catalyst by Fe3O4@Si–NHC–Pda",
+    "footnote": "aReaction conditions: styrene, 4-iodotoluene, Et3N, Fe3O4@Si–NHC–Pd catalyst, in H2O at 90 °C. bYields of isolated product."
+   },
+   "caliber": {
+    "outcome_type": "isolated",
+    "quote": ", in H2O at 90 °C. bYields of isolated product.",
+    "from": "caption_or_footnote"
+   },
+   "parsed": {
+    "aryl_halide": "4-iodotoluene",
+    "partner_field": "alkene",
+    "partner": "styrene",
+    "generic_substrate": false,
+    "bare_names": [
+     "styrene",
+     "4-iodotoluene"
+    ],
+    "base": "Et3N",
+    "solvent": "toluene",
+    "temp_c": 90.0,
+    "time_h": null,
+    "internal_standard": null,
+    "catalyst": "4-Me",
+    "feeds": [],
+    "label_map_size": 0
+   },
+   "entries": [
+    {
+     "unit_id": "PMC7511807-T2",
+     "row": [
+      "1",
+      "4-Me",
+      "I",
+      "CO2Me",
+      "8a",
+      "8",
+      "95"
+     ],
+     "locator": "T2, entry 1",
+     "value": 95.0,
+     "value_raw": "95",
+     "notes": [],
+     "catalyst_raw": "4-Me"
+    },
+    {
+     "unit_id": "PMC7511807-T2",
+     "row": [
+      "2",
+      "H",
+      "I",
+      "CO2Et",
+      "8b",
+      "8.5",
+      "95"
+     ],
+     "locator": "T2, entry 2",
+     "value": 95.0,
+     "value_raw": "95",
+     "notes": [],
+     "catalyst_raw": "H"
+    },
+    {
+     "unit_id": "PMC7511807-T2",
+     "row": [
+      "3",
+      "4-Me",
+      "I",
+      "Ph",
+      "8c",
+      "8",
+      "95"
+     ],
+     "locator": "T2, entry 3",
+     "value": 95.0,
+     "value_raw": "95",
+     "notes": [],
+     "catalyst_raw": "4-Me"
+    },
+    {
+     "unit_id": "PMC7511807-T2",
+     "row": [
+      "4",
+      "4-OMe",
+      "Br",
+      "CO2Me",
+      "8d",
+      "10.5",
+      "80"
+     ],
+     "locator": "T2, entry 4",
+     "value": 80.0,
+     "value_raw": "80",
+     "notes": [],
+     "catalyst_raw": "4-OMe"
+    },
+    {
+     "unit_id": "PMC7511807-T2",
+     "row": [
+      "5",
+      "4-OMe",
+      "Br",
+      "CO2Et",
+      "8e",
+      "11",
+      "85"
+     ],
+     "locator": "T2, entry 5",
+     "value": 85.0,
+     "value_raw": "85",
+     "notes": [],
+     "catalyst_raw": "4-OMe"
+    },
+    {
+     "unit_id": "PMC7511807-T2",
+     "row": [
+      "6",
+      "4-OMe",
+      "Br",
+      "Ph",
+      "8f",
+      "12",
+      "85"
+     ],
+     "locator": "T2, entry 6",
+     "value": 85.0,
+     "value_raw": "85",
+     "notes": [],
+     "catalyst_raw": "4-OMe"
+    },
+    {
+     "unit_id": "PMC7511807-T2",
+     "row": [
+      "7",
+      "3-OMe",
+      "Br",
+      "CO2Me",
+      "8g",
+      "12.25",
+      "80"
+     ],
+     "locator": "T2, entry 7",
+     "value": 80.0,
+     "value_raw": "80",
+     "notes": [],
+     "catalyst_raw": "3-OMe"
+    },
+    {
+     "unit_id": "PMC7511807-T2",
+     "row": [
+      "8",
+      "3-OMe",
+      "Br",
+      "CO2Et",
+      "8h",
+      "12.5",
+      "75"
+     ],
+     "locator": "T2, entry 8",
+     "value": 75.0,
+     "value_raw": "75",
+     "notes": [],
+     "catalyst_raw": "3-OMe"
+    },
+    {
+     "unit_id": "PMC7511807-T2",
+     "row": [
+      "9",
+      "3-OMe",
+      "Br",
+      "Ph",
+      "8i",
+      "15",
+      "80"
+     ],
+     "locator": "T2, entry 9",
+     "value": 80.0,
+     "value_raw": "80",
+     "notes": [],
+     "catalyst_raw": "3-OMe"
+    },
+    {
+     "unit_id": "PMC7511807-T2",
+     "row": [
+      "10",
+      "4-COMe",
+      "Cl",
+      "CO2Me",
+      "8j",
+      "22",
+      "75"
+     ],
+     "locator": "T2, entry 10",
+     "value": 75.0,
+     "value_raw": "75",
+     "notes": [],
+     "catalyst_raw": "4-COMe"
+    },
+    {
+     "unit_id": "PMC7511807-T2",
+     "row": [
+      "11",
+      "4-COMe",
+      "Cl",
+      "CO2Et",
+      "8k",
+      "24",
+      "75"
+     ],
+     "locator": "T2, entry 11",
+     "value": 75.0,
+     "value_raw": "75",
+     "notes": [],
+     "catalyst_raw": "4-COMe"
+    },
+    {
+     "unit_id": "PMC7511807-T2",
+     "row": [
+      "12",
+      "4-COMe",
+      "Cl",
+      "Ph",
+      "8l",
+      "24",
+      "75"
+     ],
+     "locator": "T2, entry 12",
+     "value": 75.0,
+     "value_raw": "75",
+     "notes": [],
+     "catalyst_raw": "4-COMe"
+    },
+    {
+     "unit_id": "PMC7511807-T2",
+     "row": [
+      "13",
+      "H",
+      "Br",
+      "CO2Me",
+      "8m",
+      "10",
+      "85"
+     ],
+     "locator": "T2, entry 13",
+     "value": 85.0,
+     "value_raw": "85",
+     "notes": [],
+     "catalyst_raw": "H"
+    },
+    {
+     "unit_id": "PMC7511807-T2",
+     "row": [
+      "14",
+      "4-CN",
+      "Br",
+      "CO2Et",
+      "8n",
+      "12",
+      "90"
+     ],
+     "locator": "T2, entry 14",
+     "value": 90.0,
+     "value_raw": "90",
+     "notes": [],
+     "catalyst_raw": "4-CN"
+    },
+    {
+     "unit_id": "PMC7511807-T2",
+     "row": [
+      "15",
+      "4-CN",
+      "Br",
+      "Ph",
+      "8°",
+      "15",
+      "90"
+     ],
+     "locator": "T2, entry 15",
+     "value": 90.0,
+     "value_raw": "90",
+     "notes": [],
+     "catalyst_raw": "4-CN"
+    },
+    {
+     "unit_id": "PMC7511807-T2",
+     "row": [
+      "16",
+      "4-CHO",
+      "Br",
+      "CO2Me",
+      "8p",
+      "16",
+      "90"
+     ],
+     "locator": "T2, entry 16",
+     "value": 90.0,
+     "value_raw": "90",
+     "notes": [],
+     "catalyst_raw": "4-CHO"
+    },
+    {
+     "unit_id": "PMC7511807-T2",
+     "row": [
+      "17",
+      "4-CHO",
+      "Br",
+      "CO2Et",
+      "8q",
+      "18",
+      "90"
+     ],
+     "locator": "T2, entry 17",
+     "value": 90.0,
+     "value_raw": "90",
+     "notes": [],
+     "catalyst_raw": "4-CHO"
+    },
+    {
+     "unit_id": "PMC7511807-T2",
+     "row": [
+      "18",
+      "H",
+      "Br",
+      "Ph",
+      "8r",
+      "8",
+      "98"
+     ],
+     "locator": "T2, entry 18",
+     "value": 98.0,
+     "value_raw": "98",
+     "notes": [],
+     "catalyst_raw": "H"
+    },
+    {
+     "unit_id": "PMC7511807-T2",
+     "row": [
+      "19",
+      "4-Me",
+      "I",
+      "CN",
+      "8s",
+      "8",
+      "90"
+     ],
+     "locator": "T2, entry 19",
+     "value": 90.0,
+     "value_raw": "90",
+     "notes": [],
+     "catalyst_raw": "4-Me"
+    },
+    {
+     "unit_id": "PMC7511807-T2",
+     "row": [
+      "20",
+      "4-COMe",
+      "Cl",
+      "CN",
+      "8t",
+      "8.5",
+      "80"
+     ],
+     "locator": "T2, entry 20",
+     "value": 80.0,
+     "value_raw": "80",
+     "notes": [],
+     "catalyst_raw": "4-COMe"
+    }
+   ]
+  },
+  {
+   "unit_id": "PMC7511807-T3",
+   "corpus_id": "PMC7511807",
+   "reaction_class": "heck",
+   "header": [
+    "Entry",
+    "Catalyst",
+    "Pd (mol %)",
+    "Temp. (°C)",
+    "Time (h)",
+    "Solvent",
+    "Yieldb (%)",
+    "Ref."
+   ],
+   "source": {
+    "citation": "Synthesis of nano magnetic supported NHC-palladium and investigation of its applications as a catalyst in the Mizoroki-H",
+    "journal": "Heliyon",
+    "year": "2020",
+    "doi": "10.1016/j.heliyon.2020.e04946",
+    "pmcid": "PMC7511807",
+    "label": null,
+    "caption": "Comparison of catalytic activity for the Heck cross coupling reaction using Fe3O4@Si–NHC–Pd catalyst with those obtained by reported catalysts.a",
+    "footnote": "aReaction conditions: Bromobenzene (1 mmol), styrene (1.2 mmol), base, Catalyst and solvent. bYields of isolated product."
+   },
+   "caliber": {
+    "outcome_type": "isolated",
+    "quote": "alyst and solvent. bYields of isolated product.",
+    "from": "caption_or_footnote"
+   },
+   "parsed": {
+    "aryl_halide": "Bromobenzene",
+    "partner_field": "alkene",
+    "partner": "styrene",
+    "generic_substrate": false,
+    "bare_names": [
+     "Bromobenzene",
+     "styrene"
+    ],
+    "base": null,
+    "solvent": "benzene",
+    "temp_c": null,
+    "time_h": null,
+    "internal_standard": null,
+    "catalyst": "Fe3O4@Si–NHC–Pd",
+    "feeds": [
+     [
+      "Bromobenzene",
+      1.0,
+      "mmol"
+     ],
+     [
+      "styrene",
+      1.2,
+      "mmol"
+     ]
+    ],
+    "label_map_size": 0
+   },
+   "entries": [
+    {
+     "unit_id": "PMC7511807-T3",
+     "row": [
+      "1",
+      "Fe3O4@Si–NHC–Pd",
+      "0.272",
+      "90",
+      "8",
+      "H2O",
+      "98",
+      "This work"
+     ],
+     "locator": "T3, entry 1",
+     "value": 98.0,
+     "value_raw": "98",
+     "notes": [],
+     "catalyst_raw": "Fe3O4@Si–NHC–Pd"
+    },
+    {
+     "unit_id": "PMC7511807-T3",
+     "row": [
+      "2",
+      "NO2–NHC–Pd@Fe3O4",
+      "1.0",
+      "80",
+      "6",
+      "MeCN",
+      "92",
+      "[21]"
+     ],
+     "locator": "T3, entry 2",
+     "value": 92.0,
+     "value_raw": "92",
+     "notes": [],
+     "catalyst_raw": "NO2–NHC–Pd@Fe3O4"
+    },
+    {
+     "unit_id": "PMC7511807-T3",
+     "row": [
+      "3",
+      "Pd NPs@NHC@ZIF-8",
+      "0.08",
+      "110",
+      "2.5",
+      "DMF-H2O",
+      "90",
+      "[22]"
+     ],
+     "locator": "T3, entry 3",
+     "value": 90.0,
+     "value_raw": "90",
+     "notes": [],
+     "catalyst_raw": "Pd NPs@NHC@ZIF-8"
+    },
+    {
+     "unit_id": "PMC7511807-T3",
+     "row": [
+      "4",
+      "MnPs–NHC–Pd(II)",
+      "0.036",
+      "70",
+      "0.33",
+      "DMF",
+      "87",
+      "[19]"
+     ],
+     "locator": "T3, entry 4",
+     "value": 87.0,
+     "value_raw": "87",
+     "notes": [],
+     "catalyst_raw": "MnPs–NHC–Pd(II)"
+    },
+    {
+     "unit_id": "PMC7511807-T3",
+     "row": [
+      "5",
+      "Hydrazon-pd@ZnO",
+      "0.26",
+      "130",
+      "1.5",
+      "DMF",
+      "85",
+      "[23]"
+     ],
+     "locator": "T3, entry 5",
+     "value": 85.0,
+     "value_raw": "85",
+     "notes": [],
+     "catalyst_raw": "Hydrazon-pd@ZnO"
+    },
+    {
+     "unit_id": "PMC7511807-T3",
+     "row": [
+      "6",
+      "PdCl2Kryptofix-5",
+      "0.9",
+      "130",
+      "24",
+      "DMF",
+      "16",
+      "[24]"
+     ],
+     "locator": "T3, entry 6",
+     "value": 16.0,
+     "value_raw": "16",
+     "notes": [],
+     "catalyst_raw": "PdCl2Kryptofix-5"
+    }
+   ]
+  },
+  {
+   "unit_id": "PMC8402173-T1",
+   "corpus_id": "PMC8402173",
+   "reaction_class": "heck",
+   "header": [
+    "Entry",
+    "PdCl2(PPh3)2/mol%",
+    "Copolymer (Surfactant)",
+    "Yield of 5aa/% b"
+   ],
+   "source": {
+    "citation": "Palladium-Catalyzed Mizoroki–Heck and Copper-Free Sonogashira Coupling Reactions in Water Using Thermoresponsive Polymer",
+    "journal": "Polymers",
+    "year": "2021",
+    "doi": "10.3390/polym13162717",
+    "pmcid": "PMC8402173",
+    "label": null,
+    "caption": "Mizoroki–Heck reaction in water using the copolymers a.",
+    "footnote": "(a) Conditions: iodobenzene (0.5 mmol), n-butyl acrylate (1.0 mmol), NEt(i-Pr)2 (1.0 mmol), PdCl2(PPh3)2 (0.01 mmol = 2 mol%), polymer (1 wt % in water), H2O (4 mL), 70 °C, 48 h. (b) Determined by gas chromatography. (c) [45]."
+   },
+   "caliber": {
+    "outcome_type": "gc",
+    "quote": "0 °C, 48 h. (b) Determined by gas chromatography. (c) [45].",
+    "from": "caption_or_footnote"
+   },
+   "parsed": {
+    "aryl_halide": "iodobenzene",
+    "partner_field": "alkene",
+    "partner": "n-butyl acrylate",
+    "generic_substrate": false,
+    "bare_names": [
+     "n-butyl acrylate"
+    ],
+    "base": "NEt(i-Pr)2",
+    "solvent": "benzene",
+    "temp_c": 70.0,
+    "time_h": 48.0,
+    "internal_standard": null,
+    "catalyst": "2",
+    "feeds": [
+     [
+      "iodobenzene",
+      0.5,
+      "mmol"
+     ],
+     [
+      "n-butyl acrylate",
+      1.0,
+      "mmol"
+     ]
+    ],
+    "label_map_size": 0
+   },
+   "entries": [
+    {
+     "unit_id": "PMC8402173-T1",
+     "row": [
+      "1",
+      "2",
+      "NS",
+      "99"
+     ],
+     "locator": "T1, entry 1",
+     "value": 99.0,
+     "value_raw": "99",
+     "notes": [],
+     "catalyst_raw": "2"
+    },
+    {
+     "unit_id": "PMC8402173-T1",
+     "row": [
+      "2",
+      "0.5",
+      "NS",
+      "52"
+     ],
+     "locator": "T1, entry 2",
+     "value": 52.0,
+     "value_raw": "52",
+     "notes": [],
+     "catalyst_raw": "0.5"
+    },
+    {
+     "unit_id": "PMC8402173-T1",
+     "row": [
+      "3",
+      "2",
+      "NA",
+      "73"
+     ],
+     "locator": "T1, entry 3",
+     "value": 73.0,
+     "value_raw": "73",
+     "notes": [],
+     "catalyst_raw": "2"
+    },
+    {
+     "unit_id": "PMC8402173-T1",
+     "row": [
+      "4",
+      "2",
+      "DS",
+      "99"
+     ],
+     "locator": "T1, entry 4",
+     "value": 99.0,
+     "value_raw": "99",
+     "notes": [],
+     "catalyst_raw": "2"
+    },
+    {
+     "unit_id": "PMC8402173-T1",
+     "row": [
+      "5",
+      "0.5",
+      "DS",
+      "49"
+     ],
+     "locator": "T1, entry 5",
+     "value": 49.0,
+     "value_raw": "49",
+     "notes": [],
+     "catalyst_raw": "0.5"
+    },
+    {
+     "unit_id": "PMC8402173-T1",
+     "row": [
+      "6",
+      "2",
+      "DA",
+      "99"
+     ],
+     "locator": "T1, entry 6",
+     "value": 99.0,
+     "value_raw": "99",
+     "notes": [],
+     "catalyst_raw": "2"
+    },
+    {
+     "unit_id": "PMC8402173-T1",
+     "row": [
+      "7",
+      "2",
+      "SDS",
+      "47"
+     ],
+     "locator": "T1, entry 7",
+     "value": 47.0,
+     "value_raw": "47",
+     "notes": [],
+     "catalyst_raw": "2"
+    },
+    {
+     "unit_id": "PMC8402173-T1",
+     "row": [
+      "8",
+      "2",
+      "Triton X-100",
+      "61"
+     ],
+     "locator": "T1, entry 8",
+     "value": 61.0,
+     "value_raw": "61",
+     "notes": [],
+     "catalyst_raw": "2"
+    },
+    {
+     "unit_id": "PMC8402173-T1",
+     "row": [
+      "9 c",
+      "2",
+      "none",
+      "43"
+     ],
+     "locator": "T1, entry 9 c",
+     "value": 43.0,
+     "value_raw": "43",
+     "notes": [],
+     "catalyst_raw": "2"
+    }
+   ]
+  },
+  {
+   "unit_id": "PMC8402173-T3",
+   "corpus_id": "PMC8402173",
+   "reaction_class": "heck",
+   "header": [
+    "Entry",
+    "Aryl halide",
+    "Alkene",
+    "Copolymer",
+    "Product",
+    "Yield/% a"
+   ],
+   "source": {
+    "citation": "Palladium-Catalyzed Mizoroki–Heck and Copper-Free Sonogashira Coupling Reactions in Water Using Thermoresponsive Polymer",
+    "journal": "Polymers",
+    "year": "2021",
+    "doi": "10.3390/polym13162717",
+    "pmcid": "PMC8402173",
+    "label": null,
+    "caption": "Mizoroki–Heck reactions with various aryl halides and alkenes in water.",
+    "footnote": "(a) NMR yields with isolated yields in parentheses. (b) Determined by gas chromatography."
+   },
+   "caliber": {
+    "outcome_type": "nmr",
+    "quote": "des and alkenes in water. (a) NMR yields with isolated yields in pare",
+    "from": "caption_or_footnote"
+   },
+   "parsed": {
+    "aryl_halide": null,
+    "partner_field": null,
+    "partner": null,
+    "generic_substrate": true,
+    "bare_names": [],
+    "base": null,
+    "solvent": "water",
+    "temp_c": null,
+    "time_h": null,
+    "internal_standard": null,
+    "catalyst": "",
+    "feeds": [],
+    "label_map_size": 0
+   },
+   "entries": [
+    {
+     "unit_id": "PMC8402173-T3",
+     "row": [
+      "1",
+      "",
+      "",
+      "NS",
+      "",
+      ">99 b"
+     ],
+     "locator": "T3, entry 1",
+     "value": 99.0,
+     "value_raw": ">99 b",
+     "notes": [
+      "原始单元格非纯数值：'>99 b'（数值为按首位数字提取，需人工确认）"
+     ],
+     "catalyst_raw": ""
+    },
+    {
+     "unit_id": "PMC8402173-T3",
+     "row": [
+      "2",
+      "",
+      "",
+      "NA",
+      "",
+      "15 b"
+     ],
+     "locator": "T3, entry 2",
+     "value": 15.0,
+     "value_raw": "15 b",
+     "notes": [
+      "原始单元格非纯数值：'15 b'（数值为按首位数字提取，需人工确认）"
+     ],
+     "catalyst_raw": ""
+    },
+    {
+     "unit_id": "PMC8402173-T3",
+     "row": [
+      "3",
+      "",
+      "",
+      "DS",
+      "",
+      "93 b"
+     ],
+     "locator": "T3, entry 3",
+     "value": 93.0,
+     "value_raw": "93 b",
+     "notes": [
+      "原始单元格非纯数值：'93 b'（数值为按首位数字提取，需人工确认）"
+     ],
+     "catalyst_raw": ""
+    },
+    {
+     "unit_id": "PMC8402173-T3",
+     "row": [
+      "4",
+      "",
+      "",
+      "DA",
+      "",
+      "98 b"
+     ],
+     "locator": "T3, entry 4",
+     "value": 98.0,
+     "value_raw": "98 b",
+     "notes": [
+      "原始单元格非纯数值：'98 b'（数值为按首位数字提取，需人工确认）"
+     ],
+     "catalyst_raw": ""
+    },
+    {
+     "unit_id": "PMC8402173-T3",
+     "row": [
+      "5",
+      "",
+      "",
+      "NS",
+      "",
+      "8 b"
+     ],
+     "locator": "T3, entry 5",
+     "value": 8.0,
+     "value_raw": "8 b",
+     "notes": [
+      "原始单元格非纯数值：'8 b'（数值为按首位数字提取，需人工确认）"
+     ],
+     "catalyst_raw": ""
+    },
+    {
+     "unit_id": "PMC8402173-T3",
+     "row": [
+      "6",
+      "",
+      "",
+      "NS",
+      "",
+      "97 (91)"
+     ],
+     "locator": "T3, entry 6",
+     "value": 97.0,
+     "value_raw": "97 (91)",
+     "notes": [
+      "原始单元格非纯数值：'97 (91)'（数值为按首位数字提取，需人工确认）"
+     ],
+     "catalyst_raw": ""
+    },
+    {
+     "unit_id": "PMC8402173-T3",
+     "row": [
+      "7",
+      "",
+      "",
+      "NS",
+      "",
+      "99"
+     ],
+     "locator": "T3, entry 7",
+     "value": 99.0,
+     "value_raw": "99",
+     "notes": [],
+     "catalyst_raw": ""
+    },
+    {
+     "unit_id": "PMC8402173-T3",
+     "row": [
+      "8",
+      "",
+      "",
+      "NS",
+      "",
+      "98 (85)"
+     ],
+     "locator": "T3, entry 8",
+     "value": 98.0,
+     "value_raw": "98 (85)",
+     "notes": [
+      "原始单元格非纯数值：'98 (85)'（数值为按首位数字提取，需人工确认）"
+     ],
+     "catalyst_raw": ""
+    },
+    {
+     "unit_id": "PMC8402173-T3",
+     "row": [
+      "9",
+      "",
+      "",
+      "NS",
+      "",
+      "98"
+     ],
+     "locator": "T3, entry 9",
+     "value": 98.0,
+     "value_raw": "98",
+     "notes": [],
+     "catalyst_raw": ""
+    },
+    {
+     "unit_id": "PMC8402173-T3",
+     "row": [
+      "10",
+      "",
+      "",
+      "NS",
+      "",
+      "99 (87)"
+     ],
+     "locator": "T3, entry 10",
+     "value": 99.0,
+     "value_raw": "99 (87)",
+     "notes": [
+      "原始单元格非纯数值：'99 (87)'（数值为按首位数字提取，需人工确认）"
+     ],
+     "catalyst_raw": ""
+    },
+    {
+     "unit_id": "PMC8402173-T3",
+     "row": [
+      "11",
+      "",
+      "",
+      "NS",
+      "",
+      "89 (83)"
+     ],
+     "locator": "T3, entry 11",
+     "value": 89.0,
+     "value_raw": "89 (83)",
+     "notes": [
+      "原始单元格非纯数值：'89 (83)'（数值为按首位数字提取，需人工确认）"
+     ],
+     "catalyst_raw": ""
+    },
+    {
+     "unit_id": "PMC8402173-T3",
+     "row": [
+      "12",
+      "",
+      "",
+      "NS",
+      "",
+      "99 (90)"
+     ],
+     "locator": "T3, entry 12",
+     "value": 99.0,
+     "value_raw": "99 (90)",
+     "notes": [
+      "原始单元格非纯数值：'99 (90)'（数值为按首位数字提取，需人工确认）"
+     ],
+     "catalyst_raw": ""
+    },
+    {
+     "unit_id": "PMC8402173-T3",
+     "row": [
+      "13",
+      "",
+      "",
+      "NS",
+      "",
+      "20 (19)"
+     ],
+     "locator": "T3, entry 13",
+     "value": 20.0,
+     "value_raw": "20 (19)",
+     "notes": [
+      "原始单元格非纯数值：'20 (19)'（数值为按首位数字提取，需人工确认）"
+     ],
+     "catalyst_raw": ""
+    },
+    {
+     "unit_id": "PMC8402173-T3",
+     "row": [
+      "14",
+      "",
+      "",
+      "NS",
+      "",
+      "13"
+     ],
+     "locator": "T3, entry 14",
+     "value": 13.0,
+     "value_raw": "13",
+     "notes": [],
+     "catalyst_raw": ""
+    },
+    {
+     "unit_id": "PMC8402173-T3",
+     "row": [
+      "15",
+      "",
+      "",
+      "NS",
+      "",
+      "4"
+     ],
+     "locator": "T3, entry 15",
+     "value": 4.0,
+     "value_raw": "4",
+     "notes": [],
+     "catalyst_raw": ""
+    },
+    {
+     "unit_id": "PMC8402173-T3",
+     "row": [
+      "18",
+      "",
+      "",
+      "NS",
+      "",
+      "6"
+     ],
+     "locator": "T3, entry 18",
+     "value": 6.0,
+     "value_raw": "6",
+     "notes": [],
+     "catalyst_raw": ""
+    }
+   ]
+  },
+  {
+   "unit_id": "PMC8402173-T4",
+   "corpus_id": "PMC8402173",
+   "reaction_class": "heck",
+   "header": [
+    "Entry",
+    "Catalysts",
+    "x/mol %",
+    "Additives",
+    "y/mol %",
+    "Yields/% b"
+   ],
+   "source": {
+    "citation": "Palladium-Catalyzed Mizoroki–Heck and Copper-Free Sonogashira Coupling Reactions in Water Using Thermoresponsive Polymer",
+    "journal": "Polymers",
+    "year": "2021",
+    "doi": "10.3390/polym13162717",
+    "pmcid": "PMC8402173",
+    "label": null,
+    "caption": "Copper-free Sonogashira coupling in water with Pd catalysts a.",
+    "footnote": "(a) Conditions: 4-iodoanisole (0.5 mmol), phenylacetylene (0.75 mmol), Pd catalysts (x mol% to 4-iodoanisole), additives (y mol% to 4-iodoanisole), triethylamine (1.0 mmol), surfactant (20 mg), water 2 mL, 70 °C, 24 h. (b) Determined by gas chromatography."
+   },
+   "caliber": {
+    "outcome_type": "gc",
+    "quote": "0 °C, 24 h. (b) Determined by gas chromatography.",
+    "from": "caption_or_footnote"
+   },
+   "parsed": {
+    "aryl_halide": "4-iodoanisole",
+    "partner_field": "alkyne",
+    "partner": "phenylacetylene",
+    "generic_substrate": false,
+    "bare_names": [
+     "phenylacetylene",
+     "triethylamine"
+    ],
+    "base": null,
+    "solvent": "water",
+    "temp_c": 70.0,
+    "time_h": 24.0,
+    "internal_standard": null,
+    "catalyst": "Pd(OAc)2",
+    "feeds": [
+     [
+      "4-iodoanisole",
+      0.5,
+      "mmol"
+     ],
+     [
+      "phenylacetylene",
+      0.75,
+      "mmol"
+     ],
+     [
+      "triethylamine",
+      1.0,
+      "mmol"
+     ]
+    ],
+    "label_map_size": 0
+   },
+   "entries": [
+    {
+     "unit_id": "PMC8402173-T4",
+     "row": [
+      "1",
+      "Pd(OAc)2",
+      "2",
+      "-",
+      "-",
+      "38"
+     ],
+     "locator": "T4, entry 1",
+     "value": 38.0,
+     "value_raw": "38",
+     "notes": [],
+     "catalyst_raw": "Pd(OAc)2"
+    },
+    {
+     "unit_id": "PMC8402173-T4",
+     "row": [
+      "2",
+      "PdCl2(PPh3)2",
+      "2",
+      "-",
+      "-",
+      "86"
+     ],
+     "locator": "T4, entry 2",
+     "value": 86.0,
+     "value_raw": "86",
+     "notes": [],
+     "catalyst_raw": "PdCl2(PPh3)2"
+    },
+    {
+     "unit_id": "PMC8402173-T4",
+     "row": [
+      "3",
+      "PdCl2(PPh3)2",
+      "1",
+      "-",
+      "-",
+      "81"
+     ],
+     "locator": "T4, entry 3",
+     "value": 81.0,
+     "value_raw": "81",
+     "notes": [],
+     "catalyst_raw": "PdCl2(PPh3)2"
+    },
+    {
+     "unit_id": "PMC8402173-T4",
+     "row": [
+      "4",
+      "PdCl2(dppf)",
+      "2",
+      "-",
+      "-",
+      "63"
+     ],
+     "locator": "T4, entry 4",
+     "value": 63.0,
+     "value_raw": "63",
+     "notes": [],
+     "catalyst_raw": "PdCl2(dppf)"
+    },
+    {
+     "unit_id": "PMC8402173-T4",
+     "row": [
+      "5",
+      "PdCl2(dppf)",
+      "1",
+      "-",
+      "-",
+      "62"
+     ],
+     "locator": "T4, entry 5",
+     "value": 62.0,
+     "value_raw": "62",
+     "notes": [],
+     "catalyst_raw": "PdCl2(dppf)"
+    },
+    {
+     "unit_id": "PMC8402173-T4",
+     "row": [
+      "6",
+      "Pd(OAc)2",
+      "2",
+      "PPh3",
+      "2",
+      "50"
+     ],
+     "locator": "T4, entry 6",
+     "value": 50.0,
+     "value_raw": "50",
+     "notes": [],
+     "catalyst_raw": "Pd(OAc)2"
+    },
+    {
+     "unit_id": "PMC8402173-T4",
+     "row": [
+      "7",
+      "Pd(OAc)2",
+      "1",
+      "PCy3",
+      "2",
+      "14"
+     ],
+     "locator": "T4, entry 7",
+     "value": 14.0,
+     "value_raw": "14",
+     "notes": [],
+     "catalyst_raw": "Pd(OAc)2"
+    },
+    {
+     "unit_id": "PMC8402173-T4",
+     "row": [
+      "8",
+      "Pd(OAc)2",
+      "2",
+      "XPhos",
+      "4",
+      "99"
+     ],
+     "locator": "T4, entry 8",
+     "value": 99.0,
+     "value_raw": "99",
+     "notes": [],
+     "catalyst_raw": "Pd(OAc)2"
+    },
+    {
+     "unit_id": "PMC8402173-T4",
+     "row": [
+      "9",
+      "PdCl2(cod)",
+      "2",
+      "XPhos",
+      "4",
+      "97"
+     ],
+     "locator": "T4, entry 9",
+     "value": 97.0,
+     "value_raw": "97",
+     "notes": [],
+     "catalyst_raw": "PdCl2(cod)"
+    },
+    {
+     "unit_id": "PMC8402173-T4",
+     "row": [
+      "10",
+      "1",
+      "0.5",
+      "H2NNH2",
+      "10",
+      "74"
+     ],
+     "locator": "T4, entry 10",
+     "value": 74.0,
+     "value_raw": "74",
+     "notes": [],
+     "catalyst_raw": "1"
+    },
+    {
+     "unit_id": "PMC8402173-T4",
+     "row": [
+      "11",
+      "PdCl2(PPh3)2",
+      "2",
+      "CuI",
+      "2",
+      "99"
+     ],
+     "locator": "T4, entry 11",
+     "value": 99.0,
+     "value_raw": "99",
+     "notes": [],
+     "catalyst_raw": "PdCl2(PPh3)2"
+    },
+    {
+     "unit_id": "PMC8402173-T4",
+     "row": [
+      "12",
+      "Ni(acac)2",
+      "2",
+      "XPhos",
+      "4",
+      "7"
+     ],
+     "locator": "T4, entry 12",
+     "value": 7.0,
+     "value_raw": "7",
+     "notes": [],
+     "catalyst_raw": "Ni(acac)2"
+    }
+   ]
+  },
+  {
+   "unit_id": "PMC8402173-T5",
+   "corpus_id": "PMC8402173",
+   "reaction_class": "heck",
+   "header": [
+    "Entry",
+    "Surfactant",
+    "Description",
+    "Yield of 7da/% b"
+   ],
+   "source": {
+    "citation": "Palladium-Catalyzed Mizoroki–Heck and Copper-Free Sonogashira Coupling Reactions in Water Using Thermoresponsive Polymer",
+    "journal": "Polymers",
+    "year": "2021",
+    "doi": "10.3390/polym13162717",
+    "pmcid": "PMC8402173",
+    "label": null,
+    "caption": "Copper-free Sonogashira coupling in water with surfactants a.",
+    "footnote": "(a) Conditions: 4-iodoanisole (0.5 mmol), phenylacetylene (0.75 mmol), PdCl2(PPh3)2 (0.01 mmol), triethylamine (1.0 mmol), surfactant (20 mg), water 2 mL, 70 °C, 24 h. (b) Determined by gas chromatography."
+   },
+   "caliber": {
+    "outcome_type": "gc",
+    "quote": "0 °C, 24 h. (b) Determined by gas chromatography.",
+    "from": "caption_or_footnote"
+   },
+   "parsed": {
+    "aryl_halide": "4-iodoanisole",
+    "partner_field": "alkyne",
+    "partner": "phenylacetylene",
+    "generic_substrate": false,
+    "bare_names": [
+     "phenylacetylene",
+     "triethylamine"
+    ],
+    "base": null,
+    "solvent": "water",
+    "temp_c": 70.0,
+    "time_h": 24.0,
+    "internal_standard": null,
+    "catalyst": "None",
+    "feeds": [
+     [
+      "4-iodoanisole",
+      0.5,
+      "mmol"
+     ],
+     [
+      "phenylacetylene",
+      0.75,
+      "mmol"
+     ],
+     [
+      "triethylamine",
+      1.0,
+      "mmol"
+     ]
+    ],
+    "label_map_size": 0
+   },
+   "entries": [
+    {
+     "unit_id": "PMC8402173-T5",
+     "row": [
+      "1",
+      "None",
+      "Only water",
+      "77"
+     ],
+     "locator": "T5, entry 1",
+     "value": 77.0,
+     "value_raw": "77",
+     "notes": [],
+     "catalyst_raw": "None"
+    },
+    {
+     "unit_id": "PMC8402173-T5",
+     "row": [
+      "2",
+      "NS",
+      "PNIPAAm-b-PSSNa",
+      "86"
+     ],
+     "locator": "T5, entry 2",
+     "value": 86.0,
+     "value_raw": "86",
+     "notes": [],
+     "catalyst_raw": "NS"
+    },
+    {
+     "unit_id": "PMC8402173-T5",
+     "row": [
+      "3",
+      "NA",
+      "PNIPAAm-b-PAMPSNa",
+      "84"
+     ],
+     "locator": "T5, entry 3",
+     "value": 84.0,
+     "value_raw": "84",
+     "notes": [],
+     "catalyst_raw": "NA"
+    },
+    {
+     "unit_id": "PMC8402173-T5",
+     "row": [
+      "4",
+      "DS",
+      "PDEAAm-b-PSSNa",
+      "81"
+     ],
+     "locator": "T5, entry 4",
+     "value": 81.0,
+     "value_raw": "81",
+     "notes": [],
+     "catalyst_raw": "DS"
+    },
+    {
+     "unit_id": "PMC8402173-T5",
+     "row": [
+      "5",
+      "DA",
+      "PDEAAm-b-PAMPSNa",
+      "82"
+     ],
+     "locator": "T5, entry 5",
+     "value": 82.0,
+     "value_raw": "82",
+     "notes": [],
+     "catalyst_raw": "DA"
+    },
+    {
+     "unit_id": "PMC8402173-T5",
+     "row": [
+      "6",
+      "SDS",
+      "Anionic surfactant",
+      "61"
+     ],
+     "locator": "T5, entry 6",
+     "value": 61.0,
+     "value_raw": "61",
+     "notes": [],
+     "catalyst_raw": "SDS"
+    },
+    {
+     "unit_id": "PMC8402173-T5",
+     "row": [
+      "7",
+      "Triton X-100",
+      "Neutral surfactant",
+      "78"
+     ],
+     "locator": "T5, entry 7",
+     "value": 78.0,
+     "value_raw": "78",
+     "notes": [],
+     "catalyst_raw": "Triton X-100"
+    }
+   ]
+  },
+  {
+   "unit_id": "PMC8402173-T6",
+   "corpus_id": "PMC8402173",
+   "reaction_class": "heck",
+   "header": [
+    "Entry",
+    "Ar-X",
+    "R",
+    "Pd",
+    "Product",
+    "Yield/% b"
+   ],
+   "source": {
+    "citation": "Palladium-Catalyzed Mizoroki–Heck and Copper-Free Sonogashira Coupling Reactions in Water Using Thermoresponsive Polymer",
+    "journal": "Polymers",
+    "year": "2021",
+    "doi": "10.3390/polym13162717",
+    "pmcid": "PMC8402173",
+    "label": null,
+    "caption": "Copper-free Sonogashira coupling in water using thermoresponsive copolymers a.",
+    "footnote": "(a) Conditions: Ar-X (0.5 mmol), alkynes (0.75 mmol), Pd complex (0.01 mmol), triethyl amine 1.0 mmol), NS (20 mg), water 2 mL, 70 °C, 24 h. (b) Isolated yield. (c) Determined by 1H NMR."
+   },
+   "caliber": {
+    "outcome_type": "isolated",
+    "quote": "water 2 mL, 70 °C, 24 h. (b) Isolated yield. (c) Determined by 1H NMR.",
+    "from": "caption_or_footnote"
+   },
+   "parsed": {
+    "aryl_halide": "Ar-X",
+    "partner_field": "alkyne",
+    "partner": "alkynes",
+    "generic_substrate": true,
+    "bare_names": [
+     "alkynes",
+     "triethyl amine 1.0 mmol)"
+    ],
+    "base": null,
+    "solvent": "water",
+    "temp_c": 70.0,
+    "time_h": 24.0,
+    "internal_standard": null,
+    "catalyst": "",
+    "feeds": [
+     [
+      "Ar-X",
+      0.5,
+      "mmol"
+     ],
+     [
+      "alkynes",
+      0.75,
+      "mmol"
+     ],
+     [
+      "Pd complex",
+      0.01,
+      "mmol"
+     ]
+    ],
+    "label_map_size": 0
+   },
+   "entries": [
+    {
+     "unit_id": "PMC8402173-T6",
+     "row": [
+      "1",
+      "",
+      "Ph 6a",
+      "PdCl2(PPh3)2",
+      "",
+      "86"
+     ],
+     "locator": "T6, entry 1",
+     "value": 86.0,
+     "value_raw": "86",
+     "notes": [],
+     "catalyst_raw": ""
+    },
+    {
+     "unit_id": "PMC8402173-T6",
+     "row": [
+      "2",
+      "",
+      "Ph 6a",
+      "PdCl2(PPh3)2",
+      "7da",
+      "14"
+     ],
+     "locator": "T6, entry 2",
+     "value": 14.0,
+     "value_raw": "14",
+     "notes": [],
+     "catalyst_raw": ""
+    },
+    {
+     "unit_id": "PMC8402173-T6",
+     "row": [
+      "3",
+      "",
+      "Ph 6a",
+      "PdCl2(PPh3)2",
+      "",
+      "77"
+     ],
+     "locator": "T6, entry 3",
+     "value": 77.0,
+     "value_raw": "77",
+     "notes": [],
+     "catalyst_raw": ""
+    },
+    {
+     "unit_id": "PMC8402173-T6",
+     "row": [
+      "4",
+      "",
+      "Ph 6a",
+      "PdCl2(PPh3)2",
+      "",
+      "78"
+     ],
+     "locator": "T6, entry 4",
+     "value": 78.0,
+     "value_raw": "78",
+     "notes": [],
+     "catalyst_raw": ""
+    },
+    {
+     "unit_id": "PMC8402173-T6",
+     "row": [
+      "5",
+      "",
+      "Ph 6a",
+      "PdCl2(PPh3)2",
+      "",
+      "49 c"
+     ],
+     "locator": "T6, entry 5",
+     "value": 49.0,
+     "value_raw": "49 c",
+     "notes": [
+      "原始单元格非纯数值：'49 c'（数值为按首位数字提取，需人工确认）"
+     ],
+     "catalyst_raw": ""
+    },
+    {
+     "unit_id": "PMC8402173-T6",
+     "row": [
+      "6",
+      "",
+      "Ph 6a",
+      "Pd(OAc)2 + 2 XPhos",
+      "7da",
+      "97"
+     ],
+     "locator": "T6, entry 6",
+     "value": 97.0,
+     "value_raw": "97",
+     "notes": [],
+     "catalyst_raw": ""
+    },
+    {
+     "unit_id": "PMC8402173-T6",
+     "row": [
+      "8",
+      "",
+      "Ph 6a",
+      "Pd(OAc)2 + 2 XPhos",
+      "",
+      "94"
+     ],
+     "locator": "T6, entry 8",
+     "value": 94.0,
+     "value_raw": "94",
+     "notes": [],
+     "catalyst_raw": ""
+    },
+    {
+     "unit_id": "PMC8402173-T6",
+     "row": [
+      "9",
+      "",
+      "Ph 6a",
+      "Pd(OAc)2 + 2 XPhos",
+      "",
+      "84"
+     ],
+     "locator": "T6, entry 9",
+     "value": 84.0,
+     "value_raw": "84",
+     "notes": [],
+     "catalyst_raw": ""
+    },
+    {
+     "unit_id": "PMC8402173-T6",
+     "row": [
+      "10",
+      "",
+      "SiMe2(t-Bu) 6b",
+      "Pd(OAc)2 + 2 XPhos",
+      "",
+      "90"
+     ],
+     "locator": "T6, entry 10",
+     "value": 90.0,
+     "value_raw": "90",
+     "notes": [],
+     "catalyst_raw": ""
+    },
+    {
+     "unit_id": "PMC8402173-T6",
+     "row": [
+      "11",
+      "",
+      "SiMe2(t-Bu) 6b",
+      "Pd(OAc)2 + 2 XPhos",
+      "",
+      "33"
+     ],
+     "locator": "T6, entry 11",
+     "value": 33.0,
+     "value_raw": "33",
+     "notes": [],
+     "catalyst_raw": ""
+    },
+    {
+     "unit_id": "PMC8402173-T6",
+     "row": [
+      "12",
+      "",
+      "n-C6H13 6c",
+      "Pd(OAc)2 + 2 XPhos",
+      "",
+      "94"
+     ],
+     "locator": "T6, entry 12",
+     "value": 94.0,
+     "value_raw": "94",
+     "notes": [],
+     "catalyst_raw": ""
+    },
+    {
+     "unit_id": "PMC8402173-T6",
+     "row": [
+      "13",
+      "",
+      "Ph 6a",
+      "Pd(OAc)2 + 2 XPhos",
+      "",
+      "78 c"
+     ],
+     "locator": "T6, entry 13",
+     "value": 78.0,
+     "value_raw": "78 c",
+     "notes": [
+      "原始单元格非纯数值：'78 c'（数值为按首位数字提取，需人工确认）"
+     ],
+     "catalyst_raw": ""
+    }
+   ]
+  },
+  {
+   "unit_id": "PMC9101052-T3",
+   "corpus_id": "PMC9101052",
+   "reaction_class": "heck",
+   "header": [
+    "Sl. No",
+    "Aryl Halides",
+    "1a-g",
+    "3a-f",
+    "Yielda,c HRG-Py-Pd",
+    "Yieldb,cPd-NPs"
+   ],
+   "source": {
+    "citation": "Pyrene Functionalized Highly Reduced Graphene Oxide-palladium Nanocomposite: A Novel Catalyst for the Mizoroki-Heck Reac",
+    "journal": "Frontiers in Chemistry",
+    "year": "2022",
+    "doi": "10.3389/fchem.2022.872366",
+    "pmcid": "PMC9101052",
+    "label": null,
+    "caption": "Mizoroki-Heck reaction catalyzed by HRG-Py-Pd and Pd-NPs nanocatalysts, Substrate scope.",
+    "footnote": "Aryl halides (0.5 mmol), Acrylic acid (0.5 mmol); a Catalyst HRG-Py-Pd (3.0 mg), K3PO4 (1.0 eq.), SDS (0.5 eq.) in H2O (2 ml), 100°C, 2 h; b Catalyst Pd-NPs (5.3 mg), K3PO4 (2.0 eq.), SDS (0.5 eq.) in H2O (2 ml), 100°C, 20 h; c Isolated yields; d HPLC, conversion."
+   },
+   "caliber": {
+    "outcome_type": "isolated",
+    "quote": "in H2O (2 ml), 100°C, 20 h; c Isolated yields; d HPLC, conversion.",
+    "from": "caption_or_footnote"
+   },
+   "parsed": {
+    "aryl_halide": "Aryl halides",
+    "partner_field": "alkene",
+    "partner": "Acrylic acid",
+    "generic_substrate": true,
+    "bare_names": [
+     "Acrylic acid"
+    ],
+    "base": "K3PO4",
+    "solvent": "H2O",
+    "temp_c": 100.0,
+    "time_h": 2.0,
+    "internal_standard": null,
+    "catalyst": "4-bromoanisol",
+    "feeds": [
+     [
+      "Aryl halides",
+      0.5,
+      "mmol"
+     ],
+     [
+      "Acrylic acid",
+      0.5,
+      "mmol"
+     ],
+     [
+      "K3PO4",
+      1.0,
+      "eq."
+     ],
+     [
+      "SDS",
+      0.5,
+      "eq."
+     ],
+     [
+      "K3PO4",
+      2.0,
+      "eq."
+     ],
+     [
+      "SDS",
+      0.5,
+      "eq."
+     ]
+    ],
+    "label_map_size": 0
+   },
+   "entries": [
+    {
+     "unit_id": "PMC9101052-T3",
+     "row": [
+      "1",
+      "4-bromoanisol",
+      "1a",
+      "3a",
+      "98% (99%)d",
+      "91% (93%)d"
+     ],
+     "locator": "T3, entry 1",
+     "value": 98.0,
+     "value_raw": "98% (99%)d",
+     "notes": [
+      "原始单元格非纯数值：'98% (99%)d'（数值为按首位数字提取，需人工确认）"
+     ],
+     "catalyst_raw": "4-bromoanisol"
+    },
+    {
+     "unit_id": "PMC9101052-T3",
+     "row": [
+      "2",
+      "3-bromoanisol",
+      "1b",
+      "3b",
+      "94%",
+      "88%"
+     ],
+     "locator": "T3, entry 2",
+     "value": 94.0,
+     "value_raw": "94%",
+     "notes": [
+      "原始单元格非纯数值：'94%'（数值为按首位数字提取，需人工确认）"
+     ],
+     "catalyst_raw": "3-bromoanisol"
+    },
+    {
+     "unit_id": "PMC9101052-T3",
+     "row": [
+      "3",
+      "2-bromoanisol",
+      "1c",
+      "3c",
+      "87%",
+      "83%"
+     ],
+     "locator": "T3, entry 3",
+     "value": 87.0,
+     "value_raw": "87%",
+     "notes": [
+      "原始单元格非纯数值：'87%'（数值为按首位数字提取，需人工确认）"
+     ],
+     "catalyst_raw": "2-bromoanisol"
+    },
+    {
+     "unit_id": "PMC9101052-T3",
+     "row": [
+      "4",
+      "4-Iodotoluene",
+      "1d",
+      "3d",
+      "98%",
+      "92%"
+     ],
+     "locator": "T3, entry 4",
+     "value": 98.0,
+     "value_raw": "98%",
+     "notes": [
+      "原始单元格非纯数值：'98%'（数值为按首位数字提取，需人工确认）"
+     ],
+     "catalyst_raw": "4-Iodotoluene"
+    },
+    {
+     "unit_id": "PMC9101052-T3",
+     "row": [
+      "5",
+      "4-Iodobenzene",
+      "1e",
+      "3e",
+      "98%",
+      "90%"
+     ],
+     "locator": "T3, entry 5",
+     "value": 98.0,
+     "value_raw": "98%",
+     "notes": [
+      "原始单元格非纯数值：'98%'（数值为按首位数字提取，需人工确认）"
+     ],
+     "catalyst_raw": "4-Iodobenzene"
+    },
+    {
+     "unit_id": "PMC9101052-T3",
+     "row": [
+      "6",
+      "4-bromobenzene",
+      "1f",
+      "96%",
+      "87%"
+     ],
+     "locator": "T3, entry 6",
+     "value": 87.0,
+     "value_raw": "87%",
+     "notes": [
+      "原始单元格非纯数值：'87%'（数值为按首位数字提取，需人工确认）"
+     ],
+     "catalyst_raw": "4-bromobenzene"
+    }
+   ]
+  },
+  {
+   "unit_id": "PMC9476516-T1",
+   "corpus_id": "PMC9476516",
+   "reaction_class": "heck",
+   "header": [
+    "entry",
+    "starting material",
+    "Pd (mol %)",
+    "ligand (mol %)",
+    "temp (°C)",
+    "time (h)",
+    "NMR ratio (6:7 or 8a:9a)b",
+    "isolated yield of 7/9ac"
+   ],
+   "source": {
+    "citation": "Diastereoselective Synthesis of N-Methylspiroindolines by Intramolecular Mizoroki–Heck Annulations",
+    "journal": "ACS Omega",
+    "year": "2022",
+    "doi": "10.1021/acsomega.2c04111",
+    "pmcid": "PMC9476516",
+    "label": null,
+    "caption": "Optimization of Reaction Conditions for Intramolecular Mizoroki–Heck Spirocyclization of 6/8aa",
+    "footnote": "aReaction conditions: cyclization precursor 6 or 8a (0.1 mmol, 1 equiv), Et3N (2 equiv), DMF. Amounts of palladium precatalyst and ligands listed in the table.bRatio between 6:7 or 8a:9a determined by 1H NMR of crude reaction mixture.cIsolated yields after column chromatography.dExperiment run without Et3N. In all screening reactions diastereoselectivity toward the anti product was >98% according "
+   },
+   "caliber": {
+    "outcome_type": "isolated",
+    "quote": "isolated yield of 7/9ac",
+    "from": "header"
+   },
+   "parsed": {
+    "aryl_halide": null,
+    "partner_field": null,
+    "partner": null,
+    "generic_substrate": true,
+    "bare_names": [],
+    "base": "Et3N",
+    "solvent": "DMF",
+    "temp_c": null,
+    "time_h": null,
+    "internal_standard": null,
+    "catalyst": "6",
+    "feeds": [
+     [
+      "Et3N",
+      2.0,
+      "equiv"
+     ]
+    ],
+    "label_map_size": 0
+   },
+   "entries": [
+    {
+     "unit_id": "PMC9476516-T1",
+     "row": [
+      "11",
+      "6",
+      "Pd(t-Bu3P)2 (10)",
+      "",
+      "80",
+      "16",
+      "1:99",
+      "64%"
+     ],
+     "locator": "T1, entry 11",
+     "value": 64.0,
+     "value_raw": "64%",
+     "notes": [
+      "原始单元格非纯数值：'64%'（数值为按首位数字提取，需人工确认）"
+     ],
+     "catalyst_raw": "6"
+    },
+    {
+     "unit_id": "PMC9476516-T1",
+     "row": [
+      "14",
+      "8a",
+      "Pd(t-Bu3P)2 (10)",
+      "",
+      "80",
+      "16",
+      "1:99",
+      "83%"
+     ],
+     "locator": "T1, entry 14",
+     "value": 83.0,
+     "value_raw": "83%",
+     "notes": [
+      "原始单元格非纯数值：'83%'（数值为按首位数字提取，需人工确认）"
+     ],
+     "catalyst_raw": "8a"
+    }
+   ]
+  },
+  {
+   "unit_id": "PMC13325132-T1",
+   "corpus_id": "PMC13325132",
+   "reaction_class": "heck",
+   "header": [
+    "entry",
+    "Pd/mol %",
+    "T/°C",
+    "t/h",
+    "solvent",
+    "yield/%"
+   ],
+   "source": {
+    "citation": "Sustainable Mizoroki–Heck Cross-Coupling Using a Pd(II)-Polymer as Precatalyst in 1‑Butanol",
+    "journal": "ACS Omega",
+    "year": "2026",
+    "doi": "10.1021/acsomega.6c01810",
+    "pmcid": "PMC13325132",
+    "label": null,
+    "caption": "Optimization of Reaction Conditions for MH Reaction between iodobenzene and Ethyl Acrylate Catalyzed by Pd/PECIm",
+    "footnote": "aReaction conditions: iodobenzene (0.5 mmol), ethyl acrylate (1.0 mmol), Et3N (1.0 mmol), solvent (1.0 mL), and Pd/PECIm (ranging from 2.5 to 10 mg).bYield determined by GC/MS with a calibration curve for ethyl cinnamate.cA total of 2.5 mg of PECIm was used.dNo additional components were added."
+   },
+   "caliber": {
+    "outcome_type": "gc",
+    "quote": "o 10 mg).bYield determined by GC/MS with a calibration curve for",
+    "from": "caption_or_footnote"
+   },
+   "parsed": {
+    "aryl_halide": "iodobenzene",
+    "partner_field": "alkene",
+    "partner": "ethyl acrylate",
+    "generic_substrate": false,
+    "bare_names": [
+     "iodobenzene",
+     "ethyl acrylate"
+    ],
+    "base": "Et3N",
+    "solvent": "benzene",
+    "temp_c": null,
+    "time_h": null,
+    "internal_standard": null,
+    "catalyst": "0.5",
+    "feeds": [
+     [
+      "iodobenzene",
+      0.5,
+      "mmol"
+     ],
+     [
+      "ethyl acrylate",
+      1.0,
+      "mmol"
+     ],
+     [
+      "Et3N",
+      1.0,
+      "mmol"
+     ]
+    ],
+    "label_map_size": 0
+   },
+   "entries": [
+    {
+     "unit_id": "PMC13325132-T1",
+     "row": [
+      "1",
+      "0.5",
+      "80",
+      "24",
+      "iPrOH",
+      "17"
+     ],
+     "locator": "T1, entry 1",
+     "value": 17.0,
+     "value_raw": "17",
+     "notes": [],
+     "catalyst_raw": "0.5"
+    },
+    {
+     "unit_id": "PMC13325132-T1",
+     "row": [
+      "2",
+      "0.5",
+      "80",
+      "24",
+      "iPrOH/H2O",
+      "66"
+     ],
+     "locator": "T1, entry 2",
+     "value": 66.0,
+     "value_raw": "66",
+     "notes": [],
+     "catalyst_raw": "0.5"
+    },
+    {
+     "unit_id": "PMC13325132-T1",
+     "row": [
+      "3",
+      "0.5",
+      "80",
+      "24",
+      "H2O",
+      "67"
+     ],
+     "locator": "T1, entry 3",
+     "value": 67.0,
+     "value_raw": "67",
+     "notes": [],
+     "catalyst_raw": "0.5"
+    },
+    {
+     "unit_id": "PMC13325132-T1",
+     "row": [
+      "4",
+      "1.0",
+      "80",
+      "24",
+      "iPrOH/H2O",
+      "69"
+     ],
+     "locator": "T1, entry 4",
+     "value": 69.0,
+     "value_raw": "69",
+     "notes": [],
+     "catalyst_raw": "1.0"
+    },
+    {
+     "unit_id": "PMC13325132-T1",
+     "row": [
+      "5",
+      "1.5",
+      "80",
+      "24",
+      "iPrOH/H2O",
+      "70"
+     ],
+     "locator": "T1, entry 5",
+     "value": 70.0,
+     "value_raw": "70",
+     "notes": [],
+     "catalyst_raw": "1.5"
+    },
+    {
+     "unit_id": "PMC13325132-T1",
+     "row": [
+      "6",
+      "2.0",
+      "80",
+      "24",
+      "iPrOH/H2O",
+      "69"
+     ],
+     "locator": "T1, entry 6",
+     "value": 69.0,
+     "value_raw": "69",
+     "notes": [],
+     "catalyst_raw": "2.0"
+    },
+    {
+     "unit_id": "PMC13325132-T1",
+     "row": [
+      "7",
+      "0.5",
+      "90",
+      "24",
+      "iPrOH/H2O",
+      "88"
+     ],
+     "locator": "T1, entry 7",
+     "value": 88.0,
+     "value_raw": "88",
+     "notes": [],
+     "catalyst_raw": "0.5"
+    },
+    {
+     "unit_id": "PMC13325132-T1",
+     "row": [
+      "8",
+      "1.0",
+      "90",
+      "24",
+      "iPrOH/H2O",
+      "87"
+     ],
+     "locator": "T1, entry 8",
+     "value": 87.0,
+     "value_raw": "87",
+     "notes": [],
+     "catalyst_raw": "1.0"
+    },
+    {
+     "unit_id": "PMC13325132-T1",
+     "row": [
+      "9",
+      "0.5",
+      "80",
+      "24",
+      "EtOH",
+      "79"
+     ],
+     "locator": "T1, entry 9",
+     "value": 79.0,
+     "value_raw": "79",
+     "notes": [],
+     "catalyst_raw": "0.5"
+    },
+    {
+     "unit_id": "PMC13325132-T1",
+     "row": [
+      "10",
+      "0.5",
+      "95",
+      "1.5",
+      "1-BuOH",
+      "95"
+     ],
+     "locator": "T1, entry 10",
+     "value": 95.0,
+     "value_raw": "95",
+     "notes": [],
+     "catalyst_raw": "0.5"
+    },
+    {
+     "unit_id": "PMC13325132-T1",
+     "row": [
+      "11",
+      "-",
+      "95",
+      "1.5",
+      "1-BuOH",
+      "0"
+     ],
+     "locator": "T1, entry 11",
+     "value": 0.0,
+     "value_raw": "0",
+     "notes": [],
+     "catalyst_raw": "-"
+    },
+    {
+     "unit_id": "PMC13325132-T1",
+     "row": [
+      "12",
+      "-",
+      "95",
+      "1.5",
+      "1-BuOH",
+      "0"
+     ],
+     "locator": "T1, entry 12",
+     "value": 0.0,
+     "value_raw": "0",
+     "notes": [],
+     "catalyst_raw": "-"
+    }
+   ]
+  },
+  {
+   "unit_id": "PMC13325132-T2",
+   "corpus_id": "PMC13325132",
+   "reaction_class": "heck",
+   "header": [
+    "entry",
+    "X",
+    "R 1",
+    "R 2",
+    "t/h",
+    "yield/%",
+    "TON",
+    "TOF/h –1"
+   ],
+   "source": {
+    "citation": "Sustainable Mizoroki–Heck Cross-Coupling Using a Pd(II)-Polymer as Precatalyst in 1‑Butanol",
+    "journal": "ACS Omega",
+    "year": "2026",
+    "doi": "10.1021/acsomega.6c01810",
+    "pmcid": "PMC13325132",
+    "label": null,
+    "caption": "Scope of MH Coupling Reaction Catalyzed by Pd/PECIm",
+    "footnote": "aReaction conditions: aryl halide (0.5 mmol), alkene (1.0 mmol), Et3N (1.0 mmol), n-BuOH (1.0 mL), Pd/PECIm (2.5 mg), 95 °C.bIsolated yield.cTOF was calculated based on the total amount of Pd atoms in Pd/PECIm.dPerformed at 120 °C.ePerformed on a 50× scale."
+   },
+   "caliber": {
+    "outcome_type": "isolated",
+    "quote": "L), Pd/PECIm (2.5 mg), 95 °C.bIsolated yield.cTOF was calculated based on",
+    "from": "caption_or_footnote"
+   },
+   "parsed": {
+    "aryl_halide": "aryl halide",
+    "partner_field": "alkene",
+    "partner": "alkene",
+    "generic_substrate": true,
+    "bare_names": [],
+    "base": "Et3N",
+    "solvent": "n-BuOH",
+    "temp_c": 95.0,
+    "time_h": null,
+    "internal_standard": null,
+    "catalyst": "I",
+    "feeds": [
+     [
+      "aryl halide",
+      0.5,
+      "mmol"
+     ],
+     [
+      "alkene",
+      1.0,
+      "mmol"
+     ],
+     [
+      "Et3N",
+      1.0,
+      "mmol"
+     ]
+    ],
+    "label_map_size": 0
+   },
+   "entries": [
+    {
+     "unit_id": "PMC13325132-T2",
+     "row": [
+      "1",
+      "I",
+      "H",
+      "CO2CH3",
+      "2",
+      "91",
+      "176",
+      "88"
+     ],
+     "locator": "T2, entry 1",
+     "value": 91.0,
+     "value_raw": "91",
+     "notes": [],
+     "catalyst_raw": "I"
+    },
+    {
+     "unit_id": "PMC13325132-T2",
+     "row": [
+      "2",
+      "I",
+      "H",
+      "CO2CH2CH3",
+      "1.5",
+      "95",
+      "182",
+      "121"
+     ],
+     "locator": "T2, entry 2",
+     "value": 95.0,
+     "value_raw": "95",
+     "notes": [],
+     "catalyst_raw": "I"
+    },
+    {
+     "unit_id": "PMC13325132-T2",
+     "row": [
+      "3",
+      "I",
+      "H",
+      "CO2(CH3)3",
+      "2",
+      "95",
+      "182",
+      "91"
+     ],
+     "locator": "T2, entry 3",
+     "value": 95.0,
+     "value_raw": "95",
+     "notes": [],
+     "catalyst_raw": "I"
+    },
+    {
+     "unit_id": "PMC13325132-T2",
+     "row": [
+      "4",
+      "I",
+      "H",
+      "C6H5",
+      "24",
+      "91",
+      "176",
+      "7"
+     ],
+     "locator": "T2, entry 4",
+     "value": 91.0,
+     "value_raw": "91",
+     "notes": [],
+     "catalyst_raw": "I"
+    },
+    {
+     "unit_id": "PMC13325132-T2",
+     "row": [
+      "5",
+      "I",
+      "4-CH3O",
+      "C6H5",
+      "24",
+      "73",
+      "141",
+      "6"
+     ],
+     "locator": "T2, entry 5",
+     "value": 73.0,
+     "value_raw": "73",
+     "notes": [],
+     "catalyst_raw": "I"
+    },
+    {
+     "unit_id": "PMC13325132-T2",
+     "row": [
+      "6",
+      "I",
+      "4-CH3CO",
+      "C6H5",
+      "48",
+      "66",
+      "127",
+      "3"
+     ],
+     "locator": "T2, entry 6",
+     "value": 66.0,
+     "value_raw": "66",
+     "notes": [],
+     "catalyst_raw": "I"
+    },
+    {
+     "unit_id": "PMC13325132-T2",
+     "row": [
+      "7",
+      "I",
+      "4-CH3O",
+      "CO2CH2CH3",
+      "3",
+      "90",
+      "173",
+      "58"
+     ],
+     "locator": "T2, entry 7",
+     "value": 90.0,
+     "value_raw": "90",
+     "notes": [],
+     "catalyst_raw": "I"
+    },
+    {
+     "unit_id": "PMC13325132-T2",
+     "row": [
+      "8",
+      "I",
+      "4-NO2",
+      "CO2CH2CH3",
+      "4",
+      "90",
+      "173",
+      "43"
+     ],
+     "locator": "T2, entry 8",
+     "value": 90.0,
+     "value_raw": "90",
+     "notes": [],
+     "catalyst_raw": "I"
+    },
+    {
+     "unit_id": "PMC13325132-T2",
+     "row": [
+      "9",
+      "I",
+      "2-CH3",
+      "CO2CH2CH3",
+      "2",
+      "95",
+      "182",
+      "91"
+     ],
+     "locator": "T2, entry 9",
+     "value": 95.0,
+     "value_raw": "95",
+     "notes": [],
+     "catalyst_raw": "I"
+    },
+    {
+     "unit_id": "PMC13325132-T2",
+     "row": [
+      "10",
+      "I",
+      "4-CH3O",
+      "CO2C(CH3)3",
+      "2",
+      "92",
+      "178",
+      "89"
+     ],
+     "locator": "T2, entry 10",
+     "value": 92.0,
+     "value_raw": "92",
+     "notes": [],
+     "catalyst_raw": "I"
+    },
+    {
+     "unit_id": "PMC13325132-T2",
+     "row": [
+      "11",
+      "I",
+      "2-CH3",
+      "CO2C(CH3)3",
+      "2",
+      "91",
+      "176",
+      "88"
+     ],
+     "locator": "T2, entry 11",
+     "value": 91.0,
+     "value_raw": "91",
+     "notes": [],
+     "catalyst_raw": "I"
+    },
+    {
+     "unit_id": "PMC13325132-T2",
+     "row": [
+      "12",
+      "Br",
+      "H",
+      "CO2C(CH3)3",
+      "48",
+      "15",
+      "29",
+      "0.6"
+     ],
+     "locator": "T2, entry 12",
+     "value": 15.0,
+     "value_raw": "15",
+     "notes": [],
+     "catalyst_raw": "Br"
+    },
+    {
+     "unit_id": "PMC13325132-T2",
+     "row": [
+      "13",
+      "Br",
+      "4-NO2",
+      "CO2CH2CH3",
+      "4",
+      "90",
+      "173",
+      "43"
+     ],
+     "locator": "T2, entry 13",
+     "value": 90.0,
+     "value_raw": "90",
+     "notes": [],
+     "catalyst_raw": "Br"
+    },
+    {
+     "unit_id": "PMC13325132-T2",
+     "row": [
+      "14",
+      "Br",
+      "4-CH3CO",
+      "C6H5",
+      "48",
+      "56",
+      "108",
+      "2"
+     ],
+     "locator": "T2, entry 14",
+     "value": 56.0,
+     "value_raw": "56",
+     "notes": [],
+     "catalyst_raw": "Br"
+    },
+    {
+     "unit_id": "PMC13325132-T2",
+     "row": [
+      "15",
+      "Cl",
+      "H",
+      "CO2C(CH3)3",
+      "56",
+      "0",
+      "0",
+      "0"
+     ],
+     "locator": "T2, entry 15",
+     "value": 0.0,
+     "value_raw": "0",
+     "notes": [],
+     "catalyst_raw": "Cl"
+    },
+    {
+     "unit_id": "PMC13325132-T2",
+     "row": [
+      "16",
+      "I",
+      "H",
+      "4-NC5H5",
+      "24",
+      "46",
+      "89",
+      "4"
+     ],
+     "locator": "T2, entry 16",
+     "value": 46.0,
+     "value_raw": "46",
+     "notes": [],
+     "catalyst_raw": "I"
+    },
+    {
+     "unit_id": "PMC13325132-T2",
+     "row": [
+      "17",
+      "I",
+      "H",
+      "CO2CH2CH3",
+      "2",
+      "93",
+      "172",
+      "86"
+     ],
+     "locator": "T2, entry 17",
+     "value": 93.0,
+     "value_raw": "93",
+     "notes": [],
+     "catalyst_raw": "I"
+    }
+   ]
+  },
+  {
+   "unit_id": "PMC5225227-T1",
+   "corpus_id": "PMC5225227",
+   "reaction_class": "negishi",
+   "header": [
+    "Entry",
+    "Catalyst",
+    "Base",
+    "Yield/%a"
+   ],
+   "source": {
+    "citation": "A triazine-based Ni(II) PNP pincer complex as catalyst for Kumada–Corriu and Negishi cross-coupling reactions",
+    "journal": "Monatshefte Fur Chemie",
+    "year": "2016",
+    "doi": "10.1007/s00706-016-1878-4",
+    "pmcid": "PMC5225227",
+    "label": null,
+    "caption": "Catalyst screening for the Kumada–Corriu cross coupling",
+    "footnote": "4-Bromotoluene (1 mmol) and catalyst (2 mol%) in 3 cm3 THF, PhMgBr (1.3 mmol) was added and stirred at r.t. for 6 h aYield of pure isolated product after column chromatography"
+   },
+   "caliber": {
+    "outcome_type": "isolated",
+    "quote": "t r.t. for 6 h aYield of pure isolated product after column chromatography",
+    "from": "caption_or_footnote"
+   },
+   "parsed": {
+    "aryl_halide": "4-Bromotoluene",
+    "partner_field": "organometallic",
+    "partner": "PhMgBr",
+    "generic_substrate": false,
+    "bare_names": [
+     "4-Bromotoluene"
+    ],
+    "base": null,
+    "solvent": "THF",
+    "temp_c": null,
+    "time_h": 6.0,
+    "internal_standard": null,
+    "catalyst": "1",
+    "feeds": [
+     [
+      "4-Bromotoluene",
+      1.0,
+      "mmol"
+     ],
+     [
+      "catalyst",
+      2.0,
+      "mol%"
+     ],
+     [
+      "PhMgBr",
+      1.3,
+      "mmol"
+     ]
+    ],
+    "label_map_size": 0
+   },
+   "entries": [
+    {
+     "unit_id": "PMC5225227-T1",
+     "row": [
+      "1",
+      "1",
+      "PhMgBr",
+      "47"
+     ],
+     "locator": "T1, entry 1",
+     "value": 47.0,
+     "value_raw": "47",
+     "notes": [],
+     "catalyst_raw": "1"
+    },
+    {
+     "unit_id": "PMC5225227-T1",
+     "row": [
+      "2",
+      "2",
+      "PhMgBr",
+      "91"
+     ],
+     "locator": "T1, entry 2",
+     "value": 91.0,
+     "value_raw": "91",
+     "notes": [],
+     "catalyst_raw": "2"
+    },
+    {
+     "unit_id": "PMC5225227-T1",
+     "row": [
+      "3",
+      "3",
+      "PhMgBr",
+      "86"
+     ],
+     "locator": "T1, entry 3",
+     "value": 86.0,
+     "value_raw": "86",
+     "notes": [],
+     "catalyst_raw": "3"
+    },
+    {
+     "unit_id": "PMC5225227-T1",
+     "row": [
+      "4",
+      "4",
+      "PhMgBr",
+      "96"
+     ],
+     "locator": "T1, entry 4",
+     "value": 96.0,
+     "value_raw": "96",
+     "notes": [],
+     "catalyst_raw": "4"
+    }
+   ]
+  },
+  {
+   "unit_id": "PMC5225227-T2",
+   "corpus_id": "PMC5225227",
+   "reaction_class": "negishi",
+   "header": [
+    "Entry",
+    "Catalyst",
+    "Base",
+    "Yield/%a"
+   ],
+   "source": {
+    "citation": "A triazine-based Ni(II) PNP pincer complex as catalyst for Kumada–Corriu and Negishi cross-coupling reactions",
+    "journal": "Monatshefte Fur Chemie",
+    "year": "2016",
+    "doi": "10.1007/s00706-016-1878-4",
+    "pmcid": "PMC5225227",
+    "label": null,
+    "caption": "Catalyst screening for the Negishi cross coupling",
+    "footnote": "4-Bromotoluene (1 mmol) and catalyst (2 mol%) in 3 cm3 THF, PhZnBr (0.5 M in THF, 1.3 mmol) and LiCl (1.3 mmol) were added at r.t. and the solution was stirred at 60 °C for 6 h aYield of pure isolated product after column chromatography"
+   },
+   "caliber": {
+    "outcome_type": "isolated",
+    "quote": "60 °C for 6 h aYield of pure isolated product after column chromatography",
+    "from": "caption_or_footnote"
+   },
+   "parsed": {
+    "aryl_halide": "4-Bromotoluene",
+    "partner_field": null,
+    "partner": null,
+    "generic_substrate": true,
+    "bare_names": [
+     "4-Bromotoluene"
+    ],
+    "base": null,
+    "solvent": "THF",
+    "temp_c": 60.0,
+    "time_h": 6.0,
+    "internal_standard": null,
+    "catalyst": "1",
+    "feeds": [
+     [
+      "4-Bromotoluene",
+      1.0,
+      "mmol"
+     ],
+     [
+      "catalyst",
+      2.0,
+      "mol%"
+     ],
+     [
+      "LiCl",
+      1.3,
+      "mmol"
+     ]
+    ],
+    "label_map_size": 0
+   },
+   "entries": [
+    {
+     "unit_id": "PMC5225227-T2",
+     "row": [
+      "1",
+      "1",
+      "PhZnBr",
+      "52"
+     ],
+     "locator": "T2, entry 1",
+     "value": 52.0,
+     "value_raw": "52",
+     "notes": [],
+     "catalyst_raw": "1"
+    },
+    {
+     "unit_id": "PMC5225227-T2",
+     "row": [
+      "2",
+      "2",
+      "PhZnBr",
+      "92"
+     ],
+     "locator": "T2, entry 2",
+     "value": 92.0,
+     "value_raw": "92",
+     "notes": [],
+     "catalyst_raw": "2"
+    },
+    {
+     "unit_id": "PMC5225227-T2",
+     "row": [
+      "3",
+      "3",
+      "PhZnBr",
+      "90"
+     ],
+     "locator": "T2, entry 3",
+     "value": 90.0,
+     "value_raw": "90",
+     "notes": [],
+     "catalyst_raw": "3"
+    },
+    {
+     "unit_id": "PMC5225227-T2",
+     "row": [
+      "4",
+      "4",
+      "PhZnBr",
+      "94"
+     ],
+     "locator": "T2, entry 4",
+     "value": 94.0,
+     "value_raw": "94",
+     "notes": [],
+     "catalyst_raw": "4"
+    }
+   ]
+  },
+  {
+   "unit_id": "PMC10254696-T1",
+   "corpus_id": "PMC10254696",
+   "reaction_class": "sonogashira",
+   "header": [
+    "Entry",
+    "Catalyst",
+    "Solvent",
+    "Yield [%] a"
+   ],
+   "source": {
+    "citation": "A General Synthesis of Cross-Conjugated Enynones through Pd Catalyzed Sonogashira Coupling with Triazine Esters",
+    "journal": "Molecules",
+    "year": "2023",
+    "doi": "10.3390/molecules28114364",
+    "pmcid": "PMC10254696",
+    "label": null,
+    "caption": "The optimization of the palladium-catalyzed cross-coupling of cinnamic triazine ester 1a and phenylacetylene 3a.",
+    "footnote": "a All reactions were performed on a 0.25 mmol scale in 2 mL of solvent, and yields were determined by calibrated GC analysis with biphenyl as an internal standard. b catalyst (3% mol) was used. c catalyst (1% mol) was used, 24 h."
+   },
+   "caliber": {
+    "outcome_type": "gc",
+    "quote": "were determined by calibrated GC analysis with biphenyl as an internal",
+    "from": "caption_or_footnote"
+   },
+   "parsed": {
+    "aryl_halide": null,
+    "partner_field": "alkyne",
+    "partner": "phenylacetylene",
+    "generic_substrate": true,
+    "bare_names": [
+     "optimization of the palladium-catalyzed cross-coupling of cinnamic triazine ester 1a",
+     "phenylacetylene 3a."
+    ],
+    "base": null,
+    "solvent": null,
+    "temp_c": null,
+    "time_h": 24.0,
+    "internal_standard": "internal standard",
+    "catalyst": "Pd(OAc)2",
+    "feeds": [],
+    "label_map_size": 0
+   },
+   "entries": [
+    {
+     "unit_id": "PMC10254696-T1",
+     "row": [
+      "1",
+      "Pd(OAc)2",
+      "Toluene",
+      "10"
+     ],
+     "locator": "T1, entry 1",
+     "value": 10.0,
+     "value_raw": "10",
+     "notes": [],
+     "catalyst_raw": "Pd(OAc)2"
+    },
+    {
+     "unit_id": "PMC10254696-T1",
+     "row": [
+      "2",
+      "Pd(OAc)2",
+      "1,4-Dioxane",
+      "16"
+     ],
+     "locator": "T1, entry 2",
+     "value": 16.0,
+     "value_raw": "16",
+     "notes": [],
+     "catalyst_raw": "Pd(OAc)2"
+    },
+    {
+     "unit_id": "PMC10254696-T1",
+     "row": [
+      "3",
+      "Pd(OAc)2",
+      "THF",
+      "13"
+     ],
+     "locator": "T1, entry 3",
+     "value": 13.0,
+     "value_raw": "13",
+     "notes": [],
+     "catalyst_raw": "Pd(OAc)2"
+    },
+    {
+     "unit_id": "PMC10254696-T1",
+     "row": [
+      "5",
+      "Pd(OAc)2",
+      "Anisole",
+      "6"
+     ],
+     "locator": "T1, entry 5",
+     "value": 6.0,
+     "value_raw": "6",
+     "notes": [],
+     "catalyst_raw": "Pd(OAc)2"
+    },
+    {
+     "unit_id": "PMC10254696-T1",
+     "row": [
+      "6",
+      "Pd(OAc)2",
+      "MeCN",
+      "42"
+     ],
+     "locator": "T1, entry 6",
+     "value": 42.0,
+     "value_raw": "42",
+     "notes": [],
+     "catalyst_raw": "Pd(OAc)2"
+    },
+    {
+     "unit_id": "PMC10254696-T1",
+     "row": [
+      "7",
+      "PdCl2",
+      "MeCN",
+      "2"
+     ],
+     "locator": "T1, entry 7",
+     "value": 2.0,
+     "value_raw": "2",
+     "notes": [],
+     "catalyst_raw": "PdCl2"
+    },
+    {
+     "unit_id": "PMC10254696-T1",
+     "row": [
+      "9",
+      "[(Cinnamyl)PdCl]2",
+      "MeCN",
+      "62"
+     ],
+     "locator": "T1, entry 9",
+     "value": 62.0,
+     "value_raw": "62",
+     "notes": [],
+     "catalyst_raw": "[(Cinnamyl)PdCl]2"
+    },
+    {
+     "unit_id": "PMC10254696-T1",
+     "row": [
+      "10",
+      "[(2-Methylallyl)PdCl]2",
+      "MeCN",
+      "60"
+     ],
+     "locator": "T1, entry 10",
+     "value": 60.0,
+     "value_raw": "60",
+     "notes": [],
+     "catalyst_raw": "[(2-Methylallyl)PdCl]2"
+    },
+    {
+     "unit_id": "PMC10254696-T1",
+     "row": [
+      "11",
+      "[(allyl)PdCl]2",
+      "MeCN",
+      "58"
+     ],
+     "locator": "T1, entry 11",
+     "value": 58.0,
+     "value_raw": "58",
+     "notes": [],
+     "catalyst_raw": "[(allyl)PdCl]2"
+    },
+    {
+     "unit_id": "PMC10254696-T1",
+     "row": [
+      "12",
+      "Pd-1",
+      "MeCN",
+      "75"
+     ],
+     "locator": "T1, entry 12",
+     "value": 75.0,
+     "value_raw": "75",
+     "notes": [],
+     "catalyst_raw": "Pd-1"
+    },
+    {
+     "unit_id": "PMC10254696-T1",
+     "row": [
+      "13",
+      "Pd-2",
+      "MeCN",
+      "78"
+     ],
+     "locator": "T1, entry 13",
+     "value": 78.0,
+     "value_raw": "78",
+     "notes": [],
+     "catalyst_raw": "Pd-2"
+    },
+    {
+     "unit_id": "PMC10254696-T1",
+     "row": [
+      "14",
+      "Pd-3",
+      "MeCN",
+      "96"
+     ],
+     "locator": "T1, entry 14",
+     "value": 96.0,
+     "value_raw": "96",
+     "notes": [],
+     "catalyst_raw": "Pd-3"
+    },
+    {
+     "unit_id": "PMC10254696-T1",
+     "row": [
+      "15 b",
+      "Pd-3",
+      "MeCN",
+      "95"
+     ],
+     "locator": "T1, entry 15 b",
+     "value": 95.0,
+     "value_raw": "95",
+     "notes": [],
+     "catalyst_raw": "Pd-3"
+    },
+    {
+     "unit_id": "PMC10254696-T1",
+     "row": [
+      "16 c",
+      "Pd-3",
+      "MeCN",
+      "95"
+     ],
+     "locator": "T1, entry 16 c",
+     "value": 95.0,
+     "value_raw": "95",
+     "notes": [],
+     "catalyst_raw": "Pd-3"
+    }
+   ]
+  },
+  {
+   "unit_id": "PMC11667721-T1",
+   "corpus_id": "PMC11667721",
+   "reaction_class": "sonogashira",
+   "header": [
+    "Entry",
+    "Variation from the Standard conditions",
+    "Yield (%)b"
+   ],
+   "source": {
+    "citation": "Palladium-Catalyzed Carbonylative Sonogashira Coupling of Aliphatic Alkynes and Aryl Thianthrenium Salts to Alkynones an",
+    "journal": "Organic Letters",
+    "year": "2024",
+    "doi": "10.1021/acs.orglett.4c03519",
+    "pmcid": "PMC11667721",
+    "label": null,
+    "caption": "Optimization of the Reaction Conditionsa",
+    "footnote": "aThe reaction was conducted using 1a (0.2 mmol), 2a (x mmol), catalyst (2 mol %), ligand (6 mol %), base (2.0 equiv), CO (10 bar), 80 °C, 15 h.bDetermined by GC with hexadecane as internal standard.cIsolated yield is shown in parentheses."
+   },
+   "caliber": {
+    "outcome_type": "isolated",
+    "quote": "adecane as internal standard.cIsolated yield is shown in parentheses.",
+    "from": "caption_or_footnote"
+   },
+   "parsed": {
+    "aryl_halide": null,
+    "partner_field": null,
+    "partner": null,
+    "generic_substrate": true,
+    "bare_names": [],
+    "base": "DIPEA",
+    "solvent": null,
+    "temp_c": 80.0,
+    "time_h": 15.0,
+    "internal_standard": "internal standard",
+    "catalyst": "None",
+    "feeds": [
+     [
+      "catalyst",
+      2.0,
+      "mol %"
+     ],
+     [
+      "ligand",
+      6.0,
+      "mol %"
+     ],
+     [
+      "base",
+      2.0,
+      "equiv"
+     ]
+    ],
+    "label_map_size": 0
+   },
+   "entries": [
+    {
+     "unit_id": "PMC11667721-T1",
+     "row": [
+      "1",
+      "None",
+      "78 (72)c"
+     ],
+     "locator": "T1, entry 1",
+     "value": 78.0,
+     "value_raw": "78 (72)c",
+     "notes": [
+      "原始单元格非纯数值：'78 (72)c'（数值为按首位数字提取，需人工确认）"
+     ],
+     "catalyst_raw": "None"
+    },
+    {
+     "unit_id": "PMC11667721-T1",
+     "row": [
+      "5",
+      "DABCO instead DIPEA",
+      "56"
+     ],
+     "locator": "T1, entry 5",
+     "value": 56.0,
+     "value_raw": "56",
+     "notes": [],
+     "catalyst_raw": "DABCO instead DIPEA"
+    },
+    {
+     "unit_id": "PMC11667721-T1",
+     "row": [
+      "8",
+      "Pd(OAc)2 instead of PdI2",
+      "65"
+     ],
+     "locator": "T1, entry 8",
+     "value": 65.0,
+     "value_raw": "65",
+     "notes": [],
+     "catalyst_raw": "Pd(OAc)2 instead of PdI2"
+    },
+    {
+     "unit_id": "PMC11667721-T1",
+     "row": [
+      "9",
+      "PdBr2 instead of PdI2",
+      "65"
+     ],
+     "locator": "T1, entry 9",
+     "value": 65.0,
+     "value_raw": "65",
+     "notes": [],
+     "catalyst_raw": "PdBr2 instead of PdI2"
+    },
+    {
+     "unit_id": "PMC11667721-T1",
+     "row": [
+      "10",
+      "(cinnamyl)2Pd2Cl2 instead of PdI2",
+      "61"
+     ],
+     "locator": "T1, entry 10",
+     "value": 61.0,
+     "value_raw": "61",
+     "notes": [],
+     "catalyst_raw": "(cinnamyl)2Pd2Cl2 instead of PdI2"
+    },
+    {
+     "unit_id": "PMC11667721-T1",
+     "row": [
+      "11",
+      "PCy3 instead of PPh3",
+      "39"
+     ],
+     "locator": "T1, entry 11",
+     "value": 39.0,
+     "value_raw": "39",
+     "notes": [],
+     "catalyst_raw": "PCy3 instead of PPh3"
+    },
+    {
+     "unit_id": "PMC11667721-T1",
+     "row": [
+      "12",
+      "BuPAd2 instead of PPh3",
+      "63"
+     ],
+     "locator": "T1, entry 12",
+     "value": 63.0,
+     "value_raw": "63",
+     "notes": [],
+     "catalyst_raw": "BuPAd2 instead of PPh3"
+    },
+    {
+     "unit_id": "PMC11667721-T1",
+     "row": [
+      "14",
+      "DCE as solvent",
+      "61"
+     ],
+     "locator": "T1, entry 14",
+     "value": 61.0,
+     "value_raw": "61",
+     "notes": [],
+     "catalyst_raw": "DCE as solvent"
+    },
+    {
+     "unit_id": "PMC11667721-T1",
+     "row": [
+      "15",
+      "DMSO as solvent",
+      "62"
+     ],
+     "locator": "T1, entry 15",
+     "value": 62.0,
+     "value_raw": "62",
+     "notes": [],
+     "catalyst_raw": "DMSO as solvent"
+    },
+    {
+     "unit_id": "PMC11667721-T1",
+     "row": [
+      "16",
+      "CH3CN as solvent",
+      "40"
+     ],
+     "locator": "T1, entry 16",
+     "value": 40.0,
+     "value_raw": "40",
+     "notes": [],
+     "catalyst_raw": "CH3CN as solvent"
+    },
+    {
+     "unit_id": "PMC11667721-T1",
+     "row": [
+      "17",
+      "0.2 mol L–1 DMF",
+      "66"
+     ],
+     "locator": "T1, entry 17",
+     "value": 66.0,
+     "value_raw": "66",
+     "notes": [],
+     "catalyst_raw": "0.2 mol L–1 DMF"
+    },
+    {
+     "unit_id": "PMC11667721-T1",
+     "row": [
+      "18",
+      "1.0 equiv. 2a",
+      "70"
+     ],
+     "locator": "T1, entry 18",
+     "value": 70.0,
+     "value_raw": "70",
+     "notes": [],
+     "catalyst_raw": "1.0 equiv. 2a"
+    }
+   ]
+  },
+  {
+   "unit_id": "PMC13097261-T2",
+   "corpus_id": "PMC13097261",
+   "reaction_class": "sonogashira",
+   "header": [
+    "entry",
+    "subs./prod.",
+    "R1",
+    "R2",
+    "yield (%)"
+   ],
+   "source": {
+    "citation": "N‑Mesyl-Enabled Cu2O Catalysis: Synthesis of (E)‑3-Alkylideneisoindolin-1-ones and 3,4-Unsubstituted Isoquinolones via S",
+    "journal": "The Journal of Organic Chemistry",
+    "year": "2026",
+    "doi": "10.1021/acs.joc.6c00362",
+    "pmcid": "PMC13097261",
+    "label": null,
+    "caption": "Coupling of Diverse o-Iodoaryl Carboxamides with Terminal Alkynes under Cu2O-Catalyzed Conditions",
+    "footnote": "aReactions were carried out in pressure-relief borosilicate glass vials.bIsolated yields."
+   },
+   "caliber": {
+    "outcome_type": "isolated",
+    "quote": "ief borosilicate glass vials.bIsolated yields.",
+    "from": "caption_or_footnote"
+   },
+   "parsed": {
+    "aryl_halide": null,
+    "partner_field": null,
+    "partner": null,
+    "generic_substrate": true,
+    "bare_names": [],
+    "base": null,
+    "solvent": null,
+    "temp_c": null,
+    "time_h": null,
+    "internal_standard": null,
+    "catalyst": "1a/2a",
+    "feeds": [],
+    "label_map_size": 0
+   },
+   "entries": [
+    {
+     "unit_id": "PMC13097261-T2",
+     "row": [
+      "1",
+      "1a/2a",
+      "–H",
+      "–CO2Et",
+      "79"
+     ],
+     "locator": "T2, entry 1",
+     "value": 79.0,
+     "value_raw": "79",
+     "notes": [],
+     "catalyst_raw": "1a/2a"
+    },
+    {
+     "unit_id": "PMC13097261-T2",
+     "row": [
+      "6",
+      "1a/2f",
+      "–H",
+      "–Ph",
+      "75"
+     ],
+     "locator": "T2, entry 6",
+     "value": 75.0,
+     "value_raw": "75",
+     "notes": [],
+     "catalyst_raw": "1a/2f"
+    },
+    {
+     "unit_id": "PMC13097261-T2",
+     "row": [
+      "8",
+      "1a/2h",
+      "–H",
+      "–TIPS",
+      "74"
+     ],
+     "locator": "T2, entry 8",
+     "value": 74.0,
+     "value_raw": "74",
+     "notes": [],
+     "catalyst_raw": "1a/2h"
+    }
+   ]
+  },
+  {
+   "unit_id": "PMC13097261-T3",
+   "corpus_id": "PMC13097261",
+   "reaction_class": "sonogashira",
+   "header": [
+    "entry",
+    "subs./prod.",
+    "R1",
+    "R2",
+    "yield (%)"
+   ],
+   "source": {
+    "citation": "N‑Mesyl-Enabled Cu2O Catalysis: Synthesis of (E)‑3-Alkylideneisoindolin-1-ones and 3,4-Unsubstituted Isoquinolones via S",
+    "journal": "The Journal of Organic Chemistry",
+    "year": "2026",
+    "doi": "10.1021/acs.joc.6c00362",
+    "pmcid": "PMC13097261",
+    "label": null,
+    "caption": "Substrate Scope for Cu2O-Mediated Synthesis of 3-Alkyl/Arylideneisoindolin-1-ones",
+    "footnote": "aReactions were performed using different combinations of reaction temperature and time depending on the coupled alkyne, for ethyl propiolate (entries 1–9) and 3-butyn-2-one (entries 21–23): 95 °C for 6 h and for phenylacetylene (entries 10–20): 110 °C for 8 h. All the reactions were carried out in pressure-relief borosilicate glass vials.bIsolated yields."
+   },
+   "caliber": {
+    "outcome_type": "isolated",
+    "quote": "ief borosilicate glass vials.bIsolated yields.",
+    "from": "caption_or_footnote"
+   },
+   "parsed": {
+    "aryl_halide": null,
+    "partner_field": "alkyne",
+    "partner": "time depending on the coupled alkyne",
+    "generic_substrate": true,
+    "bare_names": [
+     "time depending on the coupled alkyne",
+     "for phenylacetylene : 110 °C for 8 h"
+    ],
+    "base": null,
+    "solvent": null,
+    "temp_c": 95.0,
+    "time_h": 6.0,
+    "internal_standard": null,
+    "catalyst": "3a/4a",
+    "feeds": [],
+    "label_map_size": 0
+   },
+   "entries": [
+    {
+     "unit_id": "PMC13097261-T3",
+     "row": [
+      "1",
+      "3a/4a",
+      "–H",
+      "–CO2Et",
+      "72"
+     ],
+     "locator": "T3, entry 1",
+     "value": 72.0,
+     "value_raw": "72",
+     "notes": [],
+     "catalyst_raw": "3a/4a"
+    },
+    {
+     "unit_id": "PMC13097261-T3",
+     "row": [
+      "10",
+      "3a/4j",
+      "–H",
+      "–Ph",
+      "72"
+     ],
+     "locator": "T3, entry 10",
+     "value": 72.0,
+     "value_raw": "72",
+     "notes": [],
+     "catalyst_raw": "3a/4j"
+    },
+    {
+     "unit_id": "PMC13097261-T3",
+     "row": [
+      "21",
+      "3a/4s",
+      "–H",
+      "–COCH3",
+      "70"
+     ],
+     "locator": "T3, entry 21",
+     "value": 70.0,
+     "value_raw": "70",
+     "notes": [],
+     "catalyst_raw": "3a/4s"
+    }
+   ]
+  },
+  {
+   "unit_id": "PMC13097261-T4",
+   "corpus_id": "PMC13097261",
+   "reaction_class": "sonogashira",
+   "header": [
+    "entry",
+    "subs./prod.",
+    "R1",
+    "yield (%)"
+   ],
+   "source": {
+    "citation": "N‑Mesyl-Enabled Cu2O Catalysis: Synthesis of (E)‑3-Alkylideneisoindolin-1-ones and 3,4-Unsubstituted Isoquinolones via S",
+    "journal": "The Journal of Organic Chemistry",
+    "year": "2026",
+    "doi": "10.1021/acs.joc.6c00362",
+    "pmcid": "PMC13097261",
+    "label": null,
+    "caption": "TBAF-Mediated Removal of the N-Mesyl Group from 3-Alkylideneisoindolin-1-ones",
+    "footnote": "aReactions were carried out in pressure-relief borosilicate glass vials.bIsolated yields."
+   },
+   "caliber": {
+    "outcome_type": "isolated",
+    "quote": "ief borosilicate glass vials.bIsolated yields.",
+    "from": "caption_or_footnote"
+   },
+   "parsed": {
+    "aryl_halide": null,
+    "partner_field": null,
+    "partner": null,
+    "generic_substrate": true,
+    "bare_names": [],
+    "base": null,
+    "solvent": null,
+    "temp_c": null,
+    "time_h": null,
+    "internal_standard": null,
+    "catalyst": "4a/5a",
+    "feeds": [],
+    "label_map_size": 0
+   },
+   "entries": [
+    {
+     "unit_id": "PMC13097261-T4",
+     "row": [
+      "1",
+      "4a/5a",
+      "–H",
+      "83"
+     ],
+     "locator": "T4, entry 1",
+     "value": 83.0,
+     "value_raw": "83",
+     "notes": [],
+     "catalyst_raw": "4a/5a"
+    },
+    {
+     "unit_id": "PMC13097261-T4",
+     "row": [
+      "2",
+      "4b/5b",
+      "6–F",
+      "85"
+     ],
+     "locator": "T4, entry 2",
+     "value": 85.0,
+     "value_raw": "85",
+     "notes": [],
+     "catalyst_raw": "4b/5b"
+    },
+    {
+     "unit_id": "PMC13097261-T4",
+     "row": [
+      "3",
+      "4c/5c",
+      "6–Cl",
+      "82"
+     ],
+     "locator": "T4, entry 3",
+     "value": 82.0,
+     "value_raw": "82",
+     "notes": [],
+     "catalyst_raw": "4c/5c"
+    },
+    {
+     "unit_id": "PMC13097261-T4",
+     "row": [
+      "4",
+      "4d/5d",
+      "6–Br",
+      "82"
+     ],
+     "locator": "T4, entry 4",
+     "value": 82.0,
+     "value_raw": "82",
+     "notes": [],
+     "catalyst_raw": "4d/5d"
+    },
+    {
+     "unit_id": "PMC13097261-T4",
+     "row": [
+      "5",
+      "4e/5e",
+      "6–CH3",
+      "86"
+     ],
+     "locator": "T4, entry 5",
+     "value": 86.0,
+     "value_raw": "86",
+     "notes": [],
+     "catalyst_raw": "4e/5e"
+    },
+    {
+     "unit_id": "PMC13097261-T4",
+     "row": [
+      "6",
+      "4f/5f",
+      "6–OCH3",
+      "85"
+     ],
+     "locator": "T4, entry 6",
+     "value": 85.0,
+     "value_raw": "85",
+     "notes": [],
+     "catalyst_raw": "4f/5f"
+    },
+    {
+     "unit_id": "PMC13097261-T4",
+     "row": [
+      "7",
+      "4g/5g",
+      "6–NO2",
+      "80"
+     ],
+     "locator": "T4, entry 7",
+     "value": 80.0,
+     "value_raw": "80",
+     "notes": [],
+     "catalyst_raw": "4g/5g"
+    },
+    {
+     "unit_id": "PMC13097261-T4",
+     "row": [
+      "8",
+      "4h/5h",
+      "5–Cl",
+      "84"
+     ],
+     "locator": "T4, entry 8",
+     "value": 84.0,
+     "value_raw": "84",
+     "notes": [],
+     "catalyst_raw": "4h/5h"
+    },
+    {
+     "unit_id": "PMC13097261-T4",
+     "row": [
+      "9",
+      "4i/5i",
+      "5–NO2",
+      "85"
+     ],
+     "locator": "T4, entry 9",
+     "value": 85.0,
+     "value_raw": "85",
+     "notes": [],
+     "catalyst_raw": "4i/5i"
+    }
+   ]
+  },
+  {
+   "unit_id": "PMC9075783-T1",
+   "corpus_id": "PMC9075783",
+   "reaction_class": "suzuki",
+   "header": [
+    "Yield (%)",
+    "5",
+    "6",
+    "7",
+    "8"
+   ],
+   "source": {
+    "citation": "Scope and limitation of propylene carbonate as a sustainable solvent in the Suzuki–Miyaura reaction†",
+    "journal": "RSC Advances",
+    "year": "2019",
+    "doi": "10.1039/c9ra07044c",
+    "pmcid": "PMC9075783",
+    "label": null,
+    "caption": "Obtained yields for the Suzuki–Miyaura reactions",
+    "footnote": "aIsolated yield for the conventionally heated reaction.bIsolated yield for microwave assisted reaction.cEstimated yield from HPLC analysis and weight of the raw products."
+   },
+   "caliber": {
+    "outcome_type": "isolated",
+    "quote": "the Suzuki–Miyaura reactions aIsolated yield for the conventionally heated",
+    "from": "caption_or_footnote"
+   },
+   "parsed": {
+    "aryl_halide": null,
+    "partner_field": null,
+    "partner": null,
+    "generic_substrate": true,
+    "bare_names": [],
+    "base": null,
+    "solvent": null,
+    "temp_c": null,
+    "time_h": null,
+    "internal_standard": null,
+    "catalyst": "92% (9)a",
+    "feeds": [],
+    "label_map_size": 2
+   },
+   "entries": [
+    {
+     "unit_id": "PMC9075783-T1",
+     "row": [
+      "2",
+      "92% (9)a",
+      "65% (12)a",
+      "95% (14)a",
+      "43% (16)a"
+     ],
+     "locator": "T1, entry 2",
+     "value": 2.0,
+     "value_raw": "2",
+     "notes": [],
+     "catalyst_raw": "92% (9)a"
+    },
+    {
+     "unit_id": "PMC9075783-T1",
+     "row": [
+      "89% (9)c",
+      "64% (12)c",
+      "89% (14)c",
+      "58% (16)c"
+     ],
+     "locator": "T1, entry 89% (9)c",
+     "value": 89.0,
+     "value_raw": "89% (9)c",
+     "notes": [
+      "原始单元格非纯数值：'89% (9)c'（数值为按首位数字提取，需人工确认）"
+     ],
+     "catalyst_raw": "64% (12)c"
+    },
+    {
+     "unit_id": "PMC9075783-T1",
+     "row": [
+      "93% (9)b",
+      "65% (12)b",
+      "97% (14)b",
+      "50% (16)b"
+     ],
+     "locator": "T1, entry 93% (9)b",
+     "value": 93.0,
+     "value_raw": "93% (9)b",
+     "notes": [
+      "原始单元格非纯数值：'93% (9)b'（数值为按首位数字提取，需人工确认）"
+     ],
+     "catalyst_raw": "65% (12)b"
+    },
+    {
+     "unit_id": "PMC9075783-T1",
+     "row": [
+      "88% (9)c",
+      "67% (12)c",
+      "92% (14)c",
+      "63% (16)c"
+     ],
+     "locator": "T1, entry 88% (9)c",
+     "value": 88.0,
+     "value_raw": "88% (9)c",
+     "notes": [
+      "原始单元格非纯数值：'88% (9)c'（数值为按首位数字提取，需人工确认）"
+     ],
+     "catalyst_raw": "67% (12)c"
+    },
+    {
+     "unit_id": "PMC9075783-T1",
+     "row": [
+      "3",
+      "85% (10)a",
+      "47% (13)a",
+      "92% (15)a",
+      "71% (17)a"
+     ],
+     "locator": "T1, entry 3",
+     "value": 3.0,
+     "value_raw": "3",
+     "notes": [],
+     "catalyst_raw": "85% (10)a"
+    },
+    {
+     "unit_id": "PMC9075783-T1",
+     "row": [
+      "82% (10)c",
+      "47% (13)c",
+      "87% (15)c",
+      "79% (17)c"
+     ],
+     "locator": "T1, entry 82% (10)c",
+     "value": 82.0,
+     "value_raw": "82% (10)c",
+     "notes": [
+      "原始单元格非纯数值：'82% (10)c'（数值为按首位数字提取，需人工确认）"
+     ],
+     "catalyst_raw": "47% (13)c"
+    },
+    {
+     "unit_id": "PMC9075783-T1",
+     "row": [
+      "85% (10)b",
+      "74% (13)b",
+      "91% (15)b",
+      "80% (17)b"
+     ],
+     "locator": "T1, entry 85% (10)b",
+     "value": 85.0,
+     "value_raw": "85% (10)b",
+     "notes": [
+      "原始单元格非纯数值：'85% (10)b'（数值为按首位数字提取，需人工确认）"
+     ],
+     "catalyst_raw": "74% (13)b"
+    },
+    {
+     "unit_id": "PMC9075783-T1",
+     "row": [
+      "86% (10)c",
+      "69% (13)c",
+      "84% (15)c",
+      "84% (17)c"
+     ],
+     "locator": "T1, entry 86% (10)c",
+     "value": 86.0,
+     "value_raw": "86% (10)c",
+     "notes": [
+      "原始单元格非纯数值：'86% (10)c'（数值为按首位数字提取，需人工确认）"
+     ],
+     "catalyst_raw": "69% (13)c"
+    },
+    {
+     "unit_id": "PMC9075783-T1",
+     "row": [
+      "4",
+      "19% (11a) + 20% (11b)a",
+      "47% (18a) + 52% (18b)a",
+      "32% (19a) + 58% (19b)a",
+      "33% (20a) + 56% (20b)a"
+     ],
+     "locator": "T1, entry 4",
+     "value": 4.0,
+     "value_raw": "4",
+     "notes": [],
+     "catalyst_raw": "19% (11a) + 20% (11b)a"
+    },
+    {
+     "unit_id": "PMC9075783-T1",
+     "row": [
+      "21% (11a) + 19% (11b)c",
+      "40% (18a) + 57% (18b)c",
+      "21% (19a) + 76% (19b)c",
+      "43% (20a) + 54% (20b)c"
+     ],
+     "locator": "T1, entry 21% (11a) + 19% (11b)c",
+     "value": 21.0,
+     "value_raw": "21% (11a) + 19% (11b)c",
+     "notes": [
+      "原始单元格非纯数值：'21% (11a) + 19% (11b)c'（数值为按首位数字提取，需人工确认）"
+     ],
+     "catalyst_raw": "40% (18a) + 57% (18b)c"
+    },
+    {
+     "unit_id": "PMC9075783-T1",
+     "row": [
+      "36% (11a) + 52% (11b)b",
+      "45% (18a) + 45% (18b)b",
+      "26% (19a) + 49% (19b)b",
+      "44% (20a) + 50% (20b)b"
+     ],
+     "locator": "T1, entry 36% (11a) + 52% (11b)b",
+     "value": 36.0,
+     "value_raw": "36% (11a) + 52% (11b)b",
+     "notes": [
+      "原始单元格非纯数值：'36% (11a) + 52% (11b)b'（数值为按首位数字提取，需人工确认）"
+     ],
+     "catalyst_raw": "45% (18a) + 45% (18b)b"
+    },
+    {
+     "unit_id": "PMC9075783-T1",
+     "row": [
+      "48% (11a) + 50% (11b)c",
+      "51% (18a) + 48% (18b)c",
+      "29% (19a) + 51% (19b)c",
+      "44% (20a) + 51% (20b)c"
+     ],
+     "locator": "T1, entry 48% (11a) + 50% (11b)c",
+     "value": 48.0,
+     "value_raw": "48% (11a) + 50% (11b)c",
+     "notes": [
+      "原始单元格非纯数值：'48% (11a) + 50% (11b)c'（数值为按首位数字提取，需人工确认）"
+     ],
+     "catalyst_raw": "51% (18a) + 48% (18b)c"
+    }
+   ]
+  }
+ ]
+}

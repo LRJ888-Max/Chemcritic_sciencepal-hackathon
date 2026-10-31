@@ -158,13 +158,13 @@ flowchart TD
 
 | 模块 | 状态 |
 |---|---|
-| 文献核验与 entry 级记录 | ✅ **44 条参照入库**（42 条 A_confirmed，8 种底物；全部带逐字 label_raw 与 locator） |
-| 8 维门槛 + 三档分档 + 补证杠杆 | ✅ 已实现为确定性引擎 `chemcritic-engine/1.4.0`，自检 **28/28**、契约回归 **9/9** |
+| 文献核验与 entry 级记录 | ✅ **175 条参照入库**：44 条人工核验（含 42 条 A_confirmed）+ 131 条从语料层晋升（`candidate`，口径由表头/题注逐字支撑）；全部带逐字 label_raw 与 locator / locator_zh |
+| 8 维门槛 + 三档分档 + 补证杠杆 | ✅ 已实现为确定性引擎 `chemcritic-engine/1.5.0`，自检 **28/28**、契约回归 **9/9** |
 | PDF 取证端到端（抽取→审计→签核→入库→判定生效） | ✅ 已验收（见 `docs/eval/2026-10-30-PDF取证端到端验收.md`） |
 | 化学感知层（RDKit 规范 SMILES 判同） | ✅ `--chemsense`；无 rdkit 自动降级，判定行为不变 |
 | 六个 Agent 的平台搭建 | ✅ 平台 Agent（提示词 v8.1）+ 单文件引擎 bootstrap 已上线 |
 | 评测（契约回归 + 措辞 lint + gold set） | ✅ 契约 9 用例 + 措辞 lint 18 规则；gold set 扩充中 |
-| 语料库（参照集候选面） | ✅ **114 篇文献 / 194 张数值数据表 / 1981 行 / 18 类反应**，全部带 DOI 与逐字表格（`imported_unchecked`，不参与判定）；见 `docs/corpus/2026-10-31-语料库扩充说明.md` |
+| 语料库（候选面 → 判定层通道） | ✅ **114 篇文献 / 194 张数值数据表 / 1981 行 / 18 类反应**；其中 131 条经核验晋升进 `records.json`，其余以表级索引内嵌（`--corpus-query`，`judgeable=false`）。见 `docs/corpus/2026-10-31-语料库扩充说明.md`、`docs/plan/2026-10-31-语料层晋升.md` |
 | 演示视频 / 项目说明 | 🚧 沙箱录屏待补 |
 
 ### 引擎能力一览（`chemcritic_engine.py`，单文件、零联网依赖）
@@ -177,6 +177,7 @@ flowchart TD
 | `--audit-table table.json` | 整表审计：逐行判同框、卡点维度、每行对库可比值 |
 | `--replicates reps.json` | 重复实验统计：均值 / 样本 SD / 95% t 置信区间（内嵌 t 表，免 scipy；描述用户数据，非判定） |
 | `--chemsense "名1" "名2"` | 化学感知：规范 SMILES 同一性判同 + 官能团分类（无 rdkit 自动降级） |
+| `--corpus-query "底物" "反应类型"` | 检索 194 张表的语料索引：命中的表、报了多少行、收率区间、来源 DOI；`judgeable=false`，不参与判定 |
 | `--list-records` | 全部参照的引用 / 定位 / 口径 / 档位 |
 | `--selftest` | 28 项验收矩阵，开箱自证 |
 

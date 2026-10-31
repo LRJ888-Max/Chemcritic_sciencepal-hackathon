@@ -101,15 +101,28 @@ def _is_aqueous(solvent: Optional[str]) -> Optional[bool]:
 
 # ---------- 硬门槛 ----------
 
+def _substrate_pair(sub: dict) -> Dict[str, str]:
+    """底物组合（不含产物）：任何有值的键都算，键名保留供审计。
+
+    2026-10-31 之前这里写死 ("aryl_halide", "boronic_acid")——那等于假定全库都是
+    Suzuki 型。Heck（芳卤+烯烃）、Sonogashira（芳卤+炔）、Buchwald（芳卤+胺）的记录
+    入册后会被一律判成"底物未完整记录"，等于白入库。改成取所有有值的键，
+    比较时用值的集合（底物对没有方向），键名不同但物质相同视为同一组合。
+    """
+    return {k: v for k, v in ((k, _canon(x)) for k, x in (sub or {}).items())
+            if k != "product" and v}
+
+
 def gate_substrate(user: Record, ref: Record) -> GateResult:
-    keys = ("aryl_halide", "boronic_acid")
-    u = {_canon(user.substrate.get(k)) for k in keys}
-    r = {_canon(ref.substrate.get(k)) for k in keys}
-    if None in u or None in r:
+    u = _substrate_pair(user.substrate)
+    r = _substrate_pair(ref.substrate)
+    if len(u) < 2 or len(r) < 2:
         return GateResult(1, UNKNOWN, "底物结构未完整记录")
-    if u == r:
-        return GateResult(1, PASS, "底物对一致")
-    return GateResult(1, FAIL, f"底物对不同：{sorted(x for x in u if x)} vs {sorted(x for x in r if x)}")
+    if set(u.values()) == set(r.values()):
+        return GateResult(1, PASS, "底物组合一致：" + " + ".join(sorted(set(u.values()))))
+    return GateResult(
+        1, FAIL,
+        f"底物组合不同：{sorted(set(u.values()))} vs {sorted(set(r.values()))}")
 
 
 def gate_product(user: Record, ref: Record) -> GateResult:
@@ -171,10 +184,13 @@ def assay_blame(user: Record, ref: Record) -> Optional[str]:
 
 
 # 每个口径在原文措辞里必须能找到的支撑词
+# 2026-10-31 扩词：原文写全称（"determined by gas chromatography"、"1H nuclear magnetic
+# resonance"）与写缩写是同一件事，词表漏收会让正确的记录被判"口径无支撑"。
+# 这是词表补全，不是判定放宽——仍然要求原文有明确的定量方式措辞。
 _LABEL_HINTS = {
     "isolated": ("isolated", "分离", "称重", "weighed"),
-    "gc": ("gc", "glc", "气相"),
-    "nmr": ("nmr", "核磁", "1h", "¹h"),
+    "gc": ("gc", "glc", "gas chromatog", "气相"),
+    "nmr": ("nmr", "nuclear magnetic", "核磁", "1h", "¹h"),
     "conversion": ("conversion", "转化"),
 }
 

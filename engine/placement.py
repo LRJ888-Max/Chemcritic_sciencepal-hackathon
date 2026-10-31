@@ -236,6 +236,28 @@ def _canon_pair(value) -> str:
     return str(value or "").strip().lower()
 
 
+def _same_substrate_set(us: dict, rs: dict) -> bool:
+    """底物组合是否同一（不看方向、不看键名）。
+
+    2026-10-31：原实现对 ("aryl_halide","boronic_acid") 逐键比对，等于假定全库都是
+    Suzuki 型。Heck（芳卤+烯烃）、Sonogashira（芳卤+炔）、Kumada（芳卤+格氏）的记录
+    会被判成"不同底物"，连同口径也进不了参照池。改为「值集合两两配对」：
+    键名不同、物质相同即算同一组合；两侧都必须至少两个底物。
+    """
+    uv = [v for k, v in (us or {}).items() if k != "product" and _canon_pair(v)]
+    rv = [v for k, v in (rs or {}).items() if k != "product" and _canon_pair(v)]
+    if len(uv) < 2 or len(rv) < 2 or len(uv) != len(rv):
+        return False
+    unmatched = list(rv)
+    for a in uv:
+        hit = next((b for b in unmatched
+                    if _canon_pair(a) == _canon_pair(b) or _chem_same(a, b)), None)
+        if hit is None:
+            return False
+        unmatched.remove(hit)
+    return True
+
+
 def _same_pair(user: Record, ref: Record) -> bool:
     """底物对 + 产物一致（迁移目标必须同底物，不能建议用户换底物）。
 
@@ -245,18 +267,20 @@ def _same_pair(user: Record, ref: Record) -> bool:
     3. 都不行 → 不同底物。
     """
     us, rs = user.substrate or {}, ref.substrate or {}
-    for key in ("aryl_halide", "boronic_acid"):
-        a, b = us.get(key), rs.get(key)
-        if _canon_pair(a) != _canon_pair(b):
-            if not _chem_same(a, b):
-                return False
+    if not _same_substrate_set(us, rs):
+        return False
     up = _canon_pair(getattr(user, "product", None) or us.get("product"))
     rp = _canon_pair(getattr(ref, "product", None) or rs.get("product"))
-    if up != rp and not _chem_same(
-        getattr(user, "product", None) or us.get("product"),
-        getattr(ref, "product", None) or rs.get("product"),
-    ):
-        return False
+    # 2026-10-31：产物**只有两侧都记录了**才作为排除条件。
+    # 语料层的表常只给产物编号（"3a"、"8b"），补不出名字；若把"一侧未记录"
+    # 当成"不同产物"，这些记录会永远进不了参照池——入册等于白入。
+    # 未记录不等于不同：这里不阻断，产物是否一致仍由 gate 2 单独给出判定。
+    if up and rp:
+        if up != rp and not _chem_same(
+            getattr(user, "product", None) or us.get("product"),
+            getattr(ref, "product", None) or rs.get("product"),
+        ):
+            return False
     return True
 
 

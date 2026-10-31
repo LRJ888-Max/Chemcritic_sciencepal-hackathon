@@ -164,6 +164,18 @@ def check_list_records(exp: dict, catalog: dict) -> list[str]:
         if missing:
             fails.append(f'字段 {field} 为空  缺 {len(missing)} 条：{missing[:5]}')
 
+    if exp.get("tier_or_problem"):
+        # 2026-10-31：语料层晋升的条目里，有一部分催化体系字段不全（表里只给用量，
+        # 催化剂名在正文）。档位算不出来是**事实**，不是缺字段；但必须说明原因，
+        # 否则 agent 读到 null 会自己补一个档位。所以：tier 为空 ⇒ tier_problem 必须非空。
+        bad = [r.get("record_id") for r in recs
+               if not r.get("tier") and not (r.get("tier_problem") or [])]
+        if bad:
+            fails.append(f"tier 为空且未说明原因  共 {len(bad)} 条：{bad[:5]}")
+        n_undet = sum(1 for r in recs if not r.get("tier"))
+        if n_undet:
+            print(f"      （档位未定 {n_undet} 条，均已带 tier_problem；这些记录只并排不定档）")
+
     if exp.get("locator_zh_nonempty"):
         bad = [r.get("record_id") for r in recs
                if not str(r.get("locator_zh") or "").strip()

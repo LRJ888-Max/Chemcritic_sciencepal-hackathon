@@ -21,10 +21,12 @@
 """
 from __future__ import annotations
 
+import re
 from typing import Any, Dict, Optional
 
 # 名称 → SMILES。键一律小写；查询前做 _norm。
 # 覆盖：库内全部底物对 + 常见英文变体。加底物时同步加这里。
+# 2026-10-31：随语料层晋升（Heck / Sonogashira / Kumada 类记录入册）补齐 131 条记录用到的底物。
 SUBSTRATE_SMILES: Dict[str, str] = {
     # aryl halides
     "bromobenzene": "Brc1ccccc1",
@@ -33,9 +35,14 @@ SUBSTRATE_SMILES: Dict[str, str] = {
     "4-bromoanisole": "COc1ccc(Br)cc1",
     "p-bromoanisole": "COc1ccc(Br)cc1",
     "1-bromo-4-methoxybenzene": "COc1ccc(Br)cc1",
+    "4-iodoanisole": "COc1ccc(I)cc1",
+    "p-iodoanisole": "COc1ccc(I)cc1",
     "4-bromotoluene": "Cc1ccc(Br)cc1",
     "p-bromotoluene": "Cc1ccc(Br)cc1",
     "1-bromo-4-methylbenzene": "Cc1ccc(Br)cc1",
+    "4-iodotoluene": "Cc1ccc(I)cc1",
+    "p-iodotoluene": "Cc1ccc(I)cc1",
+    "1-chloro-4-iodobenzene": "Clc1ccc(I)cc1",
     "3-bromothiophene": "Brc1ccsc1",
     "2-bromothiophene": "Brc1sccc1",
     "4-bromoacetophenone": "CC(=O)c1ccc(Br)cc1",
@@ -44,7 +51,7 @@ SUBSTRATE_SMILES: Dict[str, str] = {
     "4-bromonitrobenzene": "O=[N+]([O-])c1ccc(Br)cc1",
     "4-bromobenzaldehyde": "O=Cc1ccc(Br)cc1",
     "4-bromoaniline": "Nc1ccc(Br)cc1",
-    # boronic acids
+    # boronic acids / esters
     "phenylboronic acid": "OB(O)c1ccccc1",
     "benzeneboronic acid": "OB(O)c1ccccc1",
     "4-methoxyphenylboronic acid": "COc1ccc(B(O)O)cc1",
@@ -54,11 +61,36 @@ SUBSTRATE_SMILES: Dict[str, str] = {
     "4-cyanophenylboronic acid": "N#Cc1ccc(B(O)O)cc1",
     "3-thienylboronic acid": "OB(O)c1ccsc1",
     "thiophene-3-boronic acid": "OB(O)c1ccsc1",
+    # 有机金属亲核试剂（Kumada / Negishi）
+    "phmgbr": "Br[Mg]c1ccccc1",
+    "phenylmagnesium bromide": "Br[Mg]c1ccccc1",
+    "phzncl": "Cl[Zn]c1ccccc1",
+    # 烯烃 / 炔（Heck / Sonogashira 的另一侧底物）
+    "styrene": "C=Cc1ccccc1",
+    "methyl acrylate": "COC(=O)C=C",
+    "ethyl acrylate": "CCOC(=O)C=C",
+    "n-butyl acrylate": "CCCCOC(=O)C=C",
+    "butyl acrylate": "CCCCOC(=O)C=C",
+    "acrylic acid": "OC(=O)C=C",
+    "phenylacetylene": "C#Cc1ccccc1",
+    "ethynylbenzene": "C#Cc1ccccc1",
     # products
     "biphenyl": "c1ccc(-c2ccccc2)cc1",
     "4-methoxybiphenyl": "COc1ccc(-c2ccccc2)cc1",
     "4-methylbiphenyl": "Cc1ccc(-c2ccccc2)cc1",
+    "stilbene": "C(=Cc1ccccc1)c1ccccc1",
+    "trans-stilbene": "C(=Cc1ccccc1)c1ccccc1",
 }
+
+# 只有长得像 SMILES 的输入才交给 rdkit 解析。否则 rdkit 会把
+# 4-iodoanisole 这种名字当 SMILES 试一次，失败后往 stderr 打一串 Parse Error
+# —— 沙箱里 agent 读的是 stdout，这些噪音会淹掉真正的结论。
+_SMILES_HINT = re.compile(r"[cnoCNOSPF]|\[|=|#|\(|\)|@")
+
+
+def _looks_like_smiles(text: str) -> bool:
+    t = str(text or "").strip()
+    return bool(t) and " " not in t and bool(_SMILES_HINT.search(t))
 
 _FGS = [
     ("edg_alkoxy", "[OX2]([CH3])[c]"),
@@ -87,9 +119,12 @@ def _mol(name_or_smiles: str):
         from rdkit import Chem
     except Exception:
         return None
-    s = SUBSTRATE_SMILES.get(_norm(name_or_smiles), name_or_smiles)
-    mol = Chem.MolFromSmiles(s)
-    return mol
+    smi = SUBSTRATE_SMILES.get(_norm(name_or_smiles))
+    if smi is None:
+        if not _looks_like_smiles(name_or_smiles):
+            return None  # 名字不在表里，且不像 SMILES：直接放弃，不让 rdkit 去试错
+        smi = name_or_smiles
+    return Chem.MolFromSmiles(smi)
 
 
 def canonical(name: str) -> Optional[str]:

@@ -25,6 +25,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 ENGINE_DIR = ROOT / "engine"
 RECORDS_PATH = ROOT / "data" / "records.json"
+CORPUS_INDEX_PATH = ROOT / "data" / "corpus_index.json"
 OUT_PATH = ROOT / "skills" / "chemcritic-comparability" / "scripts" / "chemcritic_engine.py"
 
 SECTIONS = [
@@ -36,6 +37,7 @@ SECTIONS = [
     ("gates", "8 维门槛判定（确定性，LLM 无权覆盖）"),
     ("placement", "等价类 · 档内定位 · 双档敏感性"),
     ("leverage", "补证杠杆（补哪一条解锁最多）· 语料级口径杠杆"),
+    ("corpus_query", "语料索引检索（表级；judgeable=false，不参与判定）"),
     ("run_demo", "三屏演示与规则表验收矩阵（T1–T23c）"),
 ]
 
@@ -113,6 +115,18 @@ def records_json() -> str:
     return text
 
 
+def corpus_index_json() -> str:
+    """语料索引（表级，judgeable=false）。紧凑序列化以控制单文件体积。"""
+    if not CORPUS_INDEX_PATH.exists():
+        return ('{"schema":"chemcritic.corpus_index.v1","n_tables":0,"n_articles":0,'
+                '"tables":[],"notice":"索引未生成"}')
+    payload = json.loads(CORPUS_INDEX_PATH.read_text(encoding="utf-8"))
+    text = json.dumps(payload, ensure_ascii=False, separators=(",", ":"))
+    if '"""' in text:
+        raise SystemExit("corpus_index.json 含三引号，需要另选内嵌方式")
+    return text
+
+
 HEADER = '''#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """ChemCritic 判定引擎 · 单文件自包含版（零第三方依赖）。
@@ -170,7 +184,10 @@ RUNNER = r'''
 
 RECORDS_JSON = r"""__RECORDS__"""
 
-ENGINE_VERSION = "chemcritic-engine/1.4.0"
+# 语料索引（194 张表 / 114 篇，表级）。judgeable=false：只用于检索"库里有没有相关数据"。
+CORPUS_INDEX = json.loads(r"""__CORPUS_INDEX__""")
+
+ENGINE_VERSION = "chemcritic-engine/1.5.0"
 RULES_VERSION = "gates v0.5 · tier-0.1"
 CONTRACT_VERSION = "sciencepal-verdict/2"
 
@@ -272,6 +289,11 @@ def list_records_payload(records: List[Record]) -> Dict[str, Any]:
                 "label_raw": r.label_raw,
                 "calibration": calibration_level(r),
                 "tier": r.tier,
+                # 档位为空不是缺字段，是"按受控词表算不出来"。必须显式说明原因，
+                # 否则 agent 读到 null 会自己补一个档位——补就是编造（铁律 6）。
+                "tier_status": "determined" if r.tier else "undetermined",
+                "tier_problem": (r.tier_meta or {}).get("problems") or (
+                    None if r.tier else ["未提供 catalytic_profile（催化剂物理形态/配体族缺失）"]),
                 "substrate": r.substrate,
             }
             for r in records
@@ -554,9 +576,11 @@ def main(argv: Optional[List[str]] = None) -> int:
     parser.add_argument("--audit-table", metavar="PATH",
                         help="整表审计：表格行 JSON（extract.py 候选或记录行）逐行判定同框与卡点")
     parser.add_argument("--replicates", metavar="PATH",
-                        help="重复实验统计：n 次同口径重复 → 均值/标准差/95% t 置信区间（描述用户数据，非判定）")
+                        help="重复实验统计：n 次同口径重复 → 均值/标准差/95%% t 置信区间（描述用户数据，非判定）")
     parser.add_argument("--chemsense", nargs="+", metavar="NAME",
                         help="化学感知：底物名 → 规范 SMILES/官能团；≥2 名时两两判同")
+    parser.add_argument("--corpus-query", nargs="+", metavar="KEYWORD",
+                        help="检索文献语料索引（表级；judgeable=false，不参与判定）")
     parser.add_argument("--selftest", action="store_true", help="只跑 T1–T23c 验收矩阵")
     parser.add_argument("--version", action="store_true", help="打印引擎与规则版本")
     args = parser.parse_args(argv)
@@ -633,6 +657,26 @@ def main(argv: Optional[List[str]] = None) -> int:
         print(json.dumps(fn(list(args.chemsense)), ensure_ascii=False, indent=2))
         return 0
 
+    if args.corpus_query:
+        fn = globals().get("corpus_query")
+        if fn is None:
+            try:
+                from engine.corpus_query import corpus_query as fn  # 仓库内运行
+            except Exception as exc:
+                print(f"语料索引不可用：{exc}", file=sys.stderr)
+                return 2
+        idx = globals().get("CORPUS_INDEX")
+        if idx is None:
+            try:
+                import json as _json
+                from pathlib import Path as _Path
+                _p = _Path(__file__).resolve().parent.parent / "data" / "corpus_index.json"
+                idx = _json.loads(_p.read_text(encoding="utf-8"))
+            except Exception:
+                idx = None
+        print(json.dumps(fn(idx, list(args.corpus_query)), ensure_ascii=False, indent=2))
+        return 0
+
     subject = USER
     if args.input:
         try:
@@ -691,7 +735,8 @@ def build() -> str:
             parts.append("")
         parts.append(body)
 
-    parts.append(RUNNER.replace("__RECORDS__", records_json()))
+    parts.append(RUNNER.replace("__RECORDS__", records_json())
+                 .replace("__CORPUS_INDEX__", corpus_index_json()))
     return "\n".join(parts) + "\n"
 
 
