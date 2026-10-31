@@ -184,4 +184,4 @@ python /workspace/chemcritic/chemcritic_engine.py --json --input user.json --rec
 - 证书字段：`verdict` / `blocking_dimension` / `unlock_condition` / `calibration` /
   `reference{citation,doi,locator,locator_zh,value,outcome_type,label_raw,source_id,tier}` / `soft_flags`；
   顶层另含 `inputs_source` / `input_audit` / `leverage`
-- 口径与规则版本：`gates v0.5 · tier-0.1`；引擎版本以 `--version` 实际输出为准（当前 `chemcritic-engine/1.7.2`）
+- 口径与规则版本：`gates v0.5 · tier-0.1`；引擎版本以 `--version` 实际输出为准（当前 `chemcritic-engine/1.7.3`）

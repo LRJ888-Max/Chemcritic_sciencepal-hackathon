@@ -51,6 +51,9 @@ jobs:
       - name: 文档数字 vs 引擎实际（SKILL.md 会被沙箱 agent 读到）
         run: python tests/docs_consistency.py
 
+      - name: 数据卫生（label_raw / citation 不带截断残渣；表级类型不与题注矛盾）
+        run: python tests/data_hygiene.py
+
       - name: 底物盘点结果（只记录，不断言具体条数）
         run: |
           python skills/chemcritic-comparability/scripts/chemcritic_engine.py \

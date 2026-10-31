@@ -9,6 +9,6 @@
 改版本号只改这里。
 """
 
-ENGINE_VERSION = "chemcritic-engine/1.7.2"
+ENGINE_VERSION = "chemcritic-engine/1.7.3"
 RULES_VERSION = "gates v0.5 · tier-0.1"
 CONTRACT_VERSION = "sciencepal-verdict/2"

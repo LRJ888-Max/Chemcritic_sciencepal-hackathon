@@ -22,11 +22,15 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import sys
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
 ROOT = Path(__file__).resolve().parents[1]
 INCOMING = ROOT / "data" / "incoming"
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from quote_text import clean_title, excerpt, one_line, quote_around  # noqa: E402  引文/摘录/标题的唯一实现
 
 # 只晋升「双底物交叉偶联」——只有这类能填满 gate 1 要求的底物对
 CROSS_COUPLING = {"suzuki", "buchwald_hartwig", "sonogashira", "heck", "negishi"}
@@ -142,17 +146,26 @@ def _num(cell: str) -> Optional[float]:
         return None
 
 
-def _caliber(text: str) -> Tuple[Optional[str], Optional[str]]:
-    """返回 (outcome_type, 逐字片段)。多口径并存时取最先出现的，并保留原文供人工判断。"""
-    best: Tuple[Optional[str], Optional[str]] = (None, None)
-    best_pos = 10 ** 9
-    for label, pat in CALIBER_PATTERNS:
-        m = pat.search(text)
-        if m and m.start() < best_pos:
-            best_pos = m.start()
-            start = max(0, m.start() - 30)
-            best = (label, text[start:m.end() + 30].strip())
-    return best
+def _caliber(*texts: str) -> Tuple[Optional[str], Optional[str]]:
+    """返回 (outcome_type, 逐字引文)。多口径并存时取最先出现的，并保留原文供人工判断。
+
+    按传入顺序逐段找（调用方传 footnote 在前、caption 在后）：脚注才是写口径的地方，
+    题注常常只写"Optimization of reaction conditions"。引文取**整句**（`quote_text`），
+    旧实现是固定 ±30 字符窗口，截出来会是 `, catalyst, base and solvent.bIsolated yield.`
+    这种以标点开头、脚注上标粘连的残片。
+    """
+    for text in texts:
+        line = one_line(text)
+        best: Tuple[Optional[str], Optional[str]] = (None, None)
+        best_pos = 10 ** 9
+        for label, pat in CALIBER_PATTERNS:
+            m = pat.search(line)
+            if m and m.start() < best_pos:
+                best_pos = m.start()
+                best = (label, quote_around(line, m.start(), m.end()))
+        if best[0]:
+            return best
+    return (None, None)
 
 
 def _caliber_from_header(header: List[str], ycol: int) -> Tuple[Optional[str], Optional[str]]:
@@ -298,7 +311,7 @@ def build_units(triage: Dict[str, Any]) -> List[Dict[str, Any]]:
         cal_type, cal_quote = _caliber_from_header(m["header"], ycols[0] if ycols else None)
         cal_from = "header"
         if cal_type is None:
-            cal_type, cal_quote = _caliber(" ".join([m["caption"], m["footnote"]]))
+            cal_type, cal_quote = _caliber(m["footnote"], m["caption"])
             cal_from = "caption_or_footnote"
         if cal_type is None:
             continue  # 口径未明 → 不进判定层（只能进语料层）
@@ -314,6 +327,19 @@ SCOPE_COL = re.compile(
     r"^(olefin|alkene|alkyne|amine|aryl\s*halide|arylhalide|halide|substrate|boronic(\s*acid)?"
     r"|x|r1|r2|r3|r|ar|ar-?x|product)$", re.I)
 LOADING_COL = re.compile(r"mol\s*%|cat(\.|alyst)?|loading|amount", re.I)
+
+
+def _catalyst_col(header: List[str]) -> Optional[int]:
+    """按表头定位催化剂列；认不出就返回 None（宁可没有，不要拿别的列顶替）。
+
+    排除「用量列」（`Pd/mol %`、`Catalyst (mol%)`）：那一格是数字，不是名字。
+    """
+    for i, h in enumerate(header or []):
+        name = h or ""
+        if re.search(r"catalyst|cat\.|\[pd\]|\[ni\]|\[cu\]|precatalyst|催化", name, re.I) \
+                and not re.search(r"mol\s*%|loading|amount|用量", name, re.I):
+            return i
+    return None
 
 
 def _scope_columns(header: List[str], rows: List[List[str]]) -> List[str]:
@@ -471,7 +497,12 @@ def extract(unit: Dict[str, Any]) -> Dict[str, Any]:
     t_min = TIME_MIN.search(fn)
     std = INTERNAL_STD.search(fn)
 
-    cat_cells = [str(r[1]) for r in rows if len(r) > 1]
+    # 催化剂列必须按表头找，不能默认第 1 列：那张表第 1 列可能是 Solvent / Olefin / R1 /
+    # 底物编号，甚至就是收率列。旧实现取 r[1]，于是 records 里出现 catalyst="DMF"、
+    # "Styrene"、"NS"（表面活性剂）、"Catalyst"（表头本身）——26 条记录的催化剂名是错的。
+    cat_col = _catalyst_col(header)
+    cat_cells = [str(r[cat_col]).strip() for r in rows
+                 if cat_col is not None and cat_col < len(r) and str(r[cat_col]).strip()]
     catalyst = cat_cells[0] if cat_cells else None
 
     tbl = (m.get("label") or "").strip().rstrip(".")
@@ -501,7 +532,8 @@ def extract(unit: Dict[str, Any]) -> Dict[str, Any]:
             "value": val,
             "value_raw": raw,
             "notes": notes,
-            "catalyst_raw": str(r[1]).strip() if len(r) > 1 else None,
+            "catalyst_raw": (str(r[cat_col]).strip()
+                             if cat_col is not None and cat_col < len(r) else None),
         })
 
     return {
@@ -511,7 +543,7 @@ def extract(unit: Dict[str, Any]) -> Dict[str, Any]:
         "header": header,
         "scope_columns": scope_cols,
         "source": {
-            "citation": f"{m.get('article_title','')[:120]}",
+            "citation": clean_title(m.get("article_title"), 200),
             "journal": m.get("journal"),
             "year": m.get("year"),
             "doi": m.get("doi"),

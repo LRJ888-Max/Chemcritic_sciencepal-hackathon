@@ -39,7 +39,7 @@ SECTIONS = [
     ("placement", "等价类 · 档内定位 · 双档敏感性"),
     ("leverage", "补证杠杆（补哪一条解锁最多）· 语料级口径杠杆"),
     ("corpus_query", "语料索引检索（表级；judgeable=false，不参与判定）"),
-    ("run_demo", "三屏演示与规则表验收矩阵（T1–T23c）"),
+    ("run_demo", "三屏演示与规则表验收矩阵（T1–T26）"),
 ]
 
 BANNER = "# " + "=" * 76

@@ -28,6 +28,9 @@ sys.path.insert(0, str(ROOT / "engine"))
 from gates import label_supported  # noqa: E402  入库门槛直接复用判定门槛，避免两处词表漂移
 from schemas import Record  # noqa: E402
 
+sys.path.insert(0, str(ROOT / "scripts"))
+from quote_text import drop_trailing_marker, excerpt  # noqa: E402  题注摘录的唯一实现
+
 RECORDS = ROOT / "data" / "records.json"
 INCOMING = ROOT / "data" / "incoming"
 SRC = INCOMING / "corpus_promote_2026-10-31.json"
@@ -165,6 +168,37 @@ def _row_conditions(header: List[str], row: List[str]) -> Dict[str, Any]:
     return out
 
 
+_CAT_HEAD = re.compile(r"catalyst|cat\.|\[pd\]|\[ni\]|\[cu\]|precatalyst|催化", re.I)
+_AMOUNT = re.compile(r"mol\s*%|\bloading\b|\bamount\b|用量", re.I)
+_BARE_CAT = re.compile(r"(?:catalysts?|cat\.?|precatalyst|pd|ni|cu|metal)s?\s*$", re.I)
+
+
+def _strip_amount(h: str) -> str:
+    """'Pd(OAc)2 (mol%)' → 'Pd(OAc)2'；'Catalyst (mol%)' → 'Catalyst'。"""
+    s = re.sub(r"[(（][^)）]*[)）]", " ", h or "")
+    s = _AMOUNT.sub(" ", s)
+    return re.sub(r"\s+", " ", s).strip(" ,;:·-–—/%")
+
+
+def _resolve_catalyst(cat_raw: Optional[str], header: List[str]) -> Optional[str]:
+    """定催化剂名：单元格 → 表头兜底，认不出就 None。
+
+    三种脏数据都要挡住（都是旧实现真出现过的）：
+      ① 用量：单元格是 "0.20" / "0.5"（mol%）；
+      ② 表头本身当名字："Catalyst"、"Pd/mol %" —— 那是列名不是化合物；
+      ③ 别的列顶替：第 1 列是 Solvent/Olefin/R1 时，旧实现取 r[1] 得到 "DMF"/"Styrene"。
+    只有表头里真的写着化合物（"Pd(OAc)2 (mol%)"）才能从表头补名字。
+    """
+    cat = (cat_raw or "").strip() or None
+    if cat and re.fullmatch(r"[\d.,\s]+", cat):
+        cand = next((h for h in (header or []) if _CAT_HEAD.search(h or "") and not _AMOUNT.search(h or "")), None)
+        name = _strip_amount(cand) if cand else ""
+        cat = name if name and not _BARE_CAT.match(name) else None
+    if cat and _AMOUNT.search(cat):
+        cat = None
+    return cat
+
+
 def build_record(table: Dict[str, Any], entry: Dict[str, Any], seq: int) -> Dict[str, Any]:
     p = table["parsed"]
     s = table["source"]
@@ -176,16 +210,7 @@ def build_record(table: Dict[str, Any], entry: Dict[str, Any], seq: int) -> Dict
         partner_field: p["partner"],
         "product": None,  # 语料层的表里通常只给产物编号，不给名字；留空不猜
     }
-    cat = entry.get("catalyst_raw") or p.get("catalyst")
-    if cat and re.fullmatch(r"[\d.,\s]+", str(cat).strip()):
-        # 单元格里是 mol%（"0.20"），催化剂名在表头 —— 别把用量当催化剂名
-        hdr = table.get("header") or []
-        cat = next((h for h in hdr
-                    if re.search(r"catalyst|\[Pd\]|\[Ni\]|cat\.", h, re.I)
-                    and not re.search(r"mol\s*%|loading|amount|用量", h, re.I)), None)
-    if cat and re.search(r"mol\s*%|loading|amount|用量", str(cat), re.I):
-        # "Pd/mol %" 是用量表头，不是催化剂名（旧实现把它当催化剂名写进记录）
-        cat = None
+    cat = _resolve_catalyst(entry.get("catalyst_raw") or p.get("catalyst"), table.get("header") or [])
     row_cond = _row_conditions(table.get("header") or [], entry.get("row") or [])
     conditions = {
         "catalyst": cat,
@@ -209,7 +234,8 @@ def build_record(table: Dict[str, Any], entry: Dict[str, Any], seq: int) -> Dict
             "value": entry["value"],
             "unit": "%",
             "outcome_type": cal["outcome_type"],
-            "label_raw": f'{cal["quote"]} | 表头/题注原文：{s.get("caption", "")[:120]}',
+            "label_raw": f'{cal["quote"]} | 表头/题注原文：'
+                          f'{excerpt(drop_trailing_marker(s.get("caption"), s.get("footnote")), 120)}',
             "note": ("语料层晋升条目：数值与口径均取自 efetch 表格文本，未对照 PDF 图证逐字复核"
                      + ("；" + "；".join(entry["notes"]) if entry.get("notes") else "")),
         },

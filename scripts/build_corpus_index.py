@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import json
 import re
+import sys
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
@@ -23,6 +24,10 @@ ROOT = Path(__file__).resolve().parents[1]
 TRIAGE = ROOT / "data" / "corpus" / "triage_2026-10-31.json"
 PROMOTE = ROOT / "data" / "incoming" / "corpus_promote_2026-10-31.json"
 OUT = ROOT / "data" / "corpus_index.json"
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from promote_corpus import KIND_BY_PARTNER  # noqa: E402  底物键名→反应类型，与入库纠正同表
+from quote_text import drop_trailing_marker, excerpt  # noqa: E402
 
 YIELD_COL = re.compile(r"yield|收率", re.I)
 NUM = re.compile(r"-?\d+(?:[.,]\d+)?")
@@ -73,19 +78,29 @@ def main() -> None:
         # 范围表的底物随行走，表级给一个"底物对"就是错的（PMC9086392-T2：
         # 12 行 = 4 种烯烃 × 3 种卤，脚注却只写了一句模板条件）。
         sub = [] if scope else [x for x in (parsed.get("aryl_halide"), parsed.get("partner")) if x]
+        # 表级反应类型：底物键名 > 文章级标题关键词（与入库时 promote 的纠正同一条原则）。
+        # 反例 PMC12305527-T3：题注明写 "Sonogashira coupling"、底物 4-bromoacetophenone +
+        # phenylacetylene，但文章里还有一张 C–N 表，文章级分类把整篇都标成 buchwald_hartwig，
+        # 于是这张表在 --find-substrate 里被算进 Buchwald 组。
+        cls_article = u.get("reaction_class")
+        cls_from_data = KIND_BY_PARTNER.get(str(parsed.get("partner_field") or ""))
         entry = {
             "t": u["unit_id"],
-            "cls": u.get("reaction_class"),
+            "cls": cls_from_data or cls_article,
             "lab": (u.get("label") or "").strip(),
             "yr": m.get("year"),
             "jr": m.get("journal"),
             "doi": m.get("doi"),
-            "cap": re.sub(r"\s+", " ", (m.get("caption") or ""))[:160],
+            "cap": excerpt(drop_trailing_marker(m.get("caption"), m.get("footnote")), 160),
             "n": u["row_count"],
             "tier": u["verdict"],
             "sub": sub,
             "judgeable": False,
         }
+        if cls_from_data and cls_article and cls_from_data != cls_article:
+            # 保留文章级原标签：搜索 "buchwald" 时这张表仍该被找到，只是不该被算进 Buchwald 组
+            entry["cls_article"] = cls_article
+            entry["cls_conflict"] = True
         if scope:
             entry["sub_scope"] = True
             entry["scope_note"] = "底物随行变化（" + "、".join(parsed.get("scope_columns") or []) + \
