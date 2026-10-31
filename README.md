@@ -159,7 +159,7 @@ flowchart TD
 | 模块 | 状态 |
 |---|---|
 | 文献核验与 entry 级记录 | ✅ **140 条参照入库**：44 条人工核验（含 42 条 A_confirmed）+ 96 条从语料层晋升（`candidate`，口径由表头/题注逐字支撑）；全部带逐字 label_raw 与 locator / locator_zh。96 条覆盖 10 个底物对，均按「底物随行变化」甄别过（范围表不入库） |
-| 8 维门槛 + 三档分档 + 补证杠杆 | ✅ 已实现为确定性引擎 `chemcritic-engine/1.6.0`，自检 **28/28**、契约回归 **9/9** |
+| 8 维门槛 + 三档分档 + 补证杠杆 | ✅ 已实现为确定性引擎 `chemcritic-engine/1.7.0`，自检 **29/29**、契约回归 **10/10** |
 | PDF 取证端到端（抽取→审计→签核→入库→判定生效） | ✅ 已验收（见 `docs/eval/2026-10-30-PDF取证端到端验收.md`） |
 | 化学感知层（RDKit 规范 SMILES 判同） | ✅ `--chemsense`；无 rdkit 自动降级，判定行为不变 |
 | 六个 Agent 的平台搭建 | ✅ 平台 Agent（提示词 v8.1）+ 单文件引擎 bootstrap 已上线 |
@@ -177,7 +177,8 @@ flowchart TD
 | `--audit-table table.json` | 整表审计：逐行判同框、卡点维度、每行对库可比值 |
 | `--replicates reps.json` | 重复实验统计：均值 / 样本 SD / 95% t 置信区间（内嵌 t 表，免 scipy；描述用户数据，非判定） |
 | `--chemsense "名1" "名2"` | 化学感知：规范 SMILES 同一性判同 + 官能团分类（无 rdkit 自动降级） |
-| `--corpus-query "底物" "反应类型"` | 检索 194 张表的语料索引：命中的表、报了多少行、收率区间、来源 DOI；`judgeable=false`，不参与判定 |
+| `--corpus-query "底物" "反应类型"` | 检索 194 张表的语料索引：命中的表、报了多少行、收率区间、来源 DOI；`judgeable=false`，不参与判定。关键词按独立成词匹配，`iodobenzene` 不命中 `1-chloro-4-iodobenzene` |
+| `--find-substrate "底物"` | 按底物**精确**盘点：条数 / 来源数 / 按来源的反应类型与区间 / 档位未定原因，并列出被排除的近名（`excluded_similar`） |
 | `--list-records` | 全部参照的引用 / 定位 / 口径 / 档位 |
 | `--selftest` | 28 项验收矩阵，开箱自证 |
 

@@ -89,8 +89,22 @@ _SMILES_HINT = re.compile(r"[cnoCNOSPF]|\[|=|#|\(|\)|@")
 
 
 def _looks_like_smiles(text: str) -> bool:
+    """只有带 SMILES 语法特征才交给 rdkit。
+
+    2026-10-31：原判据是 `[cnoCNOSPF]`，几乎任何英文名都含 c/n/o/s，
+    于是 "2-bromoanisole" 被当 SMILES 解析，rdkit 往 stderr 刷 Parse Error
+    （沙箱里会淹掉结论）。判据必须看**语法**，不看字符表。
+
+    特征：括号/等号/井号/@ 等 SMILES 专有符号；或"环闭合数字 + 短字母段"
+    （c1ccccc1 的字母段都是 1 位）。英文名的字母段通常 ≥ 5 位。
+    """
     t = str(text or "").strip()
-    return bool(t) and " " not in t and bool(_SMILES_HINT.search(t))
+    if not t or " " in t:
+        return False
+    if any(ch in t for ch in "[]=#()@"):
+        return True
+    longest = max((len(r) for r in re.findall(r"[A-Za-z]+", t)), default=0)
+    return longest <= 3 and bool(re.search(r"\d", t))
 
 _FGS = [
     ("edg_alkoxy", "[OX2]([CH3])[c]"),

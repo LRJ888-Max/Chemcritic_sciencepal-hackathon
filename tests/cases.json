@@ -253,6 +253,22 @@
     ]
    },
    "rule": "v8 把 placement.reference_values / reference_count / delta_vs_min 当成一定存在的字段来读。若某些 status 下这些键直接缺失（而不是给 null / 空数组），agent 读到 undefined，可能崩，也可能自己补一个——补就是编造。允许值为 null 或 []，但键必须在。"
+  },
+  {
+   "id": "C10",
+   "name": "按底物盘点的匹配必须是精确同一化合物，不是子串",
+   "patch": null,
+   "rule": "2026-10-31 平台实测：agent 从 --list-records 里用子串匹配，把 1-chloro-4-iodobenzene 算进 iodobenzene，报 41 条（真实 31 条），并在同一份报告里既写「芳基卤 = 1-氯-4-碘苯」又说「共 41 条碘苯记录」。契约用独立的精确重算对齐 count，引擎一旦退回子串匹配即失败。",
+   "expect": {
+    "find_substrate": {
+     "name": "iodobenzene",
+     "count_min": 1,
+     "must_exclude": [
+      "1-chloro-4-iodobenzene"
+     ],
+     "source_count_equals_distinct": true
+    }
+   }
   }
  ]
 }

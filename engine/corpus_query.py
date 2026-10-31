@@ -28,6 +28,32 @@ def _haystack(t: Dict[str, Any]) -> str:
     ]).lower()
 
 
+def _name_hit(text: str, kw: str) -> bool:
+    """关键词命中，但**不把定位取代基的名字算进来**。
+
+    2026-10-31 平台实测：查 `iodobenzene` 时命中了 `1-chloro-4-iodobenzene`，
+    报出 41 条（真实 31 条）。纯子串匹配在这里不是"宽松"，是**换了化合物**。
+
+    规则：命中处左侧不能直接接字母/数字（否则是更长名字的一部分）；
+    左侧接 `-` 时，再往左不能是数字（`4-iodoanisole` 里的 iod... 不算，
+    但 `Mizoroki-Heck` 这种连字符连接的反应名要保留）。
+    """
+    start = 0
+    while True:
+        i = text.find(kw, start)
+        if i < 0:
+            return False
+        prev = text[i - 1] if i else " "
+        nxt = text[i + len(kw)] if i + len(kw) < len(text) else " "
+        ok = not prev.isalnum() and not nxt.isalnum()
+        if ok and prev == "-":
+            j = i - 2
+            ok = j < 0 or not text[j].isdigit()
+        if ok:
+            return True
+        start = i + 1
+
+
 def corpus_query(index: Optional[Dict[str, Any]], keywords: List[str],
                  limit: int = 12) -> Dict[str, Any]:
     """按关键词检索语料索引。
@@ -44,7 +70,20 @@ def corpus_query(index: Optional[Dict[str, Any]], keywords: List[str],
                 "notice": "请给出至少一个关键词（底物名 / 反应类型 / 期刊 / DOI 片段）",
                 "judgeable": False}
 
-    hits = [t for t in index["tables"] if all(k in _haystack(t) for k in kws)]
+    hits = [t for t in index["tables"] if all(_name_hit(_haystack(t), k) for k in kws)]
+
+    # 只靠子串才命中的表：报出来，让 agent 知道"少掉的去哪了"，而不是自己再猜一遍
+    strict_ids = {t.get("t") for t in hits}
+    loose = []
+    for t in index["tables"]:
+        if t.get("t") in strict_ids:
+            continue
+        h = _haystack(t)
+        if all(k in h for k in kws):
+            subs = [s for s in (t.get("sub") or []) if any(k in str(s).lower() for k in kws)]
+            loose.append({"table": t.get("t"), "substrates": subs[:4],
+                          "year": t.get("yr"), "journal": t.get("jr")})
+
     hits.sort(key=lambda t: (bool(t.get("sub")), bool(t.get("nnum")),
                              t.get("n") or 0), reverse=True)
 
@@ -60,6 +99,10 @@ def corpus_query(index: Optional[Dict[str, Any]], keywords: List[str],
             "caption": t.get("cap"),
             "rows": t.get("n"),
             "substrates": t.get("sub") or [],
+            "substrate_scope_table": bool(t.get("sub_scope")),
+            "scope_note": t.get("scope_note"),
+            "range_withheld": t.get("range_withheld"),
+            "blank_controls": t.get("blank_controls"),
             "yield_range": ([t["ymin"], t["ymax"]] if "ymin" in t else None),
             "numeric_cells": t.get("nnum"),
             "caliber": t.get("cal"),
@@ -71,8 +114,11 @@ def corpus_query(index: Optional[Dict[str, Any]], keywords: List[str],
     return {
         "available": True,
         "query": " AND ".join(kws),
+        "match_rule": "关键词需独立成词：`iodobenzene` 不会命中 `1-chloro-4-iodobenzene`（换化合物不是放宽）",
         "hit_tables": len(hits),
         "returned": len(rows),
+        "near_miss_tables": loose[:8],
+        "near_miss_count": len(loose),
         "corpus_scale": {"tables": index.get("n_tables"), "articles": index.get("n_articles")},
         "judgeable": False,
         "notice": _NOTICE,

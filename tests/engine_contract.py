@@ -186,6 +186,70 @@ def check_list_records(exp: dict, catalog: dict) -> list[str]:
     return fails
 
 
+def run_find_substrate(engine: str, name: str) -> tuple[dict | None, str]:
+    """跑 --find-substrate，拿引擎自报的按底物盘点。"""
+    proc = subprocess.run(
+        [sys.executable, engine, "--find-substrate", name],
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+    )
+    if proc.returncode != 0:
+        return None, f"--find-substrate 退出码 {proc.returncode}：{(proc.stderr or proc.stdout)[:300]}"
+    try:
+        return json.loads(proc.stdout), ""
+    except Exception:
+        return None, f"--find-substrate 输出不是合法 JSON：{proc.stdout[:300]}"
+
+
+def _is_exact(sub_value, name: str) -> bool:
+    """契约侧的独立实现：只认完全相等（大小写/空白归一），不做子串。"""
+    return str(sub_value or "").strip().lower() == name.strip().lower()
+
+
+def check_find_substrate(exp: dict, payload: dict, catalog: dict) -> list[str]:
+    """校验按底物盘点（C10）。
+
+    2026-10-31 平台实测暴露的问题：agent 自己从 --list-records 里数，
+    用子串匹配把 `1-chloro-4-iodobenzene` 算进 `iodobenzene`，报 41 条（真实 31 条），
+    并在同一份报告里既写"芳基卤 = 1-氯-4-碘苯"又说"共 41 条碘苯记录"。
+
+    这条契约用**独立的精确重算**（只按完全相等）对齐引擎给出的 count：
+    引擎若退回子串匹配，count 会大于重算值，立刻失败。
+    """
+    fails: list[str] = []
+    name = exp["name"]
+    q = (payload.get("queries") or [{}])[0]
+    recs = catalog.get("records") or []
+
+    exact = [r for r in recs
+             if any(_is_exact(v, name) for k, v in (r.get("substrate") or {}).items()
+                    if k != "product" and v)]
+    if q.get("count") != len(exact):
+        fails.append(f'count  期望 {len(exact)}（精确相等重算）  实际 {q.get("count")}')
+
+    if q.get("count", 0) < exp.get("count_min", 0):
+        fails.append(f'count  期望 ≥{exp["count_min"]}  实际 {q.get("count")}')
+
+    # 近名必须被排除，而且不能在 records 明细里出现（出现就等于被计入了）
+    for bad in exp.get("must_exclude", []):
+        leaked = [m.get("record_id") for m in (q.get("records") or [])
+                  if _is_exact(m.get("name"), bad)]
+        if leaked:
+            fails.append(f'近名「{bad}」被计入：{leaked[:3]}')
+        listed = {e.get("substrate") for e in (q.get("excluded_similar") or [])}
+        if recs and not any(_is_exact(x, bad) for x in listed):
+            fails.append(f'近名「{bad}」未在 excluded_similar 里说明（agent 看不出少掉的去哪了）')
+
+    if exp.get("source_count_equals_distinct"):
+        want = len({(m.get("source_id") or "") for m in (q.get("records") or [])})
+        if q.get("sources") != want:
+            fails.append(f'sources  期望 {want}  实际 {q.get("sources")}')
+
+    return fails
+
+
 def check(case: dict, seen: dict) -> list[str]:
     exp = case.get("expect") or {}
     fails: list[str] = []
@@ -291,7 +355,35 @@ def main() -> int:
         name = case.get("name", "")
         exp = case.get("expect") or {}
 
-        # patch 为 null 的用例不走判定，走 --list-records（登记表完整性）
+        # patch 为 null 的用例不走判定，走 --list-records / --find-substrate
+        if case.get("patch") is None and "find_substrate" in exp:
+            payload, err = run_find_substrate(args.engine, exp["find_substrate"]["name"])
+            if payload is None:
+                errored += 1
+                print(f"  {cid}  {name}  →  ERROR")
+                print(f"      {err}\n")
+                continue
+            if not catalog_checked:
+                catalog_checked = True
+                catalog, _ = run_list_records(args.engine)
+            fails = check_find_substrate(exp["find_substrate"], payload, catalog or {})
+            q = (payload.get("queries") or [{}])[0]
+            snapshot[cid] = {"count": q.get("count"), "sources": q.get("sources"),
+                             "excluded": [e.get("substrate") for e in (q.get("excluded_similar") or [])]}
+            if fails:
+                failed += 1
+                print(f"  {cid}  {name}  →  FAIL")
+                for f in fails:
+                    print(f"      {f}")
+                if case.get("rule"):
+                    print(f"      依据：{case['rule']}")
+                print()
+            else:
+                passed += 1
+                if not args.quiet:
+                    print(f"  {cid}  {name}  →  pass  （{q.get('count')} 条 / {q.get('sources')} 来源）")
+            continue
+
         if case.get("patch") is None and "list_records" in exp:
             if catalog_checked:
                 continue

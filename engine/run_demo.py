@@ -427,7 +427,25 @@ def test_matrix(records):
     print(f"  [{'PASS' if ok25 else 'FAIL'}] T25  别名归一 → 底物={alias_rec.substrate.get('aryl_halide')}, "
           f"gate1={v25.gates[1].status}, gate2={v25.gates[2].status}")
 
-    print(f"\n  最终：{passed} passed, {failed} failed（含 T17–T25）")
+    # T26 · 按底物盘点必须精确同一化合物
+    # 子串匹配会把 1-chloro-4-iodobenzene 算进 iodobenzene，平台实测因此报出 41 条
+    # （真实 31 条），并在同一份报告里既写"芳基卤=1-氯-4-碘苯"又说"共 41 条碘苯记录"。
+    finder = globals().get("find_substrate_payload")
+    if finder is None:
+        print("  [SKIP] T26  按底物精确匹配（包内模式无此函数，仅单文件版校验）")
+    else:
+        q26 = finder(records, ["iodobenzene"])["queries"][0]
+        exact26 = sum(1 for r in records
+                      if any(str(v).strip().lower() == "iodobenzene"
+                             for k, v in (r.substrate or {}).items() if k != "product" and v))
+        names26 = {str(m["name"]).strip().lower() for m in q26["records"]}
+        ok26 = (q26["count"] == exact26 and names26 <= {"iodobenzene"})
+        passed += ok26
+        failed += not ok26
+        print(f"  [{'PASS' if ok26 else 'FAIL'}] T26  按底物精确匹配 → count={q26['count']} "
+              f"(精确重算 {exact26}), 排除近名={len(q26['excluded_similar'])}")
+
+    print(f"\n  最终：{passed} passed, {failed} failed（含 T17–T26）")
     return failed == 0
 
 

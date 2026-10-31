@@ -52,14 +52,27 @@ def main() -> None:
         m = u["material"]
         header = m["header"]
         ycols = [i for i, h in enumerate(header) if YIELD_COL.search(h or "")]
+        p = promote.get(u["unit_id"], {})
+        parsed = p.get("parsed") or {}
+        blanks = set(parsed.get("blank_controls") or [])
+        # 空白对照的定位是 "T1, entry 14"，行首只有 "14"；两种写法都要认
+        blank_ids = set()
+        for b in blanks:
+            blank_ids.add(str(b).strip())
+            blank_ids.add(str(b).split("entry")[-1].strip())
+        scope = bool(parsed.get("substrate_in_rows"))
+
         vals: List[float] = []
         for row in m["rows"]:
+            if row and str(row[0]).strip() in blank_ids:
+                continue  # 空白/阴性对照不进区间，否则下界被拉到 0
             for i in ycols:
                 if i < len(row):
                     vals += _nums([row[i]])
-        p = promote.get(u["unit_id"], {})
-        parsed = p.get("parsed") or {}
-        sub = [x for x in (parsed.get("aryl_halide"), parsed.get("partner")) if x]
+
+        # 范围表的底物随行走，表级给一个"底物对"就是错的（PMC9086392-T2：
+        # 12 行 = 4 种烯烃 × 3 种卤，脚注却只写了一句模板条件）。
+        sub = [] if scope else [x for x in (parsed.get("aryl_halide"), parsed.get("partner")) if x]
         entry = {
             "t": u["unit_id"],
             "cls": u.get("reaction_class"),
@@ -73,10 +86,19 @@ def main() -> None:
             "sub": sub,
             "judgeable": False,
         }
-        if vals:
+        if scope:
+            entry["sub_scope"] = True
+            entry["scope_note"] = "底物随行变化（" + "、".join(parsed.get("scope_columns") or []) + \
+                                  "），表级不给底物对；需行级解析，本轮不入判定层"
+        if blanks:
+            entry["blank_controls"] = len(blanks)
+        if vals and not scope:
             entry["ymin"] = round(min(vals), 1)
             entry["ymax"] = round(max(vals), 1)
             entry["nnum"] = len(vals)
+        elif vals and scope:
+            # 跨不同底物的区间看着像"文献分散度"，其实是不同反应拼起来的一个范围
+            entry["range_withheld"] = "底物随行变化，区间跨不同底物，不作为单一底物区间给出"
         if p:
             entry["cal"] = (p.get("caliber") or {}).get("outcome_type")
         tables.append(entry)
