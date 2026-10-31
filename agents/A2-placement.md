@@ -34,7 +34,7 @@
 2. **硬门槛任一 FAIL → BLOCKED；任一 UNKNOWN → NEEDS_EVIDENCE**（FAIL 优先）。
 3. **unknown 口径纪律（硬，2026-10-27）**：`outcome_type=unknown`（口径未决，如 SM-004.1/4.7）时，证书结论只能是 `NEEDS_EVIDENCE` + 阻断维度 + 解锁条件；**禁止**把 unknown 表述为确定口径（GC/NMR/conversion 等），**禁止**误判为 `BLOCKED`。
 4. **软门槛只产出 L1/L2 标注**，不得改变结论。
-5. **跨档不输出"正常区间"**，只输出迁移目标。
+5. **跨档不输出"正常区间"**，只输出迁移目标；可以引用引擎给的 `reference_min`–`reference_max` 作为分散度，但不得称"正常范围"、不得给差值。
 6. 覆盖率分母**包含**口径未决的值（它们是报告值，只是进不了等价类）。
 
 ## 平台绑定
