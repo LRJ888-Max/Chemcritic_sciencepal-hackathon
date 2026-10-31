@@ -30,3 +30,6 @@ __pycache__/
 .pytest_cache/
 .venv/
 venv/
+
+# 语料库自制证据卡与目录（PMC 开放获取逐字摘录，许可随卡注明，总体积 ~1.1MB）
+!docs/corpus/**/*.pdf
