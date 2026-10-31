@@ -2502,7 +2502,7 @@ def test_matrix(records):
     print(f"  [{'PASS' if ok18 else 'FAIL'}] T18  SM-001a vs SM-001b → "
           f"non_independent={v18.non_independent}  expect=True")
 
-    print(f"\n  最终：{passed} passed, {failed} failed（含 T17/T18）")
+    print(f"\n  T1–T18：{passed} passed, {failed} failed")
 
     # T19 · 迁移目标必须同底物（2026-10-28：此前会把溴苯的 P20 当迁移目标）
     pl = placement_mod.placement(USER, records)
