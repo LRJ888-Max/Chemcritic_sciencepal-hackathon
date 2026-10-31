@@ -61,6 +61,24 @@ PARTNER = [
     ("amine", re.compile(r"aniline|toluidine|amine|amide|phenoxazine|carbazole|triazol", re.I)),
 ]
 
+# 反应类型 → 亲核试剂应有的类别（用于纠正「抽到的是添加剂而非底物」）
+EXPECT_PARTNER = {
+    "suzuki": {"boronic_acid"},
+    "heck": {"alkene"},
+    "sonogashira": {"alkyne"},
+    "buchwald_hartwig": {"amine"},
+    "kumada": {"organometallic"},
+    "negishi": {"organometallic"},
+}
+# 底物类别 → 反应类型（反过来定类型：Heck 不用炔，芳卤+末端炔就是 Sonogashira）
+KIND_BY_PARTNER = {
+    "boronic_acid": "suzuki",
+    "alkene": "heck",
+    "alkyne": "sonogashira",
+    "amine": "buchwald_hartwig",
+    "organometallic": "kumada",
+}
+
 # 底物通称：表里用它代表一类，真实分子在行内。抽到这些一律标 needs_review，不入库。
 GENERIC_SUBSTRATE = re.compile(r"^(?:ar[-\s]?x|aryl\s+halide[s]?|aryl\s+bromide[s]?|"
                               r"alkyne[s]?|alkene[s]?|halide[s]?)$", re.I)
@@ -81,6 +99,9 @@ TIME_MIN = re.compile(r"(\d+(?:\.\d+)?)\s*min")
 # 名字片段里不该出现的叙述词——命中说明正则跨句吞了半句话
 _JUNK_NAME = re.compile(r"\b(when|reaction|section|conditions|were|was|carried|out|"
                         r"with|using|see|following|mixture|added|then|and)\b", re.I)
+# 候选名里出现这些 = 抽到的是叙述残片或投料量尾巴，不是化合物
+_JUNK_CAND = re.compile(r"mmol|equiv|\btime\b|depend|condition|section|table|entry|"
+                        r"supporting|see\b|details|depends", re.I)
 
 
 def _norm_name(s: str) -> str:
@@ -289,6 +310,61 @@ def build_units(triage: Dict[str, Any]) -> List[Dict[str, Any]]:
     return units
 
 
+SCOPE_COL = re.compile(
+    r"^(olefin|alkene|alkyne|amine|aryl\s*halide|arylhalide|halide|substrate|boronic(\s*acid)?"
+    r"|x|r1|r2|r3|r|ar|ar-?x|product)$", re.I)
+LOADING_COL = re.compile(r"mol\s*%|cat(\.|alyst)?|loading|amount", re.I)
+
+
+def _scope_columns(header: List[str], rows: List[List[str]]) -> List[str]:
+    """表头出现「底物维度」列，且该列在行内取 ≥2 个不同值 → 底物随行走。
+
+    这类是底物范围表（substrate scope）：脚注常写一句模板
+    「Reaction conditions: iodobenzene, methyl acrylate, ...」，
+    但那只是 model reaction 的条件，不是整表的底物。按脚注给整表打同一个
+    底物对，会把「苯乙烯 / 丙烯腈 / 溴代物」全说成「碘苯 + 丙烯酸甲酯」。
+    """
+    out = []
+    for i, h in enumerate(header or []):
+        name = (h or "").strip()
+        if not SCOPE_COL.match(name):
+            continue
+        vals = {str(r[i]).strip().lower() for r in rows if len(r) > i and str(r[i]).strip()}
+        if len(vals) >= 2:
+            out.append(name)
+    return out
+
+
+def _blank_control_rows(header: List[str], rows: List[List[str]], ycol: Optional[int]) -> List[str]:
+    """空白/阴性对照行：催化剂用量为 0 或明确缺失，且收率为 0。
+
+    这类行收率常为 0，留在参照池里会把区间下界拉到 0，
+    让「0–96%」这种区间看着像文献分散度，其实是「不加催化剂的必然结果」。
+    两种写法都要认：用量列写 0.0，或写 "-" / "none" 同时收率 0。
+    """
+    idx = [i for i, h in enumerate(header or []) if LOADING_COL.search(h or "")]
+    if not idx or ycol is None:
+        return []
+    hits = []
+    for r in rows:
+        if len(r) <= ycol:
+            continue
+        y = _num(str(r[ycol]))
+        if y is None or y > 0.001:
+            continue  # 只有收率为 0 的行才可能是阴性对照
+        for i in idx:
+            if len(r) <= i:
+                continue
+            cell = str(r[i]).strip()
+            if re.fullmatch(r"0+(\.0+)?", cell):
+                hits.append(str(r[0]).strip() or "?")
+                break
+            if re.fullmatch(r"[-–—]|n\.?d\.?|none|no\s+catalyst", cell, re.I):
+                hits.append(str(r[0]).strip() or "?")
+                break
+    return hits
+
+
 def extract(unit: Dict[str, Any]) -> Dict[str, Any]:
     m = unit["material"]
     header = m["header"]
@@ -297,8 +373,11 @@ def extract(unit: Dict[str, Any]) -> Dict[str, Any]:
     cap = m["caption"]
     ctx = m["table_context"]
 
+    scope_cols = _scope_columns(header, rows)
+
     ycols = [i for i, h in enumerate(header) if YIELD_COL.search(h or "")]
     ycol = ycols[0] if ycols else None
+    blanks = set(_blank_control_rows(header, rows, ycol))
 
     labels = _label_map(cap, fn, ctx)
     feeds = _resolve_feeds(_feeds(" ".join([fn, cap])), labels)
@@ -336,6 +415,40 @@ def extract(unit: Dict[str, Any]) -> Dict[str, Any]:
                     partner_field, partner = field, hit
                     break
 
+    # ---- 亲核试剂重选：底物证据 > 标题关键词 ----
+    # 两个方向都会错，不能只朝一边修：
+    #   PMC9301730  标题是 BH 胺化，苯硼酸酯只是活化剂 → 亲核试剂应是甲苯胺；
+    #   PMC8402173  一篇里 Heck 与 Sonogashira 并存，表级关键词写成 heck，
+    #               但表里是 4-碘苯甲醚 + 苯乙炔 → 按炔改回 Sonogashira。
+    # 规则：候选来自底物本身（芳香卤以外的试剂）；反应类型只用来在**多候选**时打破平局。
+    pools: List[List[str]] = [[n for n, q, u in feeds], bare,
+                              _bare_feeds(ctx), _bare_feeds(cap)]
+    cands: List[Tuple[str, str]] = []
+    for pool in pools:
+        for field, pat in PARTNER:
+            for n in pool:
+                if n == halide or not pat.search(n):
+                    continue
+                if GENERIC_SUBSTRATE.match(str(n).strip()):
+                    continue
+                if _JUNK_CAND.search(str(n)):
+                    continue
+                # 碱/溶剂被 PATTERN 误当亲核试剂（"triethyl amine 1.0 mmol)"）
+                if any(b.lower() in str(n).lower() for b in BASE_NAMES):
+                    continue
+                if not any(f == field and nm == n for f, nm in cands):
+                    cands.append((field, n))
+    rc = unit.get("reaction_class")
+    want = EXPECT_PARTNER.get(rc or "", set())
+    fields = {f for f, _ in cands}
+    if cands:
+        if want & fields:
+            partner_field, partner = next(c for c in cands if c[0] in want)
+        else:
+            partner_field, partner = cands[0]
+    kind_from_data = KIND_BY_PARTNER.get(partner_field or "")
+    class_fix = f"{rc}→{kind_from_data}" if (rc and kind_from_data and rc != kind_from_data) else None
+
     generic = bool(GENERIC_SUBSTRATE.match((halide or "").strip())) or \
               bool(GENERIC_SUBSTRATE.match((partner or "").strip()))
     halide, partner = _clean_name(halide), _clean_name(partner)
@@ -366,6 +479,7 @@ def extract(unit: Dict[str, Any]) -> Dict[str, Any]:
         tbl = unit["unit_id"].split("-")[-1]
 
     entries = []
+    dropped_blank = []
     for r in rows:
         if not r or ycol is None or ycol >= len(r):
             continue
@@ -373,6 +487,10 @@ def extract(unit: Dict[str, Any]) -> Dict[str, Any]:
         val = _num(raw)
         if val is None or val > 100.5:
             continue
+        tag = str(r[0]).strip()
+        if tag in blanks:
+            dropped_blank.append(f"{tbl}, entry {tag or '?'}")
+            continue  # 空白对照（催化剂 0）不是催化结果，不进参照池
         notes = []
         if not NUM_ANY.search(re.sub(r"[a-zA-Z\*\[\]\(\)]", "", raw.strip())):
             notes.append(f"原始单元格非纯数值：{raw!r}（数值为按首位数字提取，需人工确认）")
@@ -391,6 +509,7 @@ def extract(unit: Dict[str, Any]) -> Dict[str, Any]:
         "corpus_id": unit["corpus_id"],
         "reaction_class": unit["reaction_class"],
         "header": header,
+        "scope_columns": scope_cols,
         "source": {
             "citation": f"{m.get('article_title','')[:120]}",
             "journal": m.get("journal"),
@@ -400,6 +519,9 @@ def extract(unit: Dict[str, Any]) -> Dict[str, Any]:
             "label": m.get("label"),
             "caption": cap,
             "footnote": fn,
+            # 催化剂形态常只写在题注/正文首段（"hydrogel nanocatalyst"、"supported Pd"），
+            # 表里只有 mol% 用量。不带上下文，96 条里 40 条档位算不出来。
+            "table_context": (ctx or "")[:600],
         },
         "caliber": {"outcome_type": unit["cal_type"], "quote": unit["cal_quote"],
                     "from": unit["cal_from"]},
@@ -408,6 +530,9 @@ def extract(unit: Dict[str, Any]) -> Dict[str, Any]:
             "partner_field": partner_field,
             "partner": partner,
             "generic_substrate": generic,
+            "substrate_in_rows": bool(scope_cols),
+            "scope_columns": scope_cols,
+            "blank_controls": dropped_blank,
             "bare_names": bare,
             "base": base,
             "solvent": solvent,
@@ -417,6 +542,10 @@ def extract(unit: Dict[str, Any]) -> Dict[str, Any]:
             "catalyst": catalyst,
             "feeds": feeds,
             "label_map_size": len(labels),
+            "partner_candidates": [f"{f}:{n}" for f, n in cands][:6],
+            # 底物证据推翻标题关键词时记下（"heck→sonogashira"），供审计与文档引用
+            "class_corrected": class_fix,
+            "reaction_class_data": kind_from_data,
         },
         "entries": entries,
     }

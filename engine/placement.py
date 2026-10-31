@@ -103,6 +103,9 @@ def ensure_keys(d: dict) -> dict:
     """
     for k, default in (("reference_values", []), ("reference_count", 0),
                        ("delta_vs_min", None), ("delta_vs_max", None),
+                       ("delta_reference_min", None), ("delta_reference_max", None),
+                       ("product_confirmed", {"confirmed": 0, "unconfirmed": 0}),
+                       ("source_count", 0), ("non_independent", False),
                        ("comparables", []), ("migration_targets", []),
                        ("observed", None), ("uncalibrated_refs", [])):
         d.setdefault(k, default)
@@ -205,25 +208,78 @@ def _placement_impl(user: Record, records: List[Record]) -> Dict[str, Any]:
             "action": "回原文补录参照的收率数值",
         }
 
-    can_delta = same_tier and user.outcome_value is not None
-    return {
-            "status": "PLACED",
-            "outcome_type": user.outcome_type,
-            "tier": tier,
-            "tier_basis": "同档" if same_tier else "同口径（跨档）",
-            "comparables": [r.record_id for r in calibrated],
-            "uncalibrated_refs": uncal_ids,
-            "observed": user.outcome_value,
-            "reference_min": min(values),
-            "reference_max": max(values),
-            "reference_values": sorted(values),
-            "reference_count": len(values),
-            # 差值只给"同档 + 用户有值"的情形；跨档一律 None（只并排，不定位）
-            "delta_vs_min": round(user.outcome_value - min(values), 1) if can_delta else None,
-            "delta_vs_max": round(user.outcome_value - max(values), 1) if can_delta else None,
-            # 跨档迁移目标：不参与差值，只回答"换体系能到哪"
-            "migration_targets": migration_targets,
-        }
+    # 2026-10-31：产物「是否确认」与底物对「是否一致」是两件事。
+    # _same_pair 为了不把"产物只写编号"的语料记录全排除，对"一侧未记录"放行；
+    # 但放行 ≠ 已确认。若把放行直接说成 PLACED，下游会读成"可以比较"——
+    # 用户实测已复现该矛盾：status=PLACED，报告正文却写"产物结构未确认"。
+    states = {r.record_id: _product_state(user, r) for r in calibrated}
+    confirmed = [r for r in calibrated
+                 if r.outcome_value is not None and states[r.record_id] == "same"]
+    inferred = [r for r in calibrated
+                if r.outcome_value is not None and states[r.record_id] == "inferred"]
+    unconfirmed_n = sum(1 for s in states.values() if s == "unconfirmed")
+    # 可算差值的参照：产物逐字确认 + 由反应类型推定（后者须在文案里声明推定）
+    usable = confirmed + inferred
+    use_values = [r.outcome_value for r in usable]
+
+    # 差值必须有"产物同一"这个前提，否则两个不同反应的收率相减就是假精确。
+    can_delta = bool(same_tier) and user.outcome_value is not None and bool(use_values)
+    dmin = min(use_values) if use_values else None
+    dmax = max(use_values) if use_values else None
+
+    if confirmed:
+        status = "PLACED"
+    elif inferred:
+        status = "PLACED_PRODUCT_INFERRED"
+    else:
+        status = "PLACED_PRODUCT_UNCONFIRMED"
+
+    payload = {
+        "status": status,
+        "outcome_type": user.outcome_type,
+        "tier": tier,
+        "tier_basis": "同档" if same_tier else "同口径（跨档）",
+        "comparables": [r.record_id for r in calibrated],
+        "uncalibrated_refs": uncal_ids,
+        "observed": user.outcome_value,
+        "reference_min": min(values),
+        "reference_max": max(values),
+        "reference_values": sorted(values),
+        "reference_count": len(values),
+        # 2026-10-31：条数 ≠ 独立证据数。条件优化表常在一张表里报十几个点，
+        # 它们同属一次优化、同一批材料，按 13 条独立参照呈现就是虚增证据量。
+        "source_count": len({(r.source_id or r.record_id) for r in calibrated}),
+        "non_independent": len({(r.source_id or r.record_id) for r in calibrated}) == 1
+                           and len(calibrated) > 1,
+        # 可比面里每一条的产物依据，逐级可查
+        "product_confirmed": {"confirmed": len(confirmed), "inferred": len(inferred),
+                              "unconfirmed": unconfirmed_n},
+        # 差值只给"同档 + 用户有值 + 产物可用"，三缺一即 None
+        "delta_vs_min": round(user.outcome_value - dmin, 1) if can_delta else None,
+        "delta_vs_max": round(user.outcome_value - dmax, 1) if can_delta else None,
+        # 差值的基准值单独给出：可能与 reference_min/max 不同（那两条含产物未确认的）
+        "delta_reference_min": dmin,
+        "delta_reference_max": dmax,
+        "delta_basis": ("product_recorded" if confirmed and not inferred
+                        else "reaction_class_inferred" if inferred else None) if can_delta else None,
+        # 跨档迁移目标：不参与差值，只回答"换体系能到哪"
+        "migration_targets": migration_targets,
+    }
+    if status == "PLACED_PRODUCT_UNCONFIRMED":
+        payload["reason"] = (
+            f"同底物对、同口径的 {len(values)} 条参照都在，但产物结构两侧均未记录，"
+            "且无法由底物推出反应类型，不能确认是同一产物")
+        payload["action"] = "先确认产物结构（或补录参照的产物名）；确认前只并排看区间，不给差值"
+    elif status == "PLACED_PRODUCT_INFERRED":
+        payload["reason"] = (
+            f"产物名两侧均未逐字记录；按底物键名推定为 {_reaction_kind(user.substrate)} 型，"
+            f"两侧一致，故可按同一反应处理（{len(inferred)} 条）")
+        payload["caveat"] = ("产物结构系由底物类别推定，不是原文逐字给出；"
+                             "引用差值时必须同时说明这一点。若原文另有区域/立体选择性说明，以原文为准")
+    elif unconfirmed_n:
+        payload["delta_note"] = (
+            f"差值基于产物可用的 {len(usable)} 条；另 {unconfirmed_n} 条产物未记录且推不出类别，未参与差值")
+    return payload
 
 
 def _canon_pair(value) -> str:
@@ -265,23 +321,61 @@ def _same_pair(user: Record, ref: Record) -> bool:
     1. 归一化名相等（别名表 + 大小写/空白归一）；
     2. 化学同一性（chemsense 规范 SMILES 判同，别名表漏项的兜底）；
     3. 都不行 → 不同底物。
+
+    产物侧只排除「两侧都记录且确实不同」；「未记录」放行（详见 _product_state）。
+    """
+    if not _same_substrate_set(user.substrate or {}, ref.substrate or {}):
+        return False
+    return _product_state(user, ref) != "diff"
+
+
+def _product_state(user: Record, ref: Record) -> str:
+    """产物关系：same / inferred / unconfirmed / diff —— 四态，不允许把"不知道"归到任一侧。
+
+    2026-10-31：语料层的表常只给产物编号（"3a"、"8b"），补不出名字。
+    若把"一侧未记录"当成"不同产物"，131 条语料记录会永远进不了参照池（入册等于白入）；
+    若把它当成"同一产物"，就会拿两个不同反应的收率相减（假精确）。
+    所以既不放行成 same，也不阻断成 diff，而是分开三档：
+
+    - same       两侧都记录了产物名且判同（唯一可以不做说明就引用的情形）
+    - inferred   两侧都未记录，但底物键名给出的反应类型一致（芳卤+烯烃 → Heck 等）。
+                 产物由反应类型决定，可算差值，但必须声明"产物名系推定，非原文逐字"。
+    - unconfirmed 推不出（反应类型无法从键名确定）→ 只能并排，不给差值
+    - diff       两侧都记录且确实不同 → 不是同一反应
     """
     us, rs = user.substrate or {}, ref.substrate or {}
-    if not _same_substrate_set(us, rs):
-        return False
-    up = _canon_pair(getattr(user, "product", None) or us.get("product"))
-    rp = _canon_pair(getattr(ref, "product", None) or rs.get("product"))
-    # 2026-10-31：产物**只有两侧都记录了**才作为排除条件。
-    # 语料层的表常只给产物编号（"3a"、"8b"），补不出名字；若把"一侧未记录"
-    # 当成"不同产物"，这些记录会永远进不了参照池——入册等于白入。
-    # 未记录不等于不同：这里不阻断，产物是否一致仍由 gate 2 单独给出判定。
+    ua = getattr(user, "product", None) or us.get("product")
+    ra = getattr(ref, "product", None) or rs.get("product")
+    up, rp = _canon_pair(ua), _canon_pair(ra)
     if up and rp:
-        if up != rp and not _chem_same(
-            getattr(user, "product", None) or us.get("product"),
-            getattr(ref, "product", None) or rs.get("product"),
-        ):
-            return False
-    return True
+        return "same" if (up == rp or _chem_same(ua, ra)) else "diff"
+    # 至少一侧未记录：只允许「反应类型可确定且相同」时降级为 inferred
+    ku, kr = _reaction_kind(us), _reaction_kind(rs)
+    if ku and ku == kr:
+        return "inferred"
+    return "unconfirmed"
+
+
+# 底物键名 → 反应类型。**用键名而不是 reaction_class 字段**：
+# 后者由标题关键词粗归类（PMC9301730 标题是 "Buchwald–Hartwig-Type Amination"，
+# 底物却是芳卤 + 硼酸酯），键名来自底物名本身，错得更少。
+_KIND_BY_KEY = (
+    (("boronic_acid", "boronic", "boronate"), "suzuki"),
+    (("alkene", "olefin", "acrylate"), "heck"),
+    (("alkyne", "acetylene", "ethynyl"), "sonogashira"),
+    (("amine", "aniline", "amide"), "buchwald_hartwig"),
+    (("organometallic", "grignard", "zinc"), "kumada"),
+)
+
+
+def _reaction_kind(sub: dict) -> Optional[str]:
+    """从底物键名推反应类型；推不出返回 None（不猜）。"""
+    keys = {k for k, v in (sub or {}).items()
+            if k != "product" and _canon_pair(v)}
+    for names, kind in _KIND_BY_KEY:
+        if keys & set(names):
+            return kind
+    return None
 
 
 def _chem_same(a: Any, b: Any) -> bool:

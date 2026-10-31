@@ -3,7 +3,7 @@
  "notice": "晋升候选：脚本按规则从语料层抽出的 entry 形状，尚未人工核验。核验通过才写 data/records.json，evidence_grade 最高 candidate。",
  "counts": {
   "tables": 26,
-  "entries": 246
+  "entries": 243
  },
  "tables": [
   {
@@ -16,6 +16,7 @@
     "yield 4b (%)",
     "yield 5b (%)"
    ],
+   "scope_columns": [],
    "source": {
     "citation": "Phenylboronic Ester-Activated Aryl Iodide-Selective Buchwald–Hartwig-Type Amination toward Bioactivity Assay",
     "journal": "ACS Omega",
@@ -24,7 +25,8 @@
     "pmcid": "PMC9301730",
     "label": null,
     "caption": "Screening of Nickel and Palladium Catalysts for the Activator-Promoted Buchwald–Hartwig-Type Aminationa",
-    "footnote": "aReaction conditions: 1b (1.0 mmol), 2a (3.0 mmol), 3a (1.3 mmol), and K3PO4 (3 mmol). The yield was determined by GC analysis using mesitylene as an external standard.bWithout 3a."
+    "footnote": "aReaction conditions: 1b (1.0 mmol), 2a (3.0 mmol), 3a (1.3 mmol), and K3PO4 (3 mmol). The yield was determined by GC analysis using mesitylene as an external standard.bWithout 3a.",
+    "table_context": "Nickel catalysts were screened for the aryl iodide-selective C–N bond-forming amination (Table 1, entries 1–8; for more details, see the Supporting Information (Section 2)). When the reaction of 1-chloro-4-iodobenzene (1b) and toluidine (2a) was carried out with phenylboronic ester (3a) and 0.5 mol % Ni in the form of Ni(acac)2, the C–I bond selectively reacted with 2a to give the corresponding amination product 4b w"
    },
    "caliber": {
     "outcome_type": "gc",
@@ -33,9 +35,12 @@
    },
    "parsed": {
     "aryl_halide": "1-chloro-4-iodobenzene",
-    "partner_field": "boronic_acid",
-    "partner": "phenylboronic ester",
+    "partner_field": "amine",
+    "partner": "toluidine",
     "generic_substrate": false,
+    "substrate_in_rows": false,
+    "scope_columns": [],
+    "blank_controls": [],
     "bare_names": [],
     "base": "K3PO4",
     "solvent": null,
@@ -65,7 +70,13 @@
       "mmol"
      ]
     ],
-    "label_map_size": 3
+    "label_map_size": 3,
+    "partner_candidates": [
+     "boronic_acid:phenylboronic ester",
+     "amine:toluidine"
+    ],
+    "class_corrected": null,
+    "reaction_class_data": "buchwald_hartwig"
    },
    "entries": [
     {
@@ -221,6 +232,7 @@
     "Conversion (%)",
     "Selectivity (%)"
    ],
+   "scope_columns": [],
    "source": {
     "citation": "Application of palladium nanoparticles supported on ordered mesoporous oxides for C–N and C <svg xmlns=\"http://www.w3.or",
     "journal": "RSC Advances",
@@ -229,7 +241,8 @@
     "pmcid": "PMC12305527",
     "label": null,
     "caption": "The yield, conversion and selectivity obtained for each reaction during the catalyst screening study",
-    "footnote": ""
+    "footnote": "",
+    "table_context": "Table 3 and Fig. S3† additionally showed the comparison by GC yield of the 4-methylbiphenylamine produced when Pd–NiO, Pd–Co3O4, Pd–Mn3O4, Pd–TiO2 and Pd–CeO2 were used as catalysts for the model reaction. Amongst all the evaluated catalysts, the Pd–CeO2 produced the highest yield (97%) of the 4-methylbiphenylamine with a 100% selectivity to only one product. The Pd–CeO2 was then used for substrate screening and othe"
    },
    "caliber": {
     "outcome_type": "gc",
@@ -241,6 +254,9 @@
     "partner_field": null,
     "partner": null,
     "generic_substrate": true,
+    "substrate_in_rows": false,
+    "scope_columns": [],
+    "blank_controls": [],
     "bare_names": [],
     "base": null,
     "solvent": null,
@@ -249,7 +265,10 @@
     "internal_standard": null,
     "catalyst": "Pd–Co3O4",
     "feeds": [],
-    "label_map_size": 0
+    "label_map_size": 0,
+    "partner_candidates": [],
+    "class_corrected": null,
+    "reaction_class_data": null
    },
    "entries": [
     {
@@ -342,6 +361,7 @@
     "Conversion (%)",
     "Selectivity (%)"
    ],
+   "scope_columns": [],
    "source": {
     "citation": "Application of palladium nanoparticles supported on ordered mesoporous oxides for C–N and C <svg xmlns=\"http://www.w3.or",
     "journal": "RSC Advances",
@@ -350,7 +370,8 @@
     "pmcid": "PMC12305527",
     "label": null,
     "caption": "Evaluation of the optimal reaction parameters, including bases and temperaturea",
-    "footnote": "aReaction conditions: aniline (1.2 equiv., 1.2 mmol), 4-bromotoluene (1 equiv., 1 mmol), catalyst (50 mg) and base (2 equiv., 1.5 mmol), 6 h."
+    "footnote": "aReaction conditions: aniline (1.2 equiv., 1.2 mmol), 4-bromotoluene (1 equiv., 1 mmol), catalyst (50 mg) and base (2 equiv., 1.5 mmol), 6 h.",
+    "table_context": "Table 3 and Fig. S3† additionally showed the comparison by GC yield of the 4-methylbiphenylamine produced when Pd–NiO, Pd–Co3O4, Pd–Mn3O4, Pd–TiO2 and Pd–CeO2 were used as catalysts for the model reaction. Amongst all the evaluated catalysts, the Pd–CeO2 produced the highest yield (97%) of the 4-methylbiphenylamine with a 100% selectivity to only one product. The Pd–CeO2 was then used for substrate screening and othe"
    },
    "caliber": {
     "outcome_type": "gc",
@@ -362,6 +383,9 @@
     "partner_field": "amine",
     "partner": "aniline",
     "generic_substrate": false,
+    "substrate_in_rows": false,
+    "scope_columns": [],
+    "blank_controls": [],
     "bare_names": [
      "aniline (1.2 equiv.",
      "4-bromotoluene (1 equiv."
@@ -373,7 +397,10 @@
     "internal_standard": null,
     "catalyst": "No catalyst",
     "feeds": [],
-    "label_map_size": 0
+    "label_map_size": 0,
+    "partner_candidates": [],
+    "class_corrected": null,
+    "reaction_class_data": "buchwald_hartwig"
    },
    "entries": [
     {
@@ -508,6 +535,7 @@
     "Selectivity (%)",
     "GC yield (%)"
    ],
+   "scope_columns": [],
    "source": {
     "citation": "Application of palladium nanoparticles supported on ordered mesoporous oxides for C–N and C <svg xmlns=\"http://www.w3.or",
     "journal": "RSC Advances",
@@ -516,7 +544,8 @@
     "pmcid": "PMC12305527",
     "label": null,
     "caption": "The yields, conversions, and selectivity obtained for each reaction during the catalyst screening study for Sonogashira coupling reactionsa",
-    "footnote": "aReaction conditions: phenylacetylene (1.2 equiv., 1.2 mmol), 4-bromoacetophenone (1 equiv., 1 mmol), catalyst (50 mg) and K2CO3 (2 equiv., 1.5 mmol), 80 °C, 6 h."
+    "footnote": "aReaction conditions: phenylacetylene (1.2 equiv., 1.2 mmol), 4-bromoacetophenone (1 equiv., 1 mmol), catalyst (50 mg) and K2CO3 (2 equiv., 1.5 mmol), 80 °C, 6 h.",
+    "table_context": "Table 3 and Fig. S3† additionally showed the comparison by GC yield of the 4-methylbiphenylamine produced when Pd–NiO, Pd–Co3O4, Pd–Mn3O4, Pd–TiO2 and Pd–CeO2 were used as catalysts for the model reaction. Amongst all the evaluated catalysts, the Pd–CeO2 produced the highest yield (97%) of the 4-methylbiphenylamine with a 100% selectivity to only one product. The Pd–CeO2 was then used for substrate screening and othe"
    },
    "caliber": {
     "outcome_type": "gc",
@@ -528,6 +557,9 @@
     "partner_field": "alkyne",
     "partner": "phenylacetylene",
     "generic_substrate": false,
+    "substrate_in_rows": false,
+    "scope_columns": [],
+    "blank_controls": [],
     "bare_names": [
      "phenylacetylene (1.2 equiv.",
      "4-bromoacetophenone (1 equiv."
@@ -539,7 +571,10 @@
     "internal_standard": null,
     "catalyst": "Pd–Co3O4",
     "feeds": [],
-    "label_map_size": 0
+    "label_map_size": 0,
+    "partner_candidates": [],
+    "class_corrected": "buchwald_hartwig→sonogashira",
+    "reaction_class_data": "sonogashira"
    },
    "entries": [
     {
@@ -631,6 +666,7 @@
     "Time (min.)",
     "Yield (%)b"
    ],
+   "scope_columns": [],
    "source": {
     "citation": "Preparation of a novel palladium catalytic hydrogel based on graphene oxide/chitosan NPs and cellulose nanowhiskers†",
     "journal": "RSC Advances",
@@ -639,7 +675,8 @@
     "pmcid": "PMC9086392",
     "label": null,
     "caption": "Optimization of reaction temperature for the model coupling reactiona",
-    "footnote": "aReaction conditions: iodobenzene, methyl acrylate, catalyst, base and solvent.bIsolated yield."
+    "footnote": "aReaction conditions: iodobenzene, methyl acrylate, catalyst, base and solvent.bIsolated yield.",
+    "table_context": "Initially, to evaluate the effect of the catalyst, the model reaction was performed in the absence and presence of different amounts of hydrogel nanocatalyst under reflux conditions. As expected, no product was obtained in the absence of the catalyst (entry 14); therefore, the addition of a catalyst to the mixture reaction is required. The highest yield was obtained using 0.20 g of hydrogel@Pd (entry 5)."
    },
    "caliber": {
     "outcome_type": "isolated",
@@ -651,6 +688,11 @@
     "partner_field": "alkene",
     "partner": "methyl acrylate",
     "generic_substrate": false,
+    "substrate_in_rows": false,
+    "scope_columns": [],
+    "blank_controls": [
+     "T1, entry 14"
+    ],
     "bare_names": [
      "iodobenzene",
      "methyl acrylate"
@@ -662,7 +704,12 @@
     "internal_standard": null,
     "catalyst": "0.20",
     "feeds": [],
-    "label_map_size": 0
+    "label_map_size": 0,
+    "partner_candidates": [
+     "alkene:methyl acrylate"
+    ],
+    "class_corrected": null,
+    "reaction_class_data": "heck"
    },
    "entries": [
     {
@@ -856,22 +903,6 @@
      "value_raw": "90",
      "notes": [],
      "catalyst_raw": "0.25"
-    },
-    {
-     "unit_id": "PMC9086392-T1",
-     "row": [
-      "14",
-      "0.0",
-      "EtOH/H2O",
-      "K2CO",
-      "120",
-      "0.0"
-     ],
-     "locator": "T1, entry 14",
-     "value": 0.0,
-     "value_raw": "0.0",
-     "notes": [],
-     "catalyst_raw": "0.0"
     }
    ]
   },
@@ -887,6 +918,11 @@
     "Time (min)",
     "Yield (%)b"
    ],
+   "scope_columns": [
+    "Olefin",
+    "X",
+    "R1"
+   ],
    "source": {
     "citation": "Preparation of a novel palladium catalytic hydrogel based on graphene oxide/chitosan NPs and cellulose nanowhiskers†",
     "journal": "RSC Advances",
@@ -895,7 +931,8 @@
     "pmcid": "PMC9086392",
     "label": null,
     "caption": "Mizoroki–Heck reaction coupling reaction of different aryl halides with olefinsa",
-    "footnote": "aReaction conditions: iodobenzene, methyl acrylate, catalyst, base and solvent.bIsolated yield."
+    "footnote": "aReaction conditions: iodobenzene, methyl acrylate, catalyst, base and solvent.bIsolated yield.",
+    "table_context": "Initially, to evaluate the effect of the catalyst, the model reaction was performed in the absence and presence of different amounts of hydrogel nanocatalyst under reflux conditions. As expected, no product was obtained in the absence of the catalyst (entry 14); therefore, the addition of a catalyst to the mixture reaction is required. The highest yield was obtained using 0.20 g of hydrogel@Pd (entry 5)."
    },
    "caliber": {
     "outcome_type": "isolated",
@@ -907,6 +944,13 @@
     "partner_field": "alkene",
     "partner": "methyl acrylate",
     "generic_substrate": false,
+    "substrate_in_rows": true,
+    "scope_columns": [
+     "Olefin",
+     "X",
+     "R1"
+    ],
+    "blank_controls": [],
     "bare_names": [
      "iodobenzene",
      "methyl acrylate"
@@ -918,7 +962,12 @@
     "internal_standard": null,
     "catalyst": "Styrene",
     "feeds": [],
-    "label_map_size": 0
+    "label_map_size": 0,
+    "partner_candidates": [
+     "alkene:methyl acrylate"
+    ],
+    "class_corrected": null,
+    "reaction_class_data": "heck"
    },
    "entries": [
     {
@@ -1128,6 +1177,7 @@
     "Time (h)",
     "Yieldb (%)"
    ],
+   "scope_columns": [],
    "source": {
     "citation": "Synthesis of nano magnetic supported NHC-palladium and investigation of its applications as a catalyst in the Mizoroki-H",
     "journal": "Heliyon",
@@ -1136,7 +1186,8 @@
     "pmcid": "PMC7511807",
     "label": null,
     "caption": "Optimization of the reaction conditions.a",
-    "footnote": "aReaction conditions: styrene, 4-iodotoluene, base (2 mmol), Fe3O4@Si–NHC–Pd and solvent (2 ml). bYields of isolated product."
+    "footnote": "aReaction conditions: styrene, 4-iodotoluene, base (2 mmol), Fe3O4@Si–NHC–Pd and solvent (2 ml). bYields of isolated product.",
+    "table_context": "Modification of Fe3O4 NPs was confirmed by FT-IR spectroscopy (Figure 1-a) All samples showed a peak at 653 which is related to (Fe–O). The adsorption bands at 1082 and 821 cm−1 are assigned to (Si–O–Si) bands, which are associated with Fe3O4 @SiO2. The broad adsorption at 3300 cm−1 is due to –OH stretching of surface hydroxyl groups. Figure 1-b showed a peak at 2104 cm−1, which is attributed to the stretching vibrat"
    },
    "caliber": {
     "outcome_type": "isolated",
@@ -1148,6 +1199,9 @@
     "partner_field": "alkene",
     "partner": "styrene",
     "generic_substrate": false,
+    "substrate_in_rows": false,
+    "scope_columns": [],
+    "blank_controls": [],
     "bare_names": [
      "styrene",
      "4-iodotoluene"
@@ -1165,7 +1219,12 @@
       "mmol"
      ]
     ],
-    "label_map_size": 0
+    "label_map_size": 0,
+    "partner_candidates": [
+     "alkene:styrene"
+    ],
+    "class_corrected": null,
+    "reaction_class_data": "heck"
    },
    "entries": [
     {
@@ -1449,6 +1508,12 @@
     "Time (h)",
     "Yieldb (%)"
    ],
+   "scope_columns": [
+    "R1",
+    "X",
+    "R2",
+    "Product"
+   ],
    "source": {
     "citation": "Synthesis of nano magnetic supported NHC-palladium and investigation of its applications as a catalyst in the Mizoroki-H",
     "journal": "Heliyon",
@@ -1457,7 +1522,8 @@
     "pmcid": "PMC7511807",
     "label": null,
     "caption": "Heck reaction catalyst by Fe3O4@Si–NHC–Pda",
-    "footnote": "aReaction conditions: styrene, 4-iodotoluene, Et3N, Fe3O4@Si–NHC–Pd catalyst, in H2O at 90 °C. bYields of isolated product."
+    "footnote": "aReaction conditions: styrene, 4-iodotoluene, Et3N, Fe3O4@Si–NHC–Pd catalyst, in H2O at 90 °C. bYields of isolated product.",
+    "table_context": "Modification of Fe3O4 NPs was confirmed by FT-IR spectroscopy (Figure 1-a) All samples showed a peak at 653 which is related to (Fe–O). The adsorption bands at 1082 and 821 cm−1 are assigned to (Si–O–Si) bands, which are associated with Fe3O4 @SiO2. The broad adsorption at 3300 cm−1 is due to –OH stretching of surface hydroxyl groups. Figure 1-b showed a peak at 2104 cm−1, which is attributed to the stretching vibrat"
    },
    "caliber": {
     "outcome_type": "isolated",
@@ -1469,6 +1535,14 @@
     "partner_field": "alkene",
     "partner": "styrene",
     "generic_substrate": false,
+    "substrate_in_rows": true,
+    "scope_columns": [
+     "R1",
+     "X",
+     "R2",
+     "Product"
+    ],
+    "blank_controls": [],
     "bare_names": [
      "styrene",
      "4-iodotoluene"
@@ -1480,7 +1554,12 @@
     "internal_standard": null,
     "catalyst": "4-Me",
     "feeds": [],
-    "label_map_size": 0
+    "label_map_size": 0,
+    "partner_candidates": [
+     "alkene:styrene"
+    ],
+    "class_corrected": null,
+    "reaction_class_data": "heck"
    },
    "entries": [
     {
@@ -1839,6 +1918,7 @@
     "Yieldb (%)",
     "Ref."
    ],
+   "scope_columns": [],
    "source": {
     "citation": "Synthesis of nano magnetic supported NHC-palladium and investigation of its applications as a catalyst in the Mizoroki-H",
     "journal": "Heliyon",
@@ -1847,7 +1927,8 @@
     "pmcid": "PMC7511807",
     "label": null,
     "caption": "Comparison of catalytic activity for the Heck cross coupling reaction using Fe3O4@Si–NHC–Pd catalyst with those obtained by reported catalysts.a",
-    "footnote": "aReaction conditions: Bromobenzene (1 mmol), styrene (1.2 mmol), base, Catalyst and solvent. bYields of isolated product."
+    "footnote": "aReaction conditions: Bromobenzene (1 mmol), styrene (1.2 mmol), base, Catalyst and solvent. bYields of isolated product.",
+    "table_context": "Modification of Fe3O4 NPs was confirmed by FT-IR spectroscopy (Figure 1-a) All samples showed a peak at 653 which is related to (Fe–O). The adsorption bands at 1082 and 821 cm−1 are assigned to (Si–O–Si) bands, which are associated with Fe3O4 @SiO2. The broad adsorption at 3300 cm−1 is due to –OH stretching of surface hydroxyl groups. Figure 1-b showed a peak at 2104 cm−1, which is attributed to the stretching vibrat"
    },
    "caliber": {
     "outcome_type": "isolated",
@@ -1859,6 +1940,9 @@
     "partner_field": "alkene",
     "partner": "styrene",
     "generic_substrate": false,
+    "substrate_in_rows": false,
+    "scope_columns": [],
+    "blank_controls": [],
     "bare_names": [
      "Bromobenzene",
      "styrene"
@@ -1881,7 +1965,12 @@
       "mmol"
      ]
     ],
-    "label_map_size": 0
+    "label_map_size": 0,
+    "partner_candidates": [
+     "alkene:styrene"
+    ],
+    "class_corrected": null,
+    "reaction_class_data": "heck"
    },
    "entries": [
     {
@@ -2004,6 +2093,7 @@
     "Copolymer (Surfactant)",
     "Yield of 5aa/% b"
    ],
+   "scope_columns": [],
    "source": {
     "citation": "Palladium-Catalyzed Mizoroki–Heck and Copper-Free Sonogashira Coupling Reactions in Water Using Thermoresponsive Polymer",
     "journal": "Polymers",
@@ -2012,7 +2102,8 @@
     "pmcid": "PMC8402173",
     "label": null,
     "caption": "Mizoroki–Heck reaction in water using the copolymers a.",
-    "footnote": "(a) Conditions: iodobenzene (0.5 mmol), n-butyl acrylate (1.0 mmol), NEt(i-Pr)2 (1.0 mmol), PdCl2(PPh3)2 (0.01 mmol = 2 mol%), polymer (1 wt % in water), H2O (4 mL), 70 °C, 48 h. (b) Determined by gas chromatography. (c) [45]."
+    "footnote": "(a) Conditions: iodobenzene (0.5 mmol), n-butyl acrylate (1.0 mmol), NEt(i-Pr)2 (1.0 mmol), PdCl2(PPh3)2 (0.01 mmol = 2 mol%), polymer (1 wt % in water), H2O (4 mL), 70 °C, 48 h. (b) Determined by gas chromatography. (c) [45].",
+    "table_context": "We studied the Mizoroki–Heck reaction in water using the thermoresponsive polymer micelles. We previously reported that copolymer NS promoted the Mizoroki–Heck reaction in water with PdCl2(PPh3)2 as a catalyst precursor [45]. In this study, the three other copolymers were also investigated. Initially, we compared these polymers under our previous reaction conditions (Table 1). The copolymer was dissolved in water at "
    },
    "caliber": {
     "outcome_type": "gc",
@@ -2024,6 +2115,9 @@
     "partner_field": "alkene",
     "partner": "n-butyl acrylate",
     "generic_substrate": false,
+    "substrate_in_rows": false,
+    "scope_columns": [],
+    "blank_controls": [],
     "bare_names": [
      "n-butyl acrylate"
     ],
@@ -2045,7 +2139,12 @@
       "mmol"
      ]
     ],
-    "label_map_size": 0
+    "label_map_size": 0,
+    "partner_candidates": [
+     "alkene:n-butyl acrylate"
+    ],
+    "class_corrected": null,
+    "reaction_class_data": "heck"
    },
    "entries": [
     {
@@ -2188,6 +2287,7 @@
     "Product",
     "Yield/% a"
    ],
+   "scope_columns": [],
    "source": {
     "citation": "Palladium-Catalyzed Mizoroki–Heck and Copper-Free Sonogashira Coupling Reactions in Water Using Thermoresponsive Polymer",
     "journal": "Polymers",
@@ -2196,7 +2296,8 @@
     "pmcid": "PMC8402173",
     "label": null,
     "caption": "Mizoroki–Heck reactions with various aryl halides and alkenes in water.",
-    "footnote": "(a) NMR yields with isolated yields in parentheses. (b) Determined by gas chromatography."
+    "footnote": "(a) NMR yields with isolated yields in parentheses. (b) Determined by gas chromatography.",
+    "table_context": "We studied the Mizoroki–Heck reaction in water using the thermoresponsive polymer micelles. We previously reported that copolymer NS promoted the Mizoroki–Heck reaction in water with PdCl2(PPh3)2 as a catalyst precursor [45]. In this study, the three other copolymers were also investigated. Initially, we compared these polymers under our previous reaction conditions (Table 1). The copolymer was dissolved in water at "
    },
    "caliber": {
     "outcome_type": "nmr",
@@ -2208,6 +2309,9 @@
     "partner_field": null,
     "partner": null,
     "generic_substrate": true,
+    "substrate_in_rows": false,
+    "scope_columns": [],
+    "blank_controls": [],
     "bare_names": [],
     "base": null,
     "solvent": "water",
@@ -2216,7 +2320,10 @@
     "internal_standard": null,
     "catalyst": "",
     "feeds": [],
-    "label_map_size": 0
+    "label_map_size": 0,
+    "partner_candidates": [],
+    "class_corrected": null,
+    "reaction_class_data": null
    },
    "entries": [
     {
@@ -2511,6 +2618,7 @@
     "y/mol %",
     "Yields/% b"
    ],
+   "scope_columns": [],
    "source": {
     "citation": "Palladium-Catalyzed Mizoroki–Heck and Copper-Free Sonogashira Coupling Reactions in Water Using Thermoresponsive Polymer",
     "journal": "Polymers",
@@ -2519,7 +2627,8 @@
     "pmcid": "PMC8402173",
     "label": null,
     "caption": "Copper-free Sonogashira coupling in water with Pd catalysts a.",
-    "footnote": "(a) Conditions: 4-iodoanisole (0.5 mmol), phenylacetylene (0.75 mmol), Pd catalysts (x mol% to 4-iodoanisole), additives (y mol% to 4-iodoanisole), triethylamine (1.0 mmol), surfactant (20 mg), water 2 mL, 70 °C, 24 h. (b) Determined by gas chromatography."
+    "footnote": "(a) Conditions: 4-iodoanisole (0.5 mmol), phenylacetylene (0.75 mmol), Pd catalysts (x mol% to 4-iodoanisole), additives (y mol% to 4-iodoanisole), triethylamine (1.0 mmol), surfactant (20 mg), water 2 mL, 70 °C, 24 h. (b) Determined by gas chromatography.",
+    "table_context": "We studied the Mizoroki–Heck reaction in water using the thermoresponsive polymer micelles. We previously reported that copolymer NS promoted the Mizoroki–Heck reaction in water with PdCl2(PPh3)2 as a catalyst precursor [45]. In this study, the three other copolymers were also investigated. Initially, we compared these polymers under our previous reaction conditions (Table 1). The copolymer was dissolved in water at "
    },
    "caliber": {
     "outcome_type": "gc",
@@ -2531,6 +2640,9 @@
     "partner_field": "alkyne",
     "partner": "phenylacetylene",
     "generic_substrate": false,
+    "substrate_in_rows": false,
+    "scope_columns": [],
+    "blank_controls": [],
     "bare_names": [
      "phenylacetylene",
      "triethylamine"
@@ -2558,7 +2670,13 @@
       "mmol"
      ]
     ],
-    "label_map_size": 0
+    "label_map_size": 0,
+    "partner_candidates": [
+     "alkyne:phenylacetylene",
+     "amine:triethylamine"
+    ],
+    "class_corrected": "heck→sonogashira",
+    "reaction_class_data": "sonogashira"
    },
    "entries": [
     {
@@ -2765,6 +2883,7 @@
     "Description",
     "Yield of 7da/% b"
    ],
+   "scope_columns": [],
    "source": {
     "citation": "Palladium-Catalyzed Mizoroki–Heck and Copper-Free Sonogashira Coupling Reactions in Water Using Thermoresponsive Polymer",
     "journal": "Polymers",
@@ -2773,7 +2892,8 @@
     "pmcid": "PMC8402173",
     "label": null,
     "caption": "Copper-free Sonogashira coupling in water with surfactants a.",
-    "footnote": "(a) Conditions: 4-iodoanisole (0.5 mmol), phenylacetylene (0.75 mmol), PdCl2(PPh3)2 (0.01 mmol), triethylamine (1.0 mmol), surfactant (20 mg), water 2 mL, 70 °C, 24 h. (b) Determined by gas chromatography."
+    "footnote": "(a) Conditions: 4-iodoanisole (0.5 mmol), phenylacetylene (0.75 mmol), PdCl2(PPh3)2 (0.01 mmol), triethylamine (1.0 mmol), surfactant (20 mg), water 2 mL, 70 °C, 24 h. (b) Determined by gas chromatography.",
+    "table_context": "We studied the Mizoroki–Heck reaction in water using the thermoresponsive polymer micelles. We previously reported that copolymer NS promoted the Mizoroki–Heck reaction in water with PdCl2(PPh3)2 as a catalyst precursor [45]. In this study, the three other copolymers were also investigated. Initially, we compared these polymers under our previous reaction conditions (Table 1). The copolymer was dissolved in water at "
    },
    "caliber": {
     "outcome_type": "gc",
@@ -2785,6 +2905,9 @@
     "partner_field": "alkyne",
     "partner": "phenylacetylene",
     "generic_substrate": false,
+    "substrate_in_rows": false,
+    "scope_columns": [],
+    "blank_controls": [],
     "bare_names": [
      "phenylacetylene",
      "triethylamine"
@@ -2812,7 +2935,13 @@
       "mmol"
      ]
     ],
-    "label_map_size": 0
+    "label_map_size": 0,
+    "partner_candidates": [
+     "alkyne:phenylacetylene",
+     "amine:triethylamine"
+    ],
+    "class_corrected": "heck→sonogashira",
+    "reaction_class_data": "sonogashira"
    },
    "entries": [
     {
@@ -2927,6 +3056,9 @@
     "Product",
     "Yield/% b"
    ],
+   "scope_columns": [
+    "R"
+   ],
    "source": {
     "citation": "Palladium-Catalyzed Mizoroki–Heck and Copper-Free Sonogashira Coupling Reactions in Water Using Thermoresponsive Polymer",
     "journal": "Polymers",
@@ -2935,7 +3067,8 @@
     "pmcid": "PMC8402173",
     "label": null,
     "caption": "Copper-free Sonogashira coupling in water using thermoresponsive copolymers a.",
-    "footnote": "(a) Conditions: Ar-X (0.5 mmol), alkynes (0.75 mmol), Pd complex (0.01 mmol), triethyl amine 1.0 mmol), NS (20 mg), water 2 mL, 70 °C, 24 h. (b) Isolated yield. (c) Determined by 1H NMR."
+    "footnote": "(a) Conditions: Ar-X (0.5 mmol), alkynes (0.75 mmol), Pd complex (0.01 mmol), triethyl amine 1.0 mmol), NS (20 mg), water 2 mL, 70 °C, 24 h. (b) Isolated yield. (c) Determined by 1H NMR.",
+    "table_context": "We studied the Mizoroki–Heck reaction in water using the thermoresponsive polymer micelles. We previously reported that copolymer NS promoted the Mizoroki–Heck reaction in water with PdCl2(PPh3)2 as a catalyst precursor [45]. In this study, the three other copolymers were also investigated. Initially, we compared these polymers under our previous reaction conditions (Table 1). The copolymer was dissolved in water at "
    },
    "caliber": {
     "outcome_type": "isolated",
@@ -2947,6 +3080,11 @@
     "partner_field": "alkyne",
     "partner": "alkynes",
     "generic_substrate": true,
+    "substrate_in_rows": true,
+    "scope_columns": [
+     "R"
+    ],
+    "blank_controls": [],
     "bare_names": [
      "alkynes",
      "triethyl amine 1.0 mmol)"
@@ -2974,7 +3112,10 @@
       "mmol"
      ]
     ],
-    "label_map_size": 0
+    "label_map_size": 0,
+    "partner_candidates": [],
+    "class_corrected": "heck→sonogashira",
+    "reaction_class_data": "sonogashira"
    },
    "entries": [
     {
@@ -3187,6 +3328,7 @@
     "Yielda,c HRG-Py-Pd",
     "Yieldb,cPd-NPs"
    ],
+   "scope_columns": [],
    "source": {
     "citation": "Pyrene Functionalized Highly Reduced Graphene Oxide-palladium Nanocomposite: A Novel Catalyst for the Mizoroki-Heck Reac",
     "journal": "Frontiers in Chemistry",
@@ -3195,7 +3337,8 @@
     "pmcid": "PMC9101052",
     "label": null,
     "caption": "Mizoroki-Heck reaction catalyzed by HRG-Py-Pd and Pd-NPs nanocatalysts, Substrate scope.",
-    "footnote": "Aryl halides (0.5 mmol), Acrylic acid (0.5 mmol); a Catalyst HRG-Py-Pd (3.0 mg), K3PO4 (1.0 eq.), SDS (0.5 eq.) in H2O (2 ml), 100°C, 2 h; b Catalyst Pd-NPs (5.3 mg), K3PO4 (2.0 eq.), SDS (0.5 eq.) in H2O (2 ml), 100°C, 20 h; c Isolated yields; d HPLC, conversion."
+    "footnote": "Aryl halides (0.5 mmol), Acrylic acid (0.5 mmol); a Catalyst HRG-Py-Pd (3.0 mg), K3PO4 (1.0 eq.), SDS (0.5 eq.) in H2O (2 ml), 100°C, 2 h; b Catalyst Pd-NPs (5.3 mg), K3PO4 (2.0 eq.), SDS (0.5 eq.) in H2O (2 ml), 100°C, 20 h; c Isolated yields; d HPLC, conversion.",
+    "table_context": "After examining the efficiency of all the as-prepared nanocatalysts at different catalyst loading, the effect of reagents (SDS, K3PO4), solvent, and reaction time were evaluated on the same model MH reaction, using the best performing catalyst mass loading condition i.e. Pd-NPs (5.3 mg) and HRG-Py-Pd (3.0 mg), respectively, as both the catalyst demonstrated best results with small amount of catalyst loading and the o"
    },
    "caliber": {
     "outcome_type": "isolated",
@@ -3207,6 +3350,9 @@
     "partner_field": "alkene",
     "partner": "Acrylic acid",
     "generic_substrate": true,
+    "substrate_in_rows": false,
+    "scope_columns": [],
+    "blank_controls": [],
     "bare_names": [
      "Acrylic acid"
     ],
@@ -3248,7 +3394,12 @@
       "eq."
      ]
     ],
-    "label_map_size": 0
+    "label_map_size": 0,
+    "partner_candidates": [
+     "alkene:Acrylic acid"
+    ],
+    "class_corrected": null,
+    "reaction_class_data": "heck"
    },
    "entries": [
     {
@@ -3374,6 +3525,7 @@
     "NMR ratio (6:7 or 8a:9a)b",
     "isolated yield of 7/9ac"
    ],
+   "scope_columns": [],
    "source": {
     "citation": "Diastereoselective Synthesis of N-Methylspiroindolines by Intramolecular Mizoroki–Heck Annulations",
     "journal": "ACS Omega",
@@ -3382,7 +3534,8 @@
     "pmcid": "PMC9476516",
     "label": null,
     "caption": "Optimization of Reaction Conditions for Intramolecular Mizoroki–Heck Spirocyclization of 6/8aa",
-    "footnote": "aReaction conditions: cyclization precursor 6 or 8a (0.1 mmol, 1 equiv), Et3N (2 equiv), DMF. Amounts of palladium precatalyst and ligands listed in the table.bRatio between 6:7 or 8a:9a determined by 1H NMR of crude reaction mixture.cIsolated yields after column chromatography.dExperiment run without Et3N. In all screening reactions diastereoselectivity toward the anti product was >98% according "
+    "footnote": "aReaction conditions: cyclization precursor 6 or 8a (0.1 mmol, 1 equiv), Et3N (2 equiv), DMF. Amounts of palladium precatalyst and ligands listed in the table.bRatio between 6:7 or 8a:9a determined by 1H NMR of crude reaction mixture.cIsolated yields after column chromatography.dExperiment run without Et3N. In all screening reactions diastereoselectivity toward the anti product was >98% according ",
+    "table_context": "With substrate 6 in hand, screening of reaction conditions for the Mizoroki–Heck cyclization was commenced. The results are presented in Table 1. A Pd(OAc)2/dppf catalytic system with Et3N as the base and DMF as the solvent was chosen as the starting point, as this has previously been successfully used for the synthesis of spiroxindoles using a related ring-closing protocol.16 Screening of the reaction temperature sh"
    },
    "caliber": {
     "outcome_type": "isolated",
@@ -3394,6 +3547,9 @@
     "partner_field": null,
     "partner": null,
     "generic_substrate": true,
+    "substrate_in_rows": false,
+    "scope_columns": [],
+    "blank_controls": [],
     "bare_names": [],
     "base": "Et3N",
     "solvent": "DMF",
@@ -3408,7 +3564,10 @@
       "equiv"
      ]
     ],
-    "label_map_size": 0
+    "label_map_size": 0,
+    "partner_candidates": [],
+    "class_corrected": null,
+    "reaction_class_data": null
    },
    "entries": [
     {
@@ -3465,6 +3624,7 @@
     "solvent",
     "yield/%"
    ],
+   "scope_columns": [],
    "source": {
     "citation": "Sustainable Mizoroki–Heck Cross-Coupling Using a Pd(II)-Polymer as Precatalyst in 1‑Butanol",
     "journal": "ACS Omega",
@@ -3473,7 +3633,8 @@
     "pmcid": "PMC13325132",
     "label": null,
     "caption": "Optimization of Reaction Conditions for MH Reaction between iodobenzene and Ethyl Acrylate Catalyzed by Pd/PECIm",
-    "footnote": "aReaction conditions: iodobenzene (0.5 mmol), ethyl acrylate (1.0 mmol), Et3N (1.0 mmol), solvent (1.0 mL), and Pd/PECIm (ranging from 2.5 to 10 mg).bYield determined by GC/MS with a calibration curve for ethyl cinnamate.cA total of 2.5 mg of PECIm was used.dNo additional components were added."
+    "footnote": "aReaction conditions: iodobenzene (0.5 mmol), ethyl acrylate (1.0 mmol), Et3N (1.0 mmol), solvent (1.0 mL), and Pd/PECIm (ranging from 2.5 to 10 mg).bYield determined by GC/MS with a calibration curve for ethyl cinnamate.cA total of 2.5 mg of PECIm was used.dNo additional components were added.",
+    "table_context": "The MH reaction between iodobenzene and ethyl acrylate was selected to evaluate the catalytic performance of Pd/PECIm under varying conditions of solvent, reaction time, and catalyst loading (Table ). Guided by the solvent selection principles outlined by Prat et al., isopropanol (iPrOH), classified as a recommended solvent, was initially employed. The reaction was conducted at 80 °C (near its boiling point), with 0."
    },
    "caliber": {
     "outcome_type": "gc",
@@ -3485,6 +3646,12 @@
     "partner_field": "alkene",
     "partner": "ethyl acrylate",
     "generic_substrate": false,
+    "substrate_in_rows": false,
+    "scope_columns": [],
+    "blank_controls": [
+     "T1, entry 11",
+     "T1, entry 12"
+    ],
     "bare_names": [
      "iodobenzene",
      "ethyl acrylate"
@@ -3512,7 +3679,13 @@
       "mmol"
      ]
     ],
-    "label_map_size": 0
+    "label_map_size": 0,
+    "partner_candidates": [
+     "alkene:ethyl acrylate",
+     "alkene:Ethyl Acrylate Catalyzed by Pd/PECIm"
+    ],
+    "class_corrected": null,
+    "reaction_class_data": "heck"
    },
    "entries": [
     {
@@ -3674,38 +3847,6 @@
      "value_raw": "95",
      "notes": [],
      "catalyst_raw": "0.5"
-    },
-    {
-     "unit_id": "PMC13325132-T1",
-     "row": [
-      "11",
-      "-",
-      "95",
-      "1.5",
-      "1-BuOH",
-      "0"
-     ],
-     "locator": "T1, entry 11",
-     "value": 0.0,
-     "value_raw": "0",
-     "notes": [],
-     "catalyst_raw": "-"
-    },
-    {
-     "unit_id": "PMC13325132-T1",
-     "row": [
-      "12",
-      "-",
-      "95",
-      "1.5",
-      "1-BuOH",
-      "0"
-     ],
-     "locator": "T1, entry 12",
-     "value": 0.0,
-     "value_raw": "0",
-     "notes": [],
-     "catalyst_raw": "-"
     }
    ]
   },
@@ -3723,6 +3864,9 @@
     "TON",
     "TOF/h –1"
    ],
+   "scope_columns": [
+    "X"
+   ],
    "source": {
     "citation": "Sustainable Mizoroki–Heck Cross-Coupling Using a Pd(II)-Polymer as Precatalyst in 1‑Butanol",
     "journal": "ACS Omega",
@@ -3731,7 +3875,8 @@
     "pmcid": "PMC13325132",
     "label": null,
     "caption": "Scope of MH Coupling Reaction Catalyzed by Pd/PECIm",
-    "footnote": "aReaction conditions: aryl halide (0.5 mmol), alkene (1.0 mmol), Et3N (1.0 mmol), n-BuOH (1.0 mL), Pd/PECIm (2.5 mg), 95 °C.bIsolated yield.cTOF was calculated based on the total amount of Pd atoms in Pd/PECIm.dPerformed at 120 °C.ePerformed on a 50× scale."
+    "footnote": "aReaction conditions: aryl halide (0.5 mmol), alkene (1.0 mmol), Et3N (1.0 mmol), n-BuOH (1.0 mL), Pd/PECIm (2.5 mg), 95 °C.bIsolated yield.cTOF was calculated based on the total amount of Pd atoms in Pd/PECIm.dPerformed at 120 °C.ePerformed on a 50× scale.",
+    "table_context": "The MH reaction between iodobenzene and ethyl acrylate was selected to evaluate the catalytic performance of Pd/PECIm under varying conditions of solvent, reaction time, and catalyst loading (Table ). Guided by the solvent selection principles outlined by Prat et al., isopropanol (iPrOH), classified as a recommended solvent, was initially employed. The reaction was conducted at 80 °C (near its boiling point), with 0."
    },
    "caliber": {
     "outcome_type": "isolated",
@@ -3743,6 +3888,11 @@
     "partner_field": "alkene",
     "partner": "alkene",
     "generic_substrate": true,
+    "substrate_in_rows": true,
+    "scope_columns": [
+     "X"
+    ],
+    "blank_controls": [],
     "bare_names": [],
     "base": "Et3N",
     "solvent": "n-BuOH",
@@ -3767,7 +3917,10 @@
       "mmol"
      ]
     ],
-    "label_map_size": 0
+    "label_map_size": 0,
+    "partner_candidates": [],
+    "class_corrected": null,
+    "reaction_class_data": "heck"
    },
    "entries": [
     {
@@ -4088,6 +4241,7 @@
     "Base",
     "Yield/%a"
    ],
+   "scope_columns": [],
    "source": {
     "citation": "A triazine-based Ni(II) PNP pincer complex as catalyst for Kumada–Corriu and Negishi cross-coupling reactions",
     "journal": "Monatshefte Fur Chemie",
@@ -4096,7 +4250,8 @@
     "pmcid": "PMC5225227",
     "label": null,
     "caption": "Catalyst screening for the Kumada–Corriu cross coupling",
-    "footnote": "4-Bromotoluene (1 mmol) and catalyst (2 mol%) in 3 cm3 THF, PhMgBr (1.3 mmol) was added and stirred at r.t. for 6 h aYield of pure isolated product after column chromatography"
+    "footnote": "4-Bromotoluene (1 mmol) and catalyst (2 mol%) in 3 cm3 THF, PhMgBr (1.3 mmol) was added and stirred at r.t. for 6 h aYield of pure isolated product after column chromatography",
+    "table_context": "The precatalysts 1–4 (Scheme 2) were prepared by treatment of NiCl2·6H2O with the respective PNP ligands as reported previously [27, 32] and are thermally robust and air-stable compounds. The reaction of 4-bromotoluene with phenyl magnesium bromide and phenyl zinc bromide in THF at room temperature and 60 °C, respectively, for 6 h was investigated with a catalyst loading of 2 mol% to identify the most efficient catal"
    },
    "caliber": {
     "outcome_type": "isolated",
@@ -4108,6 +4263,9 @@
     "partner_field": "organometallic",
     "partner": "PhMgBr",
     "generic_substrate": false,
+    "substrate_in_rows": false,
+    "scope_columns": [],
+    "blank_controls": [],
     "bare_names": [
      "4-Bromotoluene"
     ],
@@ -4134,7 +4292,12 @@
       "mmol"
      ]
     ],
-    "label_map_size": 0
+    "label_map_size": 0,
+    "partner_candidates": [
+     "organometallic:PhMgBr"
+    ],
+    "class_corrected": "negishi→kumada",
+    "reaction_class_data": "kumada"
    },
    "entries": [
     {
@@ -4205,6 +4368,7 @@
     "Base",
     "Yield/%a"
    ],
+   "scope_columns": [],
    "source": {
     "citation": "A triazine-based Ni(II) PNP pincer complex as catalyst for Kumada–Corriu and Negishi cross-coupling reactions",
     "journal": "Monatshefte Fur Chemie",
@@ -4213,7 +4377,8 @@
     "pmcid": "PMC5225227",
     "label": null,
     "caption": "Catalyst screening for the Negishi cross coupling",
-    "footnote": "4-Bromotoluene (1 mmol) and catalyst (2 mol%) in 3 cm3 THF, PhZnBr (0.5 M in THF, 1.3 mmol) and LiCl (1.3 mmol) were added at r.t. and the solution was stirred at 60 °C for 6 h aYield of pure isolated product after column chromatography"
+    "footnote": "4-Bromotoluene (1 mmol) and catalyst (2 mol%) in 3 cm3 THF, PhZnBr (0.5 M in THF, 1.3 mmol) and LiCl (1.3 mmol) were added at r.t. and the solution was stirred at 60 °C for 6 h aYield of pure isolated product after column chromatography",
+    "table_context": "The precatalysts 1–4 (Scheme 2) were prepared by treatment of NiCl2·6H2O with the respective PNP ligands as reported previously [27, 32] and are thermally robust and air-stable compounds. The reaction of 4-bromotoluene with phenyl magnesium bromide and phenyl zinc bromide in THF at room temperature and 60 °C, respectively, for 6 h was investigated with a catalyst loading of 2 mol% to identify the most efficient catal"
    },
    "caliber": {
     "outcome_type": "isolated",
@@ -4225,6 +4390,9 @@
     "partner_field": null,
     "partner": null,
     "generic_substrate": true,
+    "substrate_in_rows": false,
+    "scope_columns": [],
+    "blank_controls": [],
     "bare_names": [
      "4-Bromotoluene"
     ],
@@ -4251,7 +4419,10 @@
       "mmol"
      ]
     ],
-    "label_map_size": 0
+    "label_map_size": 0,
+    "partner_candidates": [],
+    "class_corrected": null,
+    "reaction_class_data": null
    },
    "entries": [
     {
@@ -4322,6 +4493,7 @@
     "Solvent",
     "Yield [%] a"
    ],
+   "scope_columns": [],
    "source": {
     "citation": "A General Synthesis of Cross-Conjugated Enynones through Pd Catalyzed Sonogashira Coupling with Triazine Esters",
     "journal": "Molecules",
@@ -4330,7 +4502,8 @@
     "pmcid": "PMC10254696",
     "label": null,
     "caption": "The optimization of the palladium-catalyzed cross-coupling of cinnamic triazine ester 1a and phenylacetylene 3a.",
-    "footnote": "a All reactions were performed on a 0.25 mmol scale in 2 mL of solvent, and yields were determined by calibrated GC analysis with biphenyl as an internal standard. b catalyst (3% mol) was used. c catalyst (1% mol) was used, 24 h."
+    "footnote": "a All reactions were performed on a 0.25 mmol scale in 2 mL of solvent, and yields were determined by calibrated GC analysis with biphenyl as an internal standard. b catalyst (3% mol) was used. c catalyst (1% mol) was used, 24 h.",
+    "table_context": "Since there is limited access to cross-conjugated enynones from natural resources, considerable effort has been put into preparing conjugated acetylenic carbonyl compounds through various synthetic methods from commercially available starting materials. These methods include oxidatively dimerizing phenylacetylene [10], oxidizing secondary vinyl ethynyl alcohols [11,12,13,14,15], and aldol crotonic condensation of eth"
    },
    "caliber": {
     "outcome_type": "gc",
@@ -4342,6 +4515,9 @@
     "partner_field": "alkyne",
     "partner": "phenylacetylene",
     "generic_substrate": true,
+    "substrate_in_rows": false,
+    "scope_columns": [],
+    "blank_controls": [],
     "bare_names": [
      "optimization of the palladium-catalyzed cross-coupling of cinnamic triazine ester 1a",
      "phenylacetylene 3a."
@@ -4353,7 +4529,12 @@
     "internal_standard": "internal standard",
     "catalyst": "Pd(OAc)2",
     "feeds": [],
-    "label_map_size": 0
+    "label_map_size": 0,
+    "partner_candidates": [
+     "alkyne:phenylacetylene 3a."
+    ],
+    "class_corrected": null,
+    "reaction_class_data": "sonogashira"
    },
    "entries": [
     {
@@ -4563,6 +4744,7 @@
     "Variation from the Standard conditions",
     "Yield (%)b"
    ],
+   "scope_columns": [],
    "source": {
     "citation": "Palladium-Catalyzed Carbonylative Sonogashira Coupling of Aliphatic Alkynes and Aryl Thianthrenium Salts to Alkynones an",
     "journal": "Organic Letters",
@@ -4571,7 +4753,8 @@
     "pmcid": "PMC11667721",
     "label": null,
     "caption": "Optimization of the Reaction Conditionsa",
-    "footnote": "aThe reaction was conducted using 1a (0.2 mmol), 2a (x mmol), catalyst (2 mol %), ligand (6 mol %), base (2.0 equiv), CO (10 bar), 80 °C, 15 h.bDetermined by GC with hexadecane as internal standard.cIsolated yield is shown in parentheses."
+    "footnote": "aThe reaction was conducted using 1a (0.2 mmol), 2a (x mmol), catalyst (2 mol %), ligand (6 mol %), base (2.0 equiv), CO (10 bar), 80 °C, 15 h.bDetermined by GC with hexadecane as internal standard.cIsolated yield is shown in parentheses.",
+    "table_context": "Initially, we started with readily available aryl thianthrenium salt 2a and heptane 1a as the model substrates to establish this reaction, and the target product 3a was obtained (Table 1). After a systematic investigation of the reaction parameters, we determined the optimal conditions: alkyl alkyne 1a (1.0 equiv), aryl thianthrenium salt 2a (1.5 equiv), PdI2 (2 mol %), PPh3 (6 mol %), DIPEA (2.0 equiv), DMF (0.1 mol"
    },
    "caliber": {
     "outcome_type": "isolated",
@@ -4583,6 +4766,9 @@
     "partner_field": null,
     "partner": null,
     "generic_substrate": true,
+    "substrate_in_rows": false,
+    "scope_columns": [],
+    "blank_controls": [],
     "bare_names": [],
     "base": "DIPEA",
     "solvent": null,
@@ -4607,7 +4793,10 @@
       "equiv"
      ]
     ],
-    "label_map_size": 0
+    "label_map_size": 0,
+    "partner_candidates": [],
+    "class_corrected": null,
+    "reaction_class_data": null
    },
    "entries": [
     {
@@ -4781,6 +4970,10 @@
     "R2",
     "yield (%)"
    ],
+   "scope_columns": [
+    "R1",
+    "R2"
+   ],
    "source": {
     "citation": "N‑Mesyl-Enabled Cu2O Catalysis: Synthesis of (E)‑3-Alkylideneisoindolin-1-ones and 3,4-Unsubstituted Isoquinolones via S",
     "journal": "The Journal of Organic Chemistry",
@@ -4789,7 +4982,8 @@
     "pmcid": "PMC13097261",
     "label": null,
     "caption": "Coupling of Diverse o-Iodoaryl Carboxamides with Terminal Alkynes under Cu2O-Catalyzed Conditions",
-    "footnote": "aReactions were carried out in pressure-relief borosilicate glass vials.bIsolated yields."
+    "footnote": "aReactions were carried out in pressure-relief borosilicate glass vials.bIsolated yields.",
+    "table_context": ""
    },
    "caliber": {
     "outcome_type": "isolated",
@@ -4801,6 +4995,12 @@
     "partner_field": null,
     "partner": null,
     "generic_substrate": true,
+    "substrate_in_rows": true,
+    "scope_columns": [
+     "R1",
+     "R2"
+    ],
+    "blank_controls": [],
     "bare_names": [],
     "base": null,
     "solvent": null,
@@ -4809,7 +5009,10 @@
     "internal_standard": null,
     "catalyst": "1a/2a",
     "feeds": [],
-    "label_map_size": 0
+    "label_map_size": 0,
+    "partner_candidates": [],
+    "class_corrected": null,
+    "reaction_class_data": null
    },
    "entries": [
     {
@@ -4870,6 +5073,10 @@
     "R2",
     "yield (%)"
    ],
+   "scope_columns": [
+    "R1",
+    "R2"
+   ],
    "source": {
     "citation": "N‑Mesyl-Enabled Cu2O Catalysis: Synthesis of (E)‑3-Alkylideneisoindolin-1-ones and 3,4-Unsubstituted Isoquinolones via S",
     "journal": "The Journal of Organic Chemistry",
@@ -4878,7 +5085,8 @@
     "pmcid": "PMC13097261",
     "label": null,
     "caption": "Substrate Scope for Cu2O-Mediated Synthesis of 3-Alkyl/Arylideneisoindolin-1-ones",
-    "footnote": "aReactions were performed using different combinations of reaction temperature and time depending on the coupled alkyne, for ethyl propiolate (entries 1–9) and 3-butyn-2-one (entries 21–23): 95 °C for 6 h and for phenylacetylene (entries 10–20): 110 °C for 8 h. All the reactions were carried out in pressure-relief borosilicate glass vials.bIsolated yields."
+    "footnote": "aReactions were performed using different combinations of reaction temperature and time depending on the coupled alkyne, for ethyl propiolate (entries 1–9) and 3-butyn-2-one (entries 21–23): 95 °C for 6 h and for phenylacetylene (entries 10–20): 110 °C for 8 h. All the reactions were carried out in pressure-relief borosilicate glass vials.bIsolated yields.",
+    "table_context": ""
    },
    "caliber": {
     "outcome_type": "isolated",
@@ -4888,8 +5096,14 @@
    "parsed": {
     "aryl_halide": null,
     "partner_field": "alkyne",
-    "partner": "time depending on the coupled alkyne",
+    "partner": "for phenylacetylene : 110 °C for 8 h",
     "generic_substrate": true,
+    "substrate_in_rows": true,
+    "scope_columns": [
+     "R1",
+     "R2"
+    ],
+    "blank_controls": [],
     "bare_names": [
      "time depending on the coupled alkyne",
      "for phenylacetylene : 110 °C for 8 h"
@@ -4901,7 +5115,12 @@
     "internal_standard": null,
     "catalyst": "3a/4a",
     "feeds": [],
-    "label_map_size": 0
+    "label_map_size": 0,
+    "partner_candidates": [
+     "alkyne:for phenylacetylene : 110 °C for 8 h"
+    ],
+    "class_corrected": null,
+    "reaction_class_data": "sonogashira"
    },
    "entries": [
     {
@@ -4961,6 +5180,9 @@
     "R1",
     "yield (%)"
    ],
+   "scope_columns": [
+    "R1"
+   ],
    "source": {
     "citation": "N‑Mesyl-Enabled Cu2O Catalysis: Synthesis of (E)‑3-Alkylideneisoindolin-1-ones and 3,4-Unsubstituted Isoquinolones via S",
     "journal": "The Journal of Organic Chemistry",
@@ -4969,7 +5191,8 @@
     "pmcid": "PMC13097261",
     "label": null,
     "caption": "TBAF-Mediated Removal of the N-Mesyl Group from 3-Alkylideneisoindolin-1-ones",
-    "footnote": "aReactions were carried out in pressure-relief borosilicate glass vials.bIsolated yields."
+    "footnote": "aReactions were carried out in pressure-relief borosilicate glass vials.bIsolated yields.",
+    "table_context": ""
    },
    "caliber": {
     "outcome_type": "isolated",
@@ -4981,6 +5204,11 @@
     "partner_field": null,
     "partner": null,
     "generic_substrate": true,
+    "substrate_in_rows": true,
+    "scope_columns": [
+     "R1"
+    ],
+    "blank_controls": [],
     "bare_names": [],
     "base": null,
     "solvent": null,
@@ -4989,7 +5217,10 @@
     "internal_standard": null,
     "catalyst": "4a/5a",
     "feeds": [],
-    "label_map_size": 0
+    "label_map_size": 0,
+    "partner_candidates": [],
+    "class_corrected": null,
+    "reaction_class_data": null
    },
    "entries": [
     {
@@ -5131,6 +5362,7 @@
     "7",
     "8"
    ],
+   "scope_columns": [],
    "source": {
     "citation": "Scope and limitation of propylene carbonate as a sustainable solvent in the Suzuki–Miyaura reaction†",
     "journal": "RSC Advances",
@@ -5139,7 +5371,8 @@
     "pmcid": "PMC9075783",
     "label": null,
     "caption": "Obtained yields for the Suzuki–Miyaura reactions",
-    "footnote": "aIsolated yield for the conventionally heated reaction.bIsolated yield for microwave assisted reaction.cEstimated yield from HPLC analysis and weight of the raw products."
+    "footnote": "aIsolated yield for the conventionally heated reaction.bIsolated yield for microwave assisted reaction.cEstimated yield from HPLC analysis and weight of the raw products.",
+    "table_context": "According to the necessary reaction times to attain total conversion shown in Table 1, 2-iodopyridine (2) had higher reactivity compared to 4-iodopyridine (3) in the Suzuki–Miyaura reaction with boronic acids 5, 6 and 7. The lowest yield was found in the reaction of 2-iodopyridine derivatives with 4-fluorophenylboronic acid both under conventional heating and under microwave conditions (8). After 3 h reaction time, p"
    },
    "caliber": {
     "outcome_type": "isolated",
@@ -5151,6 +5384,9 @@
     "partner_field": null,
     "partner": null,
     "generic_substrate": true,
+    "substrate_in_rows": false,
+    "scope_columns": [],
+    "blank_controls": [],
     "bare_names": [],
     "base": null,
     "solvent": null,
@@ -5159,7 +5395,10 @@
     "internal_standard": null,
     "catalyst": "92% (9)a",
     "feeds": [],
-    "label_map_size": 2
+    "label_map_size": 2,
+    "partner_candidates": [],
+    "class_corrected": null,
+    "reaction_class_data": null
    },
    "entries": [
     {

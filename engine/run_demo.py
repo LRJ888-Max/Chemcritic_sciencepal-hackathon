@@ -127,7 +127,7 @@ def screen_two(records, verbose=True):
 def screen_three(records):
     _hr("屏 3 · 档内定位")
     result = placement_mod.placement(USER, records)
-    if result["status"] != "PLACED":
+    if result["status"] not in ("PLACED", "PLACED_PRODUCT_UNCONFIRMED"):
         print(f"  {result['status']}：{result.get('reason')}")
         print(f"  下一步：{result.get('action')}")
         return result

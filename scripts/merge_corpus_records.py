@@ -35,13 +35,39 @@ SRC = INCOMING / "corpus_promote_2026-10-31.json"
 ALLOWED = {"isolated", "gc", "nmr", "conversion"}
 
 
+def _form_from_text(text: Optional[str]) -> Optional[str]:
+    """从题注/正文里捞出催化剂形态，只认「含 Pd/Ni/catalyst 的那一句」。
+
+    整段当 blob 匹配会把「与 Pd/C 相比」这类对比句当成本文催化剂，
+    所以按句切，句内必须同时出现金属/催化剂词与形态词。
+    """
+    if not text:
+        return None
+    for sent in re.split(r"(?<=[.;])\s+", text):
+        low = sent.lower()
+        if not re.search(r"catalys|palladium|nickel|\bpd\b|\bni\b|钯|镍", low):
+            continue
+        if re.search(r"nanoparticle|nanocatalyst|\bnps?\b|magnetic|fe3o4|nano-?gel", low):
+            return "nanoparticle"
+        if re.search(r"supported|immobili[sz]|heterogeneous|anchored|grafted|encapsulat", low):
+            return "supported"
+        if re.search(r"homogeneous|molecular\s+complex|\bcomplex\b", low):
+            return "molecular_complex"
+    return None
+
+
 def _profile(cat: Optional[str], base: Optional[str], solvent: Optional[str],
-             reaction_class: str) -> Dict[str, Any]:
+             reaction_class: str, context: Optional[str] = None) -> Dict[str, Any]:
     """催化体系五字段。判不准的键一律不写（tier 会退化成未定，而不是假档位）。"""
     blob = f"{cat or ''}".lower()
     prof: Dict[str, Any] = {}
     if not blob.strip() or blob in ("none", "no catalyst"):
-        prof["catalyst_form"] = "none"
+        # ⚠️ 不能写 catalyst_form="none"：它不在受控词表里，写了 tier 永远算不出（旧 bug）。
+        # 且「没抽到催化剂」与「原文明确无催化剂」是两回事，前者不该被表述成任一形态。
+        # 形态有写在题注/首段的，从这里捞；捞不到就留空，让档位如实报未定。
+        from_text = _form_from_text(context)
+        if from_text:
+            prof["catalyst_form"] = from_text
     elif any(k in blob for k in ("nanoparticle", "np", "magnetic", "fe3o4", "pd–c", "pd-c")):
         prof["catalyst_form"] = "nanoparticle"
     elif any(k in blob for k in ("@", "mof", "sio2", "supported", "resin", "polymer")):
@@ -50,6 +76,12 @@ def _profile(cat: Optional[str], base: Optional[str], solvent: Optional[str],
         prof["catalyst_form"] = "in_situ_salt"
     elif "(" in blob or "complex" in blob or "nhc" in blob:
         prof["catalyst_form"] = "molecular_complex"
+    else:
+        # 表里只有用量（"Pd (mol%)"）时，形态常写在题注/首段：
+        # 不补这一步，语料 96 条里 40 条档位算不出来（96 条全变成"只能并排"）。
+        from_text = _form_from_text(context)
+        if from_text:
+            prof["catalyst_form"] = from_text
 
     if any(k in blob for k in ("pph3", "phosphine", "sphos", "xphos", "dppp", "dppf", "xantphos", "binap")):
         prof["ligand_family"] = "phosphine"
@@ -91,6 +123,48 @@ def _locator_zh(table: Dict[str, Any], entry: Dict[str, Any]) -> str:
     return f"{head}（{tail}）" if tail else head
 
 
+ROW_COLS = {
+    "solvent": r"solvent|溶剂|介质",
+    "base": r"^base\b|^碱",
+    "temp_c": r"^t\s*/\s*°?\s*c|temp|温度",
+    "time_h": r"^time|时间|^t\s*/\s*h",
+}
+
+
+def _row_conditions(header: List[str], row: List[str]) -> Dict[str, Any]:
+    """条件表常在行里给溶剂/碱/温度/时间（表级脚注只写"catalyst, base and solvent"）。
+
+    parsed 里的表级值是"这张表出现过某个溶剂"，放到每条 entry 上就是张冠李戴：
+    T1 里 14 行分别是 toluene / DMF / EtOH / H2O / EtOH-H2O，表级只会留下一个。
+    行里有值就以行为准，没有才回退表级。
+    """
+    out: Dict[str, Any] = {}
+    for i, h in enumerate(header or []):
+        if len(row) <= i:
+            continue
+        name, cell = (h or "").strip(), str(row[i]).strip()
+        if not cell or re.fullmatch(r"[-–—]", cell):
+            continue
+        for key, pat in ROW_COLS.items():
+            if not re.search(pat, name, re.I):
+                continue
+            if key == "solvent":
+                out["solvent"] = cell
+            elif key == "base":
+                if not re.search(r"no\s*base|无碱", cell, re.I):
+                    out["base"] = cell
+            elif key == "temp_c":
+                m = re.search(r"-?\d+(?:\.\d+)?", cell)
+                if m:
+                    out["temp_c"] = float(m.group(0))
+            elif key == "time_h":
+                m = re.search(r"\d+(?:\.\d+)?", cell)
+                if m:
+                    v = float(m.group(0))
+                    out["time_h"] = round(v / 60, 2) if re.search(r"min", name, re.I) else v
+    return out
+
+
 def build_record(table: Dict[str, Any], entry: Dict[str, Any], seq: int) -> Dict[str, Any]:
     p = table["parsed"]
     s = table["source"]
@@ -106,13 +180,19 @@ def build_record(table: Dict[str, Any], entry: Dict[str, Any], seq: int) -> Dict
     if cat and re.fullmatch(r"[\d.,\s]+", str(cat).strip()):
         # 单元格里是 mol%（"0.20"），催化剂名在表头 —— 别把用量当催化剂名
         hdr = table.get("header") or []
-        cat = next((h for h in hdr if re.search(r"catalyst|\[Pd\]|\[Ni\]|pd/|cat\.", h, re.I)), None)
+        cat = next((h for h in hdr
+                    if re.search(r"catalyst|\[Pd\]|\[Ni\]|cat\.", h, re.I)
+                    and not re.search(r"mol\s*%|loading|amount|用量", h, re.I)), None)
+    if cat and re.search(r"mol\s*%|loading|amount|用量", str(cat), re.I):
+        # "Pd/mol %" 是用量表头，不是催化剂名（旧实现把它当催化剂名写进记录）
+        cat = None
+    row_cond = _row_conditions(table.get("header") or [], entry.get("row") or [])
     conditions = {
         "catalyst": cat,
-        "base": p.get("base"),
-        "solvent": p.get("solvent"),
-        "temp_c": p.get("temp_c"),
-        "time_h": p.get("time_h"),
+        "base": row_cond.get("base") or p.get("base"),
+        "solvent": row_cond.get("solvent") or p.get("solvent"),
+        "temp_c": row_cond.get("temp_c", p.get("temp_c")),
+        "time_h": row_cond.get("time_h", p.get("time_h")),
         "atmosphere": None,
         "scale_mmol": None,
         "equivalents": {k: v for k, v, u in [(n, q, un) for n, q, un in p.get("feeds", []) if un == "equiv"]},
@@ -138,8 +218,9 @@ def build_record(table: Dict[str, Any], entry: Dict[str, Any], seq: int) -> Dict
         "purification": None,
         "evidence_grade": "candidate",
         "verification": "unverified",
-        "catalytic_profile": _profile(cat, p.get("base"), p.get("solvent"),
-                                      table["reaction_class"]),
+        "catalytic_profile": _profile(cat, conditions["base"], conditions["solvent"],
+                                      table["reaction_class"],
+                                      f"{s.get('caption','')} {s.get('table_context','')}"),
         "evidence_note": (f"2026-10-31 从语料层（{table['corpus_id']}，{table['reaction_class']}）晋升；"
                           "规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。"),
         "substrate": substrate,
@@ -192,6 +273,12 @@ def main() -> None:
     rejected: List[Dict[str, str]] = []
     for table in promote["tables"]:
         p = table["parsed"]
+        if p.get("substrate_in_rows"):
+            # 底物范围表：脚注是 model reaction 的模板条件，真正的底物在行里
+            rejected.append({"unit": table["unit_id"],
+                             "reason": f"底物范围表（{'+'.join(p.get('scope_columns') or [])} 列随行变化），"
+                                       "表级底物不代表各行，需行级结构解析"})
+            continue
         if p.get("generic_substrate") or not p.get("aryl_halide") or not p.get("partner"):
             rejected.append({"unit": table["unit_id"], "reason": "底物为通称或缺失，需读行内结构"})
             continue

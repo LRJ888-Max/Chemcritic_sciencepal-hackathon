@@ -2931,7 +2931,7 @@
    "evidence_note": "2026-10-31 从语料层（PMC9301730，buchwald_hartwig）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
    "substrate": {
     "aryl_halide": "1-chloro-4-iodobenzene",
-    "boronic_acid": "phenylboronic ester",
+    "amine": "toluidine",
     "product": null
    },
    "provenance": {
@@ -2986,7 +2986,7 @@
    "evidence_note": "2026-10-31 从语料层（PMC9301730，buchwald_hartwig）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
    "substrate": {
     "aryl_halide": "1-chloro-4-iodobenzene",
-    "boronic_acid": "phenylboronic ester",
+    "amine": "toluidine",
     "product": null
    },
    "provenance": {
@@ -3038,7 +3038,7 @@
    "evidence_note": "2026-10-31 从语料层（PMC9301730，buchwald_hartwig）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
    "substrate": {
     "aryl_halide": "1-chloro-4-iodobenzene",
-    "boronic_acid": "phenylboronic ester",
+    "amine": "toluidine",
     "product": null
    },
    "provenance": {
@@ -3090,7 +3090,7 @@
    "evidence_note": "2026-10-31 从语料层（PMC9301730，buchwald_hartwig）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
    "substrate": {
     "aryl_halide": "1-chloro-4-iodobenzene",
-    "boronic_acid": "phenylboronic ester",
+    "amine": "toluidine",
     "product": null
    },
    "provenance": {
@@ -3143,7 +3143,7 @@
    "evidence_note": "2026-10-31 从语料层（PMC9301730，buchwald_hartwig）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
    "substrate": {
     "aryl_halide": "1-chloro-4-iodobenzene",
-    "boronic_acid": "phenylboronic ester",
+    "amine": "toluidine",
     "product": null
    },
    "provenance": {
@@ -3198,7 +3198,7 @@
    "evidence_note": "2026-10-31 从语料层（PMC9301730，buchwald_hartwig）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
    "substrate": {
     "aryl_halide": "1-chloro-4-iodobenzene",
-    "boronic_acid": "phenylboronic ester",
+    "amine": "toluidine",
     "product": null
    },
    "provenance": {
@@ -3251,7 +3251,7 @@
    "evidence_note": "2026-10-31 从语料层（PMC9301730，buchwald_hartwig）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
    "substrate": {
     "aryl_halide": "1-chloro-4-iodobenzene",
-    "boronic_acid": "phenylboronic ester",
+    "amine": "toluidine",
     "product": null
    },
    "provenance": {
@@ -3306,7 +3306,7 @@
    "evidence_note": "2026-10-31 从语料层（PMC9301730，buchwald_hartwig）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
    "substrate": {
     "aryl_halide": "1-chloro-4-iodobenzene",
-    "boronic_acid": "phenylboronic ester",
+    "amine": "toluidine",
     "product": null
    },
    "provenance": {
@@ -3361,7 +3361,7 @@
    "evidence_note": "2026-10-31 从语料层（PMC9301730，buchwald_hartwig）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
    "substrate": {
     "aryl_halide": "1-chloro-4-iodobenzene",
-    "boronic_acid": "phenylboronic ester",
+    "amine": "toluidine",
     "product": null
    },
    "provenance": {
@@ -3416,7 +3416,7 @@
    "evidence_note": "2026-10-31 从语料层（PMC9301730，buchwald_hartwig）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
    "substrate": {
     "aryl_halide": "1-chloro-4-iodobenzene",
-    "boronic_acid": "phenylboronic ester",
+    "amine": "toluidine",
     "product": null
    },
    "provenance": {
@@ -3453,7 +3453,7 @@
     "catalyst": "Pd–CeO2",
     "base": "K2CO3",
     "solvent": "toluene",
-    "temp_c": null,
+    "temp_c": 25.0,
     "time_h": 6.0,
     "atmosphere": null,
     "scale_mmol": null,
@@ -3509,7 +3509,7 @@
     "catalyst": "Pd–CeO2",
     "base": "K2CO3",
     "solvent": "toluene",
-    "temp_c": null,
+    "temp_c": 50.0,
     "time_h": 6.0,
     "atmosphere": null,
     "scale_mmol": null,
@@ -3565,7 +3565,7 @@
     "catalyst": "Pd–CeO2",
     "base": "K2CO3",
     "solvent": "toluene",
-    "temp_c": null,
+    "temp_c": 80.0,
     "time_h": 6.0,
     "atmosphere": null,
     "scale_mmol": null,
@@ -3619,9 +3619,9 @@
    },
    "conditions": {
     "catalyst": "Pd–CeO2",
-    "base": "K2CO3",
+    "base": "KOH",
     "solvent": "toluene",
-    "temp_c": null,
+    "temp_c": 80.0,
     "time_h": 6.0,
     "atmosphere": null,
     "scale_mmol": null,
@@ -3675,9 +3675,9 @@
    },
    "conditions": {
     "catalyst": "Pd–CeO2",
-    "base": "K2CO3",
+    "base": "NEt3",
     "solvent": "toluene",
-    "temp_c": null,
+    "temp_c": 80.0,
     "time_h": 6.0,
     "atmosphere": null,
     "scale_mmol": null,
@@ -3731,9 +3731,9 @@
    },
    "conditions": {
     "catalyst": "Pd–CeO2",
-    "base": "K2CO3",
+    "base": "Cs2CO3",
     "solvent": "toluene",
-    "temp_c": null,
+    "temp_c": 80.0,
     "time_h": 6.0,
     "atmosphere": null,
     "scale_mmol": null,
@@ -3787,9 +3787,9 @@
    },
    "conditions": {
     "catalyst": "Pd–CeO2",
-    "base": "K2CO3",
+    "base": "Na2CO3",
     "solvent": "toluene",
-    "temp_c": null,
+    "temp_c": 80.0,
     "time_h": 6.0,
     "atmosphere": null,
     "scale_mmol": null,
@@ -4110,9 +4110,9 @@
    "conditions": {
     "catalyst": null,
     "base": "K2CO3",
-    "solvent": "benzene",
+    "solvent": "Toluene",
     "temp_c": null,
-    "time_h": null,
+    "time_h": 1.0,
     "atmosphere": null,
     "scale_mmol": null,
     "equivalents": {}
@@ -4121,9 +4121,9 @@
    "evidence_grade": "candidate",
    "verification": "unverified",
    "catalytic_profile": {
-    "catalyst_form": "none",
+    "catalyst_form": "nanoparticle",
     "ligand_family": "none",
-    "support": "none",
+    "support": "solid_support",
     "medium": "organic",
     "activation_mode": "thermal"
    },
@@ -4166,9 +4166,9 @@
    "conditions": {
     "catalyst": null,
     "base": "K2CO3",
-    "solvent": "benzene",
+    "solvent": "DMF",
     "temp_c": null,
-    "time_h": null,
+    "time_h": 0.83,
     "atmosphere": null,
     "scale_mmol": null,
     "equivalents": {}
@@ -4177,9 +4177,9 @@
    "evidence_grade": "candidate",
    "verification": "unverified",
    "catalytic_profile": {
-    "catalyst_form": "none",
+    "catalyst_form": "nanoparticle",
     "ligand_family": "none",
-    "support": "none",
+    "support": "solid_support",
     "medium": "organic",
     "activation_mode": "thermal"
    },
@@ -4222,9 +4222,9 @@
    "conditions": {
     "catalyst": null,
     "base": "K2CO3",
-    "solvent": "benzene",
+    "solvent": "EtOH",
     "temp_c": null,
-    "time_h": null,
+    "time_h": 0.67,
     "atmosphere": null,
     "scale_mmol": null,
     "equivalents": {}
@@ -4233,9 +4233,9 @@
    "evidence_grade": "candidate",
    "verification": "unverified",
    "catalytic_profile": {
-    "catalyst_form": "none",
+    "catalyst_form": "nanoparticle",
     "ligand_family": "none",
-    "support": "none",
+    "support": "solid_support",
     "medium": "organic",
     "activation_mode": "thermal"
    },
@@ -4278,9 +4278,9 @@
    "conditions": {
     "catalyst": null,
     "base": "K2CO3",
-    "solvent": "benzene",
+    "solvent": "H2O",
     "temp_c": null,
-    "time_h": null,
+    "time_h": 1.0,
     "atmosphere": null,
     "scale_mmol": null,
     "equivalents": {}
@@ -4289,10 +4289,10 @@
    "evidence_grade": "candidate",
    "verification": "unverified",
    "catalytic_profile": {
-    "catalyst_form": "none",
+    "catalyst_form": "nanoparticle",
     "ligand_family": "none",
-    "support": "none",
-    "medium": "organic",
+    "support": "solid_support",
+    "medium": "aqueous",
     "activation_mode": "thermal"
    },
    "evidence_note": "2026-10-31 从语料层（PMC9086392，heck）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
@@ -4334,9 +4334,9 @@
    "conditions": {
     "catalyst": null,
     "base": "K2CO3",
-    "solvent": "benzene",
+    "solvent": "EtOH/H2O",
     "temp_c": null,
-    "time_h": null,
+    "time_h": 0.58,
     "atmosphere": null,
     "scale_mmol": null,
     "equivalents": {}
@@ -4345,10 +4345,10 @@
    "evidence_grade": "candidate",
    "verification": "unverified",
    "catalytic_profile": {
-    "catalyst_form": "none",
+    "catalyst_form": "nanoparticle",
     "ligand_family": "none",
-    "support": "none",
-    "medium": "organic",
+    "support": "solid_support",
+    "medium": "aqueous",
     "activation_mode": "thermal"
    },
    "evidence_note": "2026-10-31 从语料层（PMC9086392，heck）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
@@ -4389,10 +4389,10 @@
    },
    "conditions": {
     "catalyst": null,
-    "base": "K2CO3",
-    "solvent": "benzene",
+    "base": "NaOAc",
+    "solvent": "EtOH/H2O",
     "temp_c": null,
-    "time_h": null,
+    "time_h": 1.0,
     "atmosphere": null,
     "scale_mmol": null,
     "equivalents": {}
@@ -4401,10 +4401,10 @@
    "evidence_grade": "candidate",
    "verification": "unverified",
    "catalytic_profile": {
-    "catalyst_form": "none",
+    "catalyst_form": "nanoparticle",
     "ligand_family": "none",
-    "support": "none",
-    "medium": "organic",
+    "support": "solid_support",
+    "medium": "aqueous",
     "activation_mode": "thermal"
    },
    "evidence_note": "2026-10-31 从语料层（PMC9086392，heck）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
@@ -4445,10 +4445,10 @@
    },
    "conditions": {
     "catalyst": null,
-    "base": "K2CO3",
-    "solvent": "benzene",
+    "base": "NEt3",
+    "solvent": "EtOH/H2O",
     "temp_c": null,
-    "time_h": null,
+    "time_h": 1.0,
     "atmosphere": null,
     "scale_mmol": null,
     "equivalents": {}
@@ -4457,10 +4457,10 @@
    "evidence_grade": "candidate",
    "verification": "unverified",
    "catalytic_profile": {
-    "catalyst_form": "none",
+    "catalyst_form": "nanoparticle",
     "ligand_family": "none",
-    "support": "none",
-    "medium": "organic",
+    "support": "solid_support",
+    "medium": "aqueous",
     "activation_mode": "thermal"
    },
    "evidence_note": "2026-10-31 从语料层（PMC9086392，heck）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
@@ -4501,10 +4501,10 @@
    },
    "conditions": {
     "catalyst": null,
-    "base": "K2CO3",
-    "solvent": "benzene",
+    "base": "NaHCO3",
+    "solvent": "EtOH/H2O",
     "temp_c": null,
-    "time_h": null,
+    "time_h": 1.08,
     "atmosphere": null,
     "scale_mmol": null,
     "equivalents": {}
@@ -4513,10 +4513,10 @@
    "evidence_grade": "candidate",
    "verification": "unverified",
    "catalytic_profile": {
-    "catalyst_form": "none",
+    "catalyst_form": "nanoparticle",
     "ligand_family": "none",
-    "support": "none",
-    "medium": "organic",
+    "support": "solid_support",
+    "medium": "aqueous",
     "activation_mode": "thermal"
    },
    "evidence_note": "2026-10-31 从语料层（PMC9086392，heck）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
@@ -4557,10 +4557,10 @@
    },
    "conditions": {
     "catalyst": null,
-    "base": "K2CO3",
-    "solvent": "benzene",
+    "base": "t-BuOK",
+    "solvent": "EtOH/H2O",
     "temp_c": null,
-    "time_h": null,
+    "time_h": 0.83,
     "atmosphere": null,
     "scale_mmol": null,
     "equivalents": {}
@@ -4569,10 +4569,10 @@
    "evidence_grade": "candidate",
    "verification": "unverified",
    "catalytic_profile": {
-    "catalyst_form": "none",
+    "catalyst_form": "nanoparticle",
     "ligand_family": "none",
-    "support": "none",
-    "medium": "organic",
+    "support": "solid_support",
+    "medium": "aqueous",
     "activation_mode": "thermal"
    },
    "evidence_note": "2026-10-31 从语料层（PMC9086392，heck）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
@@ -4614,9 +4614,9 @@
    "conditions": {
     "catalyst": null,
     "base": "K2CO3",
-    "solvent": "benzene",
+    "solvent": "EtOH/H2O",
     "temp_c": null,
-    "time_h": null,
+    "time_h": 0.58,
     "atmosphere": null,
     "scale_mmol": null,
     "equivalents": {}
@@ -4625,10 +4625,10 @@
    "evidence_grade": "candidate",
    "verification": "unverified",
    "catalytic_profile": {
-    "catalyst_form": "none",
+    "catalyst_form": "nanoparticle",
     "ligand_family": "none",
-    "support": "none",
-    "medium": "organic",
+    "support": "solid_support",
+    "medium": "aqueous",
     "activation_mode": "thermal"
    },
    "evidence_note": "2026-10-31 从语料层（PMC9086392，heck）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
@@ -4669,10 +4669,10 @@
    },
    "conditions": {
     "catalyst": null,
-    "base": "K2CO3",
-    "solvent": "benzene",
+    "base": "K2CO",
+    "solvent": "EtOH/H2O",
     "temp_c": null,
-    "time_h": null,
+    "time_h": 0.67,
     "atmosphere": null,
     "scale_mmol": null,
     "equivalents": {}
@@ -4681,10 +4681,10 @@
    "evidence_grade": "candidate",
    "verification": "unverified",
    "catalytic_profile": {
-    "catalyst_form": "none",
+    "catalyst_form": "nanoparticle",
     "ligand_family": "none",
-    "support": "none",
-    "medium": "organic",
+    "support": "solid_support",
+    "medium": "aqueous",
     "activation_mode": "thermal"
    },
    "evidence_note": "2026-10-31 从语料层（PMC9086392，heck）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
@@ -4725,10 +4725,10 @@
    },
    "conditions": {
     "catalyst": null,
-    "base": "K2CO3",
-    "solvent": "benzene",
+    "base": "K2CO",
+    "solvent": "EtOH/H2O",
     "temp_c": null,
-    "time_h": null,
+    "time_h": 0.5,
     "atmosphere": null,
     "scale_mmol": null,
     "equivalents": {}
@@ -4737,10 +4737,10 @@
    "evidence_grade": "candidate",
    "verification": "unverified",
    "catalytic_profile": {
-    "catalyst_form": "none",
+    "catalyst_form": "nanoparticle",
     "ligand_family": "none",
-    "support": "none",
-    "medium": "organic",
+    "support": "solid_support",
+    "medium": "aqueous",
     "activation_mode": "thermal"
    },
    "evidence_note": "2026-10-31 从语料层（PMC9086392，heck）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
@@ -4752,698 +4752,6 @@
    "provenance": {
     "corpus_id": "PMC9086392",
     "unit_id": "PMC9086392-T1",
-    "reaction_class": "heck",
-    "promoted_by": "scripts/promote_corpus.py",
-    "merged_by": "scripts/merge_corpus_records.py",
-    "promoted_on": "2026-10-31"
-   }
-  },
-  {
-   "record_id": "CORP-PMC9086392-T1-13",
-   "source_id": "PMC9086392-T1",
-   "citation": "Preparation of a novel palladium catalytic hydrogel based on graphene oxide/chitosan NPs and cellulose nanowhiskers†",
-   "doi": "10.1039/c8ra06623j",
-   "pmcid": "PMC9086392",
-   "locator": "T1, entry 14",
-   "locator_zh": "表 1，entry 14（RSC Advances，2018）",
-   "outcome": {
-    "value": 0.0,
-    "unit": "%",
-    "outcome_type": "isolated",
-    "label_raw": ", catalyst, base and solvent.bIsolated yield. | 表头/题注原文：Optimization of reaction temperature for the model coupling reactiona",
-    "note": "语料层晋升条目：数值与口径均取自 efetch 表格文本，未对照 PDF 图证逐字复核"
-   },
-   "assay": {
-    "method": "isolated (as stated in source)",
-    "internal_standard": null,
-    "quantification_basis": "product",
-    "calibration_note": "原文未报告内标"
-   },
-   "conditions": {
-    "catalyst": null,
-    "base": "K2CO3",
-    "solvent": "benzene",
-    "temp_c": null,
-    "time_h": null,
-    "atmosphere": null,
-    "scale_mmol": null,
-    "equivalents": {}
-   },
-   "purification": null,
-   "evidence_grade": "candidate",
-   "verification": "unverified",
-   "catalytic_profile": {
-    "catalyst_form": "none",
-    "ligand_family": "none",
-    "support": "none",
-    "medium": "organic",
-    "activation_mode": "thermal"
-   },
-   "evidence_note": "2026-10-31 从语料层（PMC9086392，heck）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
-   "substrate": {
-    "aryl_halide": "iodobenzene",
-    "alkene": "methyl acrylate",
-    "product": null
-   },
-   "provenance": {
-    "corpus_id": "PMC9086392",
-    "unit_id": "PMC9086392-T1",
-    "reaction_class": "heck",
-    "promoted_by": "scripts/promote_corpus.py",
-    "merged_by": "scripts/merge_corpus_records.py",
-    "promoted_on": "2026-10-31"
-   }
-  },
-  {
-   "record_id": "CORP-PMC9086392-T2-01",
-   "source_id": "PMC9086392-T2",
-   "citation": "Preparation of a novel palladium catalytic hydrogel based on graphene oxide/chitosan NPs and cellulose nanowhiskers†",
-   "doi": "10.1039/c8ra06623j",
-   "pmcid": "PMC9086392",
-   "locator": "T2, entry 1",
-   "locator_zh": "表 2，entry 1（RSC Advances，2018）",
-   "outcome": {
-    "value": 98.0,
-    "unit": "%",
-    "outcome_type": "isolated",
-    "label_raw": ", catalyst, base and solvent.bIsolated yield. | 表头/题注原文：Mizoroki–Heck reaction coupling reaction of different aryl halides with olefinsa",
-    "note": "语料层晋升条目：数值与口径均取自 efetch 表格文本，未对照 PDF 图证逐字复核"
-   },
-   "assay": {
-    "method": "isolated (as stated in source)",
-    "internal_standard": null,
-    "quantification_basis": "product",
-    "calibration_note": "原文未报告内标"
-   },
-   "conditions": {
-    "catalyst": "Styrene",
-    "base": null,
-    "solvent": "benzene",
-    "temp_c": null,
-    "time_h": null,
-    "atmosphere": null,
-    "scale_mmol": null,
-    "equivalents": {}
-   },
-   "purification": null,
-   "evidence_grade": "candidate",
-   "verification": "unverified",
-   "catalytic_profile": {
-    "medium": "organic",
-    "activation_mode": "thermal"
-   },
-   "evidence_note": "2026-10-31 从语料层（PMC9086392，heck）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
-   "substrate": {
-    "aryl_halide": "iodobenzene",
-    "alkene": "methyl acrylate",
-    "product": null
-   },
-   "provenance": {
-    "corpus_id": "PMC9086392",
-    "unit_id": "PMC9086392-T2",
-    "reaction_class": "heck",
-    "promoted_by": "scripts/promote_corpus.py",
-    "merged_by": "scripts/merge_corpus_records.py",
-    "promoted_on": "2026-10-31"
-   }
-  },
-  {
-   "record_id": "CORP-PMC9086392-T2-02",
-   "source_id": "PMC9086392-T2",
-   "citation": "Preparation of a novel palladium catalytic hydrogel based on graphene oxide/chitosan NPs and cellulose nanowhiskers†",
-   "doi": "10.1039/c8ra06623j",
-   "pmcid": "PMC9086392",
-   "locator": "T2, entry 2",
-   "locator_zh": "表 2，entry 2（RSC Advances，2018）",
-   "outcome": {
-    "value": 96.0,
-    "unit": "%",
-    "outcome_type": "isolated",
-    "label_raw": ", catalyst, base and solvent.bIsolated yield. | 表头/题注原文：Mizoroki–Heck reaction coupling reaction of different aryl halides with olefinsa",
-    "note": "语料层晋升条目：数值与口径均取自 efetch 表格文本，未对照 PDF 图证逐字复核"
-   },
-   "assay": {
-    "method": "isolated (as stated in source)",
-    "internal_standard": null,
-    "quantification_basis": "product",
-    "calibration_note": "原文未报告内标"
-   },
-   "conditions": {
-    "catalyst": "Methyl acrylate",
-    "base": null,
-    "solvent": "benzene",
-    "temp_c": null,
-    "time_h": null,
-    "atmosphere": null,
-    "scale_mmol": null,
-    "equivalents": {}
-   },
-   "purification": null,
-   "evidence_grade": "candidate",
-   "verification": "unverified",
-   "catalytic_profile": {
-    "medium": "organic",
-    "activation_mode": "thermal"
-   },
-   "evidence_note": "2026-10-31 从语料层（PMC9086392，heck）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
-   "substrate": {
-    "aryl_halide": "iodobenzene",
-    "alkene": "methyl acrylate",
-    "product": null
-   },
-   "provenance": {
-    "corpus_id": "PMC9086392",
-    "unit_id": "PMC9086392-T2",
-    "reaction_class": "heck",
-    "promoted_by": "scripts/promote_corpus.py",
-    "merged_by": "scripts/merge_corpus_records.py",
-    "promoted_on": "2026-10-31"
-   }
-  },
-  {
-   "record_id": "CORP-PMC9086392-T2-03",
-   "source_id": "PMC9086392-T2",
-   "citation": "Preparation of a novel palladium catalytic hydrogel based on graphene oxide/chitosan NPs and cellulose nanowhiskers†",
-   "doi": "10.1039/c8ra06623j",
-   "pmcid": "PMC9086392",
-   "locator": "T2, entry 3",
-   "locator_zh": "表 2，entry 3（RSC Advances，2018）",
-   "outcome": {
-    "value": 92.0,
-    "unit": "%",
-    "outcome_type": "isolated",
-    "label_raw": ", catalyst, base and solvent.bIsolated yield. | 表头/题注原文：Mizoroki–Heck reaction coupling reaction of different aryl halides with olefinsa",
-    "note": "语料层晋升条目：数值与口径均取自 efetch 表格文本，未对照 PDF 图证逐字复核"
-   },
-   "assay": {
-    "method": "isolated (as stated in source)",
-    "internal_standard": null,
-    "quantification_basis": "product",
-    "calibration_note": "原文未报告内标"
-   },
-   "conditions": {
-    "catalyst": "Methyl acrylate",
-    "base": null,
-    "solvent": "benzene",
-    "temp_c": null,
-    "time_h": null,
-    "atmosphere": null,
-    "scale_mmol": null,
-    "equivalents": {}
-   },
-   "purification": null,
-   "evidence_grade": "candidate",
-   "verification": "unverified",
-   "catalytic_profile": {
-    "medium": "organic",
-    "activation_mode": "thermal"
-   },
-   "evidence_note": "2026-10-31 从语料层（PMC9086392，heck）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
-   "substrate": {
-    "aryl_halide": "iodobenzene",
-    "alkene": "methyl acrylate",
-    "product": null
-   },
-   "provenance": {
-    "corpus_id": "PMC9086392",
-    "unit_id": "PMC9086392-T2",
-    "reaction_class": "heck",
-    "promoted_by": "scripts/promote_corpus.py",
-    "merged_by": "scripts/merge_corpus_records.py",
-    "promoted_on": "2026-10-31"
-   }
-  },
-  {
-   "record_id": "CORP-PMC9086392-T2-04",
-   "source_id": "PMC9086392-T2",
-   "citation": "Preparation of a novel palladium catalytic hydrogel based on graphene oxide/chitosan NPs and cellulose nanowhiskers†",
-   "doi": "10.1039/c8ra06623j",
-   "pmcid": "PMC9086392",
-   "locator": "T2, entry 4",
-   "locator_zh": "表 2，entry 4（RSC Advances，2018）",
-   "outcome": {
-    "value": 95.0,
-    "unit": "%",
-    "outcome_type": "isolated",
-    "label_raw": ", catalyst, base and solvent.bIsolated yield. | 表头/题注原文：Mizoroki–Heck reaction coupling reaction of different aryl halides with olefinsa",
-    "note": "语料层晋升条目：数值与口径均取自 efetch 表格文本，未对照 PDF 图证逐字复核"
-   },
-   "assay": {
-    "method": "isolated (as stated in source)",
-    "internal_standard": null,
-    "quantification_basis": "product",
-    "calibration_note": "原文未报告内标"
-   },
-   "conditions": {
-    "catalyst": "Methyl methacrylate",
-    "base": null,
-    "solvent": "benzene",
-    "temp_c": null,
-    "time_h": null,
-    "atmosphere": null,
-    "scale_mmol": null,
-    "equivalents": {}
-   },
-   "purification": null,
-   "evidence_grade": "candidate",
-   "verification": "unverified",
-   "catalytic_profile": {
-    "medium": "organic",
-    "activation_mode": "thermal"
-   },
-   "evidence_note": "2026-10-31 从语料层（PMC9086392，heck）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
-   "substrate": {
-    "aryl_halide": "iodobenzene",
-    "alkene": "methyl acrylate",
-    "product": null
-   },
-   "provenance": {
-    "corpus_id": "PMC9086392",
-    "unit_id": "PMC9086392-T2",
-    "reaction_class": "heck",
-    "promoted_by": "scripts/promote_corpus.py",
-    "merged_by": "scripts/merge_corpus_records.py",
-    "promoted_on": "2026-10-31"
-   }
-  },
-  {
-   "record_id": "CORP-PMC9086392-T2-05",
-   "source_id": "PMC9086392-T2",
-   "citation": "Preparation of a novel palladium catalytic hydrogel based on graphene oxide/chitosan NPs and cellulose nanowhiskers†",
-   "doi": "10.1039/c8ra06623j",
-   "pmcid": "PMC9086392",
-   "locator": "T2, entry 5",
-   "locator_zh": "表 2，entry 5（RSC Advances，2018）",
-   "outcome": {
-    "value": 99.0,
-    "unit": "%",
-    "outcome_type": "isolated",
-    "label_raw": ", catalyst, base and solvent.bIsolated yield. | 表头/题注原文：Mizoroki–Heck reaction coupling reaction of different aryl halides with olefinsa",
-    "note": "语料层晋升条目：数值与口径均取自 efetch 表格文本，未对照 PDF 图证逐字复核"
-   },
-   "assay": {
-    "method": "isolated (as stated in source)",
-    "internal_standard": null,
-    "quantification_basis": "product",
-    "calibration_note": "原文未报告内标"
-   },
-   "conditions": {
-    "catalyst": "Acrylonitrile",
-    "base": null,
-    "solvent": "benzene",
-    "temp_c": null,
-    "time_h": null,
-    "atmosphere": null,
-    "scale_mmol": null,
-    "equivalents": {}
-   },
-   "purification": null,
-   "evidence_grade": "candidate",
-   "verification": "unverified",
-   "catalytic_profile": {
-    "medium": "organic",
-    "activation_mode": "thermal"
-   },
-   "evidence_note": "2026-10-31 从语料层（PMC9086392，heck）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
-   "substrate": {
-    "aryl_halide": "iodobenzene",
-    "alkene": "methyl acrylate",
-    "product": null
-   },
-   "provenance": {
-    "corpus_id": "PMC9086392",
-    "unit_id": "PMC9086392-T2",
-    "reaction_class": "heck",
-    "promoted_by": "scripts/promote_corpus.py",
-    "merged_by": "scripts/merge_corpus_records.py",
-    "promoted_on": "2026-10-31"
-   }
-  },
-  {
-   "record_id": "CORP-PMC9086392-T2-06",
-   "source_id": "PMC9086392-T2",
-   "citation": "Preparation of a novel palladium catalytic hydrogel based on graphene oxide/chitosan NPs and cellulose nanowhiskers†",
-   "doi": "10.1039/c8ra06623j",
-   "pmcid": "PMC9086392",
-   "locator": "T2, entry 6",
-   "locator_zh": "表 2，entry 6（RSC Advances，2018）",
-   "outcome": {
-    "value": 95.0,
-    "unit": "%",
-    "outcome_type": "isolated",
-    "label_raw": ", catalyst, base and solvent.bIsolated yield. | 表头/题注原文：Mizoroki–Heck reaction coupling reaction of different aryl halides with olefinsa",
-    "note": "语料层晋升条目：数值与口径均取自 efetch 表格文本，未对照 PDF 图证逐字复核"
-   },
-   "assay": {
-    "method": "isolated (as stated in source)",
-    "internal_standard": null,
-    "quantification_basis": "product",
-    "calibration_note": "原文未报告内标"
-   },
-   "conditions": {
-    "catalyst": "Methyl methacrylate",
-    "base": null,
-    "solvent": "benzene",
-    "temp_c": null,
-    "time_h": null,
-    "atmosphere": null,
-    "scale_mmol": null,
-    "equivalents": {}
-   },
-   "purification": null,
-   "evidence_grade": "candidate",
-   "verification": "unverified",
-   "catalytic_profile": {
-    "medium": "organic",
-    "activation_mode": "thermal"
-   },
-   "evidence_note": "2026-10-31 从语料层（PMC9086392，heck）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
-   "substrate": {
-    "aryl_halide": "iodobenzene",
-    "alkene": "methyl acrylate",
-    "product": null
-   },
-   "provenance": {
-    "corpus_id": "PMC9086392",
-    "unit_id": "PMC9086392-T2",
-    "reaction_class": "heck",
-    "promoted_by": "scripts/promote_corpus.py",
-    "merged_by": "scripts/merge_corpus_records.py",
-    "promoted_on": "2026-10-31"
-   }
-  },
-  {
-   "record_id": "CORP-PMC9086392-T2-07",
-   "source_id": "PMC9086392-T2",
-   "citation": "Preparation of a novel palladium catalytic hydrogel based on graphene oxide/chitosan NPs and cellulose nanowhiskers†",
-   "doi": "10.1039/c8ra06623j",
-   "pmcid": "PMC9086392",
-   "locator": "T2, entry 7",
-   "locator_zh": "表 2，entry 7（RSC Advances，2018）",
-   "outcome": {
-    "value": 97.0,
-    "unit": "%",
-    "outcome_type": "isolated",
-    "label_raw": ", catalyst, base and solvent.bIsolated yield. | 表头/题注原文：Mizoroki–Heck reaction coupling reaction of different aryl halides with olefinsa",
-    "note": "语料层晋升条目：数值与口径均取自 efetch 表格文本，未对照 PDF 图证逐字复核"
-   },
-   "assay": {
-    "method": "isolated (as stated in source)",
-    "internal_standard": null,
-    "quantification_basis": "product",
-    "calibration_note": "原文未报告内标"
-   },
-   "conditions": {
-    "catalyst": "Styrene",
-    "base": null,
-    "solvent": "benzene",
-    "temp_c": null,
-    "time_h": null,
-    "atmosphere": null,
-    "scale_mmol": null,
-    "equivalents": {}
-   },
-   "purification": null,
-   "evidence_grade": "candidate",
-   "verification": "unverified",
-   "catalytic_profile": {
-    "medium": "organic",
-    "activation_mode": "thermal"
-   },
-   "evidence_note": "2026-10-31 从语料层（PMC9086392，heck）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
-   "substrate": {
-    "aryl_halide": "iodobenzene",
-    "alkene": "methyl acrylate",
-    "product": null
-   },
-   "provenance": {
-    "corpus_id": "PMC9086392",
-    "unit_id": "PMC9086392-T2",
-    "reaction_class": "heck",
-    "promoted_by": "scripts/promote_corpus.py",
-    "merged_by": "scripts/merge_corpus_records.py",
-    "promoted_on": "2026-10-31"
-   }
-  },
-  {
-   "record_id": "CORP-PMC9086392-T2-08",
-   "source_id": "PMC9086392-T2",
-   "citation": "Preparation of a novel palladium catalytic hydrogel based on graphene oxide/chitosan NPs and cellulose nanowhiskers†",
-   "doi": "10.1039/c8ra06623j",
-   "pmcid": "PMC9086392",
-   "locator": "T2, entry 8",
-   "locator_zh": "表 2，entry 8（RSC Advances，2018）",
-   "outcome": {
-    "value": 95.0,
-    "unit": "%",
-    "outcome_type": "isolated",
-    "label_raw": ", catalyst, base and solvent.bIsolated yield. | 表头/题注原文：Mizoroki–Heck reaction coupling reaction of different aryl halides with olefinsa",
-    "note": "语料层晋升条目：数值与口径均取自 efetch 表格文本，未对照 PDF 图证逐字复核"
-   },
-   "assay": {
-    "method": "isolated (as stated in source)",
-    "internal_standard": null,
-    "quantification_basis": "product",
-    "calibration_note": "原文未报告内标"
-   },
-   "conditions": {
-    "catalyst": "Acrylonitrile",
-    "base": null,
-    "solvent": "benzene",
-    "temp_c": null,
-    "time_h": null,
-    "atmosphere": null,
-    "scale_mmol": null,
-    "equivalents": {}
-   },
-   "purification": null,
-   "evidence_grade": "candidate",
-   "verification": "unverified",
-   "catalytic_profile": {
-    "medium": "organic",
-    "activation_mode": "thermal"
-   },
-   "evidence_note": "2026-10-31 从语料层（PMC9086392，heck）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
-   "substrate": {
-    "aryl_halide": "iodobenzene",
-    "alkene": "methyl acrylate",
-    "product": null
-   },
-   "provenance": {
-    "corpus_id": "PMC9086392",
-    "unit_id": "PMC9086392-T2",
-    "reaction_class": "heck",
-    "promoted_by": "scripts/promote_corpus.py",
-    "merged_by": "scripts/merge_corpus_records.py",
-    "promoted_on": "2026-10-31"
-   }
-  },
-  {
-   "record_id": "CORP-PMC9086392-T2-09",
-   "source_id": "PMC9086392-T2",
-   "citation": "Preparation of a novel palladium catalytic hydrogel based on graphene oxide/chitosan NPs and cellulose nanowhiskers†",
-   "doi": "10.1039/c8ra06623j",
-   "pmcid": "PMC9086392",
-   "locator": "T2, entry 9",
-   "locator_zh": "表 2，entry 9（RSC Advances，2018）",
-   "outcome": {
-    "value": 90.0,
-    "unit": "%",
-    "outcome_type": "isolated",
-    "label_raw": ", catalyst, base and solvent.bIsolated yield. | 表头/题注原文：Mizoroki–Heck reaction coupling reaction of different aryl halides with olefinsa",
-    "note": "语料层晋升条目：数值与口径均取自 efetch 表格文本，未对照 PDF 图证逐字复核"
-   },
-   "assay": {
-    "method": "isolated (as stated in source)",
-    "internal_standard": null,
-    "quantification_basis": "product",
-    "calibration_note": "原文未报告内标"
-   },
-   "conditions": {
-    "catalyst": "Acrylonitrile",
-    "base": null,
-    "solvent": "benzene",
-    "temp_c": null,
-    "time_h": null,
-    "atmosphere": null,
-    "scale_mmol": null,
-    "equivalents": {}
-   },
-   "purification": null,
-   "evidence_grade": "candidate",
-   "verification": "unverified",
-   "catalytic_profile": {
-    "medium": "organic",
-    "activation_mode": "thermal"
-   },
-   "evidence_note": "2026-10-31 从语料层（PMC9086392，heck）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
-   "substrate": {
-    "aryl_halide": "iodobenzene",
-    "alkene": "methyl acrylate",
-    "product": null
-   },
-   "provenance": {
-    "corpus_id": "PMC9086392",
-    "unit_id": "PMC9086392-T2",
-    "reaction_class": "heck",
-    "promoted_by": "scripts/promote_corpus.py",
-    "merged_by": "scripts/merge_corpus_records.py",
-    "promoted_on": "2026-10-31"
-   }
-  },
-  {
-   "record_id": "CORP-PMC9086392-T2-10",
-   "source_id": "PMC9086392-T2",
-   "citation": "Preparation of a novel palladium catalytic hydrogel based on graphene oxide/chitosan NPs and cellulose nanowhiskers†",
-   "doi": "10.1039/c8ra06623j",
-   "pmcid": "PMC9086392",
-   "locator": "T2, entry 10",
-   "locator_zh": "表 2，entry 10（RSC Advances，2018）",
-   "outcome": {
-    "value": 93.0,
-    "unit": "%",
-    "outcome_type": "isolated",
-    "label_raw": ", catalyst, base and solvent.bIsolated yield. | 表头/题注原文：Mizoroki–Heck reaction coupling reaction of different aryl halides with olefinsa",
-    "note": "语料层晋升条目：数值与口径均取自 efetch 表格文本，未对照 PDF 图证逐字复核"
-   },
-   "assay": {
-    "method": "isolated (as stated in source)",
-    "internal_standard": null,
-    "quantification_basis": "product",
-    "calibration_note": "原文未报告内标"
-   },
-   "conditions": {
-    "catalyst": "Methyl acrylate",
-    "base": null,
-    "solvent": "benzene",
-    "temp_c": null,
-    "time_h": null,
-    "atmosphere": null,
-    "scale_mmol": null,
-    "equivalents": {}
-   },
-   "purification": null,
-   "evidence_grade": "candidate",
-   "verification": "unverified",
-   "catalytic_profile": {
-    "medium": "organic",
-    "activation_mode": "thermal"
-   },
-   "evidence_note": "2026-10-31 从语料层（PMC9086392，heck）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
-   "substrate": {
-    "aryl_halide": "iodobenzene",
-    "alkene": "methyl acrylate",
-    "product": null
-   },
-   "provenance": {
-    "corpus_id": "PMC9086392",
-    "unit_id": "PMC9086392-T2",
-    "reaction_class": "heck",
-    "promoted_by": "scripts/promote_corpus.py",
-    "merged_by": "scripts/merge_corpus_records.py",
-    "promoted_on": "2026-10-31"
-   }
-  },
-  {
-   "record_id": "CORP-PMC9086392-T2-11",
-   "source_id": "PMC9086392-T2",
-   "citation": "Preparation of a novel palladium catalytic hydrogel based on graphene oxide/chitosan NPs and cellulose nanowhiskers†",
-   "doi": "10.1039/c8ra06623j",
-   "pmcid": "PMC9086392",
-   "locator": "T2, entry 11",
-   "locator_zh": "表 2，entry 11（RSC Advances，2018）",
-   "outcome": {
-    "value": 87.0,
-    "unit": "%",
-    "outcome_type": "isolated",
-    "label_raw": ", catalyst, base and solvent.bIsolated yield. | 表头/题注原文：Mizoroki–Heck reaction coupling reaction of different aryl halides with olefinsa",
-    "note": "语料层晋升条目：数值与口径均取自 efetch 表格文本，未对照 PDF 图证逐字复核"
-   },
-   "assay": {
-    "method": "isolated (as stated in source)",
-    "internal_standard": null,
-    "quantification_basis": "product",
-    "calibration_note": "原文未报告内标"
-   },
-   "conditions": {
-    "catalyst": "Styrene",
-    "base": null,
-    "solvent": "benzene",
-    "temp_c": null,
-    "time_h": null,
-    "atmosphere": null,
-    "scale_mmol": null,
-    "equivalents": {}
-   },
-   "purification": null,
-   "evidence_grade": "candidate",
-   "verification": "unverified",
-   "catalytic_profile": {
-    "medium": "organic",
-    "activation_mode": "thermal"
-   },
-   "evidence_note": "2026-10-31 从语料层（PMC9086392，heck）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
-   "substrate": {
-    "aryl_halide": "iodobenzene",
-    "alkene": "methyl acrylate",
-    "product": null
-   },
-   "provenance": {
-    "corpus_id": "PMC9086392",
-    "unit_id": "PMC9086392-T2",
-    "reaction_class": "heck",
-    "promoted_by": "scripts/promote_corpus.py",
-    "merged_by": "scripts/merge_corpus_records.py",
-    "promoted_on": "2026-10-31"
-   }
-  },
-  {
-   "record_id": "CORP-PMC9086392-T2-12",
-   "source_id": "PMC9086392-T2",
-   "citation": "Preparation of a novel palladium catalytic hydrogel based on graphene oxide/chitosan NPs and cellulose nanowhiskers†",
-   "doi": "10.1039/c8ra06623j",
-   "pmcid": "PMC9086392",
-   "locator": "T2, entry 12",
-   "locator_zh": "表 2，entry 12（RSC Advances，2018）",
-   "outcome": {
-    "value": 81.0,
-    "unit": "%",
-    "outcome_type": "isolated",
-    "label_raw": ", catalyst, base and solvent.bIsolated yield. | 表头/题注原文：Mizoroki–Heck reaction coupling reaction of different aryl halides with olefinsa",
-    "note": "语料层晋升条目：数值与口径均取自 efetch 表格文本，未对照 PDF 图证逐字复核"
-   },
-   "assay": {
-    "method": "isolated (as stated in source)",
-    "internal_standard": null,
-    "quantification_basis": "product",
-    "calibration_note": "原文未报告内标"
-   },
-   "conditions": {
-    "catalyst": "Methyl methacrylate",
-    "base": null,
-    "solvent": "benzene",
-    "temp_c": null,
-    "time_h": null,
-    "atmosphere": null,
-    "scale_mmol": null,
-    "equivalents": {}
-   },
-   "purification": null,
-   "evidence_grade": "candidate",
-   "verification": "unverified",
-   "catalytic_profile": {
-    "medium": "organic",
-    "activation_mode": "thermal"
-   },
-   "evidence_note": "2026-10-31 从语料层（PMC9086392，heck）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
-   "substrate": {
-    "aryl_halide": "iodobenzene",
-    "alkene": "methyl acrylate",
-    "product": null
-   },
-   "provenance": {
-    "corpus_id": "PMC9086392",
-    "unit_id": "PMC9086392-T2",
     "reaction_class": "heck",
     "promoted_by": "scripts/promote_corpus.py",
     "merged_by": "scripts/merge_corpus_records.py",
@@ -5474,9 +4782,9 @@
    "conditions": {
     "catalyst": "DMF",
     "base": "Et3N",
-    "solvent": "toluene",
-    "temp_c": null,
-    "time_h": null,
+    "solvent": "DMF",
+    "temp_c": 90.0,
+    "time_h": 7.0,
     "atmosphere": null,
     "scale_mmol": null,
     "equivalents": {}
@@ -5527,9 +4835,9 @@
    "conditions": {
     "catalyst": "DMSO",
     "base": "Et3N",
-    "solvent": "toluene",
-    "temp_c": null,
-    "time_h": null,
+    "solvent": "DMSO",
+    "temp_c": 90.0,
+    "time_h": 8.0,
     "atmosphere": null,
     "scale_mmol": null,
     "equivalents": {}
@@ -5580,9 +4888,9 @@
    "conditions": {
     "catalyst": "CH3CN",
     "base": "Et3N",
-    "solvent": "toluene",
-    "temp_c": null,
-    "time_h": null,
+    "solvent": "CH3CN",
+    "temp_c": 90.0,
+    "time_h": 7.0,
     "atmosphere": null,
     "scale_mmol": null,
     "equivalents": {}
@@ -5633,9 +4941,9 @@
    "conditions": {
     "catalyst": "EtOH",
     "base": "Et3N",
-    "solvent": "toluene",
-    "temp_c": null,
-    "time_h": null,
+    "solvent": "EtOH",
+    "temp_c": 90.0,
+    "time_h": 9.0,
     "atmosphere": null,
     "scale_mmol": null,
     "equivalents": {}
@@ -5686,9 +4994,9 @@
    "conditions": {
     "catalyst": "EtOH/H2O",
     "base": "Et3N",
-    "solvent": "toluene",
-    "temp_c": null,
-    "time_h": null,
+    "solvent": "EtOH/H2O",
+    "temp_c": 90.0,
+    "time_h": 8.0,
     "atmosphere": null,
     "scale_mmol": null,
     "equivalents": {}
@@ -5697,7 +5005,7 @@
    "evidence_grade": "candidate",
    "verification": "unverified",
    "catalytic_profile": {
-    "medium": "organic",
+    "medium": "aqueous",
     "activation_mode": "thermal"
    },
    "evidence_note": "2026-10-31 从语料层（PMC7511807，heck）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
@@ -5739,9 +5047,9 @@
    "conditions": {
     "catalyst": "H2O",
     "base": "Et3N",
-    "solvent": "toluene",
-    "temp_c": null,
-    "time_h": null,
+    "solvent": "H2O",
+    "temp_c": 90.0,
+    "time_h": 8.0,
     "atmosphere": null,
     "scale_mmol": null,
     "equivalents": {}
@@ -5750,7 +5058,7 @@
    "evidence_grade": "candidate",
    "verification": "unverified",
    "catalytic_profile": {
-    "medium": "organic",
+    "medium": "aqueous",
     "activation_mode": "thermal"
    },
    "evidence_note": "2026-10-31 从语料层（PMC7511807，heck）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
@@ -5792,9 +5100,9 @@
    "conditions": {
     "catalyst": "DMF/H2O",
     "base": "Et3N",
-    "solvent": "toluene",
-    "temp_c": null,
-    "time_h": null,
+    "solvent": "DMF/H2O",
+    "temp_c": 90.0,
+    "time_h": 9.0,
     "atmosphere": null,
     "scale_mmol": null,
     "equivalents": {}
@@ -5803,7 +5111,7 @@
    "evidence_grade": "candidate",
    "verification": "unverified",
    "catalytic_profile": {
-    "medium": "organic",
+    "medium": "aqueous",
     "activation_mode": "thermal"
    },
    "evidence_note": "2026-10-31 从语料层（PMC7511807，heck）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
@@ -5844,10 +5152,10 @@
    },
    "conditions": {
     "catalyst": "H2O",
-    "base": "Et3N",
-    "solvent": "toluene",
-    "temp_c": null,
-    "time_h": null,
+    "base": "K2CO3",
+    "solvent": "H2O",
+    "temp_c": 90.0,
+    "time_h": 9.0,
     "atmosphere": null,
     "scale_mmol": null,
     "equivalents": {}
@@ -5856,7 +5164,7 @@
    "evidence_grade": "candidate",
    "verification": "unverified",
    "catalytic_profile": {
-    "medium": "organic",
+    "medium": "aqueous",
     "activation_mode": "thermal"
    },
    "evidence_note": "2026-10-31 从语料层（PMC7511807，heck）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
@@ -5897,10 +5205,10 @@
    },
    "conditions": {
     "catalyst": "H2O",
-    "base": "Et3N",
-    "solvent": "toluene",
-    "temp_c": null,
-    "time_h": null,
+    "base": "Cs2CO3",
+    "solvent": "H2O",
+    "temp_c": 90.0,
+    "time_h": 8.0,
     "atmosphere": null,
     "scale_mmol": null,
     "equivalents": {}
@@ -5909,7 +5217,7 @@
    "evidence_grade": "candidate",
    "verification": "unverified",
    "catalytic_profile": {
-    "medium": "organic",
+    "medium": "aqueous",
     "activation_mode": "thermal"
    },
    "evidence_note": "2026-10-31 从语料层（PMC7511807，heck）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
@@ -5950,10 +5258,10 @@
    },
    "conditions": {
     "catalyst": "H2O",
-    "base": "Et3N",
-    "solvent": "toluene",
-    "temp_c": null,
-    "time_h": null,
+    "base": "Na2CO3",
+    "solvent": "H2O",
+    "temp_c": 90.0,
+    "time_h": 6.0,
     "atmosphere": null,
     "scale_mmol": null,
     "equivalents": {}
@@ -5962,7 +5270,7 @@
    "evidence_grade": "candidate",
    "verification": "unverified",
    "catalytic_profile": {
-    "medium": "organic",
+    "medium": "aqueous",
     "activation_mode": "thermal"
    },
    "evidence_note": "2026-10-31 从语料层（PMC7511807，heck）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
@@ -6004,9 +5312,9 @@
    "conditions": {
     "catalyst": "H2O",
     "base": "Et3N",
-    "solvent": "toluene",
-    "temp_c": null,
-    "time_h": null,
+    "solvent": "H2O",
+    "temp_c": 100.0,
+    "time_h": 7.0,
     "atmosphere": null,
     "scale_mmol": null,
     "equivalents": {}
@@ -6015,7 +5323,7 @@
    "evidence_grade": "candidate",
    "verification": "unverified",
    "catalytic_profile": {
-    "medium": "organic",
+    "medium": "aqueous",
     "activation_mode": "thermal"
    },
    "evidence_note": "2026-10-31 从语料层（PMC7511807，heck）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
@@ -6057,9 +5365,9 @@
    "conditions": {
     "catalyst": "H2O",
     "base": "Et3N",
-    "solvent": "toluene",
-    "temp_c": null,
-    "time_h": null,
+    "solvent": "H2O",
+    "temp_c": 110.0,
+    "time_h": 7.0,
     "atmosphere": null,
     "scale_mmol": null,
     "equivalents": {}
@@ -6068,7 +5376,7 @@
    "evidence_grade": "candidate",
    "verification": "unverified",
    "catalytic_profile": {
-    "medium": "organic",
+    "medium": "aqueous",
     "activation_mode": "thermal"
    },
    "evidence_note": "2026-10-31 从语料层（PMC7511807，heck）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
@@ -6110,9 +5418,9 @@
    "conditions": {
     "catalyst": "H2O",
     "base": "Et3N",
-    "solvent": "toluene",
-    "temp_c": null,
-    "time_h": null,
+    "solvent": "H2O",
+    "temp_c": 90.0,
+    "time_h": 10.0,
     "atmosphere": null,
     "scale_mmol": null,
     "equivalents": {}
@@ -6121,7 +5429,7 @@
    "evidence_grade": "candidate",
    "verification": "unverified",
    "catalytic_profile": {
-    "medium": "organic",
+    "medium": "aqueous",
     "activation_mode": "thermal"
    },
    "evidence_note": "2026-10-31 从语料层（PMC7511807，heck）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
@@ -6163,9 +5471,9 @@
    "conditions": {
     "catalyst": "H2O",
     "base": "Et3N",
-    "solvent": "toluene",
-    "temp_c": null,
-    "time_h": null,
+    "solvent": "H2O",
+    "temp_c": 90.0,
+    "time_h": 9.0,
     "atmosphere": null,
     "scale_mmol": null,
     "equivalents": {}
@@ -6174,7 +5482,7 @@
    "evidence_grade": "candidate",
    "verification": "unverified",
    "catalytic_profile": {
-    "medium": "organic",
+    "medium": "aqueous",
     "activation_mode": "thermal"
    },
    "evidence_note": "2026-10-31 从语料层（PMC7511807，heck）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
@@ -6186,1066 +5494,6 @@
    "provenance": {
     "corpus_id": "PMC7511807",
     "unit_id": "PMC7511807-T1",
-    "reaction_class": "heck",
-    "promoted_by": "scripts/promote_corpus.py",
-    "merged_by": "scripts/merge_corpus_records.py",
-    "promoted_on": "2026-10-31"
-   }
-  },
-  {
-   "record_id": "CORP-PMC7511807-T2-01",
-   "source_id": "PMC7511807-T2",
-   "citation": "Synthesis of nano magnetic supported NHC-palladium and investigation of its applications as a catalyst in the Mizoroki-H",
-   "doi": "10.1016/j.heliyon.2020.e04946",
-   "pmcid": "PMC7511807",
-   "locator": "T2, entry 1",
-   "locator_zh": "表 2，entry 1（Heliyon，2020）",
-   "outcome": {
-    "value": 95.0,
-    "unit": "%",
-    "outcome_type": "isolated",
-    "label_raw": ", in H2O at 90 °C. bYields of isolated product. | 表头/题注原文：Heck reaction catalyst by Fe3O4@Si–NHC–Pda",
-    "note": "语料层晋升条目：数值与口径均取自 efetch 表格文本，未对照 PDF 图证逐字复核"
-   },
-   "assay": {
-    "method": "isolated (as stated in source)",
-    "internal_standard": null,
-    "quantification_basis": "product",
-    "calibration_note": "原文未报告内标"
-   },
-   "conditions": {
-    "catalyst": "4-Me",
-    "base": "Et3N",
-    "solvent": "toluene",
-    "temp_c": 90.0,
-    "time_h": null,
-    "atmosphere": null,
-    "scale_mmol": null,
-    "equivalents": {}
-   },
-   "purification": null,
-   "evidence_grade": "candidate",
-   "verification": "unverified",
-   "catalytic_profile": {
-    "medium": "organic",
-    "activation_mode": "thermal"
-   },
-   "evidence_note": "2026-10-31 从语料层（PMC7511807，heck）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
-   "substrate": {
-    "aryl_halide": "4-iodotoluene",
-    "alkene": "styrene",
-    "product": null
-   },
-   "provenance": {
-    "corpus_id": "PMC7511807",
-    "unit_id": "PMC7511807-T2",
-    "reaction_class": "heck",
-    "promoted_by": "scripts/promote_corpus.py",
-    "merged_by": "scripts/merge_corpus_records.py",
-    "promoted_on": "2026-10-31"
-   }
-  },
-  {
-   "record_id": "CORP-PMC7511807-T2-02",
-   "source_id": "PMC7511807-T2",
-   "citation": "Synthesis of nano magnetic supported NHC-palladium and investigation of its applications as a catalyst in the Mizoroki-H",
-   "doi": "10.1016/j.heliyon.2020.e04946",
-   "pmcid": "PMC7511807",
-   "locator": "T2, entry 2",
-   "locator_zh": "表 2，entry 2（Heliyon，2020）",
-   "outcome": {
-    "value": 95.0,
-    "unit": "%",
-    "outcome_type": "isolated",
-    "label_raw": ", in H2O at 90 °C. bYields of isolated product. | 表头/题注原文：Heck reaction catalyst by Fe3O4@Si–NHC–Pda",
-    "note": "语料层晋升条目：数值与口径均取自 efetch 表格文本，未对照 PDF 图证逐字复核"
-   },
-   "assay": {
-    "method": "isolated (as stated in source)",
-    "internal_standard": null,
-    "quantification_basis": "product",
-    "calibration_note": "原文未报告内标"
-   },
-   "conditions": {
-    "catalyst": "H",
-    "base": "Et3N",
-    "solvent": "toluene",
-    "temp_c": 90.0,
-    "time_h": null,
-    "atmosphere": null,
-    "scale_mmol": null,
-    "equivalents": {}
-   },
-   "purification": null,
-   "evidence_grade": "candidate",
-   "verification": "unverified",
-   "catalytic_profile": {
-    "medium": "organic",
-    "activation_mode": "thermal"
-   },
-   "evidence_note": "2026-10-31 从语料层（PMC7511807，heck）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
-   "substrate": {
-    "aryl_halide": "4-iodotoluene",
-    "alkene": "styrene",
-    "product": null
-   },
-   "provenance": {
-    "corpus_id": "PMC7511807",
-    "unit_id": "PMC7511807-T2",
-    "reaction_class": "heck",
-    "promoted_by": "scripts/promote_corpus.py",
-    "merged_by": "scripts/merge_corpus_records.py",
-    "promoted_on": "2026-10-31"
-   }
-  },
-  {
-   "record_id": "CORP-PMC7511807-T2-03",
-   "source_id": "PMC7511807-T2",
-   "citation": "Synthesis of nano magnetic supported NHC-palladium and investigation of its applications as a catalyst in the Mizoroki-H",
-   "doi": "10.1016/j.heliyon.2020.e04946",
-   "pmcid": "PMC7511807",
-   "locator": "T2, entry 3",
-   "locator_zh": "表 2，entry 3（Heliyon，2020）",
-   "outcome": {
-    "value": 95.0,
-    "unit": "%",
-    "outcome_type": "isolated",
-    "label_raw": ", in H2O at 90 °C. bYields of isolated product. | 表头/题注原文：Heck reaction catalyst by Fe3O4@Si–NHC–Pda",
-    "note": "语料层晋升条目：数值与口径均取自 efetch 表格文本，未对照 PDF 图证逐字复核"
-   },
-   "assay": {
-    "method": "isolated (as stated in source)",
-    "internal_standard": null,
-    "quantification_basis": "product",
-    "calibration_note": "原文未报告内标"
-   },
-   "conditions": {
-    "catalyst": "4-Me",
-    "base": "Et3N",
-    "solvent": "toluene",
-    "temp_c": 90.0,
-    "time_h": null,
-    "atmosphere": null,
-    "scale_mmol": null,
-    "equivalents": {}
-   },
-   "purification": null,
-   "evidence_grade": "candidate",
-   "verification": "unverified",
-   "catalytic_profile": {
-    "medium": "organic",
-    "activation_mode": "thermal"
-   },
-   "evidence_note": "2026-10-31 从语料层（PMC7511807，heck）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
-   "substrate": {
-    "aryl_halide": "4-iodotoluene",
-    "alkene": "styrene",
-    "product": null
-   },
-   "provenance": {
-    "corpus_id": "PMC7511807",
-    "unit_id": "PMC7511807-T2",
-    "reaction_class": "heck",
-    "promoted_by": "scripts/promote_corpus.py",
-    "merged_by": "scripts/merge_corpus_records.py",
-    "promoted_on": "2026-10-31"
-   }
-  },
-  {
-   "record_id": "CORP-PMC7511807-T2-04",
-   "source_id": "PMC7511807-T2",
-   "citation": "Synthesis of nano magnetic supported NHC-palladium and investigation of its applications as a catalyst in the Mizoroki-H",
-   "doi": "10.1016/j.heliyon.2020.e04946",
-   "pmcid": "PMC7511807",
-   "locator": "T2, entry 4",
-   "locator_zh": "表 2，entry 4（Heliyon，2020）",
-   "outcome": {
-    "value": 80.0,
-    "unit": "%",
-    "outcome_type": "isolated",
-    "label_raw": ", in H2O at 90 °C. bYields of isolated product. | 表头/题注原文：Heck reaction catalyst by Fe3O4@Si–NHC–Pda",
-    "note": "语料层晋升条目：数值与口径均取自 efetch 表格文本，未对照 PDF 图证逐字复核"
-   },
-   "assay": {
-    "method": "isolated (as stated in source)",
-    "internal_standard": null,
-    "quantification_basis": "product",
-    "calibration_note": "原文未报告内标"
-   },
-   "conditions": {
-    "catalyst": "4-OMe",
-    "base": "Et3N",
-    "solvent": "toluene",
-    "temp_c": 90.0,
-    "time_h": null,
-    "atmosphere": null,
-    "scale_mmol": null,
-    "equivalents": {}
-   },
-   "purification": null,
-   "evidence_grade": "candidate",
-   "verification": "unverified",
-   "catalytic_profile": {
-    "medium": "organic",
-    "activation_mode": "thermal"
-   },
-   "evidence_note": "2026-10-31 从语料层（PMC7511807，heck）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
-   "substrate": {
-    "aryl_halide": "4-iodotoluene",
-    "alkene": "styrene",
-    "product": null
-   },
-   "provenance": {
-    "corpus_id": "PMC7511807",
-    "unit_id": "PMC7511807-T2",
-    "reaction_class": "heck",
-    "promoted_by": "scripts/promote_corpus.py",
-    "merged_by": "scripts/merge_corpus_records.py",
-    "promoted_on": "2026-10-31"
-   }
-  },
-  {
-   "record_id": "CORP-PMC7511807-T2-05",
-   "source_id": "PMC7511807-T2",
-   "citation": "Synthesis of nano magnetic supported NHC-palladium and investigation of its applications as a catalyst in the Mizoroki-H",
-   "doi": "10.1016/j.heliyon.2020.e04946",
-   "pmcid": "PMC7511807",
-   "locator": "T2, entry 5",
-   "locator_zh": "表 2，entry 5（Heliyon，2020）",
-   "outcome": {
-    "value": 85.0,
-    "unit": "%",
-    "outcome_type": "isolated",
-    "label_raw": ", in H2O at 90 °C. bYields of isolated product. | 表头/题注原文：Heck reaction catalyst by Fe3O4@Si–NHC–Pda",
-    "note": "语料层晋升条目：数值与口径均取自 efetch 表格文本，未对照 PDF 图证逐字复核"
-   },
-   "assay": {
-    "method": "isolated (as stated in source)",
-    "internal_standard": null,
-    "quantification_basis": "product",
-    "calibration_note": "原文未报告内标"
-   },
-   "conditions": {
-    "catalyst": "4-OMe",
-    "base": "Et3N",
-    "solvent": "toluene",
-    "temp_c": 90.0,
-    "time_h": null,
-    "atmosphere": null,
-    "scale_mmol": null,
-    "equivalents": {}
-   },
-   "purification": null,
-   "evidence_grade": "candidate",
-   "verification": "unverified",
-   "catalytic_profile": {
-    "medium": "organic",
-    "activation_mode": "thermal"
-   },
-   "evidence_note": "2026-10-31 从语料层（PMC7511807，heck）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
-   "substrate": {
-    "aryl_halide": "4-iodotoluene",
-    "alkene": "styrene",
-    "product": null
-   },
-   "provenance": {
-    "corpus_id": "PMC7511807",
-    "unit_id": "PMC7511807-T2",
-    "reaction_class": "heck",
-    "promoted_by": "scripts/promote_corpus.py",
-    "merged_by": "scripts/merge_corpus_records.py",
-    "promoted_on": "2026-10-31"
-   }
-  },
-  {
-   "record_id": "CORP-PMC7511807-T2-06",
-   "source_id": "PMC7511807-T2",
-   "citation": "Synthesis of nano magnetic supported NHC-palladium and investigation of its applications as a catalyst in the Mizoroki-H",
-   "doi": "10.1016/j.heliyon.2020.e04946",
-   "pmcid": "PMC7511807",
-   "locator": "T2, entry 6",
-   "locator_zh": "表 2，entry 6（Heliyon，2020）",
-   "outcome": {
-    "value": 85.0,
-    "unit": "%",
-    "outcome_type": "isolated",
-    "label_raw": ", in H2O at 90 °C. bYields of isolated product. | 表头/题注原文：Heck reaction catalyst by Fe3O4@Si–NHC–Pda",
-    "note": "语料层晋升条目：数值与口径均取自 efetch 表格文本，未对照 PDF 图证逐字复核"
-   },
-   "assay": {
-    "method": "isolated (as stated in source)",
-    "internal_standard": null,
-    "quantification_basis": "product",
-    "calibration_note": "原文未报告内标"
-   },
-   "conditions": {
-    "catalyst": "4-OMe",
-    "base": "Et3N",
-    "solvent": "toluene",
-    "temp_c": 90.0,
-    "time_h": null,
-    "atmosphere": null,
-    "scale_mmol": null,
-    "equivalents": {}
-   },
-   "purification": null,
-   "evidence_grade": "candidate",
-   "verification": "unverified",
-   "catalytic_profile": {
-    "medium": "organic",
-    "activation_mode": "thermal"
-   },
-   "evidence_note": "2026-10-31 从语料层（PMC7511807，heck）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
-   "substrate": {
-    "aryl_halide": "4-iodotoluene",
-    "alkene": "styrene",
-    "product": null
-   },
-   "provenance": {
-    "corpus_id": "PMC7511807",
-    "unit_id": "PMC7511807-T2",
-    "reaction_class": "heck",
-    "promoted_by": "scripts/promote_corpus.py",
-    "merged_by": "scripts/merge_corpus_records.py",
-    "promoted_on": "2026-10-31"
-   }
-  },
-  {
-   "record_id": "CORP-PMC7511807-T2-07",
-   "source_id": "PMC7511807-T2",
-   "citation": "Synthesis of nano magnetic supported NHC-palladium and investigation of its applications as a catalyst in the Mizoroki-H",
-   "doi": "10.1016/j.heliyon.2020.e04946",
-   "pmcid": "PMC7511807",
-   "locator": "T2, entry 7",
-   "locator_zh": "表 2，entry 7（Heliyon，2020）",
-   "outcome": {
-    "value": 80.0,
-    "unit": "%",
-    "outcome_type": "isolated",
-    "label_raw": ", in H2O at 90 °C. bYields of isolated product. | 表头/题注原文：Heck reaction catalyst by Fe3O4@Si–NHC–Pda",
-    "note": "语料层晋升条目：数值与口径均取自 efetch 表格文本，未对照 PDF 图证逐字复核"
-   },
-   "assay": {
-    "method": "isolated (as stated in source)",
-    "internal_standard": null,
-    "quantification_basis": "product",
-    "calibration_note": "原文未报告内标"
-   },
-   "conditions": {
-    "catalyst": "3-OMe",
-    "base": "Et3N",
-    "solvent": "toluene",
-    "temp_c": 90.0,
-    "time_h": null,
-    "atmosphere": null,
-    "scale_mmol": null,
-    "equivalents": {}
-   },
-   "purification": null,
-   "evidence_grade": "candidate",
-   "verification": "unverified",
-   "catalytic_profile": {
-    "medium": "organic",
-    "activation_mode": "thermal"
-   },
-   "evidence_note": "2026-10-31 从语料层（PMC7511807，heck）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
-   "substrate": {
-    "aryl_halide": "4-iodotoluene",
-    "alkene": "styrene",
-    "product": null
-   },
-   "provenance": {
-    "corpus_id": "PMC7511807",
-    "unit_id": "PMC7511807-T2",
-    "reaction_class": "heck",
-    "promoted_by": "scripts/promote_corpus.py",
-    "merged_by": "scripts/merge_corpus_records.py",
-    "promoted_on": "2026-10-31"
-   }
-  },
-  {
-   "record_id": "CORP-PMC7511807-T2-08",
-   "source_id": "PMC7511807-T2",
-   "citation": "Synthesis of nano magnetic supported NHC-palladium and investigation of its applications as a catalyst in the Mizoroki-H",
-   "doi": "10.1016/j.heliyon.2020.e04946",
-   "pmcid": "PMC7511807",
-   "locator": "T2, entry 8",
-   "locator_zh": "表 2，entry 8（Heliyon，2020）",
-   "outcome": {
-    "value": 75.0,
-    "unit": "%",
-    "outcome_type": "isolated",
-    "label_raw": ", in H2O at 90 °C. bYields of isolated product. | 表头/题注原文：Heck reaction catalyst by Fe3O4@Si–NHC–Pda",
-    "note": "语料层晋升条目：数值与口径均取自 efetch 表格文本，未对照 PDF 图证逐字复核"
-   },
-   "assay": {
-    "method": "isolated (as stated in source)",
-    "internal_standard": null,
-    "quantification_basis": "product",
-    "calibration_note": "原文未报告内标"
-   },
-   "conditions": {
-    "catalyst": "3-OMe",
-    "base": "Et3N",
-    "solvent": "toluene",
-    "temp_c": 90.0,
-    "time_h": null,
-    "atmosphere": null,
-    "scale_mmol": null,
-    "equivalents": {}
-   },
-   "purification": null,
-   "evidence_grade": "candidate",
-   "verification": "unverified",
-   "catalytic_profile": {
-    "medium": "organic",
-    "activation_mode": "thermal"
-   },
-   "evidence_note": "2026-10-31 从语料层（PMC7511807，heck）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
-   "substrate": {
-    "aryl_halide": "4-iodotoluene",
-    "alkene": "styrene",
-    "product": null
-   },
-   "provenance": {
-    "corpus_id": "PMC7511807",
-    "unit_id": "PMC7511807-T2",
-    "reaction_class": "heck",
-    "promoted_by": "scripts/promote_corpus.py",
-    "merged_by": "scripts/merge_corpus_records.py",
-    "promoted_on": "2026-10-31"
-   }
-  },
-  {
-   "record_id": "CORP-PMC7511807-T2-09",
-   "source_id": "PMC7511807-T2",
-   "citation": "Synthesis of nano magnetic supported NHC-palladium and investigation of its applications as a catalyst in the Mizoroki-H",
-   "doi": "10.1016/j.heliyon.2020.e04946",
-   "pmcid": "PMC7511807",
-   "locator": "T2, entry 9",
-   "locator_zh": "表 2，entry 9（Heliyon，2020）",
-   "outcome": {
-    "value": 80.0,
-    "unit": "%",
-    "outcome_type": "isolated",
-    "label_raw": ", in H2O at 90 °C. bYields of isolated product. | 表头/题注原文：Heck reaction catalyst by Fe3O4@Si–NHC–Pda",
-    "note": "语料层晋升条目：数值与口径均取自 efetch 表格文本，未对照 PDF 图证逐字复核"
-   },
-   "assay": {
-    "method": "isolated (as stated in source)",
-    "internal_standard": null,
-    "quantification_basis": "product",
-    "calibration_note": "原文未报告内标"
-   },
-   "conditions": {
-    "catalyst": "3-OMe",
-    "base": "Et3N",
-    "solvent": "toluene",
-    "temp_c": 90.0,
-    "time_h": null,
-    "atmosphere": null,
-    "scale_mmol": null,
-    "equivalents": {}
-   },
-   "purification": null,
-   "evidence_grade": "candidate",
-   "verification": "unverified",
-   "catalytic_profile": {
-    "medium": "organic",
-    "activation_mode": "thermal"
-   },
-   "evidence_note": "2026-10-31 从语料层（PMC7511807，heck）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
-   "substrate": {
-    "aryl_halide": "4-iodotoluene",
-    "alkene": "styrene",
-    "product": null
-   },
-   "provenance": {
-    "corpus_id": "PMC7511807",
-    "unit_id": "PMC7511807-T2",
-    "reaction_class": "heck",
-    "promoted_by": "scripts/promote_corpus.py",
-    "merged_by": "scripts/merge_corpus_records.py",
-    "promoted_on": "2026-10-31"
-   }
-  },
-  {
-   "record_id": "CORP-PMC7511807-T2-10",
-   "source_id": "PMC7511807-T2",
-   "citation": "Synthesis of nano magnetic supported NHC-palladium and investigation of its applications as a catalyst in the Mizoroki-H",
-   "doi": "10.1016/j.heliyon.2020.e04946",
-   "pmcid": "PMC7511807",
-   "locator": "T2, entry 10",
-   "locator_zh": "表 2，entry 10（Heliyon，2020）",
-   "outcome": {
-    "value": 75.0,
-    "unit": "%",
-    "outcome_type": "isolated",
-    "label_raw": ", in H2O at 90 °C. bYields of isolated product. | 表头/题注原文：Heck reaction catalyst by Fe3O4@Si–NHC–Pda",
-    "note": "语料层晋升条目：数值与口径均取自 efetch 表格文本，未对照 PDF 图证逐字复核"
-   },
-   "assay": {
-    "method": "isolated (as stated in source)",
-    "internal_standard": null,
-    "quantification_basis": "product",
-    "calibration_note": "原文未报告内标"
-   },
-   "conditions": {
-    "catalyst": "4-COMe",
-    "base": "Et3N",
-    "solvent": "toluene",
-    "temp_c": 90.0,
-    "time_h": null,
-    "atmosphere": null,
-    "scale_mmol": null,
-    "equivalents": {}
-   },
-   "purification": null,
-   "evidence_grade": "candidate",
-   "verification": "unverified",
-   "catalytic_profile": {
-    "medium": "organic",
-    "activation_mode": "thermal"
-   },
-   "evidence_note": "2026-10-31 从语料层（PMC7511807，heck）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
-   "substrate": {
-    "aryl_halide": "4-iodotoluene",
-    "alkene": "styrene",
-    "product": null
-   },
-   "provenance": {
-    "corpus_id": "PMC7511807",
-    "unit_id": "PMC7511807-T2",
-    "reaction_class": "heck",
-    "promoted_by": "scripts/promote_corpus.py",
-    "merged_by": "scripts/merge_corpus_records.py",
-    "promoted_on": "2026-10-31"
-   }
-  },
-  {
-   "record_id": "CORP-PMC7511807-T2-11",
-   "source_id": "PMC7511807-T2",
-   "citation": "Synthesis of nano magnetic supported NHC-palladium and investigation of its applications as a catalyst in the Mizoroki-H",
-   "doi": "10.1016/j.heliyon.2020.e04946",
-   "pmcid": "PMC7511807",
-   "locator": "T2, entry 11",
-   "locator_zh": "表 2，entry 11（Heliyon，2020）",
-   "outcome": {
-    "value": 75.0,
-    "unit": "%",
-    "outcome_type": "isolated",
-    "label_raw": ", in H2O at 90 °C. bYields of isolated product. | 表头/题注原文：Heck reaction catalyst by Fe3O4@Si–NHC–Pda",
-    "note": "语料层晋升条目：数值与口径均取自 efetch 表格文本，未对照 PDF 图证逐字复核"
-   },
-   "assay": {
-    "method": "isolated (as stated in source)",
-    "internal_standard": null,
-    "quantification_basis": "product",
-    "calibration_note": "原文未报告内标"
-   },
-   "conditions": {
-    "catalyst": "4-COMe",
-    "base": "Et3N",
-    "solvent": "toluene",
-    "temp_c": 90.0,
-    "time_h": null,
-    "atmosphere": null,
-    "scale_mmol": null,
-    "equivalents": {}
-   },
-   "purification": null,
-   "evidence_grade": "candidate",
-   "verification": "unverified",
-   "catalytic_profile": {
-    "medium": "organic",
-    "activation_mode": "thermal"
-   },
-   "evidence_note": "2026-10-31 从语料层（PMC7511807，heck）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
-   "substrate": {
-    "aryl_halide": "4-iodotoluene",
-    "alkene": "styrene",
-    "product": null
-   },
-   "provenance": {
-    "corpus_id": "PMC7511807",
-    "unit_id": "PMC7511807-T2",
-    "reaction_class": "heck",
-    "promoted_by": "scripts/promote_corpus.py",
-    "merged_by": "scripts/merge_corpus_records.py",
-    "promoted_on": "2026-10-31"
-   }
-  },
-  {
-   "record_id": "CORP-PMC7511807-T2-12",
-   "source_id": "PMC7511807-T2",
-   "citation": "Synthesis of nano magnetic supported NHC-palladium and investigation of its applications as a catalyst in the Mizoroki-H",
-   "doi": "10.1016/j.heliyon.2020.e04946",
-   "pmcid": "PMC7511807",
-   "locator": "T2, entry 12",
-   "locator_zh": "表 2，entry 12（Heliyon，2020）",
-   "outcome": {
-    "value": 75.0,
-    "unit": "%",
-    "outcome_type": "isolated",
-    "label_raw": ", in H2O at 90 °C. bYields of isolated product. | 表头/题注原文：Heck reaction catalyst by Fe3O4@Si–NHC–Pda",
-    "note": "语料层晋升条目：数值与口径均取自 efetch 表格文本，未对照 PDF 图证逐字复核"
-   },
-   "assay": {
-    "method": "isolated (as stated in source)",
-    "internal_standard": null,
-    "quantification_basis": "product",
-    "calibration_note": "原文未报告内标"
-   },
-   "conditions": {
-    "catalyst": "4-COMe",
-    "base": "Et3N",
-    "solvent": "toluene",
-    "temp_c": 90.0,
-    "time_h": null,
-    "atmosphere": null,
-    "scale_mmol": null,
-    "equivalents": {}
-   },
-   "purification": null,
-   "evidence_grade": "candidate",
-   "verification": "unverified",
-   "catalytic_profile": {
-    "medium": "organic",
-    "activation_mode": "thermal"
-   },
-   "evidence_note": "2026-10-31 从语料层（PMC7511807，heck）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
-   "substrate": {
-    "aryl_halide": "4-iodotoluene",
-    "alkene": "styrene",
-    "product": null
-   },
-   "provenance": {
-    "corpus_id": "PMC7511807",
-    "unit_id": "PMC7511807-T2",
-    "reaction_class": "heck",
-    "promoted_by": "scripts/promote_corpus.py",
-    "merged_by": "scripts/merge_corpus_records.py",
-    "promoted_on": "2026-10-31"
-   }
-  },
-  {
-   "record_id": "CORP-PMC7511807-T2-13",
-   "source_id": "PMC7511807-T2",
-   "citation": "Synthesis of nano magnetic supported NHC-palladium and investigation of its applications as a catalyst in the Mizoroki-H",
-   "doi": "10.1016/j.heliyon.2020.e04946",
-   "pmcid": "PMC7511807",
-   "locator": "T2, entry 13",
-   "locator_zh": "表 2，entry 13（Heliyon，2020）",
-   "outcome": {
-    "value": 85.0,
-    "unit": "%",
-    "outcome_type": "isolated",
-    "label_raw": ", in H2O at 90 °C. bYields of isolated product. | 表头/题注原文：Heck reaction catalyst by Fe3O4@Si–NHC–Pda",
-    "note": "语料层晋升条目：数值与口径均取自 efetch 表格文本，未对照 PDF 图证逐字复核"
-   },
-   "assay": {
-    "method": "isolated (as stated in source)",
-    "internal_standard": null,
-    "quantification_basis": "product",
-    "calibration_note": "原文未报告内标"
-   },
-   "conditions": {
-    "catalyst": "H",
-    "base": "Et3N",
-    "solvent": "toluene",
-    "temp_c": 90.0,
-    "time_h": null,
-    "atmosphere": null,
-    "scale_mmol": null,
-    "equivalents": {}
-   },
-   "purification": null,
-   "evidence_grade": "candidate",
-   "verification": "unverified",
-   "catalytic_profile": {
-    "medium": "organic",
-    "activation_mode": "thermal"
-   },
-   "evidence_note": "2026-10-31 从语料层（PMC7511807，heck）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
-   "substrate": {
-    "aryl_halide": "4-iodotoluene",
-    "alkene": "styrene",
-    "product": null
-   },
-   "provenance": {
-    "corpus_id": "PMC7511807",
-    "unit_id": "PMC7511807-T2",
-    "reaction_class": "heck",
-    "promoted_by": "scripts/promote_corpus.py",
-    "merged_by": "scripts/merge_corpus_records.py",
-    "promoted_on": "2026-10-31"
-   }
-  },
-  {
-   "record_id": "CORP-PMC7511807-T2-14",
-   "source_id": "PMC7511807-T2",
-   "citation": "Synthesis of nano magnetic supported NHC-palladium and investigation of its applications as a catalyst in the Mizoroki-H",
-   "doi": "10.1016/j.heliyon.2020.e04946",
-   "pmcid": "PMC7511807",
-   "locator": "T2, entry 14",
-   "locator_zh": "表 2，entry 14（Heliyon，2020）",
-   "outcome": {
-    "value": 90.0,
-    "unit": "%",
-    "outcome_type": "isolated",
-    "label_raw": ", in H2O at 90 °C. bYields of isolated product. | 表头/题注原文：Heck reaction catalyst by Fe3O4@Si–NHC–Pda",
-    "note": "语料层晋升条目：数值与口径均取自 efetch 表格文本，未对照 PDF 图证逐字复核"
-   },
-   "assay": {
-    "method": "isolated (as stated in source)",
-    "internal_standard": null,
-    "quantification_basis": "product",
-    "calibration_note": "原文未报告内标"
-   },
-   "conditions": {
-    "catalyst": "4-CN",
-    "base": "Et3N",
-    "solvent": "toluene",
-    "temp_c": 90.0,
-    "time_h": null,
-    "atmosphere": null,
-    "scale_mmol": null,
-    "equivalents": {}
-   },
-   "purification": null,
-   "evidence_grade": "candidate",
-   "verification": "unverified",
-   "catalytic_profile": {
-    "medium": "organic",
-    "activation_mode": "thermal"
-   },
-   "evidence_note": "2026-10-31 从语料层（PMC7511807，heck）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
-   "substrate": {
-    "aryl_halide": "4-iodotoluene",
-    "alkene": "styrene",
-    "product": null
-   },
-   "provenance": {
-    "corpus_id": "PMC7511807",
-    "unit_id": "PMC7511807-T2",
-    "reaction_class": "heck",
-    "promoted_by": "scripts/promote_corpus.py",
-    "merged_by": "scripts/merge_corpus_records.py",
-    "promoted_on": "2026-10-31"
-   }
-  },
-  {
-   "record_id": "CORP-PMC7511807-T2-15",
-   "source_id": "PMC7511807-T2",
-   "citation": "Synthesis of nano magnetic supported NHC-palladium and investigation of its applications as a catalyst in the Mizoroki-H",
-   "doi": "10.1016/j.heliyon.2020.e04946",
-   "pmcid": "PMC7511807",
-   "locator": "T2, entry 15",
-   "locator_zh": "表 2，entry 15（Heliyon，2020）",
-   "outcome": {
-    "value": 90.0,
-    "unit": "%",
-    "outcome_type": "isolated",
-    "label_raw": ", in H2O at 90 °C. bYields of isolated product. | 表头/题注原文：Heck reaction catalyst by Fe3O4@Si–NHC–Pda",
-    "note": "语料层晋升条目：数值与口径均取自 efetch 表格文本，未对照 PDF 图证逐字复核"
-   },
-   "assay": {
-    "method": "isolated (as stated in source)",
-    "internal_standard": null,
-    "quantification_basis": "product",
-    "calibration_note": "原文未报告内标"
-   },
-   "conditions": {
-    "catalyst": "4-CN",
-    "base": "Et3N",
-    "solvent": "toluene",
-    "temp_c": 90.0,
-    "time_h": null,
-    "atmosphere": null,
-    "scale_mmol": null,
-    "equivalents": {}
-   },
-   "purification": null,
-   "evidence_grade": "candidate",
-   "verification": "unverified",
-   "catalytic_profile": {
-    "medium": "organic",
-    "activation_mode": "thermal"
-   },
-   "evidence_note": "2026-10-31 从语料层（PMC7511807，heck）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
-   "substrate": {
-    "aryl_halide": "4-iodotoluene",
-    "alkene": "styrene",
-    "product": null
-   },
-   "provenance": {
-    "corpus_id": "PMC7511807",
-    "unit_id": "PMC7511807-T2",
-    "reaction_class": "heck",
-    "promoted_by": "scripts/promote_corpus.py",
-    "merged_by": "scripts/merge_corpus_records.py",
-    "promoted_on": "2026-10-31"
-   }
-  },
-  {
-   "record_id": "CORP-PMC7511807-T2-16",
-   "source_id": "PMC7511807-T2",
-   "citation": "Synthesis of nano magnetic supported NHC-palladium and investigation of its applications as a catalyst in the Mizoroki-H",
-   "doi": "10.1016/j.heliyon.2020.e04946",
-   "pmcid": "PMC7511807",
-   "locator": "T2, entry 16",
-   "locator_zh": "表 2，entry 16（Heliyon，2020）",
-   "outcome": {
-    "value": 90.0,
-    "unit": "%",
-    "outcome_type": "isolated",
-    "label_raw": ", in H2O at 90 °C. bYields of isolated product. | 表头/题注原文：Heck reaction catalyst by Fe3O4@Si–NHC–Pda",
-    "note": "语料层晋升条目：数值与口径均取自 efetch 表格文本，未对照 PDF 图证逐字复核"
-   },
-   "assay": {
-    "method": "isolated (as stated in source)",
-    "internal_standard": null,
-    "quantification_basis": "product",
-    "calibration_note": "原文未报告内标"
-   },
-   "conditions": {
-    "catalyst": "4-CHO",
-    "base": "Et3N",
-    "solvent": "toluene",
-    "temp_c": 90.0,
-    "time_h": null,
-    "atmosphere": null,
-    "scale_mmol": null,
-    "equivalents": {}
-   },
-   "purification": null,
-   "evidence_grade": "candidate",
-   "verification": "unverified",
-   "catalytic_profile": {
-    "medium": "organic",
-    "activation_mode": "thermal"
-   },
-   "evidence_note": "2026-10-31 从语料层（PMC7511807，heck）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
-   "substrate": {
-    "aryl_halide": "4-iodotoluene",
-    "alkene": "styrene",
-    "product": null
-   },
-   "provenance": {
-    "corpus_id": "PMC7511807",
-    "unit_id": "PMC7511807-T2",
-    "reaction_class": "heck",
-    "promoted_by": "scripts/promote_corpus.py",
-    "merged_by": "scripts/merge_corpus_records.py",
-    "promoted_on": "2026-10-31"
-   }
-  },
-  {
-   "record_id": "CORP-PMC7511807-T2-17",
-   "source_id": "PMC7511807-T2",
-   "citation": "Synthesis of nano magnetic supported NHC-palladium and investigation of its applications as a catalyst in the Mizoroki-H",
-   "doi": "10.1016/j.heliyon.2020.e04946",
-   "pmcid": "PMC7511807",
-   "locator": "T2, entry 17",
-   "locator_zh": "表 2，entry 17（Heliyon，2020）",
-   "outcome": {
-    "value": 90.0,
-    "unit": "%",
-    "outcome_type": "isolated",
-    "label_raw": ", in H2O at 90 °C. bYields of isolated product. | 表头/题注原文：Heck reaction catalyst by Fe3O4@Si–NHC–Pda",
-    "note": "语料层晋升条目：数值与口径均取自 efetch 表格文本，未对照 PDF 图证逐字复核"
-   },
-   "assay": {
-    "method": "isolated (as stated in source)",
-    "internal_standard": null,
-    "quantification_basis": "product",
-    "calibration_note": "原文未报告内标"
-   },
-   "conditions": {
-    "catalyst": "4-CHO",
-    "base": "Et3N",
-    "solvent": "toluene",
-    "temp_c": 90.0,
-    "time_h": null,
-    "atmosphere": null,
-    "scale_mmol": null,
-    "equivalents": {}
-   },
-   "purification": null,
-   "evidence_grade": "candidate",
-   "verification": "unverified",
-   "catalytic_profile": {
-    "medium": "organic",
-    "activation_mode": "thermal"
-   },
-   "evidence_note": "2026-10-31 从语料层（PMC7511807，heck）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
-   "substrate": {
-    "aryl_halide": "4-iodotoluene",
-    "alkene": "styrene",
-    "product": null
-   },
-   "provenance": {
-    "corpus_id": "PMC7511807",
-    "unit_id": "PMC7511807-T2",
-    "reaction_class": "heck",
-    "promoted_by": "scripts/promote_corpus.py",
-    "merged_by": "scripts/merge_corpus_records.py",
-    "promoted_on": "2026-10-31"
-   }
-  },
-  {
-   "record_id": "CORP-PMC7511807-T2-18",
-   "source_id": "PMC7511807-T2",
-   "citation": "Synthesis of nano magnetic supported NHC-palladium and investigation of its applications as a catalyst in the Mizoroki-H",
-   "doi": "10.1016/j.heliyon.2020.e04946",
-   "pmcid": "PMC7511807",
-   "locator": "T2, entry 18",
-   "locator_zh": "表 2，entry 18（Heliyon，2020）",
-   "outcome": {
-    "value": 98.0,
-    "unit": "%",
-    "outcome_type": "isolated",
-    "label_raw": ", in H2O at 90 °C. bYields of isolated product. | 表头/题注原文：Heck reaction catalyst by Fe3O4@Si–NHC–Pda",
-    "note": "语料层晋升条目：数值与口径均取自 efetch 表格文本，未对照 PDF 图证逐字复核"
-   },
-   "assay": {
-    "method": "isolated (as stated in source)",
-    "internal_standard": null,
-    "quantification_basis": "product",
-    "calibration_note": "原文未报告内标"
-   },
-   "conditions": {
-    "catalyst": "H",
-    "base": "Et3N",
-    "solvent": "toluene",
-    "temp_c": 90.0,
-    "time_h": null,
-    "atmosphere": null,
-    "scale_mmol": null,
-    "equivalents": {}
-   },
-   "purification": null,
-   "evidence_grade": "candidate",
-   "verification": "unverified",
-   "catalytic_profile": {
-    "medium": "organic",
-    "activation_mode": "thermal"
-   },
-   "evidence_note": "2026-10-31 从语料层（PMC7511807，heck）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
-   "substrate": {
-    "aryl_halide": "4-iodotoluene",
-    "alkene": "styrene",
-    "product": null
-   },
-   "provenance": {
-    "corpus_id": "PMC7511807",
-    "unit_id": "PMC7511807-T2",
-    "reaction_class": "heck",
-    "promoted_by": "scripts/promote_corpus.py",
-    "merged_by": "scripts/merge_corpus_records.py",
-    "promoted_on": "2026-10-31"
-   }
-  },
-  {
-   "record_id": "CORP-PMC7511807-T2-19",
-   "source_id": "PMC7511807-T2",
-   "citation": "Synthesis of nano magnetic supported NHC-palladium and investigation of its applications as a catalyst in the Mizoroki-H",
-   "doi": "10.1016/j.heliyon.2020.e04946",
-   "pmcid": "PMC7511807",
-   "locator": "T2, entry 19",
-   "locator_zh": "表 2，entry 19（Heliyon，2020）",
-   "outcome": {
-    "value": 90.0,
-    "unit": "%",
-    "outcome_type": "isolated",
-    "label_raw": ", in H2O at 90 °C. bYields of isolated product. | 表头/题注原文：Heck reaction catalyst by Fe3O4@Si–NHC–Pda",
-    "note": "语料层晋升条目：数值与口径均取自 efetch 表格文本，未对照 PDF 图证逐字复核"
-   },
-   "assay": {
-    "method": "isolated (as stated in source)",
-    "internal_standard": null,
-    "quantification_basis": "product",
-    "calibration_note": "原文未报告内标"
-   },
-   "conditions": {
-    "catalyst": "4-Me",
-    "base": "Et3N",
-    "solvent": "toluene",
-    "temp_c": 90.0,
-    "time_h": null,
-    "atmosphere": null,
-    "scale_mmol": null,
-    "equivalents": {}
-   },
-   "purification": null,
-   "evidence_grade": "candidate",
-   "verification": "unverified",
-   "catalytic_profile": {
-    "medium": "organic",
-    "activation_mode": "thermal"
-   },
-   "evidence_note": "2026-10-31 从语料层（PMC7511807，heck）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
-   "substrate": {
-    "aryl_halide": "4-iodotoluene",
-    "alkene": "styrene",
-    "product": null
-   },
-   "provenance": {
-    "corpus_id": "PMC7511807",
-    "unit_id": "PMC7511807-T2",
-    "reaction_class": "heck",
-    "promoted_by": "scripts/promote_corpus.py",
-    "merged_by": "scripts/merge_corpus_records.py",
-    "promoted_on": "2026-10-31"
-   }
-  },
-  {
-   "record_id": "CORP-PMC7511807-T2-20",
-   "source_id": "PMC7511807-T2",
-   "citation": "Synthesis of nano magnetic supported NHC-palladium and investigation of its applications as a catalyst in the Mizoroki-H",
-   "doi": "10.1016/j.heliyon.2020.e04946",
-   "pmcid": "PMC7511807",
-   "locator": "T2, entry 20",
-   "locator_zh": "表 2，entry 20（Heliyon，2020）",
-   "outcome": {
-    "value": 80.0,
-    "unit": "%",
-    "outcome_type": "isolated",
-    "label_raw": ", in H2O at 90 °C. bYields of isolated product. | 表头/题注原文：Heck reaction catalyst by Fe3O4@Si–NHC–Pda",
-    "note": "语料层晋升条目：数值与口径均取自 efetch 表格文本，未对照 PDF 图证逐字复核"
-   },
-   "assay": {
-    "method": "isolated (as stated in source)",
-    "internal_standard": null,
-    "quantification_basis": "product",
-    "calibration_note": "原文未报告内标"
-   },
-   "conditions": {
-    "catalyst": "4-COMe",
-    "base": "Et3N",
-    "solvent": "toluene",
-    "temp_c": 90.0,
-    "time_h": null,
-    "atmosphere": null,
-    "scale_mmol": null,
-    "equivalents": {}
-   },
-   "purification": null,
-   "evidence_grade": "candidate",
-   "verification": "unverified",
-   "catalytic_profile": {
-    "medium": "organic",
-    "activation_mode": "thermal"
-   },
-   "evidence_note": "2026-10-31 从语料层（PMC7511807，heck）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
-   "substrate": {
-    "aryl_halide": "4-iodotoluene",
-    "alkene": "styrene",
-    "product": null
-   },
-   "provenance": {
-    "corpus_id": "PMC7511807",
-    "unit_id": "PMC7511807-T2",
     "reaction_class": "heck",
     "promoted_by": "scripts/promote_corpus.py",
     "merged_by": "scripts/merge_corpus_records.py",
@@ -7276,9 +5524,9 @@
    "conditions": {
     "catalyst": "Fe3O4@Si–NHC–Pd",
     "base": null,
-    "solvent": "benzene",
-    "temp_c": null,
-    "time_h": null,
+    "solvent": "H2O",
+    "temp_c": 90.0,
+    "time_h": 8.0,
     "atmosphere": null,
     "scale_mmol": null,
     "equivalents": {}
@@ -7290,7 +5538,7 @@
     "catalyst_form": "nanoparticle",
     "ligand_family": "non_phosphine",
     "support": "solid_support",
-    "medium": "organic",
+    "medium": "aqueous",
     "activation_mode": "thermal"
    },
    "evidence_note": "2026-10-31 从语料层（PMC7511807，heck）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
@@ -7332,9 +5580,9 @@
    "conditions": {
     "catalyst": "NO2–NHC–Pd@Fe3O4",
     "base": null,
-    "solvent": "benzene",
-    "temp_c": null,
-    "time_h": null,
+    "solvent": "MeCN",
+    "temp_c": 80.0,
+    "time_h": 6.0,
     "atmosphere": null,
     "scale_mmol": null,
     "equivalents": {}
@@ -7388,9 +5636,9 @@
    "conditions": {
     "catalyst": "Pd NPs@NHC@ZIF-8",
     "base": null,
-    "solvent": "benzene",
-    "temp_c": null,
-    "time_h": null,
+    "solvent": "DMF-H2O",
+    "temp_c": 110.0,
+    "time_h": 2.5,
     "atmosphere": null,
     "scale_mmol": null,
     "equivalents": {}
@@ -7402,7 +5650,7 @@
     "catalyst_form": "nanoparticle",
     "ligand_family": "non_phosphine",
     "support": "solid_support",
-    "medium": "organic",
+    "medium": "aqueous",
     "activation_mode": "thermal"
    },
    "evidence_note": "2026-10-31 从语料层（PMC7511807，heck）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
@@ -7444,9 +5692,9 @@
    "conditions": {
     "catalyst": "MnPs–NHC–Pd(II)",
     "base": null,
-    "solvent": "benzene",
-    "temp_c": null,
-    "time_h": null,
+    "solvent": "DMF",
+    "temp_c": 70.0,
+    "time_h": 0.33,
     "atmosphere": null,
     "scale_mmol": null,
     "equivalents": {}
@@ -7500,9 +5748,9 @@
    "conditions": {
     "catalyst": "Hydrazon-pd@ZnO",
     "base": null,
-    "solvent": "benzene",
-    "temp_c": null,
-    "time_h": null,
+    "solvent": "DMF",
+    "temp_c": 130.0,
+    "time_h": 1.5,
     "atmosphere": null,
     "scale_mmol": null,
     "equivalents": {}
@@ -7556,9 +5804,9 @@
    "conditions": {
     "catalyst": "PdCl2Kryptofix-5",
     "base": null,
-    "solvent": "benzene",
-    "temp_c": null,
-    "time_h": null,
+    "solvent": "DMF",
+    "temp_c": 130.0,
+    "time_h": 24.0,
     "atmosphere": null,
     "scale_mmol": null,
     "equivalents": {}
@@ -7623,9 +5871,6 @@
    "evidence_grade": "candidate",
    "verification": "unverified",
    "catalytic_profile": {
-    "catalyst_form": "none",
-    "ligand_family": "none",
-    "support": "none",
     "medium": "organic",
     "activation_mode": "thermal"
    },
@@ -7679,9 +5924,6 @@
    "evidence_grade": "candidate",
    "verification": "unverified",
    "catalytic_profile": {
-    "catalyst_form": "none",
-    "ligand_family": "none",
-    "support": "none",
     "medium": "organic",
     "activation_mode": "thermal"
    },
@@ -7735,9 +5977,6 @@
    "evidence_grade": "candidate",
    "verification": "unverified",
    "catalytic_profile": {
-    "catalyst_form": "none",
-    "ligand_family": "none",
-    "support": "none",
     "medium": "organic",
     "activation_mode": "thermal"
    },
@@ -7791,9 +6030,6 @@
    "evidence_grade": "candidate",
    "verification": "unverified",
    "catalytic_profile": {
-    "catalyst_form": "none",
-    "ligand_family": "none",
-    "support": "none",
     "medium": "organic",
     "activation_mode": "thermal"
    },
@@ -7847,9 +6083,6 @@
    "evidence_grade": "candidate",
    "verification": "unverified",
    "catalytic_profile": {
-    "catalyst_form": "none",
-    "ligand_family": "none",
-    "support": "none",
     "medium": "organic",
     "activation_mode": "thermal"
    },
@@ -7903,9 +6136,6 @@
    "evidence_grade": "candidate",
    "verification": "unverified",
    "catalytic_profile": {
-    "catalyst_form": "none",
-    "ligand_family": "none",
-    "support": "none",
     "medium": "organic",
     "activation_mode": "thermal"
    },
@@ -7959,9 +6189,6 @@
    "evidence_grade": "candidate",
    "verification": "unverified",
    "catalytic_profile": {
-    "catalyst_form": "none",
-    "ligand_family": "none",
-    "support": "none",
     "medium": "organic",
     "activation_mode": "thermal"
    },
@@ -8015,9 +6242,6 @@
    "evidence_grade": "candidate",
    "verification": "unverified",
    "catalytic_profile": {
-    "catalyst_form": "none",
-    "ligand_family": "none",
-    "support": "none",
     "medium": "organic",
     "activation_mode": "thermal"
    },
@@ -8071,9 +6295,6 @@
    "evidence_grade": "candidate",
    "verification": "unverified",
    "catalytic_profile": {
-    "catalyst_form": "none",
-    "ligand_family": "none",
-    "support": "none",
     "medium": "organic",
     "activation_mode": "thermal"
    },
@@ -8796,9 +7017,6 @@
    "evidence_grade": "candidate",
    "verification": "unverified",
    "catalytic_profile": {
-    "catalyst_form": "none",
-    "ligand_family": "none",
-    "support": "none",
     "medium": "aqueous",
     "activation_mode": "thermal"
    },
@@ -9157,11 +7375,11 @@
     "calibration_note": "原文未报告内标"
    },
    "conditions": {
-    "catalyst": "Pd/mol %",
+    "catalyst": null,
     "base": "Et3N",
-    "solvent": "benzene",
-    "temp_c": null,
-    "time_h": null,
+    "solvent": "iPrOH",
+    "temp_c": 80.0,
+    "time_h": 24.0,
     "atmosphere": null,
     "scale_mmol": null,
     "equivalents": {}
@@ -9210,11 +7428,11 @@
     "calibration_note": "原文未报告内标"
    },
    "conditions": {
-    "catalyst": "Pd/mol %",
+    "catalyst": null,
     "base": "Et3N",
-    "solvent": "benzene",
-    "temp_c": null,
-    "time_h": null,
+    "solvent": "iPrOH/H2O",
+    "temp_c": 80.0,
+    "time_h": 24.0,
     "atmosphere": null,
     "scale_mmol": null,
     "equivalents": {}
@@ -9223,7 +7441,7 @@
    "evidence_grade": "candidate",
    "verification": "unverified",
    "catalytic_profile": {
-    "medium": "organic",
+    "medium": "aqueous",
     "activation_mode": "thermal"
    },
    "evidence_note": "2026-10-31 从语料层（PMC13325132，heck）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
@@ -9263,11 +7481,11 @@
     "calibration_note": "原文未报告内标"
    },
    "conditions": {
-    "catalyst": "Pd/mol %",
+    "catalyst": null,
     "base": "Et3N",
-    "solvent": "benzene",
-    "temp_c": null,
-    "time_h": null,
+    "solvent": "H2O",
+    "temp_c": 80.0,
+    "time_h": 24.0,
     "atmosphere": null,
     "scale_mmol": null,
     "equivalents": {}
@@ -9276,7 +7494,7 @@
    "evidence_grade": "candidate",
    "verification": "unverified",
    "catalytic_profile": {
-    "medium": "organic",
+    "medium": "aqueous",
     "activation_mode": "thermal"
    },
    "evidence_note": "2026-10-31 从语料层（PMC13325132，heck）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
@@ -9316,11 +7534,11 @@
     "calibration_note": "原文未报告内标"
    },
    "conditions": {
-    "catalyst": "Pd/mol %",
+    "catalyst": null,
     "base": "Et3N",
-    "solvent": "benzene",
-    "temp_c": null,
-    "time_h": null,
+    "solvent": "iPrOH/H2O",
+    "temp_c": 80.0,
+    "time_h": 24.0,
     "atmosphere": null,
     "scale_mmol": null,
     "equivalents": {}
@@ -9329,7 +7547,7 @@
    "evidence_grade": "candidate",
    "verification": "unverified",
    "catalytic_profile": {
-    "medium": "organic",
+    "medium": "aqueous",
     "activation_mode": "thermal"
    },
    "evidence_note": "2026-10-31 从语料层（PMC13325132，heck）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
@@ -9369,11 +7587,11 @@
     "calibration_note": "原文未报告内标"
    },
    "conditions": {
-    "catalyst": "Pd/mol %",
+    "catalyst": null,
     "base": "Et3N",
-    "solvent": "benzene",
-    "temp_c": null,
-    "time_h": null,
+    "solvent": "iPrOH/H2O",
+    "temp_c": 80.0,
+    "time_h": 24.0,
     "atmosphere": null,
     "scale_mmol": null,
     "equivalents": {}
@@ -9382,7 +7600,7 @@
    "evidence_grade": "candidate",
    "verification": "unverified",
    "catalytic_profile": {
-    "medium": "organic",
+    "medium": "aqueous",
     "activation_mode": "thermal"
    },
    "evidence_note": "2026-10-31 从语料层（PMC13325132，heck）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
@@ -9422,11 +7640,11 @@
     "calibration_note": "原文未报告内标"
    },
    "conditions": {
-    "catalyst": "Pd/mol %",
+    "catalyst": null,
     "base": "Et3N",
-    "solvent": "benzene",
-    "temp_c": null,
-    "time_h": null,
+    "solvent": "iPrOH/H2O",
+    "temp_c": 80.0,
+    "time_h": 24.0,
     "atmosphere": null,
     "scale_mmol": null,
     "equivalents": {}
@@ -9435,7 +7653,7 @@
    "evidence_grade": "candidate",
    "verification": "unverified",
    "catalytic_profile": {
-    "medium": "organic",
+    "medium": "aqueous",
     "activation_mode": "thermal"
    },
    "evidence_note": "2026-10-31 从语料层（PMC13325132，heck）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
@@ -9475,11 +7693,11 @@
     "calibration_note": "原文未报告内标"
    },
    "conditions": {
-    "catalyst": "Pd/mol %",
+    "catalyst": null,
     "base": "Et3N",
-    "solvent": "benzene",
-    "temp_c": null,
-    "time_h": null,
+    "solvent": "iPrOH/H2O",
+    "temp_c": 90.0,
+    "time_h": 24.0,
     "atmosphere": null,
     "scale_mmol": null,
     "equivalents": {}
@@ -9488,7 +7706,7 @@
    "evidence_grade": "candidate",
    "verification": "unverified",
    "catalytic_profile": {
-    "medium": "organic",
+    "medium": "aqueous",
     "activation_mode": "thermal"
    },
    "evidence_note": "2026-10-31 从语料层（PMC13325132，heck）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
@@ -9528,11 +7746,11 @@
     "calibration_note": "原文未报告内标"
    },
    "conditions": {
-    "catalyst": "Pd/mol %",
+    "catalyst": null,
     "base": "Et3N",
-    "solvent": "benzene",
-    "temp_c": null,
-    "time_h": null,
+    "solvent": "iPrOH/H2O",
+    "temp_c": 90.0,
+    "time_h": 24.0,
     "atmosphere": null,
     "scale_mmol": null,
     "equivalents": {}
@@ -9541,7 +7759,7 @@
    "evidence_grade": "candidate",
    "verification": "unverified",
    "catalytic_profile": {
-    "medium": "organic",
+    "medium": "aqueous",
     "activation_mode": "thermal"
    },
    "evidence_note": "2026-10-31 从语料层（PMC13325132，heck）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
@@ -9581,11 +7799,11 @@
     "calibration_note": "原文未报告内标"
    },
    "conditions": {
-    "catalyst": "Pd/mol %",
+    "catalyst": null,
     "base": "Et3N",
-    "solvent": "benzene",
-    "temp_c": null,
-    "time_h": null,
+    "solvent": "EtOH",
+    "temp_c": 80.0,
+    "time_h": 24.0,
     "atmosphere": null,
     "scale_mmol": null,
     "equivalents": {}
@@ -9634,117 +7852,11 @@
     "calibration_note": "原文未报告内标"
    },
    "conditions": {
-    "catalyst": "Pd/mol %",
+    "catalyst": null,
     "base": "Et3N",
-    "solvent": "benzene",
-    "temp_c": null,
-    "time_h": null,
-    "atmosphere": null,
-    "scale_mmol": null,
-    "equivalents": {}
-   },
-   "purification": null,
-   "evidence_grade": "candidate",
-   "verification": "unverified",
-   "catalytic_profile": {
-    "medium": "organic",
-    "activation_mode": "thermal"
-   },
-   "evidence_note": "2026-10-31 从语料层（PMC13325132，heck）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
-   "substrate": {
-    "aryl_halide": "iodobenzene",
-    "alkene": "ethyl acrylate",
-    "product": null
-   },
-   "provenance": {
-    "corpus_id": "PMC13325132",
-    "unit_id": "PMC13325132-T1",
-    "reaction_class": "heck",
-    "promoted_by": "scripts/promote_corpus.py",
-    "merged_by": "scripts/merge_corpus_records.py",
-    "promoted_on": "2026-10-31"
-   }
-  },
-  {
-   "record_id": "CORP-PMC13325132-T1-11",
-   "source_id": "PMC13325132-T1",
-   "citation": "Sustainable Mizoroki–Heck Cross-Coupling Using a Pd(II)-Polymer as Precatalyst in 1‑Butanol",
-   "doi": "10.1021/acsomega.6c01810",
-   "pmcid": "PMC13325132",
-   "locator": "T1, entry 11",
-   "locator_zh": "表 1，entry 11（ACS Omega，2026）",
-   "outcome": {
-    "value": 0.0,
-    "unit": "%",
-    "outcome_type": "gc",
-    "label_raw": "o 10 mg).bYield determined by GC/MS with a calibration curve for | 表头/题注原文：Optimization of Reaction Conditions for MH Reaction between iodobenzene and Ethyl Acrylate Catalyzed by Pd/PECIm",
-    "note": "语料层晋升条目：数值与口径均取自 efetch 表格文本，未对照 PDF 图证逐字复核"
-   },
-   "assay": {
-    "method": "GC",
-    "internal_standard": null,
-    "quantification_basis": "product",
-    "calibration_note": "原文未报告内标"
-   },
-   "conditions": {
-    "catalyst": "-",
-    "base": "Et3N",
-    "solvent": "benzene",
-    "temp_c": null,
-    "time_h": null,
-    "atmosphere": null,
-    "scale_mmol": null,
-    "equivalents": {}
-   },
-   "purification": null,
-   "evidence_grade": "candidate",
-   "verification": "unverified",
-   "catalytic_profile": {
-    "medium": "organic",
-    "activation_mode": "thermal"
-   },
-   "evidence_note": "2026-10-31 从语料层（PMC13325132，heck）晋升；规则抽取，未经 PDF 逐字核验；evidence_grade 上限 candidate。",
-   "substrate": {
-    "aryl_halide": "iodobenzene",
-    "alkene": "ethyl acrylate",
-    "product": null
-   },
-   "provenance": {
-    "corpus_id": "PMC13325132",
-    "unit_id": "PMC13325132-T1",
-    "reaction_class": "heck",
-    "promoted_by": "scripts/promote_corpus.py",
-    "merged_by": "scripts/merge_corpus_records.py",
-    "promoted_on": "2026-10-31"
-   }
-  },
-  {
-   "record_id": "CORP-PMC13325132-T1-12",
-   "source_id": "PMC13325132-T1",
-   "citation": "Sustainable Mizoroki–Heck Cross-Coupling Using a Pd(II)-Polymer as Precatalyst in 1‑Butanol",
-   "doi": "10.1021/acsomega.6c01810",
-   "pmcid": "PMC13325132",
-   "locator": "T1, entry 12",
-   "locator_zh": "表 1，entry 12（ACS Omega，2026）",
-   "outcome": {
-    "value": 0.0,
-    "unit": "%",
-    "outcome_type": "gc",
-    "label_raw": "o 10 mg).bYield determined by GC/MS with a calibration curve for | 表头/题注原文：Optimization of Reaction Conditions for MH Reaction between iodobenzene and Ethyl Acrylate Catalyzed by Pd/PECIm",
-    "note": "语料层晋升条目：数值与口径均取自 efetch 表格文本，未对照 PDF 图证逐字复核"
-   },
-   "assay": {
-    "method": "GC",
-    "internal_standard": null,
-    "quantification_basis": "product",
-    "calibration_note": "原文未报告内标"
-   },
-   "conditions": {
-    "catalyst": "-",
-    "base": "Et3N",
-    "solvent": "benzene",
-    "temp_c": null,
-    "time_h": null,
+    "solvent": "1-BuOH",
+    "temp_c": 95.0,
+    "time_h": 1.5,
     "atmosphere": null,
     "scale_mmol": null,
     "equivalents": {}
@@ -9794,7 +7906,7 @@
    },
    "conditions": {
     "catalyst": "Catalyst",
-    "base": null,
+    "base": "PhMgBr",
     "solvent": "THF",
     "temp_c": null,
     "time_h": 6.0,
@@ -9847,7 +7959,7 @@
    },
    "conditions": {
     "catalyst": "Catalyst",
-    "base": null,
+    "base": "PhMgBr",
     "solvent": "THF",
     "temp_c": null,
     "time_h": 6.0,
@@ -9900,7 +8012,7 @@
    },
    "conditions": {
     "catalyst": "Catalyst",
-    "base": null,
+    "base": "PhMgBr",
     "solvent": "THF",
     "temp_c": null,
     "time_h": 6.0,
@@ -9953,7 +8065,7 @@
    },
    "conditions": {
     "catalyst": "Catalyst",
-    "base": null,
+    "base": "PhMgBr",
     "solvent": "THF",
     "temp_c": null,
     "time_h": 6.0,
@@ -9984,5 +8096,5 @@
    }
   }
  ],
- "merge_note": "2026-10-28 并入 pool30 中 evidence_grade=a_confirmed 的记录：P11, P12, P13, P19a, P19b, P20, P24a, P24b, P24c, P35。仅已回原文核验者进入引擎；候选池其余条目仍留在 data/pool30.json。\n2026-10-31：从 literature corpus 晋升 131 条 candidate（13 张表）。全部 evidence_grade=candidate，未经 PDF 逐字核验，口径由表头/题注逐字支撑；晋升与拒绝原因见 data/incoming/corpus_promote_2026-10-31.json 与 docs/plan/2026-10-31-语料层晋升.md。"
+ "merge_note": "2026-10-28 并入 pool30 中 evidence_grade=a_confirmed 的记录：P11, P12, P13, P19a, P19b, P20, P24a, P24b, P24c, P35。仅已回原文核验者进入引擎；候选池其余条目仍留在 data/pool30.json。\n2026-10-31：从 literature corpus 晋升 96 条 candidate（11 张表）。全部 evidence_grade=candidate，未经 PDF 逐字核验，口径由表头/题注逐字支撑；晋升与拒绝原因见 data/incoming/corpus_promote_2026-10-31.json 与 docs/plan/2026-10-31-语料层晋升.md。"
 }

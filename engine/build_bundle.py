@@ -187,7 +187,7 @@ RECORDS_JSON = r"""__RECORDS__"""
 # 语料索引（194 张表 / 114 篇，表级）。judgeable=false：只用于检索"库里有没有相关数据"。
 CORPUS_INDEX = json.loads(r"""__CORPUS_INDEX__""")
 
-ENGINE_VERSION = "chemcritic-engine/1.5.0"
+ENGINE_VERSION = "chemcritic-engine/1.6.0"
 RULES_VERSION = "gates v0.5 · tier-0.1"
 CONTRACT_VERSION = "sciencepal-verdict/2"
 
