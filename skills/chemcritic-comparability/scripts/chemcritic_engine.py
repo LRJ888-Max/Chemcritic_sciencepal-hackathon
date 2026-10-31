@@ -61,7 +61,7 @@ from typing import Any, Dict, List, Optional
 # 现在它是 SECTIONS 的第一节，单文件版与包内模式共用同一个常量；bundle 里不再重复写死。
 # 改版本号只改这里。
 
-ENGINE_VERSION = "chemcritic-engine/1.7.1"
+ENGINE_VERSION = "chemcritic-engine/1.7.2"
 RULES_VERSION = "gates v0.5 · tier-0.1"
 CONTRACT_VERSION = "sciencepal-verdict/2"
 
