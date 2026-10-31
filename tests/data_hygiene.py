@@ -22,7 +22,11 @@
 3. label_raw / citation 不含脚注上标粘连（`.bIsolated` / `yield.cTOF`）；
 4. citation 不以连接词/介词收尾（截断signature，如 "… for C–N and C"）；
 5. 索引 cls 与题注里明确写出的反应类型不矛盾（氢化家族内部不算冲突）；
-6. 索引里 cls_conflict 必须同时带 cls_article（保留原文标签以便检索）。
+6. 索引里 cls_conflict 必须同时带 cls_article（保留原文标签以便检索）；
+7. `scripts/quote_text.py` 自身的规则没被改松（那 5 个真实故障样本固化成断言）。
+
+第 7 条不是重复劳动：上面 1–4 条只能发现**已经写进 data/** 的脏数据，
+而规则被改松时要等下次重新晋升才会复发，期间 CI 全绿。
 """
 
 from __future__ import annotations
@@ -36,6 +40,9 @@ from typing import Any, Dict, List
 ROOT = Path(__file__).resolve().parent.parent
 RECORDS = ROOT / "data" / "records.json"
 INDEX = ROOT / "data" / "corpus_index.json"
+
+sys.path.insert(0, str(ROOT / "scripts"))
+import quote_text  # noqa: E402  （自检用，位置依赖 ROOT，故放在 sys.path 之后）
 
 # 判据 1：开头的孤立标点
 LEAD_PUNCT = re.compile(r"^\s*[,.;:]")
@@ -119,8 +126,10 @@ def main() -> int:
     problems: List[str] = []
     n1 = check_records(problems)
     n2 = check_index(problems)
+    problems.extend(quote_text.selftest())
+    print(f"  数据卫生：记录字段 {n1} 处 / 索引表 {n2} 行 "
+          f"/ 文本规则自检 {quote_text.selftest_count()} 项")
 
-    print(f"  数据卫生：记录字段 {n1} 处 / 索引表 {n2} 行")
     if problems:
         print()
         for p in problems[:20]:
@@ -129,7 +138,7 @@ def main() -> int:
             print(f"  …另有 {len(problems) - 20} 处")
         print(f"\n  结果：{len(problems)} 处文本/分类问题")
         return 1
-    print("  [PASS] 文本字段无截断残渣，表级反应类型与题注一致")
+    print("  [PASS] 文本字段无截断残渣，表级反应类型与题注一致，文本规则未走样")
     return 0
 
 

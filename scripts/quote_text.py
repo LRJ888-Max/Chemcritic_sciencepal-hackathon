@@ -19,7 +19,7 @@
 from __future__ import annotations
 
 import re
-from typing import Optional, Tuple
+from typing import List, Optional, Tuple
 
 # 句末标点（后面跟空白或到结尾才算，避免把 "1.5" 这种小数当句末）。
 # 冒号不算：脚注几乎都是 "Reaction conditions: 1b (1.0 mmol), ..." 这种结构，
@@ -149,3 +149,65 @@ def locate_quote(text: Optional[str], pattern: "re.Pattern[str]",
     if not m:
         return (None, None)
     return (m, quote_around(t, m.start(), m.end(), max_len=max_len))
+
+
+# 本模块的规则是"要么确定性、要么不做"。判据一旦被改松（例如把 drop_trailing_marker
+# 的双条件简化成单条件），data/ 里不会立刻出现脏数据——要等下次重新晋升才复发。
+# 所以把当初那 5 个真实故障样本固化成断言，跟着数据卫生检查一起跑。
+_CASES = [
+    # (说明, 函数, 输入, 断言)
+    ("开头的孤立标点",
+     lambda: repair_markers(", catalyst, base and solvent.bIsolated yield."),
+     lambda o: not o.startswith(",")),
+    ("句点后粘连的脚注 b",
+     lambda: repair_markers("solvent.bIsolated yield."),
+     lambda o: "〔脚注 b〕" in o and ".bI" not in o),
+    ("脚注顶端的标记字母",
+     lambda: repair_markers("bYields of 3a are isolated."),
+     lambda o: o.startswith("〔脚注 b〕")),
+    ("句中粘连的脚注 a",
+     lambda: repair_markers("The reaction was run for 6 h aYield of 92%."),
+     lambda o: "〔脚注 a〕" in o),
+    ("题注尾标记（脚注首字母相同 → 剥离）",
+     lambda: drop_trailing_marker("Scope of the Sonogashira coupling reactiona",
+                                 "aReaction conditions: 1b"),
+     lambda o: o.endswith("reaction")),
+    ("题注尾字母（脚注首字母不同 → 不动）",
+     lambda: drop_trailing_marker("Scope of the coupling reactiona", "bYields of 3a"),
+     lambda o: o.endswith("reactiona")),
+    ("题注以普通单词结尾（无脚注 → 不动）",
+     lambda: drop_trailing_marker("Reactions performed under visible light", None),
+     lambda o: o.endswith("light")),
+    ("摘录不留半截单词",
+     lambda: excerpt("x " * 100, 60),
+     lambda o: o.endswith("…")),
+    ("标题去内嵌 SVG 与出版方样板",
+     lambda: clean_title("A title <svg><text>x</text></svg> DOI: 10.1039/abc Click here for"),
+     lambda o: "<" not in o and "DOI" not in o and "Click here" not in o),
+]
+
+
+def selftest() -> List[str]:
+    """跑全部断言，返回失败说明（空列表 = 规则未被改坏）。"""
+    fails: List[str] = []
+    for name, fn, ok in _CASES:
+        out = fn()
+        if not ok(out):
+            fails.append(f"quote_text.{name} 走样了：{out!r}")
+    # 截断时不能把匹配片段切掉 —— 这是"引文"存在的唯一理由
+    t = one_line("Short. " + "x " * 60 + "target phrase. " + "y " * 60 + "Done.")
+    m = re.search(r"target", t)
+    q = quote_around(t, m.start(), m.end(), max_len=60)
+    if "target" not in q:
+        fails.append(f"quote_text.超长截断丢了匹配片段：{q!r}")
+    # 冒号不算句末：脚注式引文要留住主语 "Reaction conditions:"
+    t2 = one_line("Reaction conditions: 1b (1.0 mmol), catalyst and base in DMF.")
+    m2 = re.search(r"base", t2)
+    q2 = quote_around(t2, m2.start(), m2.end())
+    if not q2.startswith("Reaction conditions"):
+        fails.append(f"quote_text.在冒号处断句（引文丢了主语）：{q2!r}")
+    return fails
+
+
+def selftest_count() -> int:
+    return len(_CASES) + 2
