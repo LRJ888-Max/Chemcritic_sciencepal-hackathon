@@ -264,37 +264,6 @@ def _bare_feeds(text: str) -> List[str]:
     return out
 
 
-def _profile(catalyst: str, ligand: str) -> Dict[str, Any]:
-    """催化体系五字段。判不准就留空——留空只是 tier 未定，猜错是假精确。"""
-    blob = f"{catalyst or ''} {ligand or ''}".lower()
-    if not blob.strip():
-        return {}
-    prof: Dict[str, Any] = {}
-    if re.search(r"np\b|nanoparticle|nanocatal|pd[–-]c|pd[–-]ni|pd[–-]mn|magnetic|fe3o4", blob):
-        prof["catalyst_form"] = "nanoparticle"
-    elif re.search(r"@|mof|zif|sba|sio2|al2o3|supported|charcoal|\bc\b|resin|polymer", blob):
-        prof["catalyst_form"] = "supported"
-    elif re.search(r"complex|\(nhc\)|\[pd|pincer|nHC", catalyst or "", re.I):
-        prof["catalyst_form"] = "molecular_complex"
-    elif re.search(r"pd\(oac\)2|pdcl2|pd\(acac\)2|pd\(no3\)2", blob):
-        prof["catalyst_form"] = "in_situ_salt"
-
-    if re.search(r"pph3|phosphine|sphos|xphos|dppp|dppb|dppf|xantphos|binap|p\(t-bu\)3|ptbu3", blob):
-        prof["ligand_family"] = "phosphine"
-    elif re.search(r"nhc|imes|ipr|imidazol|sipr|dipp", blob):
-        prof["ligand_family"] = "phosphine" if "phosphine" in blob else "non_phosphine"
-    elif re.search(r"bipy|phenanthroline|bpy|amine ligand", blob):
-        prof["ligand_family"] = "non_phosphine"
-    prof["support"] = "solid_support" if prof.get("catalyst_form") in ("supported", "nanoparticle") else "none"
-    solv_blob = ""
-    prof["medium"] = "aqueous" if re.search(r"h2o|water|aqueous|水", solv_blob) else None
-    if re.search(r"led|light|hv|photoredox|photo-", blob):
-        prof["activation_mode"] = "photochemical"
-    elif re.search(r"microwave|ultrasound|sonicat|heating", blob):
-        prof["activation_mode"] = "thermal"
-    return {k: v for k, v in prof.items() if v is not None}
-
-
 def build_units(triage: Dict[str, Any]) -> List[Dict[str, Any]]:
     units = []
     for u in triage["units"]:
