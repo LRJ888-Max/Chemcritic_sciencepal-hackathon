@@ -164,6 +164,7 @@ flowchart TD
 | 化学感知层（RDKit 规范 SMILES 判同） | ✅ `--chemsense`；无 rdkit 自动降级，判定行为不变 |
 | 六个 Agent 的平台搭建 | ✅ 平台 Agent（提示词 v8.1）+ 单文件引擎 bootstrap 已上线 |
 | 评测（契约回归 + 措辞 lint + gold set） | ✅ 契约 9 用例 + 措辞 lint 18 规则；gold set 扩充中 |
+| 语料库（参照集候选面） | ✅ **114 篇文献 / 194 张数值数据表 / 1981 行 / 18 类反应**，全部带 DOI 与逐字表格（`imported_unchecked`，不参与判定）；见 `docs/corpus/2026-10-31-语料库扩充说明.md` |
 | 演示视频 / 项目说明 | 🚧 沙箱录屏待补 |
 
 ### 引擎能力一览（`chemcritic_engine.py`，单文件、零联网依赖）
