@@ -33,7 +33,7 @@ version: 0.4.0
 # 0. 只有在提示"文件不存在"时才自举（每个新对话一次）
 cd /workspace && rm -rf .cc_src && git clone --depth 1 https://github.com/LRJ888-Max/Chemcritic_sciencepal-hackathon.git .cc_src && bash .cc_src/bootstrap.sh
 
-# 1. 自检：确认沙箱里的引擎是好的（必须看到 26 passed, 0 failed）
+# 1. 自检：确认沙箱里的引擎是好的（关键看 0 failed；当前 29 项，条数以实际输出为准）
 python /workspace/chemcritic/chemcritic_engine.py --selftest
 
 # 2. 判定：把你整理好的 Record JSON 交给引擎
@@ -117,7 +117,7 @@ python /workspace/chemcritic/chemcritic_engine.py --json --input user.json --rec
 ## 输出：补证杠杆（`leverage`）
 
 `--json` / `--leverage` 里的 `leverage` 回答"补哪一条解锁最多"。它只统计 `judge()` 的结果，
-不产生任何新判定：
+不产生任何新判定。下面只是**结构示意**，数字随你的输入变——**永远用本次返回的值，不要照抄示例**：
 
 ```json
 {"headline": "27 对不能并列：3 对可以靠补证据解决，24 对是确定不同（补也没用）",
@@ -132,8 +132,10 @@ python /workspace/chemcritic/chemcritic_engine.py --json --input user.json --rec
   `caliber:reference`，不把一次动作虚报成两次工作量。
 - 数值是**上限**（假设补上的证据能通过门槛），不得当作承诺；对用户说"最多解锁 N 对"。
 - `--leverage` 另返回 `corpus`：把参照库自身两两比较，"补齐哪几条记录的口径能让可比对最多"，
-  属于关于文献的可核对结论，可直接引用（当前参照集：496 个两两比较，38 对可直接并列，
-  36 对只缺口径确认，补 3 条记录后 38 → 74）。
+  属于关于文献的可核对结论，可直接引用。**数字一律读 `corpus` 字段，不要背下来**：
+  `total_pairs`（两两比较总数）／`comparable_pairs`（当前可直接并列）／`caliber_blocked_pairs`
+  （只缺口径确认）／`plan[].cumulative_total`（补齐后可达）。语料一变这些数就变，
+  以本次返回为准；不要引用任何"上次是 N 对"之类的旧数。
 
 ## 8 维门槛（脚本内的判定顺序）
 
@@ -154,7 +156,9 @@ python /workspace/chemcritic/chemcritic_engine.py --json --input user.json --rec
 
 1. **禁止换算**：GC 转化率不得折成分离收率；NMR 定量不得当作收率。
 2. **禁止区间拼接**：不同口径的数值不得合成一个范围（这是最常见的假精确）。
-3. **禁止跨档定义"异常"**：跨档只谈迁移目标。
+   ★ 引擎在同一口径等价类内给出的 `reference_min`–`reference_max` **不算拼接**，可以引用（见"何时使用"）。
+3. **禁止跨档定义"异常"**：跨档不谈正常/异常；可以引用引擎区间作分散度并指出迁移目标，
+   但不得称"正常范围"、不得给差值。
 
 ## 给平台 Agent 的硬纪律
 
@@ -163,7 +167,8 @@ python /workspace/chemcritic/chemcritic_engine.py --json --input user.json --rec
 3. **引用照抄证书**：`reference.citation / locator` 是引擎给的，原文照抄；`locator_zh` 存在时定位用中文版。证书里没有的引用，一个字都不许加。
 4. **未校准不外推**：`uncalibrated` 的参照只展示，不参与"差 X 个百分点"的结论。
 5. **不露内部术语**：`L1` / `L2` / `D1–D8` / `record_id` / `soft_flags` 只进内部证书，用户文案改成化学说法（"溶剂同属非含水体系"）。
-6. **输出长度**：【结论】/【为什么】/【下一步】三段，默认 ≤20 行；用户说"展开"才给证书明细。
+6. **输出结构以平台提示词为准**（v8 起是五节：条件表／能不能比／为什么／下一步／下一轮实验），
+   本节不另行规定段数与行数，避免两套结构打架；用户说"展开"才给证书明细。
 7. **工具轮次零自然语言**：带工具调用的消息不写任何过程自述；最终答案只在最后一条消息出现一次。
 8. **不读引擎源码**：引用、口径、档位一律取证书或 `--list-records`；禁止 grep/sed/cat 翻引擎文件。
 
@@ -171,10 +176,12 @@ python /workspace/chemcritic/chemcritic_engine.py --json --input user.json --rec
 
 - 引擎：`/workspace/chemcritic/chemcritic_engine.py`（单文件，纯 stdlib；源头是仓库 `engine/`）
 - 自举：仓库根 `bootstrap.sh`，一条命令装到固定路径并自检，成功打印 `ENGINE_READY`
-- 验收矩阵：`--selftest` → `最终：26 passed, 0 failed`（T1–T23c；T20–T22 覆盖输入来源审计、
-  参照元数据完整性与模糊口径双重拦截，T23 系列覆盖补证杠杆）
-- 内置参照：`data/records.json` 的 32 条已核验记录（SM-001…SM-006、P01…P38，均带 locator_zh）
+- 验收矩阵：`--selftest` → `最终：29 passed, 0 failed`（T1–T26；T20–T22 覆盖输入来源审计、
+  参照元数据完整性与模糊口径双重拦截，T23 系列覆盖补证杠杆，T26 覆盖按底物精确盘点）
+- 内置参照：`data/records.json` 共 **140 条**（44 条人工核验 + 96 条语料晋升 `candidate`；
+  编号形如 `SM-001a` / `P35` / `CORP-PMC…-T1-02`）。**条数以 `--list-records` 的 `count` 为准**，
+  不要在回答里写死 —— 语料还在长
 - 证书字段：`verdict` / `blocking_dimension` / `unlock_condition` / `calibration` /
   `reference{citation,doi,locator,locator_zh,value,outcome_type,label_raw,source_id,tier}` / `soft_flags`；
   顶层另含 `inputs_source` / `input_audit` / `leverage`
-- 口径与规则版本：`gates v0.5 · tier-0.1`；引擎 `chemcritic-engine/1.1.0`
+- 口径与规则版本：`gates v0.5 · tier-0.1`；引擎版本以 `--version` 实际输出为准（当前 `chemcritic-engine/1.7.2`）
