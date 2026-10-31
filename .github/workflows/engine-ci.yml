@@ -1,0 +1,94 @@
+name: engine-ci
+
+# 为什么必须有：
+# `engine/*.py` 是源码，`skills/.../chemcritic_engine.py` 是生成产物，沙箱 bootstrap 拿的是产物。
+# 改了源码忘了跑 build_bundle.py 就会 push 一个"源码对了、沙箱还是旧的"的提交，
+# 而平台上是别人跑出来的现象——这种错误本地完全看不出来（2026-10-31 就这么栽过一次）。
+# 这里把"产物是否同步""两条运行路径是否一致""契约是否仍然成立"变成 push 时的硬门。
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: engine-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  contract:
+    name: 契约 / 自检 / 产物同步
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: 环境说明（零第三方依赖 = 沙箱条件）
+        run: |
+          python --version
+          if python -c "import rdkit" 2>/dev/null; then
+            echo "rdkit: present（本机路径；沙箱通常没有，chemsense 会自动降级）"
+          else
+            echo "rdkit: absent —— 与 SciencePal 沙箱一致，跑的是降级路径"
+          fi
+
+      - name: 产物与源文件是否同步
+        run: python engine/build_bundle.py --check
+
+      - name: 包内模式自检（T1–T26）
+        run: python engine/run_demo.py
+
+      - name: 单文件版自检（沙箱实际执行的路径）
+        run: python skills/chemcritic-comparability/scripts/chemcritic_engine.py --selftest
+
+      - name: 契约回归（C1–C11）
+        run: python tests/engine_contract.py
+
+      - name: 底物盘点结果（只记录，不断言具体条数）
+        run: |
+          python skills/chemcritic-comparability/scripts/chemcritic_engine.py \
+            --find-substrate iodobenzene > "$RUNNER_TEMP/fs.json"
+          python - "$RUNNER_TEMP/fs.json" <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json, sys
+          d = json.load(open(sys.argv[1], encoding="utf-8"))
+          q = d["queries"][0]
+          # 不硬编码 31/3：语料会增长，写死数字会让 CI 在数据合法更新时误报。
+          # 这里只核对"内部自洽"，精确性由契约 C10 用独立重算保证。
+          rows = q["records"]
+          bad = [r["name"] for r in rows if r["name"].strip().lower() != "iodobenzene"]
+          print("| 项 | 值 |")
+          print("|---|---|")
+          print(f"| 引擎 | `{d['engine']}` |")
+          print(f"| count | {q['count']} |")
+          print(f"| sources | {q['sources']} |")
+          print(f"| 反应类型 | {q['by_reaction_class']} |")
+          print(f"| 排除的近名 | {[e['substrate'] for e in q['excluded_similar']]} |")
+          print(f"| 非法计入 | {bad or '无'} |")
+          assert not bad, f"count 里混进了非同化合物：{bad}"
+          PY
+
+  bootstrap:
+    name: 沙箱引导（bootstrap.sh 端到端）
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: 在干净目录跑一次真实引导
+        env:
+          PIP_NO_INDEX: "1"          # 禁网装 rdkit → 覆盖"降级运行"这条分支
+        run: |
+          export CHEMCRITIC_HOME="$RUNNER_TEMP/cc"
+          export CHEMCRITIC_SKILLS="$RUNNER_TEMP/skills"
+          OUT="$(bash bootstrap.sh 2>&1)"
+          echo "$OUT"
+          echo "$OUT" | grep -q "ENGINE_READY" || { echo "引导没有输出 ENGINE_READY"; exit 1; }
+          python "$CHEMCRITIC_HOME/chemcritic_engine.py" --list-records \
+            | python -c "import json,sys; d=json.load(sys.stdin); print('记录数:', d['count'], '| 引擎:', d['engine'])"

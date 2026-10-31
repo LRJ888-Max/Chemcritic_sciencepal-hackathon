@@ -163,7 +163,8 @@ flowchart TD
 | PDF 取证端到端（抽取→审计→签核→入库→判定生效） | ✅ 已验收（见 `docs/eval/2026-10-30-PDF取证端到端验收.md`） |
 | 化学感知层（RDKit 规范 SMILES 判同） | ✅ `--chemsense`；无 rdkit 自动降级，判定行为不变 |
 | 六个 Agent 的平台搭建 | ✅ 平台 Agent（提示词 v8.1）+ 单文件引擎 bootstrap 已上线 |
-| 评测（契约回归 + 措辞 lint + gold set） | ✅ 契约 9 用例 + 措辞 lint 18 规则；gold set 扩充中 |
+| 评测（契约回归 + 措辞 lint + gold set） | ✅ 契约 **11 条（C1–C11）** + 措辞 lint 18 规则；gold set 扩充中 |
+| 持续集成（GitHub Actions） | ✅ 每次 push / PR 自动跑 5 道门：`build_bundle --check`（产物忘了重新生成会红）· 包内自检 T1–T26 · 单文件自检 · 契约 C1–C11 · `bootstrap.sh` 端到端（无 rdkit 的降级路径）→ `.github/workflows/engine-ci.yml` |
 | 语料库（候选面 → 判定层通道） | ✅ **114 篇文献 / 194 张数值数据表 / 1981 行 / 18 类反应**；其中 96 条经核验晋升进 `records.json`，其余以表级索引内嵌（`--corpus-query`，`judgeable=false`）。7 张底物范围表与 2 张阴性对照行**不入库**，理由见 `docs/plan/2026-10-31-语料层晋升.md` |
 | 演示视频 / 项目说明 | 🚧 沙箱录屏待补 |
 
